@@ -19,6 +19,7 @@ import {
 import {
 	line as d3_line
 } from 'd3-shape';
+import Barchart from './Barchart';
 
 
 import {cancelAnimFrame, requestAnimFrame} from '../lib/raf';
@@ -141,6 +142,28 @@ export default function TeamPursuit(data,options) {
 	    	velodrome.addTeam(i,team);
 	    })
 
+	    let splits=teams[0].splits.map((s,i)=>{
+	    	return {
+	    		values:[
+	    			s.value,
+	    			teams[1].splits[i].value
+	    		],
+	    		times:[
+	    			s.time,
+	    			teams[1].splits[i].time
+	    		],
+	    		cumulative_times:[
+	    			s.cumulative_time,
+	    			teams[1].splits[i].cumulative_time
+	    		],
+	    		diff:s.cumulative_time - teams[1].splits[i].cumulative_time
+	    	}
+	    });
+	    let barchart=new Barchart(splits,{
+	    	container:container
+	    })
+
+
 	    let overlay=container.append("div")
 	    				.attr("class","overlay")
 
@@ -164,7 +187,7 @@ export default function TeamPursuit(data,options) {
 
 
 
-	    velodrome.race();
+	    //velodrome.race();
 
 	    
 	    function updateTeam(team,split) {

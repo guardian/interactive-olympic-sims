@@ -1,0 +1,651 @@
+{
+    "olympics": {
+        "eventUnit": {
+            "identifier": "CTM402103",
+            "description": "Men's Team Pursuit Finals 5-6",
+            "unitType": "NOC",
+            "medalEvent": "Yes",
+            "disciplineDescription": {
+                "identifier": "cycling-track",
+                "value": "Cycling Track"
+            },
+            "phaseDescription": {
+                "identifier": "CTM4021",
+                "value": "Finals"
+            },
+            "result": {
+                "type": "Official",
+                "timestamp": "2016-07-06T15:41:51Z",
+                "entrant": [{
+                    "order": "1",
+                    "type": "Team",
+                    "code": "CTM402DEN01",
+                    "rank": "5",
+                    "value": "4:02.671",
+                    "property": [{
+                        "type": "Diff",
+                        "value": "0.000"
+                    }, {
+                        "type": "Result Type",
+                        "value": "Time"
+                    }],
+                    "resultExtension": [{
+                        "type": "Split Times",
+                        "extension": [{
+                            "position": "1",
+                            "value": "1:04.911",
+                            "property": {
+                                "type": "Diff",
+                                "value": "+0.463"
+                            }
+                        }, {
+                            "position": "1",
+                            "value": "13.536",
+                            "property": {
+                                "type": "Diff",
+                                "value": "0.000"
+                            }
+                        }, {
+                            "position": "2",
+                            "value": "2:03.306",
+                            "property": {
+                                "type": "Diff",
+                                "value": "+1.159"
+                            }
+                        }, {
+                            "position": "2",
+                            "value": "21.520",
+                            "property": {
+                                "type": "Diff",
+                                "value": "+0.294"
+                            }
+                        }, {
+                            "position": "3",
+                            "value": "3:02.738",
+                            "property": {
+                                "type": "Diff",
+                                "value": "+1.552"
+                            }
+                        }, {
+                            "position": "3",
+                            "value": "28.782",
+                            "property": {
+                                "type": "Diff",
+                                "value": "+0.220"
+                            }
+                        }, {
+                            "position": "4",
+                            "value": "4:02.671",
+                            "property": {
+                                "type": "Diff",
+                                "value": "0.000"
+                            }
+                        }, {
+                            "position": "4",
+                            "value": "36.059",
+                            "property": {
+                                "type": "Diff",
+                                "value": "+0.396"
+                            }
+                        }, {
+                            "position": "5",
+                            "value": "43.241",
+                            "property": {
+                                "type": "Diff",
+                                "value": "+0.345"
+                            }
+                        }, {
+                            "position": "6",
+                            "value": "50.509",
+                            "property": {
+                                "type": "Diff",
+                                "value": "+0.463"
+                            }
+                        }, {
+                            "position": "7",
+                            "value": "57.639",
+                            "property": {
+                                "type": "Diff",
+                                "value": "+0.359"
+                            }
+                        }, {
+                            "position": "8",
+                            "value": "1:04.911",
+                            "property": {
+                                "type": "Diff",
+                                "value": "+0.463"
+                            }
+                        }, {
+                            "position": "9",
+                            "value": "1:12.093",
+                            "property": {
+                                "type": "Diff",
+                                "value": "+0.476"
+                            }
+                        }, {
+                            "position": "10",
+                            "value": "1:19.407",
+                            "property": {
+                                "type": "Diff",
+                                "value": "+0.550"
+                            }
+                        }, {
+                            "position": "11",
+                            "value": "1:26.661",
+                            "property": {
+                                "type": "Diff",
+                                "value": "+0.686"
+                            }
+                        }, {
+                            "position": "12",
+                            "value": "1:34.088",
+                            "property": {
+                                "type": "Diff",
+                                "value": "+0.875"
+                            }
+                        }, {
+                            "position": "13",
+                            "value": "1:41.370",
+                            "property": {
+                                "type": "Diff",
+                                "value": "+1.054"
+                            }
+                        }, {
+                            "position": "14",
+                            "value": "1:48.765",
+                            "property": {
+                                "type": "Diff",
+                                "value": "+1.159"
+                            }
+                        }, {
+                            "position": "15",
+                            "value": "1:55.984",
+                            "property": {
+                                "type": "Diff",
+                                "value": "+1.199"
+                            }
+                        }, {
+                            "position": "16",
+                            "value": "2:03.306",
+                            "property": {
+                                "type": "Diff",
+                                "value": "+1.159"
+                            }
+                        }, {
+                            "position": "17",
+                            "value": "2:10.547",
+                            "property": {
+                                "type": "Diff",
+                                "value": "+1.179"
+                            }
+                        }, {
+                            "position": "18",
+                            "value": "2:17.993",
+                            "property": {
+                                "type": "Diff",
+                                "value": "+1.403"
+                            }
+                        }, {
+                            "position": "19",
+                            "value": "2:25.487",
+                            "property": {
+                                "type": "Diff",
+                                "value": "+1.477"
+                            }
+                        }, {
+                            "position": "20",
+                            "value": "2:32.955",
+                            "property": {
+                                "type": "Diff",
+                                "value": "+1.624"
+                            }
+                        }, {
+                            "position": "21",
+                            "value": "2:40.274",
+                            "property": {
+                                "type": "Diff",
+                                "value": "+1.478"
+                            }
+                        }, {
+                            "position": "22",
+                            "value": "2:47.744",
+                            "property": {
+                                "type": "Diff",
+                                "value": "+1.593"
+                            }
+                        }, {
+                            "position": "23",
+                            "value": "2:55.157",
+                            "property": {
+                                "type": "Diff",
+                                "value": "+1.442"
+                            }
+                        }, {
+                            "position": "24",
+                            "value": "3:02.738",
+                            "property": {
+                                "type": "Diff",
+                                "value": "+1.552"
+                            }
+                        }, {
+                            "position": "25",
+                            "value": "3:10.280",
+                            "property": {
+                                "type": "Diff",
+                                "value": "+1.476"
+                            }
+                        }, {
+                            "position": "26",
+                            "value": "3:17.809",
+                            "property": {
+                                "type": "Diff",
+                                "value": "+1.426"
+                            }
+                        }, {
+                            "position": "27",
+                            "value": "3:25.238",
+                            "property": {
+                                "type": "Diff",
+                                "value": "+1.127"
+                            }
+                        }, {
+                            "position": "28",
+                            "value": "3:32.877",
+                            "property": {
+                                "type": "Diff",
+                                "value": "+1.027"
+                            }
+                        }, {
+                            "position": "29",
+                            "value": "3:40.555",
+                            "property": {
+                                "type": "Diff",
+                                "value": "+1.045"
+                            }
+                        }, {
+                            "position": "30",
+                            "value": "3:47.969",
+                            "property": {
+                                "type": "Diff",
+                                "value": "+0.763"
+                            }
+                        }, {
+                            "position": "31",
+                            "value": "3:55.299",
+                            "property": {
+                                "type": "Diff",
+                                "value": "+0.270"
+                            }
+                        }, {
+                            "position": "32",
+                            "value": "4:02.671",
+                            "property": {
+                                "type": "Diff",
+                                "value": "0.000"
+                            }
+                        }]
+                    }, {
+                        "type": "Average Speed",
+                        "value": "59.339"
+                    }],
+                    "country": {
+                        "identifier": "DEN",
+                        "name": "Denmark",
+                        "longName": "Denmark"
+                    },
+                    "participant": [{
+                        "order": "1",
+                        "bib": "16",
+                        "competitor": {
+                            "identifier": "7110397",
+                            "firstName": "Lasse Norman",
+                            "lastName": "Hansen",
+                            "fullName": "Lasse Norman Hansen"
+                        }
+                    }, {
+                        "order": "2",
+                        "bib": "87",
+                        "competitor": {
+                            "identifier": "7110260",
+                            "firstName": "Michael",
+                            "lastName": "Morkov",
+                            "fullName": "Michael Morkov"
+                        }
+                    }, {
+                        "order": "3",
+                        "bib": "89",
+                        "competitor": {
+                            "identifier": "7110250",
+                            "firstName": "Rasmus Christian",
+                            "lastName": "Quaade",
+                            "fullName": "Rasmus Christian Quaade"
+                        }
+                    }, {
+                        "order": "4",
+                        "bib": "90",
+                        "competitor": {
+                            "identifier": "7110142",
+                            "firstName": "Casper",
+                            "lastName": "von Folsach",
+                            "fullName": "Casper von Folsach"
+                        }
+                    }]
+                }, {
+                    "order": "2",
+                    "type": "Team",
+                    "code": "CTM402ESP01",
+                    "rank": "6",
+                    "value": "4:02.746",
+                    "property": [{
+                        "type": "Diff",
+                        "value": "+0.075"
+                    }, {
+                        "type": "Result Type",
+                        "value": "Time"
+                    }],
+                    "resultExtension": [{
+                        "type": "Split Times",
+                        "extension": [{
+                            "position": "1",
+                            "value": "1:04.448",
+                            "property": {
+                                "type": "Diff",
+                                "value": "0.000"
+                            }
+                        }, {
+                            "position": "1",
+                            "value": "13.571",
+                            "property": {
+                                "type": "Diff",
+                                "value": "+0.035"
+                            }
+                        }, {
+                            "position": "2",
+                            "value": "2:02.147",
+                            "property": {
+                                "type": "Diff",
+                                "value": "0.000"
+                            }
+                        }, {
+                            "position": "2",
+                            "value": "21.226",
+                            "property": {
+                                "type": "Diff",
+                                "value": "0.000"
+                            }
+                        }, {
+                            "position": "3",
+                            "value": "3:01.186",
+                            "property": {
+                                "type": "Diff",
+                                "value": "0.000"
+                            }
+                        }, {
+                            "position": "3",
+                            "value": "28.562",
+                            "property": {
+                                "type": "Diff",
+                                "value": "0.000"
+                            }
+                        }, {
+                            "position": "4",
+                            "value": "4:02.746",
+                            "property": {
+                                "type": "Diff",
+                                "value": "+0.075"
+                            }
+                        }, {
+                            "position": "4",
+                            "value": "35.663",
+                            "property": {
+                                "type": "Diff",
+                                "value": "0.000"
+                            }
+                        }, {
+                            "position": "5",
+                            "value": "42.896",
+                            "property": {
+                                "type": "Diff",
+                                "value": "0.000"
+                            }
+                        }, {
+                            "position": "6",
+                            "value": "50.046",
+                            "property": {
+                                "type": "Diff",
+                                "value": "0.000"
+                            }
+                        }, {
+                            "position": "7",
+                            "value": "57.280",
+                            "property": {
+                                "type": "Diff",
+                                "value": "0.000"
+                            }
+                        }, {
+                            "position": "8",
+                            "value": "1:04.448",
+                            "property": {
+                                "type": "Diff",
+                                "value": "0.000"
+                            }
+                        }, {
+                            "position": "9",
+                            "value": "1:11.617",
+                            "property": {
+                                "type": "Diff",
+                                "value": "0.000"
+                            }
+                        }, {
+                            "position": "10",
+                            "value": "1:18.857",
+                            "property": {
+                                "type": "Diff",
+                                "value": "0.000"
+                            }
+                        }, {
+                            "position": "11",
+                            "value": "1:25.975",
+                            "property": {
+                                "type": "Diff",
+                                "value": "0.000"
+                            }
+                        }, {
+                            "position": "12",
+                            "value": "1:33.213",
+                            "property": {
+                                "type": "Diff",
+                                "value": "0.000"
+                            }
+                        }, {
+                            "position": "13",
+                            "value": "1:40.316",
+                            "property": {
+                                "type": "Diff",
+                                "value": "0.000"
+                            }
+                        }, {
+                            "position": "14",
+                            "value": "1:47.606",
+                            "property": {
+                                "type": "Diff",
+                                "value": "0.000"
+                            }
+                        }, {
+                            "position": "15",
+                            "value": "1:54.785",
+                            "property": {
+                                "type": "Diff",
+                                "value": "0.000"
+                            }
+                        }, {
+                            "position": "16",
+                            "value": "2:02.147",
+                            "property": {
+                                "type": "Diff",
+                                "value": "0.000"
+                            }
+                        }, {
+                            "position": "17",
+                            "value": "2:09.368",
+                            "property": {
+                                "type": "Diff",
+                                "value": "0.000"
+                            }
+                        }, {
+                            "position": "18",
+                            "value": "2:16.590",
+                            "property": {
+                                "type": "Diff",
+                                "value": "0.000"
+                            }
+                        }, {
+                            "position": "19",
+                            "value": "2:24.010",
+                            "property": {
+                                "type": "Diff",
+                                "value": "0.000"
+                            }
+                        }, {
+                            "position": "20",
+                            "value": "2:31.331",
+                            "property": {
+                                "type": "Diff",
+                                "value": "0.000"
+                            }
+                        }, {
+                            "position": "21",
+                            "value": "2:38.796",
+                            "property": {
+                                "type": "Diff",
+                                "value": "0.000"
+                            }
+                        }, {
+                            "position": "22",
+                            "value": "2:46.151",
+                            "property": {
+                                "type": "Diff",
+                                "value": "0.000"
+                            }
+                        }, {
+                            "position": "23",
+                            "value": "2:53.715",
+                            "property": {
+                                "type": "Diff",
+                                "value": "0.000"
+                            }
+                        }, {
+                            "position": "24",
+                            "value": "3:01.186",
+                            "property": {
+                                "type": "Diff",
+                                "value": "0.000"
+                            }
+                        }, {
+                            "position": "25",
+                            "value": "3:08.804",
+                            "property": {
+                                "type": "Diff",
+                                "value": "0.000"
+                            }
+                        }, {
+                            "position": "26",
+                            "value": "3:16.383",
+                            "property": {
+                                "type": "Diff",
+                                "value": "0.000"
+                            }
+                        }, {
+                            "position": "27",
+                            "value": "3:24.111",
+                            "property": {
+                                "type": "Diff",
+                                "value": "0.000"
+                            }
+                        }, {
+                            "position": "28",
+                            "value": "3:31.850",
+                            "property": {
+                                "type": "Diff",
+                                "value": "0.000"
+                            }
+                        }, {
+                            "position": "29",
+                            "value": "3:39.510",
+                            "property": {
+                                "type": "Diff",
+                                "value": "0.000"
+                            }
+                        }, {
+                            "position": "30",
+                            "value": "3:47.206",
+                            "property": {
+                                "type": "Diff",
+                                "value": "0.000"
+                            }
+                        }, {
+                            "position": "31",
+                            "value": "3:55.029",
+                            "property": {
+                                "type": "Diff",
+                                "value": "0.000"
+                            }
+                        }, {
+                            "position": "32",
+                            "value": "4:02.746",
+                            "property": {
+                                "type": "Diff",
+                                "value": "+0.075"
+                            }
+                        }]
+                    }, {
+                        "type": "Average Speed",
+                        "value": "59.321"
+                    }],
+                    "country": {
+                        "identifier": "ESP",
+                        "name": "Spain",
+                        "longName": "Spain"
+                    },
+                    "participant": [{
+                        "order": "1",
+                        "bib": "91",
+                        "competitor": {
+                            "identifier": "7110455",
+                            "firstName": "Pablo Aitor",
+                            "lastName": "Bernal Rosique",
+                            "fullName": "Pablo Aitor Bernal Rosique"
+                        }
+                    }, {
+                        "order": "2",
+                        "bib": "93",
+                        "competitor": {
+                            "identifier": "7110460",
+                            "firstName": "Sebastian",
+                            "lastName": "Mora Vedri",
+                            "fullName": "Sebastian Mora Vedri"
+                        }
+                    }, {
+                        "order": "3",
+                        "bib": "94",
+                        "competitor": {
+                            "identifier": "7110462",
+                            "firstName": "Sebastian",
+                            "lastName": "Muntaner Juaneda",
+                            "fullName": "Sebastian Muntaner Juaneda"
+                        }
+                    }, {
+                        "order": "4",
+                        "bib": "96",
+                        "competitor": {
+                            "identifier": "7110468",
+                            "firstName": "Albert",
+                            "lastName": "Torres Barcelo",
+                            "fullName": "Albert Torres Barcelo"
+                        }
+                    }]
+                }]
+            }
+        }
+    }
+}
