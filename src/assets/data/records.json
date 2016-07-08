@@ -1,0 +1,27 @@
+{
+	"men_freestyle_100":{
+		"athlete":"Cesar Cielo",
+		"country":"BRA",
+		"time":46.91,
+		"reaction_time":0.66,
+		"split_times":[
+				22.17,
+				46.91
+			],
+		"date":"2009-07-30",
+		"where":"Rome, Italy",
+		"resultExtension": [{
+				                "type": "Reaction Time",
+				                "value": "0.66"
+				            }, {
+				                "type": "Split Times",
+				                "extension": [{
+				                    "position": "1",
+				                    "value": "22.17"
+				                }, {
+				                    "position": "2",
+				                    "value": "46.91"
+				                }]
+				            }]
+	}
+}

@@ -1,0 +1,376 @@
+{
+    "olympics": {
+        "eventUnit": {
+            "identifier": "SWM052101",
+            "description": "Men's 200m Individual Medley Final",
+            "unitType": "Individuals",
+            "medalEvent": "Yes",
+            "disciplineDescription": {
+                "identifier": "swimming",
+                "value": "Swimming"
+            },
+            "phaseDescription": {
+                "identifier": "SWM0521",
+                "value": "Final"
+            },
+            "result": {
+                "type": "Official",
+                "timestamp": "2013-11-13T12:15:00Z",
+                "entrant": [{
+                    "order": "1",
+                    "type": "Individual",
+                    "code": "1131796",
+                    "rank": "1",
+                    "value": "1:54.27",
+                    "property": [{
+                        "type": "Medal Awarded",
+                        "value": "Gold"
+                    }, {
+                        "type": "Result Type",
+                        "value": "Time"
+                    }],
+                    "resultExtension": [{
+                        "type": "Reaction Time",
+                        "value": "0.68"
+                    }, {
+                        "type": "Split Times",
+                        "extension": [{
+                            "position": "1",
+                            "value": "24.63"
+                        }, {
+                            "position": "2",
+                            "value": "53.26"
+                        }, {
+                            "position": "3",
+                            "value": "1:26.59"
+                        }, {
+                            "position": "4",
+                            "value": "1:54.27"
+                        }]
+                    }],
+                    "country": {
+                        "identifier": "USA",
+                        "name": "United States",
+                        "longName": "United States of America"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "competitor": {
+                            "identifier": "1131796",
+                            "firstName": "Michael",
+                            "lastName": "Phelps",
+                            "fullName": "Michael Phelps"
+                        }
+                    }
+                }, {
+                    "order": "2",
+                    "type": "Individual",
+                    "code": "1132448",
+                    "rank": "2",
+                    "value": "1:54.90",
+                    "property": [{
+                        "type": "Medal Awarded",
+                        "value": "Silver"
+                    }, {
+                        "type": "Result Type",
+                        "value": "Time"
+                    }],
+                    "resultExtension": [{
+                        "type": "Reaction Time",
+                        "value": "0.66"
+                    }, {
+                        "type": "Split Times",
+                        "extension": [{
+                            "position": "1",
+                            "value": "24.79"
+                        }, {
+                            "position": "2",
+                            "value": "53.89"
+                        }, {
+                            "position": "3",
+                            "value": "1:27.37"
+                        }, {
+                            "position": "4",
+                            "value": "1:54.90"
+                        }]
+                    }],
+                    "country": {
+                        "identifier": "USA",
+                        "name": "United States",
+                        "longName": "United States of America"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "competitor": {
+                            "identifier": "1132448",
+                            "firstName": "Ryan",
+                            "lastName": "Lochte",
+                            "fullName": "Ryan Lochte"
+                        }
+                    }
+                }, {
+                    "order": "3",
+                    "type": "Individual",
+                    "code": "1121224",
+                    "rank": "3",
+                    "value": "1:56.22",
+                    "property": [{
+                        "type": "Medal Awarded",
+                        "value": "Bronze"
+                    }, {
+                        "type": "Result Type",
+                        "value": "Time"
+                    }],
+                    "resultExtension": [{
+                        "type": "Reaction Time",
+                        "value": "0.76"
+                    }, {
+                        "type": "Split Times",
+                        "extension": [{
+                            "position": "1",
+                            "value": "25.03"
+                        }, {
+                            "position": "2",
+                            "value": "54.85"
+                        }, {
+                            "position": "3",
+                            "value": "1:27.96"
+                        }, {
+                            "position": "4",
+                            "value": "1:56.22"
+                        }]
+                    }],
+                    "country": {
+                        "identifier": "HUN",
+                        "name": "Hungary",
+                        "longName": "Hungary"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "competitor": {
+                            "identifier": "1121224",
+                            "firstName": "Laszlo",
+                            "lastName": "Cseh",
+                            "fullName": "Laszlo Cseh"
+                        }
+                    }
+                }, {
+                    "order": "4",
+                    "type": "Individual",
+                    "code": "1073153",
+                    "rank": "4",
+                    "value": "1:56.74",
+                    "property": {
+                        "type": "Result Type",
+                        "value": "Time"
+                    },
+                    "resultExtension": [{
+                        "type": "Reaction Time",
+                        "value": "0.65"
+                    }, {
+                        "type": "Split Times",
+                        "extension": [{
+                            "position": "1",
+                            "value": "25.20"
+                        }, {
+                            "position": "2",
+                            "value": "53.59"
+                        }, {
+                            "position": "3",
+                            "value": "1:27.29"
+                        }, {
+                            "position": "4",
+                            "value": "1:56.74"
+                        }]
+                    }],
+                    "country": {
+                        "identifier": "BRA",
+                        "name": "Brazil",
+                        "longName": "Brazil"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "competitor": {
+                            "identifier": "1073153",
+                            "firstName": "Thiago",
+                            "lastName": "Pereira",
+                            "fullName": "Thiago Pereira"
+                        }
+                    }
+                }, {
+                    "order": "5",
+                    "type": "Individual",
+                    "code": "1026921",
+                    "rank": "5",
+                    "value": "1:57.35",
+                    "property": {
+                        "type": "Result Type",
+                        "value": "Time"
+                    },
+                    "resultExtension": [{
+                        "type": "Reaction Time",
+                        "value": "0.70"
+                    }, {
+                        "type": "Split Times",
+                        "extension": [{
+                            "position": "1",
+                            "value": "25.83"
+                        }, {
+                            "position": "2",
+                            "value": "54.96"
+                        }, {
+                            "position": "3",
+                            "value": "1:29.28"
+                        }, {
+                            "position": "4",
+                            "value": "1:57.35"
+                        }]
+                    }],
+                    "country": {
+                        "identifier": "JPN",
+                        "name": "Japan",
+                        "longName": "Japan"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "competitor": {
+                            "identifier": "1026921",
+                            "firstName": "Kosuke",
+                            "lastName": "Hagino",
+                            "fullName": "Kosuke Hagino"
+                        }
+                    }
+                }, {
+                    "order": "6",
+                    "type": "Individual",
+                    "code": "1026920",
+                    "rank": "6",
+                    "value": "1:58.53",
+                    "property": {
+                        "type": "Result Type",
+                        "value": "Time"
+                    },
+                    "resultExtension": [{
+                        "type": "Reaction Time",
+                        "value": "0.59"
+                    }, {
+                        "type": "Split Times",
+                        "extension": [{
+                            "position": "1",
+                            "value": "25.49"
+                        }, {
+                            "position": "2",
+                            "value": "55.33"
+                        }, {
+                            "position": "3",
+                            "value": "1:29.80"
+                        }, {
+                            "position": "4",
+                            "value": "1:58.53"
+                        }]
+                    }],
+                    "country": {
+                        "identifier": "JPN",
+                        "name": "Japan",
+                        "longName": "Japan"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "competitor": {
+                            "identifier": "1026920",
+                            "firstName": "Ken",
+                            "lastName": "Takakuwa",
+                            "fullName": "Ken Takakuwa"
+                        }
+                    }
+                }, {
+                    "order": "7",
+                    "type": "Individual",
+                    "code": "1098542",
+                    "rank": "7",
+                    "value": "1:59.05",
+                    "property": {
+                        "type": "Result Type",
+                        "value": "Time"
+                    },
+                    "resultExtension": [{
+                        "type": "Reaction Time",
+                        "value": "0.67"
+                    }, {
+                        "type": "Split Times",
+                        "extension": [{
+                            "position": "1",
+                            "value": "25.16"
+                        }, {
+                            "position": "2",
+                            "value": "54.23"
+                        }, {
+                            "position": "3",
+                            "value": "1:29.03"
+                        }, {
+                            "position": "4",
+                            "value": "1:59.05"
+                        }]
+                    }],
+                    "country": {
+                        "identifier": "GBR",
+                        "name": "Great Britain",
+                        "longName": "Great Britain"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "competitor": {
+                            "identifier": "1098542",
+                            "firstName": "James",
+                            "lastName": "Goddard",
+                            "fullName": "James Goddard"
+                        }
+                    }
+                }, {
+                    "order": "8",
+                    "type": "Individual",
+                    "code": "1122245",
+                    "rank": "8",
+                    "value": "1:59.10",
+                    "property": {
+                        "type": "Result Type",
+                        "value": "Time"
+                    },
+                    "resultExtension": [{
+                        "type": "Reaction Time",
+                        "value": "0.71"
+                    }, {
+                        "type": "Split Times",
+                        "extension": [{
+                            "position": "1",
+                            "value": "25.03"
+                        }, {
+                            "position": "2",
+                            "value": "55.93"
+                        }, {
+                            "position": "3",
+                            "value": "1:29.55"
+                        }, {
+                            "position": "4",
+                            "value": "1:59.10"
+                        }]
+                    }],
+                    "country": {
+                        "identifier": "GER",
+                        "name": "Germany",
+                        "longName": "Germany"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "competitor": {
+                            "identifier": "1122245",
+                            "firstName": "Markus",
+                            "lastName": "Deibler",
+                            "fullName": "Markus Deibler"
+                        }
+                    }
+                }]
+            }
+        }
+    }
+}

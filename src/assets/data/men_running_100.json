@@ -1,0 +1,303 @@
+{
+    "olympics": {
+        "eventUnit": {
+            "identifier": "ATM001101",
+            "description": "Men's 100m Final",
+            "unitType": "Individuals",
+            "medalEvent": "Yes",
+            "disciplineDescription": {
+                "identifier": "athletics",
+                "value": "Athletics"
+            },
+            "phaseDescription": {
+                "identifier": "ATM0011",
+                "value": "Final"
+            },
+            "result": {
+                "type": "Official",
+                "timestamp": "2013-11-13T12:14:31Z",
+                "entrant": [{
+                    "order": "6",
+                    "type": "Individual",
+                    "code": "1020434",
+                    "rank": "1",
+                    "value": "9.63",
+                    "property": [{
+                        "type": "Medal Awarded",
+                        "value": "Gold"
+                    }, {
+                        "type": "Record Set",
+                        "value": "OR"
+                    }, {
+                        "type": "Result Type",
+                        "value": "Time"
+                    }],
+                    "resultExtension": [{
+                        "type": "Reaction Time",
+                        "value": "0.165"
+                    }, {
+                        "type": "Wind Speed",
+                        "value": "+1.5"
+                    }],
+                    "country": {
+                        "identifier": "JAM",
+                        "name": "Jamaica",
+                        "longName": "Jamaica"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "bib": "2170",
+                        "competitor": {
+                            "identifier": "1020434",
+                            "firstName": "Usain",
+                            "lastName": "Bolt",
+                            "fullName": "Usain Bolt"
+                        }
+                    }
+                }, {
+                    "order": "4",
+                    "type": "Individual",
+                    "code": "1020433",
+                    "rank": "2",
+                    "value": "9.75",
+                    "property": [{
+                        "type": "Medal Awarded",
+                        "value": "Silver"
+                    }, {
+                        "type": "Record Set",
+                        "value": "=PB"
+                    }, {
+                        "type": "Result Type",
+                        "value": "Time"
+                    }],
+                    "resultExtension": [{
+                        "type": "Reaction Time",
+                        "value": "0.179"
+                    }, {
+                        "type": "Wind Speed",
+                        "value": "+1.5"
+                    }],
+                    "country": {
+                        "identifier": "JAM",
+                        "name": "Jamaica",
+                        "longName": "Jamaica"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "bib": "2169",
+                        "competitor": {
+                            "identifier": "1020433",
+                            "firstName": "Yohan",
+                            "lastName": "Blake",
+                            "fullName": "Yohan Blake"
+                        }
+                    }
+                }, {
+                    "order": "5",
+                    "type": "Individual",
+                    "code": "1132934",
+                    "rank": "3",
+                    "value": "9.79",
+                    "property": [{
+                        "type": "Medal Awarded",
+                        "value": "Bronze"
+                    }, {
+                        "type": "Record Set",
+                        "value": "PB"
+                    }, {
+                        "type": "Result Type",
+                        "value": "Time"
+                    }],
+                    "resultExtension": [{
+                        "type": "Reaction Time",
+                        "value": "0.178"
+                    }, {
+                        "type": "Wind Speed",
+                        "value": "+1.5"
+                    }],
+                    "country": {
+                        "identifier": "USA",
+                        "name": "United States",
+                        "longName": "United States of America"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "bib": "3216",
+                        "competitor": {
+                            "identifier": "1132934",
+                            "firstName": "Justin",
+                            "lastName": "Gatlin",
+                            "fullName": "Justin Gatlin"
+                        }
+                    }
+                }, {
+                    "order": "3",
+                    "type": "Individual",
+                    "code": "1284191",
+                    "rank": "4",
+                    "value": "9.80",
+                    "property": [{
+                        "type": "Record Set",
+                        "value": "SB"
+                    }, {
+                        "type": "Result Type",
+                        "value": "Time"
+                    }],
+                    "resultExtension": [{
+                        "type": "Reaction Time",
+                        "value": "0.145"
+                    }, {
+                        "type": "Wind Speed",
+                        "value": "+1.5"
+                    }],
+                    "country": {
+                        "identifier": "USA",
+                        "name": "United States",
+                        "longName": "United States of America"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "bib": "3217",
+                        "competitor": {
+                            "identifier": "1284191",
+                            "firstName": "Tyson",
+                            "lastName": "Gay",
+                            "fullName": "Tyson Gay"
+                        }
+                    }
+                }, {
+                    "order": "7",
+                    "type": "Individual",
+                    "code": "1124747",
+                    "rank": "5",
+                    "value": "9.88",
+                    "property": [{
+                        "type": "Record Set",
+                        "value": "=PB"
+                    }, {
+                        "type": "Result Type",
+                        "value": "Time"
+                    }],
+                    "resultExtension": [{
+                        "type": "Reaction Time",
+                        "value": "0.176"
+                    }, {
+                        "type": "Wind Speed",
+                        "value": "+1.5"
+                    }],
+                    "country": {
+                        "identifier": "USA",
+                        "name": "United States",
+                        "longName": "United States of America"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "bib": "3205",
+                        "competitor": {
+                            "identifier": "1124747",
+                            "firstName": "Ryan",
+                            "lastName": "Bailey",
+                            "fullName": "Ryan Bailey"
+                        }
+                    }
+                }, {
+                    "order": "8",
+                    "type": "Individual",
+                    "code": "1117648",
+                    "rank": "6",
+                    "value": "9.94",
+                    "property": {
+                        "type": "Result Type",
+                        "value": "Time"
+                    },
+                    "resultExtension": [{
+                        "type": "Reaction Time",
+                        "value": "0.139"
+                    }, {
+                        "type": "Wind Speed",
+                        "value": "+1.5"
+                    }],
+                    "country": {
+                        "identifier": "NED",
+                        "name": "Netherlands",
+                        "longName": "Netherlands"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "bib": "2547",
+                        "competitor": {
+                            "identifier": "1117648",
+                            "firstName": "Churandy",
+                            "lastName": "Martina",
+                            "fullName": "Churandy Martina"
+                        }
+                    }
+                }, {
+                    "order": "1",
+                    "type": "Individual",
+                    "code": "1122873",
+                    "rank": "7",
+                    "value": "9.98",
+                    "property": {
+                        "type": "Result Type",
+                        "value": "Time"
+                    },
+                    "resultExtension": [{
+                        "type": "Reaction Time",
+                        "value": "0.160"
+                    }, {
+                        "type": "Wind Speed",
+                        "value": "+1.5"
+                    }],
+                    "country": {
+                        "identifier": "TTO",
+                        "name": "Trinidad & Tobago",
+                        "longName": "Trinidad and Tobago"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "bib": "3051",
+                        "competitor": {
+                            "identifier": "1122873",
+                            "firstName": "Richard",
+                            "lastName": "Thompson",
+                            "fullName": "Richard Thompson"
+                        }
+                    }
+                }, {
+                    "order": "2",
+                    "type": "Individual",
+                    "code": "1020543",
+                    "rank": "8",
+                    "value": "11.99",
+                    "property": {
+                        "type": "Result Type",
+                        "value": "Time"
+                    },
+                    "resultExtension": [{
+                        "type": "Reaction Time",
+                        "value": "0.155"
+                    }, {
+                        "type": "Wind Speed",
+                        "value": "+1.5"
+                    }],
+                    "country": {
+                        "identifier": "JAM",
+                        "name": "Jamaica",
+                        "longName": "Jamaica"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "bib": "2184",
+                        "competitor": {
+                            "identifier": "1020543",
+                            "firstName": "Asafa",
+                            "lastName": "Powell",
+                            "fullName": "Asafa Powell"
+                        }
+                    }
+                }]
+            }
+        }
+    }
+}

@@ -1,0 +1,97 @@
+.team-pursuit {
+	$ratio:(85.73+25.0*2)/50;
+	$width:1200px;
+
+	width:$width;
+	height:$width/$ratio;
+
+	position: relative;
+
+	svg {
+		width:$width*0.8;
+		height:$width/$ratio*0.8;
+		
+		.scaffolding {
+			line {
+				stroke:#fff;
+				stroke-width:1;
+				shape-rendering:crispEdges;
+			}	
+		}
+
+		.bg {
+			path {
+				stroke:#f2ecde;
+				stroke-width:1;
+				fill:none;
+				&.inner {
+					stroke:#b7d9f4;
+				}
+			}
+		}
+
+		.ghost-track {
+			path {
+				stroke:none;
+				stroke-width:1;
+				fill:none;
+			}
+			.ghost {
+				circle {
+					fill:#000;
+					&.gold {
+						fill:#ffd700;
+					}
+					&.silver {
+						fill:#c0c0c0;
+					}
+					&.bronze {
+						fill:#cd7f32;
+					}
+				}
+
+			}
+		}		
+
+		.teams {
+			.team {
+				path {
+					fill:none;
+					stroke-width:5;
+					stroke:#333;
+					&.gold {
+						stroke:#ffd700;
+					}
+					&.silver {
+						stroke:#c0c0c0;
+					}
+					&.bronze {
+						stroke:#cd7f32;
+					}
+				}
+			}
+		}
+	}
+	.overlay {
+		top:0;
+		left:0;
+		width:100%;
+		position: absolute;
+		.team-info {
+			position: absolute;
+
+			h3 {
+				@include fs-header(2);
+				span {
+					@include fs-headline(2);
+					margin-left:10px;
+					i {
+						margin-left:10px;
+						text-decoration: normal;
+						color:#bdbdbd;
+					}
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,2276 @@
+{
+    "olympics": {
+        "eventUnit": {
+            "identifier": "TRM001101",
+            "description": "Men's Final",
+            "unitType": "Individuals",
+            "medalEvent": "Yes",
+            "disciplineDescription": {
+                "identifier": "triathlon",
+                "value": "Triathlon"
+            },
+            "phaseDescription": {
+                "identifier": "TRM0011",
+                "value": "Finals"
+            },
+            "result": {
+                "type": "Official",
+                "timestamp": "2013-11-13T12:15:05Z",
+                "entrant": [{
+                    "order": "1",
+                    "type": "Individual",
+                    "code": "1075402",
+                    "rank": "1",
+                    "value": "1:46:25",
+                    "property": [{
+                        "type": "Medal Awarded",
+                        "value": "Gold"
+                    }, {
+                        "type": "Result Type",
+                        "value": "Time"
+                    }],
+                    "resultExtension": [{
+                        "type": "Swim",
+                        "value": "17:04"
+                    }, {
+                        "type": "Transfer 1",
+                        "value": "17:43"
+                    }, {
+                        "type": "Bike",
+                        "value": "1:16:51"
+                    }, {
+                        "type": "Transfer 2",
+                        "value": "1:17:18"
+                    }, {
+                        "type": "Run",
+                        "value": "1:46:25"
+                    }],
+                    "country": {
+                        "identifier": "GBR",
+                        "name": "Great Britain",
+                        "longName": "Great Britain"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "bib": "30",
+                        "competitor": {
+                            "identifier": "1075402",
+                            "firstName": "Alistair",
+                            "lastName": "Brownlee",
+                            "fullName": "Alistair Brownlee"
+                        }
+                    }
+                }, {
+                    "order": "2",
+                    "type": "Individual",
+                    "code": "1097831",
+                    "rank": "2",
+                    "value": "1:46:36",
+                    "property": [{
+                        "type": "Medal Awarded",
+                        "value": "Silver"
+                    }, {
+                        "type": "Result Type",
+                        "value": "Time"
+                    }],
+                    "resultExtension": [{
+                        "type": "Swim",
+                        "value": "17:00"
+                    }, {
+                        "type": "Transfer 1",
+                        "value": "17:36"
+                    }, {
+                        "type": "Bike",
+                        "value": "1:16:52"
+                    }, {
+                        "type": "Transfer 2",
+                        "value": "1:17:20"
+                    }, {
+                        "type": "Run",
+                        "value": "1:46:36"
+                    }],
+                    "country": {
+                        "identifier": "ESP",
+                        "name": "Spain",
+                        "longName": "Spain"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "bib": "51",
+                        "competitor": {
+                            "identifier": "1097831",
+                            "firstName": "Javier",
+                            "lastName": "Gomez",
+                            "fullName": "Javier Gomez"
+                        }
+                    }
+                }, {
+                    "order": "3",
+                    "type": "Individual",
+                    "code": "1075403",
+                    "rank": "3",
+                    "value": "1:46:56",
+                    "property": [{
+                        "type": "Medal Awarded",
+                        "value": "Bronze"
+                    }, {
+                        "type": "Result Type",
+                        "value": "Time"
+                    }],
+                    "resultExtension": [{
+                        "type": "Swim",
+                        "value": "17:02"
+                    }, {
+                        "type": "Transfer 1",
+                        "value": "17:40"
+                    }, {
+                        "type": "Bike",
+                        "value": "1:16:51"
+                    }, {
+                        "type": "Transfer 2",
+                        "value": "1:17:19"
+                    }, {
+                        "type": "Run",
+                        "value": "1:46:56"
+                    }],
+                    "country": {
+                        "identifier": "GBR",
+                        "name": "Great Britain",
+                        "longName": "Great Britain"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "bib": "31",
+                        "competitor": {
+                            "identifier": "1075403",
+                            "firstName": "Jonathan",
+                            "lastName": "Brownlee",
+                            "fullName": "Jonathan Brownlee"
+                        }
+                    }
+                }, {
+                    "order": "4",
+                    "type": "Individual",
+                    "code": "1051912",
+                    "rank": "4",
+                    "value": "1:47:14",
+                    "property": {
+                        "type": "Result Type",
+                        "value": "Time"
+                    },
+                    "resultExtension": [{
+                        "type": "Swim",
+                        "value": "17:24"
+                    }, {
+                        "type": "Transfer 1",
+                        "value": "18:02"
+                    }, {
+                        "type": "Bike",
+                        "value": "1:16:52"
+                    }, {
+                        "type": "Transfer 2",
+                        "value": "1:17:21"
+                    }, {
+                        "type": "Run",
+                        "value": "1:47:14"
+                    }],
+                    "country": {
+                        "identifier": "FRA",
+                        "name": "France",
+                        "longName": "France"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "bib": "11",
+                        "competitor": {
+                            "identifier": "1051912",
+                            "firstName": "David",
+                            "lastName": "Hauss",
+                            "fullName": "David Hauss"
+                        }
+                    }
+                }, {
+                    "order": "5",
+                    "type": "Individual",
+                    "code": "1051923",
+                    "rank": "5",
+                    "value": "1:47:21",
+                    "property": {
+                        "type": "Result Type",
+                        "value": "Time"
+                    },
+                    "resultExtension": [{
+                        "type": "Swim",
+                        "value": "17:27"
+                    }, {
+                        "type": "Transfer 1",
+                        "value": "18:10"
+                    }, {
+                        "type": "Bike",
+                        "value": "1:16:52"
+                    }, {
+                        "type": "Transfer 2",
+                        "value": "1:17:20"
+                    }, {
+                        "type": "Run",
+                        "value": "1:47:21"
+                    }],
+                    "country": {
+                        "identifier": "FRA",
+                        "name": "France",
+                        "longName": "France"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "bib": "14",
+                        "competitor": {
+                            "identifier": "1051923",
+                            "firstName": "Laurent",
+                            "lastName": "Vidal",
+                            "fullName": "Laurent Vidal"
+                        }
+                    }
+                }, {
+                    "order": "6",
+                    "type": "Individual",
+                    "code": "1089226",
+                    "rank": "6",
+                    "value": "1:47:26",
+                    "property": {
+                        "type": "Result Type",
+                        "value": "Time"
+                    },
+                    "resultExtension": [{
+                        "type": "Swim",
+                        "value": "17:20"
+                    }, {
+                        "type": "Transfer 1",
+                        "value": "18:06"
+                    }, {
+                        "type": "Bike",
+                        "value": "1:16:52"
+                    }, {
+                        "type": "Transfer 2",
+                        "value": "1:17:20"
+                    }, {
+                        "type": "Run",
+                        "value": "1:47:26"
+                    }],
+                    "country": {
+                        "identifier": "GER",
+                        "name": "Germany",
+                        "longName": "Germany"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "bib": "46",
+                        "competitor": {
+                            "identifier": "1089226",
+                            "firstName": "Jan",
+                            "lastName": "Frodeno",
+                            "fullName": "Jan Frodeno"
+                        }
+                    }
+                }, {
+                    "order": "7",
+                    "type": "Individual",
+                    "code": "1010542",
+                    "rank": "7",
+                    "value": "1:47:35",
+                    "property": {
+                        "type": "Result Type",
+                        "value": "Time"
+                    },
+                    "resultExtension": [{
+                        "type": "Swim",
+                        "value": "17:22"
+                    }, {
+                        "type": "Transfer 1",
+                        "value": "18:02"
+                    }, {
+                        "type": "Bike",
+                        "value": "1:16:53"
+                    }, {
+                        "type": "Transfer 2",
+                        "value": "1:17:25"
+                    }, {
+                        "type": "Run",
+                        "value": "1:47:35"
+                    }],
+                    "country": {
+                        "identifier": "RUS",
+                        "name": "Russian Fed.",
+                        "longName": "Russian Federation"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "bib": "25",
+                        "competitor": {
+                            "identifier": "1010542",
+                            "firstName": "Alexander",
+                            "lastName": "Bryukhankov",
+                            "fullName": "Alexander Bryukhankov"
+                        }
+                    }
+                }, {
+                    "order": "8",
+                    "type": "Individual",
+                    "code": "1126432",
+                    "rank": "8",
+                    "value": "1:47:46",
+                    "property": {
+                        "type": "Result Type",
+                        "value": "Time"
+                    },
+                    "resultExtension": [{
+                        "type": "Swim",
+                        "value": "17:22"
+                    }, {
+                        "type": "Transfer 1",
+                        "value": "18:01"
+                    }, {
+                        "type": "Bike",
+                        "value": "1:16:53"
+                    }, {
+                        "type": "Transfer 2",
+                        "value": "1:17:23"
+                    }, {
+                        "type": "Run",
+                        "value": "1:47:46"
+                    }],
+                    "country": {
+                        "identifier": "SUI",
+                        "name": "Switzerland",
+                        "longName": "Switzerland"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "bib": "21",
+                        "competitor": {
+                            "identifier": "1126432",
+                            "firstName": "Sven",
+                            "lastName": "Riederer",
+                            "fullName": "Sven Riederer"
+                        }
+                    }
+                }, {
+                    "order": "9",
+                    "type": "Individual",
+                    "code": "1075707",
+                    "rank": "9",
+                    "value": "1:47:51",
+                    "property": {
+                        "type": "Result Type",
+                        "value": "Time"
+                    },
+                    "resultExtension": [{
+                        "type": "Swim",
+                        "value": "17:22"
+                    }, {
+                        "type": "Transfer 1",
+                        "value": "17:58"
+                    }, {
+                        "type": "Bike",
+                        "value": "1:16:52"
+                    }, {
+                        "type": "Transfer 2",
+                        "value": "1:17:18"
+                    }, {
+                        "type": "Run",
+                        "value": "1:47:51"
+                    }],
+                    "country": {
+                        "identifier": "POR",
+                        "name": "Portugal",
+                        "longName": "Portugal"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "bib": "17",
+                        "competitor": {
+                            "identifier": "1075707",
+                            "firstName": "Joao",
+                            "lastName": "Silva",
+                            "fullName": "Joao Silva"
+                        }
+                    }
+                }, {
+                    "order": "10",
+                    "type": "Individual",
+                    "code": "1091867",
+                    "rank": "10",
+                    "value": "1:48:03",
+                    "property": {
+                        "type": "Result Type",
+                        "value": "Time"
+                    },
+                    "resultExtension": [{
+                        "type": "Swim",
+                        "value": "17:01"
+                    }, {
+                        "type": "Transfer 1",
+                        "value": "17:42"
+                    }, {
+                        "type": "Bike",
+                        "value": "1:16:52"
+                    }, {
+                        "type": "Transfer 2",
+                        "value": "1:17:20"
+                    }, {
+                        "type": "Run",
+                        "value": "1:48:03"
+                    }],
+                    "country": {
+                        "identifier": "ITA",
+                        "name": "Italy",
+                        "longName": "Italy"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "bib": "35",
+                        "competitor": {
+                            "identifier": "1091867",
+                            "firstName": "Alessandro",
+                            "lastName": "Fabian",
+                            "fullName": "Alessandro Fabian"
+                        }
+                    }
+                }, {
+                    "order": "11",
+                    "type": "Individual",
+                    "code": "1051917",
+                    "rank": "11",
+                    "value": "1:48:18",
+                    "property": {
+                        "type": "Result Type",
+                        "value": "Time"
+                    },
+                    "resultExtension": [{
+                        "type": "Swim",
+                        "value": "17:20"
+                    }, {
+                        "type": "Transfer 1",
+                        "value": "17:58"
+                    }, {
+                        "type": "Bike",
+                        "value": "1:16:51"
+                    }, {
+                        "type": "Transfer 2",
+                        "value": "1:17:18"
+                    }, {
+                        "type": "Run",
+                        "value": "1:48:18"
+                    }],
+                    "country": {
+                        "identifier": "FRA",
+                        "name": "France",
+                        "longName": "France"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "bib": "12",
+                        "competitor": {
+                            "identifier": "1051917",
+                            "firstName": "Vincent",
+                            "lastName": "Luis",
+                            "fullName": "Vincent Luis"
+                        }
+                    }
+                }, {
+                    "order": "12",
+                    "type": "Individual",
+                    "code": "1125012",
+                    "rank": "12",
+                    "value": "1:48:35",
+                    "property": {
+                        "type": "Result Type",
+                        "value": "Time"
+                    },
+                    "resultExtension": [{
+                        "type": "Swim",
+                        "value": "17:26"
+                    }, {
+                        "type": "Transfer 1",
+                        "value": "18:03"
+                    }, {
+                        "type": "Bike",
+                        "value": "1:16:54"
+                    }, {
+                        "type": "Transfer 2",
+                        "value": "1:17:23"
+                    }, {
+                        "type": "Run",
+                        "value": "1:48:35"
+                    }],
+                    "country": {
+                        "identifier": "NZL",
+                        "name": "New Zealand",
+                        "longName": "New Zealand"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "bib": "54",
+                        "competitor": {
+                            "identifier": "1125012",
+                            "firstName": "Bevan",
+                            "lastName": "Docherty",
+                            "fullName": "Bevan Docherty"
+                        }
+                    }
+                }, {
+                    "order": "13",
+                    "type": "Individual",
+                    "code": "1010543",
+                    "rank": "13",
+                    "value": "1:48:43",
+                    "property": {
+                        "type": "Result Type",
+                        "value": "Time"
+                    },
+                    "resultExtension": [{
+                        "type": "Swim",
+                        "value": "17:03"
+                    }, {
+                        "type": "Transfer 1",
+                        "value": "17:49"
+                    }, {
+                        "type": "Bike",
+                        "value": "1:16:53"
+                    }, {
+                        "type": "Transfer 2",
+                        "value": "1:17:21"
+                    }, {
+                        "type": "Run",
+                        "value": "1:48:43"
+                    }],
+                    "country": {
+                        "identifier": "RUS",
+                        "name": "Russian Fed.",
+                        "longName": "Russian Federation"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "bib": "27",
+                        "competitor": {
+                            "identifier": "1010543",
+                            "firstName": "Ivan",
+                            "lastName": "Vasiliev",
+                            "fullName": "Ivan Vasiliev"
+                        }
+                    }
+                }, {
+                    "order": "14",
+                    "type": "Individual",
+                    "code": "1135600",
+                    "rank": "14",
+                    "value": "1:48:46",
+                    "property": {
+                        "type": "Result Type",
+                        "value": "Time"
+                    },
+                    "resultExtension": [{
+                        "type": "Swim",
+                        "value": "17:25"
+                    }, {
+                        "type": "Transfer 1",
+                        "value": "18:09"
+                    }, {
+                        "type": "Bike",
+                        "value": "1:16:53"
+                    }, {
+                        "type": "Transfer 2",
+                        "value": "1:17:26"
+                    }, {
+                        "type": "Run",
+                        "value": "1:48:46"
+                    }],
+                    "country": {
+                        "identifier": "USA",
+                        "name": "United States",
+                        "longName": "United States of America"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "bib": "43",
+                        "competitor": {
+                            "identifier": "1135600",
+                            "firstName": "Hunter",
+                            "lastName": "Kemper",
+                            "fullName": "Hunter Kemper"
+                        }
+                    }
+                }, {
+                    "order": "15",
+                    "type": "Individual",
+                    "code": "1125016",
+                    "rank": "15",
+                    "value": "1:48:52",
+                    "property": {
+                        "type": "Result Type",
+                        "value": "Time"
+                    },
+                    "resultExtension": [{
+                        "type": "Swim",
+                        "value": "17:26"
+                    }, {
+                        "type": "Transfer 1",
+                        "value": "18:03"
+                    }, {
+                        "type": "Bike",
+                        "value": "1:16:51"
+                    }, {
+                        "type": "Transfer 2",
+                        "value": "1:17:21"
+                    }, {
+                        "type": "Run",
+                        "value": "1:48:52"
+                    }],
+                    "country": {
+                        "identifier": "NZL",
+                        "name": "New Zealand",
+                        "longName": "New Zealand"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "bib": "55",
+                        "competitor": {
+                            "identifier": "1125016",
+                            "firstName": "Kris",
+                            "lastName": "Gemmell",
+                            "fullName": "Kris Gemmell"
+                        }
+                    }
+                }, {
+                    "order": "16",
+                    "type": "Individual",
+                    "code": "1089216",
+                    "rank": "16",
+                    "value": "1:49:12",
+                    "property": {
+                        "type": "Result Type",
+                        "value": "Time"
+                    },
+                    "resultExtension": [{
+                        "type": "Swim",
+                        "value": "18:07"
+                    }, {
+                        "type": "Transfer 1",
+                        "value": "18:49"
+                    }, {
+                        "type": "Bike",
+                        "value": "1:18:25"
+                    }, {
+                        "type": "Transfer 2",
+                        "value": "1:18:56"
+                    }, {
+                        "type": "Run",
+                        "value": "1:49:12"
+                    }],
+                    "country": {
+                        "identifier": "GER",
+                        "name": "Germany",
+                        "longName": "Germany"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "bib": "47",
+                        "competitor": {
+                            "identifier": "1089216",
+                            "firstName": "Steffen",
+                            "lastName": "Justus",
+                            "fullName": "Steffen Justus"
+                        }
+                    }
+                }, {
+                    "order": "17",
+                    "type": "Individual",
+                    "code": "1096604",
+                    "rank": "17",
+                    "value": "1:49:15",
+                    "property": {
+                        "type": "Result Type",
+                        "value": "Time"
+                    },
+                    "resultExtension": [{
+                        "type": "Swim",
+                        "value": "18:11"
+                    }, {
+                        "type": "Transfer 1",
+                        "value": "18:46"
+                    }, {
+                        "type": "Bike",
+                        "value": "1:18:24"
+                    }, {
+                        "type": "Transfer 2",
+                        "value": "1:18:50"
+                    }, {
+                        "type": "Run",
+                        "value": "1:49:15"
+                    }],
+                    "country": {
+                        "identifier": "RSA",
+                        "name": "South Africa",
+                        "longName": "South Africa"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "bib": "19",
+                        "competitor": {
+                            "identifier": "1096604",
+                            "firstName": "Richard",
+                            "lastName": "Murray",
+                            "fullName": "Richard Murray"
+                        }
+                    }
+                }, {
+                    "order": "18",
+                    "type": "Individual",
+                    "code": "1095003",
+                    "rank": "18",
+                    "value": "1:49:19",
+                    "property": {
+                        "type": "Result Type",
+                        "value": "Time"
+                    },
+                    "resultExtension": [{
+                        "type": "Swim",
+                        "value": "17:26"
+                    }, {
+                        "type": "Transfer 1",
+                        "value": "18:05"
+                    }, {
+                        "type": "Bike",
+                        "value": "1:16:53"
+                    }, {
+                        "type": "Transfer 2",
+                        "value": "1:17:21"
+                    }, {
+                        "type": "Run",
+                        "value": "1:49:19"
+                    }],
+                    "country": {
+                        "identifier": "AUS",
+                        "name": "Australia",
+                        "longName": "Australia"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "bib": "39",
+                        "competitor": {
+                            "identifier": "1095003",
+                            "firstName": "Courtney",
+                            "lastName": "Atkinson",
+                            "fullName": "Courtney Atkinson"
+                        }
+                    }
+                }, {
+                    "order": "19",
+                    "type": "Individual",
+                    "code": "1097832",
+                    "rank": "19",
+                    "value": "1:49:23",
+                    "property": {
+                        "type": "Result Type",
+                        "value": "Time"
+                    },
+                    "resultExtension": [{
+                        "type": "Swim",
+                        "value": "18:09"
+                    }, {
+                        "type": "Transfer 1",
+                        "value": "18:47"
+                    }, {
+                        "type": "Bike",
+                        "value": "1:18:27"
+                    }, {
+                        "type": "Transfer 2",
+                        "value": "1:18:56"
+                    }, {
+                        "type": "Run",
+                        "value": "1:49:23"
+                    }],
+                    "country": {
+                        "identifier": "ESP",
+                        "name": "Spain",
+                        "longName": "Spain"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "bib": "52",
+                        "competitor": {
+                            "identifier": "1097832",
+                            "firstName": "Mario",
+                            "lastName": "Mola",
+                            "fullName": "Mario Mola"
+                        }
+                    }
+                }, {
+                    "order": "20",
+                    "type": "Individual",
+                    "code": "1015270",
+                    "rank": "20",
+                    "value": "1:49:24",
+                    "property": {
+                        "type": "Result Type",
+                        "value": "Time"
+                    },
+                    "resultExtension": [{
+                        "type": "Swim",
+                        "value": "17:24"
+                    }, {
+                        "type": "Transfer 1",
+                        "value": "18:08"
+                    }, {
+                        "type": "Bike",
+                        "value": "1:16:53"
+                    }, {
+                        "type": "Transfer 2",
+                        "value": "1:17:27"
+                    }, {
+                        "type": "Run",
+                        "value": "1:49:24"
+                    }],
+                    "country": {
+                        "identifier": "JPN",
+                        "name": "Japan",
+                        "longName": "Japan"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "bib": "38",
+                        "competitor": {
+                            "identifier": "1015270",
+                            "firstName": "Hirokatsu",
+                            "lastName": "Tayama",
+                            "fullName": "Hirokatsu Tayama"
+                        }
+                    }
+                }, {
+                    "order": "21",
+                    "type": "Individual",
+                    "code": "1010546",
+                    "rank": "21",
+                    "value": "1:49:24",
+                    "property": {
+                        "type": "Result Type",
+                        "value": "Time"
+                    },
+                    "resultExtension": [{
+                        "type": "Swim",
+                        "value": "17:14"
+                    }, {
+                        "type": "Transfer 1",
+                        "value": "17:52"
+                    }, {
+                        "type": "Bike",
+                        "value": "1:18:27"
+                    }, {
+                        "type": "Transfer 2",
+                        "value": "1:18:56"
+                    }, {
+                        "type": "Run",
+                        "value": "1:49:24"
+                    }],
+                    "country": {
+                        "identifier": "RUS",
+                        "name": "Russian Fed.",
+                        "longName": "Russian Federation"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "bib": "26",
+                        "competitor": {
+                            "identifier": "1010546",
+                            "firstName": "Dmitry",
+                            "lastName": "Polyanskiy",
+                            "fullName": "Dmitry Polyanskiy"
+                        }
+                    }
+                }, {
+                    "order": "22",
+                    "type": "Individual",
+                    "code": "1248348",
+                    "rank": "22",
+                    "value": "1:49:25",
+                    "property": {
+                        "type": "Result Type",
+                        "value": "Time"
+                    },
+                    "resultExtension": [{
+                        "type": "Swim",
+                        "value": "16:56"
+                    }, {
+                        "type": "Transfer 1",
+                        "value": "17:37"
+                    }, {
+                        "type": "Bike",
+                        "value": "1:16:52"
+                    }, {
+                        "type": "Transfer 2",
+                        "value": "1:17:22"
+                    }, {
+                        "type": "Run",
+                        "value": "1:49:25"
+                    }],
+                    "country": {
+                        "identifier": "SVK",
+                        "name": "Slovakia",
+                        "longName": "Slovakia"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "bib": "18",
+                        "competitor": {
+                            "identifier": "1248348",
+                            "firstName": "Richard",
+                            "lastName": "Varga",
+                            "fullName": "Richard Varga"
+                        }
+                    }
+                }, {
+                    "order": "23",
+                    "type": "Individual",
+                    "code": "1050879",
+                    "rank": "23",
+                    "value": "1:49:47",
+                    "property": {
+                        "type": "Result Type",
+                        "value": "Time"
+                    },
+                    "resultExtension": [{
+                        "type": "Swim",
+                        "value": "17:24"
+                    }, {
+                        "type": "Transfer 1",
+                        "value": "18:01"
+                    }, {
+                        "type": "Bike",
+                        "value": "1:16:51"
+                    }, {
+                        "type": "Transfer 2",
+                        "value": "1:17:21"
+                    }, {
+                        "type": "Run",
+                        "value": "1:49:47"
+                    }],
+                    "country": {
+                        "identifier": "IRL",
+                        "name": "Ireland",
+                        "longName": "Ireland"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "bib": "7",
+                        "competitor": {
+                            "identifier": "1050879",
+                            "firstName": "Gavin",
+                            "lastName": "Noble",
+                            "fullName": "Gavin Noble"
+                        }
+                    }
+                }, {
+                    "order": "24",
+                    "type": "Individual",
+                    "code": "1097834",
+                    "rank": "24",
+                    "value": "1:49:53",
+                    "property": {
+                        "type": "Result Type",
+                        "value": "Time"
+                    },
+                    "resultExtension": [{
+                        "type": "Swim",
+                        "value": "18:07"
+                    }, {
+                        "type": "Transfer 1",
+                        "value": "18:47"
+                    }, {
+                        "type": "Bike",
+                        "value": "1:18:27"
+                    }, {
+                        "type": "Transfer 2",
+                        "value": "1:18:56"
+                    }, {
+                        "type": "Run",
+                        "value": "1:49:53"
+                    }],
+                    "country": {
+                        "identifier": "ESP",
+                        "name": "Spain",
+                        "longName": "Spain"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "bib": "53",
+                        "competitor": {
+                            "identifier": "1097834",
+                            "firstName": "Jose Miguel",
+                            "lastName": "Perez",
+                            "fullName": "Jose Miguel Perez"
+                        }
+                    }
+                }, {
+                    "order": "25",
+                    "type": "Individual",
+                    "code": "1076810",
+                    "rank": "25",
+                    "value": "1:49:58",
+                    "property": {
+                        "type": "Result Type",
+                        "value": "Time"
+                    },
+                    "resultExtension": [{
+                        "type": "Swim",
+                        "value": "18:31"
+                    }, {
+                        "type": "Transfer 1",
+                        "value": "19:09"
+                    }, {
+                        "type": "Bike",
+                        "value": "1:18:26"
+                    }, {
+                        "type": "Transfer 2",
+                        "value": "1:18:55"
+                    }, {
+                        "type": "Run",
+                        "value": "1:49:58"
+                    }],
+                    "country": {
+                        "identifier": "CAN",
+                        "name": "Canada",
+                        "longName": "Canada"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "bib": "3",
+                        "competitor": {
+                            "identifier": "1076810",
+                            "firstName": "Kyle",
+                            "lastName": "Jones",
+                            "fullName": "Kyle Jones"
+                        }
+                    }
+                }, {
+                    "order": "26",
+                    "type": "Individual",
+                    "code": "1129210",
+                    "rank": "26",
+                    "value": "1:50:00",
+                    "property": {
+                        "type": "Result Type",
+                        "value": "Time"
+                    },
+                    "resultExtension": [{
+                        "type": "Swim",
+                        "value": "17:58"
+                    }, {
+                        "type": "Transfer 1",
+                        "value": "18:40"
+                    }, {
+                        "type": "Bike",
+                        "value": "1:18:25"
+                    }, {
+                        "type": "Transfer 2",
+                        "value": "1:18:50"
+                    }, {
+                        "type": "Run",
+                        "value": "1:50:00"
+                    }],
+                    "country": {
+                        "identifier": "BEL",
+                        "name": "Belgium",
+                        "longName": "Belgium"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "bib": "28",
+                        "competitor": {
+                            "identifier": "1129210",
+                            "firstName": "Simon",
+                            "lastName": "de Cuyper",
+                            "fullName": "Simon de Cuyper"
+                        }
+                    }
+                }, {
+                    "order": "27",
+                    "type": "Individual",
+                    "code": "1076841",
+                    "rank": "27",
+                    "value": "1:50:03",
+                    "property": {
+                        "type": "Result Type",
+                        "value": "Time"
+                    },
+                    "resultExtension": [{
+                        "type": "Swim",
+                        "value": "18:04"
+                    }, {
+                        "type": "Transfer 1",
+                        "value": "18:44"
+                    }, {
+                        "type": "Bike",
+                        "value": "1:18:24"
+                    }, {
+                        "type": "Transfer 2",
+                        "value": "1:18:54"
+                    }, {
+                        "type": "Run",
+                        "value": "1:50:03"
+                    }],
+                    "country": {
+                        "identifier": "CAN",
+                        "name": "Canada",
+                        "longName": "Canada"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "bib": "4",
+                        "competitor": {
+                            "identifier": "1076841",
+                            "firstName": "Brent",
+                            "lastName": "McMahon",
+                            "fullName": "Brent McMahon"
+                        }
+                    }
+                }, {
+                    "order": "28",
+                    "type": "Individual",
+                    "code": "1074138",
+                    "rank": "28",
+                    "value": "1:50:08",
+                    "property": {
+                        "type": "Result Type",
+                        "value": "Time"
+                    },
+                    "resultExtension": [{
+                        "type": "Swim",
+                        "value": "18:10"
+                    }, {
+                        "type": "Transfer 1",
+                        "value": "18:48"
+                    }, {
+                        "type": "Bike",
+                        "value": "1:18:24"
+                    }, {
+                        "type": "Transfer 2",
+                        "value": "1:18:57"
+                    }, {
+                        "type": "Run",
+                        "value": "1:50:08"
+                    }],
+                    "country": {
+                        "identifier": "MEX",
+                        "name": "Mexico",
+                        "longName": "Mexico"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "bib": "50",
+                        "competitor": {
+                            "identifier": "1074138",
+                            "firstName": "Crisanto",
+                            "lastName": "Grajales",
+                            "fullName": "Crisanto Grajales"
+                        }
+                    }
+                }, {
+                    "order": "29",
+                    "type": "Individual",
+                    "code": "1091821",
+                    "rank": "29",
+                    "value": "1:50:09",
+                    "property": {
+                        "type": "Result Type",
+                        "value": "Time"
+                    },
+                    "resultExtension": [{
+                        "type": "Swim",
+                        "value": "18:26"
+                    }, {
+                        "type": "Transfer 1",
+                        "value": "19:10"
+                    }, {
+                        "type": "Bike",
+                        "value": "1:18:26"
+                    }, {
+                        "type": "Transfer 2",
+                        "value": "1:18:56"
+                    }, {
+                        "type": "Run",
+                        "value": "1:50:09"
+                    }],
+                    "country": {
+                        "identifier": "ITA",
+                        "name": "Italy",
+                        "longName": "Italy"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "bib": "36",
+                        "competitor": {
+                            "identifier": "1091821",
+                            "firstName": "Davide",
+                            "lastName": "Uccellari",
+                            "fullName": "Davide Uccellari"
+                        }
+                    }
+                }, {
+                    "order": "30",
+                    "type": "Individual",
+                    "code": "1109502",
+                    "rank": "30",
+                    "value": "1:50:17",
+                    "property": {
+                        "type": "Result Type",
+                        "value": "Time"
+                    },
+                    "resultExtension": [{
+                        "type": "Swim",
+                        "value": "17:25"
+                    }, {
+                        "type": "Transfer 1",
+                        "value": "18:05"
+                    }, {
+                        "type": "Bike",
+                        "value": "1:16:54"
+                    }, {
+                        "type": "Transfer 2",
+                        "value": "1:17:23"
+                    }, {
+                        "type": "Run",
+                        "value": "1:50:17"
+                    }],
+                    "country": {
+                        "identifier": "CZE",
+                        "name": "Czech Republic",
+                        "longName": "Czech Republic"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "bib": "44",
+                        "competitor": {
+                            "identifier": "1109502",
+                            "firstName": "Jan",
+                            "lastName": "Celustka",
+                            "fullName": "Jan Celustka"
+                        }
+                    }
+                }, {
+                    "order": "31",
+                    "type": "Individual",
+                    "code": "1089214",
+                    "rank": "31",
+                    "value": "1:50:23",
+                    "property": {
+                        "type": "Result Type",
+                        "value": "Time"
+                    },
+                    "resultExtension": [{
+                        "type": "Swim",
+                        "value": "17:23"
+                    }, {
+                        "type": "Transfer 1",
+                        "value": "18:05"
+                    }, {
+                        "type": "Bike",
+                        "value": "1:16:52"
+                    }, {
+                        "type": "Transfer 2",
+                        "value": "1:17:23"
+                    }, {
+                        "type": "Run",
+                        "value": "1:50:23"
+                    }],
+                    "country": {
+                        "identifier": "GER",
+                        "name": "Germany",
+                        "longName": "Germany"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "bib": "48",
+                        "competitor": {
+                            "identifier": "1089214",
+                            "firstName": "Maik",
+                            "lastName": "Petzold",
+                            "fullName": "Maik Petzold"
+                        }
+                    }
+                }, {
+                    "order": "32",
+                    "type": "Individual",
+                    "code": "1095008",
+                    "rank": "32",
+                    "value": "1:50:23",
+                    "property": {
+                        "type": "Result Type",
+                        "value": "Time"
+                    },
+                    "resultExtension": [{
+                        "type": "Swim",
+                        "value": "18:06"
+                    }, {
+                        "type": "Transfer 1",
+                        "value": "18:45"
+                    }, {
+                        "type": "Bike",
+                        "value": "1:18:25"
+                    }, {
+                        "type": "Transfer 2",
+                        "value": "1:18:54"
+                    }, {
+                        "type": "Run",
+                        "value": "1:50:23"
+                    }],
+                    "country": {
+                        "identifier": "AUS",
+                        "name": "Australia",
+                        "longName": "Australia"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "bib": "40",
+                        "competitor": {
+                            "identifier": "1095008",
+                            "firstName": "Brad",
+                            "lastName": "Kahlefeldt",
+                            "fullName": "Brad Kahlefeldt"
+                        }
+                    }
+                }, {
+                    "order": "33",
+                    "type": "Individual",
+                    "code": "1125021",
+                    "rank": "33",
+                    "value": "1:50:27",
+                    "property": {
+                        "type": "Result Type",
+                        "value": "Time"
+                    },
+                    "resultExtension": [{
+                        "type": "Swim",
+                        "value": "18:05"
+                    }, {
+                        "type": "Transfer 1",
+                        "value": "18:42"
+                    }, {
+                        "type": "Bike",
+                        "value": "1:18:27"
+                    }, {
+                        "type": "Transfer 2",
+                        "value": "1:18:56"
+                    }, {
+                        "type": "Run",
+                        "value": "1:50:27"
+                    }],
+                    "country": {
+                        "identifier": "NZL",
+                        "name": "New Zealand",
+                        "longName": "New Zealand"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "bib": "56",
+                        "competitor": {
+                            "identifier": "1125021",
+                            "firstName": "Ryan",
+                            "lastName": "Sissons",
+                            "fullName": "Ryan Sissons"
+                        }
+                    }
+                }, {
+                    "order": "34",
+                    "type": "Individual",
+                    "code": "1096818",
+                    "rank": "34",
+                    "value": "1:50:32",
+                    "property": {
+                        "type": "Result Type",
+                        "value": "Time"
+                    },
+                    "resultExtension": [{
+                        "type": "Swim",
+                        "value": "18:58"
+                    }, {
+                        "type": "Transfer 1",
+                        "value": "19:36"
+                    }, {
+                        "type": "Bike",
+                        "value": "1:18:08"
+                    }, {
+                        "type": "Transfer 2",
+                        "value": "1:18:40"
+                    }, {
+                        "type": "Run",
+                        "value": "1:50:32"
+                    }],
+                    "country": {
+                        "identifier": "BER",
+                        "name": "Bermuda",
+                        "longName": "Bermuda"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "bib": "6",
+                        "competitor": {
+                            "identifier": "1096818",
+                            "firstName": "Tyler",
+                            "lastName": "Butterfield",
+                            "fullName": "Tyler Butterfield"
+                        }
+                    }
+                }, {
+                    "order": "35",
+                    "type": "Individual",
+                    "code": "1095011",
+                    "rank": "35",
+                    "value": "1:50:36",
+                    "property": {
+                        "type": "Result Type",
+                        "value": "Time"
+                    },
+                    "resultExtension": [{
+                        "type": "Swim",
+                        "value": "18:53"
+                    }, {
+                        "type": "Transfer 1",
+                        "value": "19:35"
+                    }, {
+                        "type": "Bike",
+                        "value": "1:18:26"
+                    }, {
+                        "type": "Transfer 2",
+                        "value": "1:18:55"
+                    }, {
+                        "type": "Run",
+                        "value": "1:50:36"
+                    }],
+                    "country": {
+                        "identifier": "AUS",
+                        "name": "Australia",
+                        "longName": "Australia"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "bib": "41",
+                        "competitor": {
+                            "identifier": "1095011",
+                            "firstName": "Brendan",
+                            "lastName": "Sexton",
+                            "fullName": "Brendan Sexton"
+                        }
+                    }
+                }, {
+                    "order": "36",
+                    "type": "Individual",
+                    "code": "1073339",
+                    "rank": "36",
+                    "value": "1:50:59",
+                    "property": {
+                        "type": "Result Type",
+                        "value": "Time"
+                    },
+                    "resultExtension": [{
+                        "type": "Swim",
+                        "value": "18:56"
+                    }, {
+                        "type": "Transfer 1",
+                        "value": "19:37"
+                    }, {
+                        "type": "Bike",
+                        "value": "1:18:24"
+                    }, {
+                        "type": "Transfer 2",
+                        "value": "1:18:52"
+                    }, {
+                        "type": "Run",
+                        "value": "1:50:59"
+                    }],
+                    "country": {
+                        "identifier": "BRA",
+                        "name": "Brazil",
+                        "longName": "Brazil"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "bib": "33",
+                        "competitor": {
+                            "identifier": "1073339",
+                            "firstName": "Reinaldo",
+                            "lastName": "Colucci",
+                            "fullName": "Reinaldo Colucci"
+                        }
+                    }
+                }, {
+                    "order": "37",
+                    "type": "Individual",
+                    "code": "1075410",
+                    "rank": "37",
+                    "value": "1:51:04",
+                    "property": {
+                        "type": "Result Type",
+                        "value": "Time"
+                    },
+                    "resultExtension": [{
+                        "type": "Swim",
+                        "value": "17:17"
+                    }, {
+                        "type": "Transfer 1",
+                        "value": "17:56"
+                    }, {
+                        "type": "Bike",
+                        "value": "1:17:00"
+                    }, {
+                        "type": "Transfer 2",
+                        "value": "1:17:35"
+                    }, {
+                        "type": "Run",
+                        "value": "1:51:04"
+                    }],
+                    "country": {
+                        "identifier": "GBR",
+                        "name": "Great Britain",
+                        "longName": "Great Britain"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "bib": "32",
+                        "competitor": {
+                            "identifier": "1075410",
+                            "firstName": "Stuart",
+                            "lastName": "Hayes",
+                            "fullName": "Stuart Hayes"
+                        }
+                    }
+                }, {
+                    "order": "38",
+                    "type": "Individual",
+                    "code": "1081245",
+                    "rank": "38",
+                    "value": "1:51:07",
+                    "property": {
+                        "type": "Result Type",
+                        "value": "Time"
+                    },
+                    "resultExtension": [{
+                        "type": "Swim",
+                        "value": "18:59"
+                    }, {
+                        "type": "Transfer 1",
+                        "value": "19:37"
+                    }, {
+                        "type": "Bike",
+                        "value": "1:18:25"
+                    }, {
+                        "type": "Transfer 2",
+                        "value": "1:18:56"
+                    }, {
+                        "type": "Run",
+                        "value": "1:51:07"
+                    }],
+                    "country": {
+                        "identifier": "ARG",
+                        "name": "Argentina",
+                        "longName": "Argentina"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "bib": "49",
+                        "competitor": {
+                            "identifier": "1081245",
+                            "firstName": "Gonzalo",
+                            "lastName": "Tellechea",
+                            "fullName": "Gonzalo Tellechea"
+                        }
+                    }
+                }, {
+                    "order": "39",
+                    "type": "Individual",
+                    "code": "1126437",
+                    "rank": "39",
+                    "value": "1:51:10",
+                    "property": {
+                        "type": "Result Type",
+                        "value": "Time"
+                    },
+                    "resultExtension": [{
+                        "type": "Swim",
+                        "value": "18:28"
+                    }, {
+                        "type": "Transfer 1",
+                        "value": "19:10"
+                    }, {
+                        "type": "Bike",
+                        "value": "1:18:27"
+                    }, {
+                        "type": "Transfer 2",
+                        "value": "1:18:55"
+                    }, {
+                        "type": "Run",
+                        "value": "1:51:10"
+                    }],
+                    "country": {
+                        "identifier": "SUI",
+                        "name": "Switzerland",
+                        "longName": "Switzerland"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "bib": "22",
+                        "competitor": {
+                            "identifier": "1126437",
+                            "firstName": "Ruedi",
+                            "lastName": "Wild",
+                            "fullName": "Ruedi Wild"
+                        }
+                    }
+                }, {
+                    "order": "40",
+                    "type": "Individual",
+                    "code": "1123121",
+                    "rank": "40",
+                    "value": "1:51:14",
+                    "property": {
+                        "type": "Result Type",
+                        "value": "Time"
+                    },
+                    "resultExtension": [{
+                        "type": "Swim",
+                        "value": "18:57"
+                    }, {
+                        "type": "Transfer 1",
+                        "value": "19:40"
+                    }, {
+                        "type": "Bike",
+                        "value": "1:18:25"
+                    }, {
+                        "type": "Transfer 2",
+                        "value": "1:18:53"
+                    }, {
+                        "type": "Run",
+                        "value": "1:51:14"
+                    }],
+                    "country": {
+                        "identifier": "AUT",
+                        "name": "Austria",
+                        "longName": "Austria"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "bib": "20",
+                        "competitor": {
+                            "identifier": "1123121",
+                            "firstName": "Andreas",
+                            "lastName": "Giglmayr",
+                            "fullName": "Andreas Giglmayr"
+                        }
+                    }
+                }, {
+                    "order": "41",
+                    "type": "Individual",
+                    "code": "1075712",
+                    "rank": "41",
+                    "value": "1:51:22",
+                    "property": {
+                        "type": "Result Type",
+                        "value": "Time"
+                    },
+                    "resultExtension": [{
+                        "type": "Swim",
+                        "value": "18:57"
+                    }, {
+                        "type": "Transfer 1",
+                        "value": "19:39"
+                    }, {
+                        "type": "Bike",
+                        "value": "1:18:23"
+                    }, {
+                        "type": "Transfer 2",
+                        "value": "1:18:52"
+                    }, {
+                        "type": "Run",
+                        "value": "1:51:22"
+                    }],
+                    "country": {
+                        "identifier": "POR",
+                        "name": "Portugal",
+                        "longName": "Portugal"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "bib": "16",
+                        "competitor": {
+                            "identifier": "1075712",
+                            "firstName": "Bruno",
+                            "lastName": "Pais",
+                            "fullName": "Bruno Pais"
+                        }
+                    }
+                }, {
+                    "order": "42",
+                    "type": "Individual",
+                    "code": "1055543",
+                    "rank": "42",
+                    "value": "1:51:32",
+                    "property": {
+                        "type": "Result Type",
+                        "value": "Time"
+                    },
+                    "resultExtension": [{
+                        "type": "Swim",
+                        "value": "18:08"
+                    }, {
+                        "type": "Transfer 1",
+                        "value": "18:50"
+                    }, {
+                        "type": "Bike",
+                        "value": "1:18:25"
+                    }, {
+                        "type": "Transfer 2",
+                        "value": "1:18:54"
+                    }, {
+                        "type": "Run",
+                        "value": "1:51:32"
+                    }],
+                    "country": {
+                        "identifier": "UKR",
+                        "name": "Ukraine",
+                        "longName": "Ukraine"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "bib": "23",
+                        "competitor": {
+                            "identifier": "1055543",
+                            "firstName": "Danylo",
+                            "lastName": "Sapunov",
+                            "fullName": "Danylo Sapunov"
+                        }
+                    }
+                }, {
+                    "order": "43",
+                    "type": "Individual",
+                    "code": "1015268",
+                    "rank": "43",
+                    "value": "1:51:40",
+                    "property": {
+                        "type": "Result Type",
+                        "value": "Time"
+                    },
+                    "resultExtension": [{
+                        "type": "Swim",
+                        "value": "18:06"
+                    }, {
+                        "type": "Transfer 1",
+                        "value": "18:49"
+                    }, {
+                        "type": "Bike",
+                        "value": "1:18:26"
+                    }, {
+                        "type": "Transfer 2",
+                        "value": "1:18:57"
+                    }, {
+                        "type": "Run",
+                        "value": "1:51:40"
+                    }],
+                    "country": {
+                        "identifier": "JPN",
+                        "name": "Japan",
+                        "longName": "Japan"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "bib": "37",
+                        "competitor": {
+                            "identifier": "1015268",
+                            "firstName": "Yuichi",
+                            "lastName": "Hosoda",
+                            "fullName": "Yuichi Hosoda"
+                        }
+                    }
+                }, {
+                    "order": "44",
+                    "type": "Individual",
+                    "code": "1073337",
+                    "rank": "44",
+                    "value": "1:51:51",
+                    "property": {
+                        "type": "Result Type",
+                        "value": "Time"
+                    },
+                    "resultExtension": [{
+                        "type": "Swim",
+                        "value": "18:10"
+                    }, {
+                        "type": "Transfer 1",
+                        "value": "18:51"
+                    }, {
+                        "type": "Bike",
+                        "value": "1:18:27"
+                    }, {
+                        "type": "Transfer 2",
+                        "value": "1:18:58"
+                    }, {
+                        "type": "Run",
+                        "value": "1:51:51"
+                    }],
+                    "country": {
+                        "identifier": "BRA",
+                        "name": "Brazil",
+                        "longName": "Brazil"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "bib": "34",
+                        "competitor": {
+                            "identifier": "1073337",
+                            "firstName": "Diogo",
+                            "lastName": "Sclebin",
+                            "fullName": "Diogo Sclebin"
+                        }
+                    }
+                }, {
+                    "order": "45",
+                    "type": "Individual",
+                    "code": "1109653",
+                    "rank": "45",
+                    "value": "1:52:08",
+                    "property": {
+                        "type": "Result Type",
+                        "value": "Time"
+                    },
+                    "resultExtension": [{
+                        "type": "Swim",
+                        "value": "18:08"
+                    }, {
+                        "type": "Transfer 1",
+                        "value": "18:49"
+                    }, {
+                        "type": "Bike",
+                        "value": "1:18:26"
+                    }, {
+                        "type": "Transfer 2",
+                        "value": "1:18:55"
+                    }, {
+                        "type": "Run",
+                        "value": "1:52:08"
+                    }],
+                    "country": {
+                        "identifier": "CZE",
+                        "name": "Czech Republic",
+                        "longName": "Czech Republic"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "bib": "45",
+                        "competitor": {
+                            "identifier": "1109653",
+                            "firstName": "Premysl",
+                            "lastName": "Svarc",
+                            "fullName": "Premysl Svarc"
+                        }
+                    }
+                }, {
+                    "order": "46",
+                    "type": "Individual",
+                    "code": "1069367",
+                    "rank": "46",
+                    "value": "1:52:26",
+                    "property": {
+                        "type": "Result Type",
+                        "value": "Time"
+                    },
+                    "resultExtension": [{
+                        "type": "Swim",
+                        "value": "17:55"
+                    }, {
+                        "type": "Transfer 1",
+                        "value": "18:41"
+                    }, {
+                        "type": "Bike",
+                        "value": "1:18:27"
+                    }, {
+                        "type": "Transfer 2",
+                        "value": "1:19:00"
+                    }, {
+                        "type": "Run",
+                        "value": "1:52:26"
+                    }],
+                    "country": {
+                        "identifier": "CHN",
+                        "name": "China",
+                        "longName": "People's Republic of China"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "bib": "2",
+                        "competitor": {
+                            "identifier": "1069367",
+                            "firstName": "Faquan",
+                            "lastName": "Bai",
+                            "fullName": "Faquan Bai"
+                        }
+                    }
+                }, {
+                    "order": "47",
+                    "type": "Individual",
+                    "code": "1050282",
+                    "rank": "47",
+                    "value": "1:52:38",
+                    "property": {
+                        "type": "Result Type",
+                        "value": "Time"
+                    },
+                    "resultExtension": [{
+                        "type": "Swim",
+                        "value": "17:58"
+                    }, {
+                        "type": "Transfer 1",
+                        "value": "18:39"
+                    }, {
+                        "type": "Bike",
+                        "value": "1:18:24"
+                    }, {
+                        "type": "Transfer 2",
+                        "value": "1:18:53"
+                    }, {
+                        "type": "Run",
+                        "value": "1:52:38"
+                    }],
+                    "country": {
+                        "identifier": "POL",
+                        "name": "Poland",
+                        "longName": "Poland"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "bib": "8",
+                        "competitor": {
+                            "identifier": "1050282",
+                            "firstName": "Marek",
+                            "lastName": "Jaskolka",
+                            "fullName": "Marek Jaskolka"
+                        }
+                    }
+                }, {
+                    "order": "48",
+                    "type": "Individual",
+                    "code": "1086933",
+                    "rank": "48",
+                    "value": "1:52:39",
+                    "property": {
+                        "type": "Result Type",
+                        "value": "Time"
+                    },
+                    "resultExtension": [{
+                        "type": "Swim",
+                        "value": "17:24"
+                    }, {
+                        "type": "Transfer 1",
+                        "value": "18:06"
+                    }, {
+                        "type": "Bike",
+                        "value": "1:18:25"
+                    }, {
+                        "type": "Transfer 2",
+                        "value": "1:18:57"
+                    }, {
+                        "type": "Run",
+                        "value": "1:52:39"
+                    }],
+                    "country": {
+                        "identifier": "CRC",
+                        "name": "Costa Rica",
+                        "longName": "Costa Rica"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "bib": "1",
+                        "competitor": {
+                            "identifier": "1086933",
+                            "firstName": "Leonardo",
+                            "lastName": "Chacon",
+                            "fullName": "Leonardo Chacon"
+                        }
+                    }
+                }, {
+                    "order": "49",
+                    "type": "Individual",
+                    "code": "1110763",
+                    "rank": "49",
+                    "value": "1:52:42",
+                    "property": {
+                        "type": "Result Type",
+                        "value": "Time"
+                    },
+                    "resultExtension": [{
+                        "type": "Swim",
+                        "value": "18:55"
+                    }, {
+                        "type": "Transfer 1",
+                        "value": "19:35"
+                    }, {
+                        "type": "Bike",
+                        "value": "1:18:26"
+                    }, {
+                        "type": "Transfer 2",
+                        "value": "1:18:58"
+                    }, {
+                        "type": "Run",
+                        "value": "1:52:42"
+                    }],
+                    "country": {
+                        "identifier": "MON",
+                        "name": "Monaco",
+                        "longName": "Monaco"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "bib": "9",
+                        "competitor": {
+                            "identifier": "1110763",
+                            "firstName": "Herve",
+                            "lastName": "Banti",
+                            "fullName": "Herve Banti"
+                        }
+                    }
+                }, {
+                    "order": "50",
+                    "type": "Individual",
+                    "code": "1078210",
+                    "rank": "50",
+                    "value": "1:53:02",
+                    "property": {
+                        "type": "Result Type",
+                        "value": "Time"
+                    },
+                    "resultExtension": [{
+                        "type": "Swim",
+                        "value": "18:53"
+                    }, {
+                        "type": "Transfer 1",
+                        "value": "19:34"
+                    }, {
+                        "type": "Bike",
+                        "value": "1:18:26"
+                    }, {
+                        "type": "Transfer 2",
+                        "value": "1:18:59"
+                    }, {
+                        "type": "Run",
+                        "value": "1:53:02"
+                    }],
+                    "country": {
+                        "identifier": "CHI",
+                        "name": "Chile",
+                        "longName": "Chile"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "bib": "24",
+                        "competitor": {
+                            "identifier": "1078210",
+                            "firstName": "Felipe",
+                            "lastName": "van de Wyngard",
+                            "fullName": "Felipe van de Wyngard"
+                        }
+                    }
+                }, {
+                    "order": "51",
+                    "type": "Individual",
+                    "code": "1132075",
+                    "rank": "51",
+                    "value": "1:53:39",
+                    "property": {
+                        "type": "Result Type",
+                        "value": "Time"
+                    },
+                    "resultExtension": [{
+                        "type": "Swim",
+                        "value": "18:57"
+                    }, {
+                        "type": "Transfer 1",
+                        "value": "19:36"
+                    }, {
+                        "type": "Bike",
+                        "value": "1:18:27"
+                    }, {
+                        "type": "Transfer 2",
+                        "value": "1:19:00"
+                    }, {
+                        "type": "Run",
+                        "value": "1:53:39"
+                    }],
+                    "country": {
+                        "identifier": "USA",
+                        "name": "United States",
+                        "longName": "United States of America"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "bib": "42",
+                        "competitor": {
+                            "identifier": "1132075",
+                            "firstName": "Manuel",
+                            "lastName": "Huerta",
+                            "fullName": "Manuel Huerta"
+                        }
+                    }
+                }, {
+                    "order": "52",
+                    "type": "Individual",
+                    "code": "1065076",
+                    "rank": "52",
+                    "value": "1:53:53",
+                    "property": {
+                        "type": "Result Type",
+                        "value": "Time"
+                    },
+                    "resultExtension": [{
+                        "type": "Swim",
+                        "value": "18:09"
+                    }, {
+                        "type": "Transfer 1",
+                        "value": "18:52"
+                    }, {
+                        "type": "Bike",
+                        "value": "1:18:28"
+                    }, {
+                        "type": "Transfer 2",
+                        "value": "1:19:02"
+                    }, {
+                        "type": "Run",
+                        "value": "1:53:53"
+                    }],
+                    "country": {
+                        "identifier": "ZIM",
+                        "name": "Zimbabwe",
+                        "longName": "Zimbabwe"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "bib": "10",
+                        "competitor": {
+                            "identifier": "1065076",
+                            "firstName": "Christopher",
+                            "lastName": "Felgate",
+                            "fullName": "Christopher Felgate"
+                        }
+                    }
+                }, {
+                    "order": "53",
+                    "type": "Individual",
+                    "code": "1105037",
+                    "rank": "53",
+                    "value": "1:54:10",
+                    "property": {
+                        "type": "Result Type",
+                        "value": "Time"
+                    },
+                    "resultExtension": [{
+                        "type": "Swim",
+                        "value": "18:02"
+                    }, {
+                        "type": "Transfer 1",
+                        "value": "18:49"
+                    }, {
+                        "type": "Bike",
+                        "value": "1:18:26"
+                    }, {
+                        "type": "Transfer 2",
+                        "value": "1:18:57"
+                    }, {
+                        "type": "Run",
+                        "value": "1:54:10"
+                    }],
+                    "country": {
+                        "identifier": "COL",
+                        "name": "Colombia",
+                        "longName": "Colombia"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "bib": "29",
+                        "competitor": {
+                            "identifier": "1105037",
+                            "firstName": "Carlos Javier",
+                            "lastName": "Quinchara",
+                            "fullName": "Carlos Javier Quinchara"
+                        }
+                    }
+                }, {
+                    "order": "54",
+                    "type": "Individual",
+                    "code": "1091070",
+                    "rank": "54",
+                    "value": "1:54:30",
+                    "property": {
+                        "type": "Result Type",
+                        "value": "Time"
+                    },
+                    "resultExtension": [{
+                        "type": "Swim",
+                        "value": "18:02"
+                    }, {
+                        "type": "Transfer 1",
+                        "value": "18:40"
+                    }, {
+                        "type": "Bike",
+                        "value": "1:18:26"
+                    }, {
+                        "type": "Transfer 2",
+                        "value": "1:18:54"
+                    }, {
+                        "type": "Run",
+                        "value": "1:54:30"
+                    }],
+                    "country": {
+                        "identifier": "KOR",
+                        "name": "Korea",
+                        "longName": "Republic of Korea"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "bib": "15",
+                        "competitor": {
+                            "identifier": "1091070",
+                            "firstName": "Min Ho",
+                            "lastName": "Heo",
+                            "fullName": "Min Ho Heo"
+                        }
+                    }
+                }, {
+                    "order": "55",
+                    "type": "Individual",
+                    "code": "1076904",
+                    "property": {
+                        "type": "Invalid Result Mark",
+                        "value": "Did Not Finish"
+                    },
+                    "resultExtension": [{
+                        "type": "Swim",
+                        "value": "17:23"
+                    }, {
+                        "type": "Transfer 1",
+                        "value": "18:07"
+                    }],
+                    "country": {
+                        "identifier": "CAN",
+                        "name": "Canada",
+                        "longName": "Canada"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "bib": "5",
+                        "competitor": {
+                            "identifier": "1076904",
+                            "firstName": "Simon",
+                            "lastName": "Whitfield",
+                            "fullName": "Simon Whitfield"
+                        }
+                    }
+                }]
+            }
+        }
+    }
+}

@@ -1,0 +1,59 @@
+.oval {
+	//(84.39+36.5*2)/73.50
+	$ratio:(84.39+36.5*2)/73.5;
+	$width:1200px;
+
+	width:$width;
+	height:$width/$ratio;
+	svg {
+		width:$width*0.8;
+		height:$width/$ratio*0.8;
+
+		.inner-border {
+			path {
+				stroke:#333;
+				stroke-width:1;
+				fill:none;
+			}
+		}
+		
+		.scaffolding {
+			line {
+				stroke:#000;
+				stroke-width:1;
+				shape-rendering:crispEdges;
+			}	
+		}
+		
+
+		.runners {
+			
+			.runner {
+				path {
+					stroke:#008BC9;
+					stroke-width:1;
+					fill:none;
+
+					&.gold {
+						stroke:#ffd700;
+					}
+					&.silver {
+						stroke:#c0c0c0;
+					}
+					&.bronze {
+						stroke:#cd7f32;
+					}
+				}	
+			}
+			
+		}
+
+		.background {
+			path {
+				stroke:#dedede;
+				fill:none;
+			}
+		}
+
+	}
+}

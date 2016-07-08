@@ -1,0 +1,33 @@
+.swimming {
+	
+	.entrant {
+		//width: 604px;
+		height: 60px;
+		div.info {
+			@include fs-textSans(1);
+			float:left;
+			height: 60px;
+			line-height: 60px;
+			width:170px;
+			text-align:right;
+
+		}
+		div.time-info {
+			@include fs-textSans(1);
+			float:left;
+			height: 60px;
+			line-height: 60px;
+			width:120px;
+			text-align:left;
+
+		}
+		svg {
+			float:left;
+			width: 604px;
+			height: 60px;
+		}
+		@import "swimming-pool";
+		@import "swimmer";
+	}
+
+}

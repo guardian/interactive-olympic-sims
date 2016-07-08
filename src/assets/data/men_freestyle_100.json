@@ -1,0 +1,324 @@
+{
+    "olympics": {
+        "eventUnit": {
+            "identifier": "SWM011101",
+            "description": "Men's 100m Freestyle Final",
+            "unitType": "Individuals",
+            "medalEvent": "Yes",
+            "disciplineDescription": {
+                "identifier": "swimming",
+                "value": "Swimming"
+            },
+            "result": {
+                "type": "Final",
+                "timestamp": "2013-11-13T12:15:00Z",
+                "entrant": [{
+                    "order": "5",
+                    "type": "Individual",
+                    "code": "1133135",
+                    "rank": "1",
+                    "value": "47.52",
+                    "property": [{
+                        "type": "Medal Awarded",
+                        "value": "Gold"
+                    }, {
+                        "type": "Result Type",
+                        "value": "Time"
+                    }],
+                    "resultExtension": [{
+                        "type": "Reaction Time",
+                        "value": "0.67"
+                    }, {
+                        "type": "Split Times",
+                        "extension": [{
+                            "position": "1",
+                            "value": "22.64"
+                        }, {
+                            "position": "2",
+                            "value": "47.52"
+                        }]
+                    }],
+                    "country": {
+                        "identifier": "USA",
+                        "name": "United States",
+                        "longName": "United States of America"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "competitor": {
+                            "identifier": "1133135",
+                            "firstName": "Nathan",
+                            "lastName": "Adrian",
+                            "fullName": "Nathan Adrian"
+                        }
+                    }
+                }, {
+                    "order": "4",
+                    "type": "Individual",
+                    "code": "1116538",
+                    "rank": "2",
+                    "value": "47.53",
+                    "property": [{
+                        "type": "Medal Awarded",
+                        "value": "Silver"
+                    }, {
+                        "type": "Result Type",
+                        "value": "Time"
+                    }],
+                    "resultExtension": [{
+                        "type": "Reaction Time",
+                        "value": "0.71"
+                    }, {
+                        "type": "Split Times",
+                        "extension": [{
+                            "position": "1",
+                            "value": "22.83"
+                        }, {
+                            "position": "2",
+                            "value": "47.53"
+                        }]
+                    }],
+                    "country": {
+                        "identifier": "AUS",
+                        "name": "Australia",
+                        "longName": "Australia"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "competitor": {
+                            "identifier": "1116538",
+                            "firstName": "James",
+                            "lastName": "Magnussen",
+                            "fullName": "James Magnussen"
+                        }
+                    }
+                }, {
+                    "order": "7",
+                    "type": "Individual",
+                    "code": "1076797",
+                    "rank": "3",
+                    "value": "47.80",
+                    "property": [{
+                        "type": "Medal Awarded",
+                        "value": "Bronze"
+                    }, {
+                        "type": "Result Type",
+                        "value": "Time"
+                    }],
+                    "resultExtension": [{
+                        "type": "Reaction Time",
+                        "value": "0.68"
+                    }, {
+                        "type": "Split Times",
+                        "extension": [{
+                            "position": "1",
+                            "value": "22.61"
+                        }, {
+                            "position": "2",
+                            "value": "47.80"
+                        }]
+                    }],
+                    "country": {
+                        "identifier": "CAN",
+                        "name": "Canada",
+                        "longName": "Canada"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "competitor": {
+                            "identifier": "1076797",
+                            "firstName": "Brent",
+                            "lastName": "Hayden",
+                            "fullName": "Brent Hayden"
+                        }
+                    }
+                }, {
+                    "order": "1",
+                    "type": "Individual",
+                    "code": "1121546",
+                    "rank": "4",
+                    "value": "47.84",
+                    "property": {
+                        "type": "Result Type",
+                        "value": "Time"
+                    },
+                    "resultExtension": [{
+                        "type": "Reaction Time",
+                        "value": "0.67"
+                    }, {
+                        "type": "Split Times",
+                        "extension": [{
+                            "position": "1",
+                            "value": "22.78"
+                        }, {
+                            "position": "2",
+                            "value": "47.84"
+                        }]
+                    }],
+                    "country": {
+                        "identifier": "FRA",
+                        "name": "France",
+                        "longName": "France"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "competitor": {
+                            "identifier": "1121546",
+                            "firstName": "Yannick",
+                            "lastName": "Agnel",
+                            "fullName": "Yannick Agnel"
+                        }
+                    }
+                }, {
+                    "order": "6",
+                    "type": "Individual",
+                    "code": "1119346",
+                    "rank": "5",
+                    "value": "47.88",
+                    "property": {
+                        "type": "Result Type",
+                        "value": "Time"
+                    },
+                    "resultExtension": [{
+                        "type": "Reaction Time",
+                        "value": "0.72"
+                    }, {
+                        "type": "Split Times",
+                        "extension": [{
+                            "position": "1",
+                            "value": "23.17"
+                        }, {
+                            "position": "2",
+                            "value": "47.88"
+                        }]
+                    }],
+                    "country": {
+                        "identifier": "NED",
+                        "name": "Netherlands",
+                        "longName": "Netherlands"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "competitor": {
+                            "identifier": "1119346",
+                            "firstName": "Sebastiaan",
+                            "lastName": "Verschuren",
+                            "fullName": "Sebastiaan Verschuren"
+                        }
+                    }
+                }, {
+                    "order": "2",
+                    "type": "Individual",
+                    "code": "1073084",
+                    "rank": "6",
+                    "value": "47.92",
+                    "property": {
+                        "type": "Result Type",
+                        "value": "Time"
+                    },
+                    "resultExtension": [{
+                        "type": "Reaction Time",
+                        "value": "0.64"
+                    }, {
+                        "type": "Split Times",
+                        "extension": [{
+                            "position": "1",
+                            "value": "22.60"
+                        }, {
+                            "position": "2",
+                            "value": "47.92"
+                        }]
+                    }],
+                    "country": {
+                        "identifier": "BRA",
+                        "name": "Brazil",
+                        "longName": "Brazil"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "competitor": {
+                            "identifier": "1073084",
+                            "firstName": "Cesar",
+                            "lastName": "Cielo",
+                            "fullName": "Cesar Cielo"
+                        }
+                    }
+                }, {
+                    "order": "3",
+                    "type": "Individual",
+                    "code": "1059910",
+                    "rank": "7",
+                    "value": "48.04",
+                    "property": {
+                        "type": "Result Type",
+                        "value": "Time"
+                    },
+                    "resultExtension": [{
+                        "type": "Reaction Time",
+                        "value": "0.68"
+                    }, {
+                        "type": "Split Times",
+                        "extension": [{
+                            "position": "1",
+                            "value": "23.42"
+                        }, {
+                            "position": "2",
+                            "value": "48.04"
+                        }]
+                    }],
+                    "country": {
+                        "identifier": "CUB",
+                        "name": "Cuba",
+                        "longName": "Cuba"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "competitor": {
+                            "identifier": "1059910",
+                            "firstName": "Hanser",
+                            "lastName": "Garcia",
+                            "fullName": "Hanser Garcia"
+                        }
+                    }
+                }, {
+                    "order": "8",
+                    "type": "Individual",
+                    "code": "1015842",
+                    "rank": "8",
+                    "value": "48.44",
+                    "property": {
+                        "type": "Result Type",
+                        "value": "Time"
+                    },
+                    "resultExtension": [{
+                        "type": "Reaction Time",
+                        "value": "0.74"
+                    }, {
+                        "type": "Split Times",
+                        "extension": [{
+                            "position": "1",
+                            "value": "23.03"
+                        }, {
+                            "position": "2",
+                            "value": "48.44"
+                        }]
+                    }],
+                    "country": {
+                        "identifier": "RUS",
+                        "name": "Russian Fed.",
+                        "longName": "Russian Federation"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "competitor": {
+                            "identifier": "1015842",
+                            "firstName": "Nikita",
+                            "lastName": "Lobintsev",
+                            "fullName": "Nikita Lobintsev"
+                        }
+                    }
+                }]
+            }
+        }
+    }
+}

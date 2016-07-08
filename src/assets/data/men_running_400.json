@@ -1,0 +1,270 @@
+{
+    "olympics": {
+        "eventUnit": {
+            "identifier": "ATM004101",
+            "description": "Men's 400m Final",
+            "unitType": "Individuals",
+            "medalEvent": "Yes",
+            "disciplineDescription": {
+                "identifier": "athletics",
+                "value": "Athletics"
+            },
+            "phaseDescription": {
+                "identifier": "ATM0041",
+                "value": "Final"
+            },
+            "result": {
+                "type": "Official",
+                "timestamp": "2013-11-13T12:14:31Z",
+                "entrant": [{
+                    "order": "4",
+                    "type": "Individual",
+                    "code": "1020534",
+                    "rank": "1",
+                    "value": "43.94",
+                    "property": [{
+                        "type": "Medal Awarded",
+                        "value": "Gold"
+                    }, {
+                        "type": "Record Set",
+                        "value": "NR"
+                    }, {
+                        "type": "Result Type",
+                        "value": "Time"
+                    }],
+                    "resultExtension": {
+                        "type": "Reaction Time",
+                        "value": "0.163"
+                    },
+                    "country": {
+                        "identifier": "GRN",
+                        "name": "Grenada",
+                        "longName": "Grenada"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "bib": "2005",
+                        "competitor": {
+                            "identifier": "1020534",
+                            "firstName": "Kirani",
+                            "lastName": "James",
+                            "fullName": "Kirani James"
+                        }
+                    }
+                }, {
+                    "order": "6",
+                    "type": "Individual",
+                    "code": "1040483",
+                    "rank": "7",
+                    "value": "44.46",
+                    "property": [{
+                        "type": "Medal Awarded",
+                        "value": "Silver"
+                    }, {
+                        "type": "Result Type",
+                        "value": "Time"
+                    }],
+                    "resultExtension": {
+                        "type": "Reaction Time",
+                        "value": "0.185"
+                    },
+                    "country": {
+                        "identifier": "DOM",
+                        "name": "Dominican Rep.",
+                        "longName": "Dominican Republic"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "bib": "1564",
+                        "competitor": {
+                            "identifier": "1040483",
+                            "firstName": "Luguelin",
+                            "lastName": "Santos",
+                            "fullName": "Luguelin Santos"
+                        }
+                    }
+                }, {
+                    "order": "3",
+                    "type": "Individual",
+                    "code": "1122850",
+                    "rank": "3",
+                    "value": "44.52",
+                    "property": [{
+                        "type": "Medal Awarded",
+                        "value": "Bronze"
+                    }, {
+                        "type": "Record Set",
+                        "value": "PB"
+                    }, {
+                        "type": "Result Type",
+                        "value": "Time"
+                    }],
+                    "resultExtension": {
+                        "type": "Reaction Time",
+                        "value": "0.159"
+                    },
+                    "country": {
+                        "identifier": "TTO",
+                        "name": "Trinidad & Tobago",
+                        "longName": "Trinidad and Tobago"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "bib": "3044",
+                        "competitor": {
+                            "identifier": "1122850",
+                            "firstName": "Lalonde",
+                            "lastName": "Gordon",
+                            "fullName": "Lalonde Gordon"
+                        }
+                    }
+                }, {
+                    "order": "5",
+                    "type": "Individual",
+                    "code": "1110817",
+                    "rank": "4",
+                    "value": "44.79",
+                    "property": {
+                        "type": "Result Type",
+                        "value": "Time"
+                    },
+                    "resultExtension": {
+                        "type": "Reaction Time",
+                        "value": "0.166"
+                    },
+                    "country": {
+                        "identifier": "BAH",
+                        "name": "Bahamas",
+                        "longName": "Bahamas"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "bib": "1100",
+                        "competitor": {
+                            "identifier": "1110817",
+                            "firstName": "Chris",
+                            "lastName": "Brown",
+                            "fullName": "Chris Brown"
+                        }
+                    }
+                }, {
+                    "order": "8",
+                    "type": "Individual",
+                    "code": "1112084",
+                    "rank": "5",
+                    "value": "44.81",
+                    "property": {
+                        "type": "Result Type",
+                        "value": "Time"
+                    },
+                    "resultExtension": {
+                        "type": "Reaction Time",
+                        "value": "0.151"
+                    },
+                    "country": {
+                        "identifier": "BEL",
+                        "name": "Belgium",
+                        "longName": "Belgium"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "bib": "1133",
+                        "competitor": {
+                            "identifier": "1112084",
+                            "firstName": "Kevin",
+                            "lastName": "Borlee",
+                            "fullName": "Kevin Borlee"
+                        }
+                    }
+                }, {
+                    "order": "1",
+                    "type": "Individual",
+                    "code": "1112082",
+                    "rank": "6",
+                    "value": "44.83",
+                    "property": {
+                        "type": "Result Type",
+                        "value": "Time"
+                    },
+                    "resultExtension": {
+                        "type": "Reaction Time",
+                        "value": "0.173"
+                    },
+                    "country": {
+                        "identifier": "BEL",
+                        "name": "Belgium",
+                        "longName": "Belgium"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "bib": "1132",
+                        "competitor": {
+                            "identifier": "1112082",
+                            "firstName": "Jonathan",
+                            "lastName": "Borlee",
+                            "fullName": "Jonathan Borlee"
+                        }
+                    }
+                }, {
+                    "order": "7",
+                    "type": "Individual",
+                    "code": "1110857",
+                    "rank": "7",
+                    "value": "44.98",
+                    "property": {
+                        "type": "Result Type",
+                        "value": "Time"
+                    },
+                    "resultExtension": {
+                        "type": "Reaction Time",
+                        "value": "0.153"
+                    },
+                    "country": {
+                        "identifier": "BAH",
+                        "name": "Bahamas",
+                        "longName": "Bahamas"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "bib": "1108",
+                        "competitor": {
+                            "identifier": "1110857",
+                            "firstName": "Demetrius",
+                            "lastName": "Pinder",
+                            "fullName": "Demetrius Pinder"
+                        }
+                    }
+                }, {
+                    "order": "2",
+                    "type": "Individual",
+                    "code": "1090298",
+                    "rank": "8",
+                    "value": "45.14",
+                    "property": {
+                        "type": "Result Type",
+                        "value": "Time"
+                    },
+                    "resultExtension": {
+                        "type": "Reaction Time",
+                        "value": "0.143"
+                    },
+                    "country": {
+                        "identifier": "AUS",
+                        "name": "Australia",
+                        "longName": "Australia"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "bib": "1060",
+                        "competitor": {
+                            "identifier": "1090298",
+                            "firstName": "Steven",
+                            "lastName": "Solomon",
+                            "fullName": "Steven Solomon"
+                        }
+                    }
+                }]
+            }
+        }
+    }
+}

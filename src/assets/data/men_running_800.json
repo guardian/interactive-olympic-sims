@@ -1,0 +1,259 @@
+{
+    "olympics": {
+        "eventUnit": {
+            "identifier": "ATM008101",
+            "description": "Men's 800m Final",
+            "unitType": "Individuals",
+            "medalEvent": "Yes",
+            "disciplineDescription": {
+                "identifier": "athletics",
+                "value": "Athletics"
+            },
+            "phaseDescription": {
+                "identifier": "ATM0081",
+                "value": "Final"
+            },
+            "result": {
+                "type": "Official",
+                "timestamp": "2013-11-13T12:14:31Z",
+                "entrant": [{
+                    "order": "3",
+                    "type": "Individual",
+                    "code": "1087478",
+                    "rank": "1",
+                    "value": "1:40.91",
+                    "property": [{
+                        "type": "Medal Awarded",
+                        "value": "Gold"
+                    }, {
+                        "type": "Record Set",
+                        "value": "WR"
+                    }, {
+                        "type": "Result Type",
+                        "value": "Time"
+                    }],
+                    "country": {
+                        "identifier": "KEN",
+                        "name": "Kenya",
+                        "longName": "Kenya"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "bib": "2319",
+                        "competitor": {
+                            "identifier": "1087478",
+                            "firstName": "David Lekuta",
+                            "lastName": "Rudisha",
+                            "fullName": "David Lekuta Rudisha"
+                        }
+                    }
+                }, {
+                    "order": "4",
+                    "type": "Individual",
+                    "code": "1087213",
+                    "rank": "2",
+                    "value": "1:41.73",
+                    "property": [{
+                        "type": "Medal Awarded",
+                        "value": "Silver"
+                    }, {
+                        "type": "Record Set",
+                        "value": "WJ"
+                    }, {
+                        "type": "Record Set",
+                        "value": "NR"
+                    }, {
+                        "type": "Result Type",
+                        "value": "Time"
+                    }],
+                    "country": {
+                        "identifier": "BOT",
+                        "name": "Botswana",
+                        "longName": "Botswana"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "bib": "1211",
+                        "competitor": {
+                            "identifier": "1087213",
+                            "firstName": "Nijel",
+                            "lastName": "Amos",
+                            "fullName": "Nijel Amos"
+                        }
+                    }
+                }, {
+                    "order": "2",
+                    "type": "Individual",
+                    "code": "1276657",
+                    "rank": "3",
+                    "value": "1:42.53",
+                    "property": [{
+                        "type": "Medal Awarded",
+                        "value": "Bronze"
+                    }, {
+                        "type": "Record Set",
+                        "value": "PB"
+                    }, {
+                        "type": "Result Type",
+                        "value": "Time"
+                    }],
+                    "country": {
+                        "identifier": "KEN",
+                        "name": "Kenya",
+                        "longName": "Kenya"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "bib": "2306",
+                        "competitor": {
+                            "identifier": "1276657",
+                            "firstName": "Timothy",
+                            "lastName": "Kitum",
+                            "fullName": "Timothy Kitum"
+                        }
+                    }
+                }, {
+                    "order": "6",
+                    "type": "Individual",
+                    "code": "1284295",
+                    "rank": "4",
+                    "value": "1:42.82",
+                    "property": [{
+                        "type": "Record Set",
+                        "value": "PB"
+                    }, {
+                        "type": "Result Type",
+                        "value": "Time"
+                    }],
+                    "country": {
+                        "identifier": "USA",
+                        "name": "United States",
+                        "longName": "United States of America"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "bib": "3252",
+                        "competitor": {
+                            "identifier": "1284295",
+                            "firstName": "Duane",
+                            "lastName": "Solomon",
+                            "fullName": "Duane Solomon"
+                        }
+                    }
+                }, {
+                    "order": "7",
+                    "type": "Individual",
+                    "code": "1131409",
+                    "rank": "5",
+                    "value": "1:42.95",
+                    "property": [{
+                        "type": "Record Set",
+                        "value": "PB"
+                    }, {
+                        "type": "Result Type",
+                        "value": "Time"
+                    }],
+                    "country": {
+                        "identifier": "USA",
+                        "name": "United States",
+                        "longName": "United States of America"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "bib": "3254",
+                        "competitor": {
+                            "identifier": "1131409",
+                            "firstName": "Nick",
+                            "lastName": "Symmonds",
+                            "fullName": "Nick Symmonds"
+                        }
+                    }
+                }, {
+                    "order": "5",
+                    "type": "Individual",
+                    "code": "1095307",
+                    "rank": "6",
+                    "value": "1:43.20",
+                    "property": [{
+                        "type": "Record Set",
+                        "value": "NR"
+                    }, {
+                        "type": "Result Type",
+                        "value": "Time"
+                    }],
+                    "country": {
+                        "identifier": "ETH",
+                        "name": "Ethiopia",
+                        "longName": "Ethiopia"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "bib": "1678",
+                        "competitor": {
+                            "identifier": "1095307",
+                            "firstName": "Mohammed",
+                            "lastName": "Aman",
+                            "fullName": "Mohammed Aman"
+                        }
+                    }
+                }, {
+                    "order": "8",
+                    "type": "Individual",
+                    "code": "1051771",
+                    "rank": "7",
+                    "value": "1:43.32",
+                    "property": [{
+                        "type": "Record Set",
+                        "value": "SB"
+                    }, {
+                        "type": "Result Type",
+                        "value": "Time"
+                    }],
+                    "country": {
+                        "identifier": "SUD",
+                        "name": "Sudan",
+                        "longName": "Sudan"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "bib": "2967",
+                        "competitor": {
+                            "identifier": "1051771",
+                            "firstName": "Abubaker",
+                            "lastName": "Kaki",
+                            "fullName": "Abubaker Kaki"
+                        }
+                    }
+                }, {
+                    "order": "1",
+                    "type": "Individual",
+                    "code": "1094247",
+                    "rank": "8",
+                    "value": "1:43.77",
+                    "property": [{
+                        "type": "Record Set",
+                        "value": "PB"
+                    }, {
+                        "type": "Result Type",
+                        "value": "Time"
+                    }],
+                    "country": {
+                        "identifier": "GBR",
+                        "name": "Great Britain",
+                        "longName": "Great Britain"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "bib": "1827",
+                        "competitor": {
+                            "identifier": "1094247",
+                            "firstName": "Andrew",
+                            "lastName": "Osagie",
+                            "fullName": "Andrew Osagie"
+                        }
+                    }
+                }]
+            }
+        }
+    }
+}
