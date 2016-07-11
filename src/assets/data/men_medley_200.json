@@ -17,7 +17,7 @@
                 "type": "Official",
                 "timestamp": "2013-11-13T12:15:00Z",
                 "entrant": [{
-                    "order": "1",
+                    "order": "3",
                     "type": "Individual",
                     "code": "1131796",
                     "rank": "1",
@@ -63,7 +63,7 @@
                         }
                     }
                 }, {
-                    "order": "2",
+                    "order": "4",
                     "type": "Individual",
                     "code": "1132448",
                     "rank": "2",
@@ -109,7 +109,7 @@
                         }
                     }
                 }, {
-                    "order": "3",
+                    "order": "5",
                     "type": "Individual",
                     "code": "1121224",
                     "rank": "3",
@@ -155,7 +155,7 @@
                         }
                     }
                 }, {
-                    "order": "4",
+                    "order": "6",
                     "type": "Individual",
                     "code": "1073153",
                     "rank": "4",
@@ -198,7 +198,7 @@
                         }
                     }
                 }, {
-                    "order": "5",
+                    "order": "2",
                     "type": "Individual",
                     "code": "1026921",
                     "rank": "5",
@@ -241,7 +241,7 @@
                         }
                     }
                 }, {
-                    "order": "6",
+                    "order": "7",
                     "type": "Individual",
                     "code": "1026920",
                     "rank": "6",
@@ -284,7 +284,7 @@
                         }
                     }
                 }, {
-                    "order": "7",
+                    "order": "1",
                     "type": "Individual",
                     "code": "1098542",
                     "rank": "7",

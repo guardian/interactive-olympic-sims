@@ -187,7 +187,7 @@ export default function TeamPursuit(data,options) {
 
 
 
-	    //velodrome.race();
+	    velodrome.race();
 
 	    
 	    function updateTeam(team,split) {

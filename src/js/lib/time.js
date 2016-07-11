@@ -10,7 +10,7 @@ export function convertTime(str_time) {
 	}
 
 	let split_minute=str_time.split(":");
-	console.log(split_minute)
+	//console.log(split_minute)
 	let minutes=split_minute.length>1?+split_minute[0]:0;
 
 

@@ -1,6 +1,6 @@
 .team-pursuit {
 	$ratio:(85.73+25.0*2)/50;
-	$width:1200px;
+	$width:1000px;
 
 	width:$width;
 	height:$width/$ratio;
@@ -8,8 +8,8 @@
 	position: relative;
 
 	svg {
-		width:$width*0.8;
-		height:$width/$ratio*0.8;
+		width:$width*1;
+		height:$width/$ratio*1;
 		
 		.scaffolding {
 			line {
