@@ -239,6 +239,11 @@ export default function Swimming(data,options) {
 					.text(d=>{
 						return best_cumulative_times[d.distance].cumulative_times.indexOf(d.cumulative_time)+1;
 					})
+					.on("click",(d)=>{
+						swimmers_data.forEach(s => {
+			    			s.swimmer.showLeg(d.distance)
+			    		})
+					})
 
 
 	    function updateTimes(s) {
