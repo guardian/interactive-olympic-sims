@@ -21,6 +21,12 @@ import {
 	line as d3_line,
 	curveCardinal
 } from 'd3-shape';
+import {
+	transition
+} from 'd3-transition';
+import {
+	interpolateString
+} from 'd3-interpolate';
 //import Barchart from './Barchart';
 
 
@@ -45,8 +51,9 @@ export default function Swimming(data,options) {
 
 	console.log("Swimming",data.olympics.eventUnit.result.entrant);
 
-	let swimmers=[],
-		best_cumulative_times={};
+	let swimmers_data=[],
+		best_cumulative_times={},
+		CURRENT_LEG=0;
 
 	let frameRequest = requestAnimFrame(function checkInnerHTML(time) {
         ////console.log(time)
@@ -66,12 +73,13 @@ export default function Swimming(data,options) {
     	let REACTION_TIME=0,
     		SPLITS=1;
 
-    	swimmers=data.olympics.eventUnit.result.entrant.sort((a,b)=>(+a.order - +b.order)).map(entrant => {
+    	swimmers_data=data.olympics.eventUnit.result.entrant.sort((a,b)=>(+a.order - +b.order)).map(entrant => {
     		let prev_cumulative_time=0;
     		return {
     			"swimmer":entrant.participant.competitor.fullName,
     			"reaction_time":{
-    				value:entrant.resultExtension[REACTION_TIME].value
+    				value:entrant.resultExtension[REACTION_TIME].value,
+    				time: +entrant.resultExtension[REACTION_TIME].value * 1000
     			},
     			"splits":entrant.resultExtension[SPLITS].extension.map((d,i)=>{
     				let cumulative_time=convertTime(d.value),
@@ -92,20 +100,34 @@ export default function Swimming(data,options) {
 
     	
 
-    	swimmers.forEach(swimmer=>{
+    	swimmers_data.forEach(swimmer=>{
+    		if(!best_cumulative_times[0]) {
+				best_cumulative_times[0]={
+					cumulative_times:[],
+    				times:[]
+				}
+			}
+			best_cumulative_times[0].times.push(swimmer.reaction_time.time)
+			best_cumulative_times[0].cumulative_times.push(swimmer.reaction_time.time)
+
     		swimmer.splits.forEach(split=>{
     			if(!best_cumulative_times[split.distance]) {
     				best_cumulative_times[split.distance]={
+    					cumulative_times:[],
     					times:[]
     				}
     			}
-    			best_cumulative_times[split.distance].times.push(split.cumulative_time)
+    			best_cumulative_times[split.distance].times.push(split.time)
+    			best_cumulative_times[split.distance].cumulative_times.push(split.cumulative_time)
     		})
     	})
     	for(let distance in best_cumulative_times) {
-    		best_cumulative_times[distance].best=d3_min(best_cumulative_times[distance].times)
+    		best_cumulative_times[distance].best_time=d3_min(best_cumulative_times[distance].times);
+    		best_cumulative_times[distance].best_cumulative=d3_min(best_cumulative_times[distance].cumulative_times);
+    		best_cumulative_times[distance].times=best_cumulative_times[distance].times.sort((a,b)=>(a-b));
+    		best_cumulative_times[distance].times=best_cumulative_times[distance].cumulative_times.sort((a,b)=>(a-b));
     	}
-    	console.log(swimmers)
+    	console.log(swimmers_data)
 		console.log(best_cumulative_times)
 		buildVisual();
 
@@ -120,21 +142,33 @@ export default function Swimming(data,options) {
 	    					.append("div")
 	    					.attr("class","swimming")
 
-	    let names=container.append("div")
+	    let timeline=new Timeline({
+		    	container:container,
+		    	steps:[0,50,100,150,200],
+		    	clickCallback:(mt) => {
+		    		console.log(mt,swimmers_data);
+		    		swimmers_data.filter((d,i)=>(1)).forEach(s => {
+		    			s.swimmer.showLeg(mt)
+		    		})
+		    	}
+		    });
+
+	    let name_box=container.append("div")
 	    				.attr("class","info swimmer-names")
 	    				.append("ul")
 	    					.selectAll("li")
-	    					.data(swimmers)
+	    					.data(swimmers_data)
 	    					.enter()
 	    						.append("li")
-	    							.append("span")
-	    							.text(d=>d.swimmer)
+	    name_box
+				.append("span")
+				.text(d=>d.swimmer)
 
 	    let swimming_pool=container.append("div")
 	    				.attr("class","info swimming-pools")
 	    				.append("ul")
 	    					.selectAll("li")
-	    					.data(swimmers)
+	    					.data(swimmers_data)
 	    					.enter()
 	    						.append("li")
 	    						.append("svg")
@@ -148,13 +182,17 @@ export default function Swimming(data,options) {
 									    let hscale=scaleLinear().domain([0,dimensions.length+dimensions.block*2]).range([0,WIDTH-(margins.left+margins.right)]),
 											vscale=scaleLinear().domain([0,dimensions.step+dimensions.depth+dimensions.man_height]).range([0,HEIGHT-(margins.top+margins.bottom)]);
 
-		    							new Swimmer(d,{
+		    							d.swimmer=new Swimmer(d,{
 		    									svg:select(this),
 		    									margins:margins,
 		    									hscale:hscale,
 		    									vscale:vscale,
-		    									best_times:best_cumulative_times
-		    							})
+		    									best_times:best_cumulative_times,
+		    									endCallback:(s) => {
+		    										//updateNames(split)
+		    										updateTimes(s);
+		    									}
+		    							});
 		    							new SwimmingPool({
 		    									svg:select(this),
 		    									margins:margins,
@@ -163,15 +201,58 @@ export default function Swimming(data,options) {
 		    							})
 		    						})
 
-	    let times=container.append("div")
+	    let time_box=container.append("div")
 	    				.attr("class","info swimmer-performances")
 	    				.append("ul")
 	    					.selectAll("li")
-	    					.data(swimmers)
+	    					.data(swimmers_data)
 	    					.enter()
-	    						.append("li")
-	    							.append("span")
-	    							.text(d=>d.value)
+	    						.append("li");
+	    time_box
+			.append("span")
+			.text(d=>{
+				return d.value;
+			})
+		time_box
+			.append("ol")
+				.selectAll("li")
+				.data(d=>{
+					console.log(d)
+					return ([{
+						value:d.reaction_time.value,
+						time:d.reaction_time.time,
+						cumulative_time:d.reaction_time.time,
+						distance:0
+					}]).concat(d.splits)
+				})
+					.enter()
+					.append("li")
+					.classed("gold",d=>{
+						return best_cumulative_times[d.distance].cumulative_times.indexOf(d.cumulative_time)===0;
+					})
+					.classed("silver",d=>{
+						return best_cumulative_times[d.distance].cumulative_times.indexOf(d.cumulative_time)===1;
+					})
+					.classed("bronze",d=>{
+						return best_cumulative_times[d.distance].cumulative_times.indexOf(d.cumulative_time)===2;
+					})
+					.text(d=>{
+						return best_cumulative_times[d.distance].cumulative_times.indexOf(d.cumulative_time)+1;
+					})
+
+
+	    function updateTimes(s) {
+	    	console.log("updateTimes",s)
+	    	time_box.select("span")
+	    			.text(d=>{
+	    				//console.log(s)
+	    				if(s.distance===0) {
+	    					return d.reaction_time.value;
+	    				}
+	    				let split=d.splits.find(sp=>(sp.distance===s.distance));
+	    				return split.value;
+	    			})
+	    }
 	}
 }
 function Swimmer(data,options) {
@@ -191,38 +272,159 @@ function Swimmer(data,options) {
 
 	let water_line=dimensions.man_height+dimensions.step;
 	let leg=swimmer.selectAll("g.leg")
-						.data(data.splits)
+						.data(([{
+							value:data.reaction_time.value,
+	    					time:data.reaction_time.time,
+	    					cumulative_time:data.reaction_time.time,
+	    					distance:0
+						}]).concat(data.splits))
 						.enter()
 						.append("g")
 							.attr("rel",d=>("m"+d.distance))
 							.attr("class",d=>("leg m"+d.distance))
-							.append("path")
-								.attr("d",d=>{
+	leg
+		.append("path")
+			.attr("d",d=>{
 
-									//cumulative_time:distance==best_cumulative_time:x
-									//x=distance*best_cumulative_time/cumulative_time
-									
+				//cumulative_time:distance==best_cumulative_time:x
+				//x=distance*best_cumulative_time/cumulative_time
+				
+				let distance=d.distance || 3.5;
+				d.mt=distance*options.best_times[d.distance].best_cumulative/d.cumulative_time;
+				d.dmt=distance-d.mt;
+				console.log(d)
 
-									d.mt=d.distance*options.best_times[d.distance].best/d.cumulative_time;
-									d.dmt=d.distance-d.mt;
-									console.log(d)
+				if(d.distance==0) {
+					return line([
+							[hscale(dimensions.block),vscale(dimensions.man_height*3/4)],
+							[hscale(dimensions.block+d.mt/2),vscale(dimensions.man_height*4/5)],
+							[hscale(dimensions.block+d.mt),vscale(water_line)]
+						])
+				}
 
-									if(d.distance%100>0) {
-										//go
-										return line([
-												[hscale(dimensions.block),vscale(water_line)],
-												[hscale(dimensions.block+dimensions.length-d.dmt),vscale(water_line)]
-											]);
-									} else {
-										//back
-										return line([
-													[hscale(dimensions.length+dimensions.block),vscale(water_line)],
-													[hscale(dimensions.block+d.dmt),vscale(water_line)]
-												]);
-									}
-									
-								})
+				if(d.distance%100>0) {
+					//go
+					return line([
+							[hscale(dimensions.block),vscale(water_line)],
+							[hscale(dimensions.block+dimensions.length-d.dmt),vscale(water_line)]
+						]);
+				} else {
+					//back
+					return line([
+								[hscale(dimensions.length+dimensions.block),vscale(water_line)],
+								[hscale(dimensions.block+d.dmt),vscale(water_line)]
+							]);
+				}
+				
+			})
+			.classed("gold",d=>{
+				return options.best_times[d.distance].cumulative_times.indexOf(d.cumulative_time)===0;
+			})
+			.classed("silver",d=>{
+				return options.best_times[d.distance].cumulative_times.indexOf(d.cumulative_time)===1;
+			})
+			.classed("bronze",d=>{
+				return options.best_times[d.distance].cumulative_times.indexOf(d.cumulative_time)===2;
+			})
+			.attr("stroke-dasharray",function(d){
+				return "0 "+this.getTotalLength();
+			})
 
+	this.showLeg = (mt) => {
+		leg
+			.classed("visible",(d)=>{
+				return d.distance == mt;
+			})
+			.filter(d=>{
+				return d.distance == mt;	
+			})
+			.each(function(d){
+				//console.log(d,this)
+				legTransition(this,d)
+			})
+	}
+
+	function legTransition(leg,split) {
+
+		console.log(leg,split)
+
+		let __TIME=1000;//(time?time:info.leg_time)/multiplier;
+	  	select(leg)
+	  		.select("path")
+	  			.attr("stroke-dasharray",function(d){
+					return "0 "+this.getTotalLength();
+				})
+		  		.transition()
+				.duration(options.best_times[split.distance].best_time/(split.distance===0?1:20))
+				//.ease(!split?CyclingEasing:CyclingLinear)
+				.ease(SwimmingLinear)
+				//.ease(RunningLinear)
+				//.ease(info.leg===0?Running200mEasing:RunningLinear)
+				.attrTween("stroke-dasharray", function(d){return tweenDash(this,d)})
+				.on("end", function(d,i) {
+					console.log("end",d,i)
+					
+					if(options.endCallback) {
+						options.endCallback(d)
+					}
+
+					// if(CURRENT[index]===split) {
+					// 	CURRENT[index]++;
+					// 	PREV[index]=this;
+
+					// 	if(options.splitCallback) {
+					// 		//console.log("SPLIT CALLBACK",index,CURRENT[index],split)
+					// 		options.splitCallback(index,split)
+					// 	}
+
+					// 	teamTransition(index,CURRENT[index]);
+					// }
+					
+				});
+	}
+
+	function tweenDash(path,split) {
+		if(split.distance===0) {
+			return function(t) {
+				let l=path.getTotalLength();
+				let interpolate = interpolateString("0," + l, l + "," + l);
+	            return interpolate(t);
+			}
+		}
+		return function(t) {
+
+			
+
+			let part = 0.7,
+				totalLength=path.getTotalLength(),
+				snakeLength = totalLength * 0.08,
+    			gap = totalLength - snakeLength,
+    			position=totalLength*part + (totalLength*(1-part))*(t);
+
+			let dash;//"0,"+(position)+","+snakeLength+","+totalLength;
+
+			if(position<snakeLength) {
+				let interpolate=interpolateString("0," + totalLength, totalLength + "," + totalLength)
+				dash=interpolate(t);
+				console.log("1",t,dash) //initial part shorter than swimmer
+			} 
+			// else if (position>=gap) {
+			// 	dash="0,"+(position - snakeLength)+","+snakeLength+","+totalLength;
+			// 	console.log("2",t,dash)
+			// } 
+			else {
+				dash="0,"+(position - snakeLength)+","+snakeLength+","+totalLength;
+				console.log("3",t,dash) //part in middle
+			}
+			
+			//console.log(t,"---->",dash)
+            //console.log(dash)
+            return dash;
+            // return interpolate(t);
+
+            // return interpolate(t);
+		}
+	}
 
 }
 function SwimmingPool(options) {
@@ -267,8 +469,28 @@ function SwimmingPool(options) {
 
 							l${hscale(dimensions.block)},0 ` 
 				});
+}
+function Timeline(options) {
 
+	let timeline=options.container
+					.append("div")
+						.attr("class","timeline");
 
-
+	let step=timeline.selectAll("div.step")
+						.data(options.steps)
+						.enter()
+						.append("div")
+							.attr("class","step")
+							.on("click",(d)=>{
+								if(options.clickCallback) {
+									options.clickCallback(d)
+								}
+							})
+	step.append("span")
+			.attr("class","dot");
+	step.append("b")
+			.text(d=>{
+				return d+"mt"
+			})
 
 }

@@ -3,3 +3,19 @@
 @function colour($name) {
     @return map-get($pasteup-palette, $name);
 }
+
+$water:#91cbe7;
+$water_rgb:rgb(203, 231, 244);
+
+
+$gold:#ffd700;
+$gold_rgb:rgb(255, 215, 0);
+$gold_rgba_05:rgba(255, 215, 0,0.5);
+
+$silver:#c0c0c0;
+$silver_rgb:rgb(192,192,192);
+$silver_rgba_05:rgba(192,192,192,0.5);
+
+$bronze:#cd7f32;
+$bronze_rgb:rgb(205, 127, 50);
+$bronze_rgba_05:rgba(205, 127, 50,0.5);
