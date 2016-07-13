@@ -23,6 +23,7 @@ System.config({
     "babel-runtime": "npm:babel-runtime@5.8.38",
     "core-js": "npm:core-js@1.2.6",
     "d3-array": "npm:d3-array@1.0.0",
+    "d3-axis": "npm:d3-axis@1.0.0",
     "d3-collection": "npm:d3-collection@1.0.0",
     "d3-format": "npm:d3-format@1.0.0",
     "d3-interpolate": "npm:d3-interpolate@1.1.0",

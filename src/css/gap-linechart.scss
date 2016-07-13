@@ -1,0 +1,87 @@
+.gap-linechart {
+	overflow:hidden;
+	
+	$width:620px;
+	$height:300px;
+
+	width:$width;
+	height:$height;
+
+	svg {
+		width:$width;
+		height:$height;
+
+		.athlete {
+			path {
+				fill:none;
+
+				stroke-width:5;
+				stroke-opacity:0.5;
+				fill:none;
+				stroke:#008BC9;
+				
+			}
+			.marker {
+				text {
+					@include fs-header(1);
+					fill:#008BC9;
+					tspan {
+						@include fs-headline(1);
+						fill:#999;
+					}
+				}
+			}
+			&.gold {
+				path {
+					stroke:$gold;
+					stroke-opacity:1;
+				}
+				text {
+					fill:$gold_text;
+				}
+			}
+			&.silver {
+				path {
+					stroke:$silver;
+					stroke-opacity:1;
+				}
+				text {
+					fill:$silver;
+				}
+			}
+			&.bronze {
+				path {
+					stroke:$bronze;
+					stroke-opacity:1;
+				}
+				text {
+					fill:$bronze;
+				}
+			}
+		}
+
+		.axes {
+			.axis {
+				&.x {
+					path {
+						display: none;
+					}
+					.tick {
+						text {
+							@include fs-textSans(1);
+							fill:#bdbdbd;
+							text-anchor:start;
+						}
+						line {
+							shape-rendering:crispEdges;
+							stroke:#bdbdbd;
+							stroke-width:1;
+						}
+					}
+				}
+			}
+		}
+
+	}
+
+}

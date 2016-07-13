@@ -47,9 +47,9 @@ import {
 
 //import Velodrome from './Velodrome';
 
-export default function Swimming(data,options) {
+export default function SwimmingExploded(data,options) {
 
-	console.log("Swimming",data.olympics.eventUnit.result.entrant);
+	console.log("SwimmingExploded",data.olympics.eventUnit.result.entrant);
 
 	let swimmers_data=[],
 		best_cumulative_times={},
@@ -140,80 +140,166 @@ export default function Swimming(data,options) {
     	
 	    let container=select(options.container)
 	    					.append("div")
-	    					.attr("class","swimming")
+	    					.attr("class","swimming-exploded")
 
-	    let timeline=new Timeline({
-		    	container:container,
-		    	steps:[0,50,100,150,200],
-		    	clickCallback:(mt) => {
-		    		console.log(mt,swimmers_data);
-		    		swimmers_data.filter((d,i)=>(1)).forEach(s => {
-		    			s.swimmer.showLeg(mt)
-		    		})
-		    	}
-		    });
+	    
+	    let ul=container.append("div")
+	    				.attr("class","swimmers")
+	    				.append("ul");
+	    let header=ul.append("li")
+	    				.attr("class","header");
+	    // header.append("div")
+	    // 			.attr("class","swimmer-name")
+	    // 			.html("&nbsp;")
+	    
+	    header.append("div")
+	    			.attr("class","splits")
+	    			.selectAll("div.split")
+	    			.data([0,50,100,150,200])
+	    			.enter()
+	    			.append("div")
+	    				.attr("class","split")
+	    				.classed("start-leg",d=>(d===0))
+	    				.html(d=>{
+	    					if(d===0) {
+	    						return "&nbsp;";//"Start"
+	    					}
+	    					return d+"m";
+	    				})
 
-	    let name_box=container.append("div")
-	    				.attr("class","info swimmer-names")
-	    				.append("ul")
-	    					.selectAll("li")
-	    					.data(swimmers_data)
-	    					.enter()
-	    						.append("li")
+
+	    let swimmer=ul
+						.selectAll("li.swimmer")
+						.data(swimmers_data)
+						.enter()
+							.append("li")
+							.attr("class","swimmer")
+
+	    let name_box=swimmer.append("div")
+	    				.attr("class","swimmer-name")
 	    name_box
 				.append("span")
 				.text(d=>d.swimmer)
 
-	    let swimming_pool=container.append("div")
-	    				.attr("class","info swimming-pools")
-	    				.append("ul")
+		let svg=swimmer
+					.append("div")
+					.attr("class","splits")
+						.selectAll("div.split")
+								.data(d=>{
+									console.log(d)
+									return ([{
+										value:d.reaction_time.value,
+										time:d.reaction_time.time,
+										cumulative_time:d.reaction_time.time,
+										distance:0
+									}]).concat(d.splits)
+								})
+								.enter()
+								.append("div")
+									.attr("class","split")
+			    						.append("svg")
+	    let defs=svg.append("defs");
+	    svg
+			.each(function(d){
+
+				let box = this.getBoundingClientRect();
+			    let WIDTH = options.width || box.width,
+			        HEIGHT = options.height || box.height;
+
+			    //console.log(WIDTH,HEIGHT)
+			    let hscale=scaleLinear().domain([0,dimensions.length+dimensions.block*4]).range([0,WIDTH-(margins.left+margins.right)]),
+					vscale=scaleLinear().domain([0,dimensions.step+dimensions.depth+dimensions.man_height]).range([0,HEIGHT-(margins.top+margins.bottom)]);
+
+				d.swimmer=new Swimmer(d,{
+						svg:select(this),
+						container:this.parentNode,
+						margins:margins,
+						hscale:hscale,
+						vscale:vscale,
+						best_times:best_cumulative_times,
+						endCallback:(s) => {
+							//updateNames(split)
+							updateTimes(s);
+						}
+				});
+				new SwimmingPool({
+						svg:select(this),
+						container:this.parentNode,
+						margins:margins,
+						hscale:hscale,
+						vscale:vscale,
+						distance:d.distance
+				})
+			})
+
+
+		defs.append("linearGradient")
+				.attr("id","poolEndBorder")
+				.selectAll("stop")
+					.data([
+						{
+							"offset":"80%",
+							"class":"water-color",
+							"stop-opacity":0
+						},
+						{
+							"offset":"100%",
+							"class":"water-color",
+							"stop-opacity":0.5
+						}
+					])
+					.enter()
+					.append("stop")
+						.attr("class",d=>d["class"])
+						.attr("offset",d=>d.offset)
+						.attr("stop-opacity",d=>d["stop-opacity"]);
+
+		defs.append("linearGradient")
+				.attr("id","poolStartBorder")
+				.selectAll("stop")
+					.data([
+						{
+							"offset":"0%",
+							"class":"water-color",
+							"stop-opacity":0.5
+						},
+						{
+							"offset":"20%",
+							"class":"water-color",
+							"stop-opacity":0
+						}
+					])
+					.enter()
+					.append("stop")
+						.attr("class",d=>d["class"])
+						.attr("offset",d=>d.offset)
+						.attr("stop-opacity",d=>d["stop-opacity"])
+		
+		
+	    let time_box=swimmer.append("div")
+	    				.attr("class","swimmer-performances")
+	    				/*.append("ul")
 	    					.selectAll("li")
 	    					.data(swimmers_data)
 	    					.enter()
-	    						.append("li")
-	    						.append("svg")
-		    						.each(function(d){
-
-		    							let box = this.getBoundingClientRect();
-									    let WIDTH = options.width || box.width,
-									        HEIGHT = options.height || box.height;
-
-									    //console.log(WIDTH,HEIGHT)
-									    let hscale=scaleLinear().domain([0,dimensions.length+dimensions.block*2]).range([0,WIDTH-(margins.left+margins.right)]),
-											vscale=scaleLinear().domain([0,dimensions.step+dimensions.depth+dimensions.man_height]).range([0,HEIGHT-(margins.top+margins.bottom)]);
-
-		    							d.swimmer=new Swimmer(d,{
-		    									svg:select(this),
-		    									margins:margins,
-		    									hscale:hscale,
-		    									vscale:vscale,
-		    									best_times:best_cumulative_times,
-		    									endCallback:(s) => {
-		    										//updateNames(split)
-		    										updateTimes(s);
-		    									}
-		    							});
-		    							new SwimmingPool({
-		    									svg:select(this),
-		    									margins:margins,
-		    									hscale:hscale,
-		    									vscale:vscale
-		    							})
-		    						})
-
-	    let time_box=container.append("div")
-	    				.attr("class","info swimmer-performances")
-	    				.append("ul")
-	    					.selectAll("li")
-	    					.data(swimmers_data)
-	    					.enter()
-	    						.append("li");
+	    						.append("li");*/
 	    time_box
 			.append("span")
 			.text(d=>{
 				return d.value;
 			})
 		time_box
+			.append("i")
+			.text(d=>{
+				let last_split=d.splits[d.splits.length-1],
+					diff=last_split.cumulative_time - best_cumulative_times[last_split.distance].best_cumulative,
+					_time="";
+				if(diff>0) {
+		    		_time="+"+formatSecondsMilliseconds(diff);
+		    	}
+				return _time;
+			})
+		/*time_box
 			.append("ol")
 				.selectAll("li")
 				.data(d=>{
@@ -243,7 +329,7 @@ export default function Swimming(data,options) {
 						swimmers_data.forEach(s => {
 			    			s.swimmer.showLeg(d.distance)
 			    		})
-					})
+					})*/
 
 
 	    function updateTimes(s) {
@@ -263,6 +349,10 @@ export default function Swimming(data,options) {
 function Swimmer(data,options) {
 	console.log("Swimmer",data,options);
 
+	let box = options.container.getBoundingClientRect();
+	    let WIDTH = box.width,
+	        HEIGHT = box.height;
+
 	let line = d3_line().curve(curveCardinal)
 
 	let margins=options.margins || {left:0,top:0,right:0,bottom:0};
@@ -270,23 +360,28 @@ function Swimmer(data,options) {
 	let hscale=options.hscale,
 		vscale=options.vscale;
 
+	let delta_x=(data.distance > 0)?(hscale(dimensions.length+dimensions.block)-WIDTH+margins.right+2):0
+	
    	let swimmer=options.svg
 				.append("g")
 				.attr("class","swimmer")
-				.attr("transform",`translate(${margins.left},${margins.top})`)
+				.attr("transform",`translate(${margins.left - (delta_x)},${margins.top})`)
+				//.attr("transform",`translate(${margins.left},${margins.top})`)
 
 	let water_line=dimensions.man_height+dimensions.step;
-	let leg=swimmer.selectAll("g.leg")
+	let leg=swimmer
+				/*.selectAll("g.leg")
 						.data(([{
 							value:data.reaction_time.value,
 	    					time:data.reaction_time.time,
 	    					cumulative_time:data.reaction_time.time,
 	    					distance:0
 						}]).concat(data.splits))
-						.enter()
+						.enter()*/
 						.append("g")
 							.attr("rel",d=>("m"+d.distance))
 							.attr("class",d=>("leg m"+d.distance))
+							.datum(data)
 	leg
 		.append("path")
 			.attr("d",d=>{
@@ -307,19 +402,23 @@ function Swimmer(data,options) {
 						])
 				}
 
-				if(d.distance%100>0) {
-					//go
-					return line([
+				// if(d.distance%100>0) {
+				// 	//go
+				// 	return line([
+				// 			[hscale(dimensions.block),vscale(water_line)],
+				// 			[hscale(dimensions.block+dimensions.length-d.dmt),vscale(water_line)]
+				// 		]);
+				// } else {
+				// 	//back
+				// 	return line([
+				// 				[hscale(dimensions.length+dimensions.block),vscale(water_line)],
+				// 				[hscale(dimensions.block+d.dmt),vscale(water_line)]
+				// 			]);
+				// }
+				return line([
 							[hscale(dimensions.block),vscale(water_line)],
 							[hscale(dimensions.block+dimensions.length-d.dmt),vscale(water_line)]
 						]);
-				} else {
-					//back
-					return line([
-								[hscale(dimensions.length+dimensions.block),vscale(water_line)],
-								[hscale(dimensions.block+d.dmt),vscale(water_line)]
-							]);
-				}
 				
 			})
 			.classed("gold",d=>{
@@ -331,9 +430,7 @@ function Swimmer(data,options) {
 			.classed("bronze",d=>{
 				return options.best_times[d.distance].cumulative_times.indexOf(d.cumulative_time)===2;
 			})
-			.attr("stroke-dasharray",function(d){
-				return "0 "+this.getTotalLength();
-			})
+			
 
 	this.showLeg = (mt) => {
 		leg
@@ -434,17 +531,24 @@ function Swimmer(data,options) {
 }
 function SwimmingPool(options) {
 
-		//console.log("SwimmingPool",options)
+		console.log("SwimmingPool",options)
 
+		let box = options.container.getBoundingClientRect();
+	    let WIDTH = box.width,
+	        HEIGHT = box.height;
+
+		//return;
 		let hscale=options.hscale,
 			vscale=options.vscale;
 
 		let margins=options.margins || {left:0,top:0,right:0,bottom:0};
 
+		let delta_x=(options.distance>0)?(hscale(dimensions.length+dimensions.block)-WIDTH+margins.right+2):0
+		
 	   	let pool=options.svg
 					.append("g")
 					.attr("class","swimming-pool")
-					.attr("transform",`translate(${margins.left},${margins.top})`)
+					.attr("transform",`translate(${margins.left - (delta_x)},${margins.top})`)
 
 		pool
 			.append("g")
@@ -454,13 +558,36 @@ function SwimmingPool(options) {
 						.attr("y",vscale(dimensions.step+dimensions.man_height))
 						.attr("width",hscale(dimensions.length))
 						.attr("height",vscale(dimensions.depth))
+						.style("fill",`url(#${options.distance===0?"poolStartBorder":"poolEndBorder"})`)
 
-		pool.append("path")
+		if(options.distance===0) {
+
+
+
+			pool.append("path")
+			.attr("class","pool-line")
+			.attr("d",()=>{
+				return `M${hscale(0)},${vscale(dimensions.man_height)}
+						
+						l${hscale(dimensions.block)},0 
+						
+						l0,${vscale(dimensions.step)} 
+
+						l0,${vscale(dimensions.depth)} 
+
+						l${hscale(dimensions.length)},0 
+
+						l0,${-vscale(dimensions.depth)} 
+
+						l0,${-vscale(dimensions.step)} `
+
+						//l${hscale(dimensions.block)},0 ` 
+			});
+		} else {
+			pool.append("path")
 				.attr("class","pool-line")
 				.attr("d",()=>{
-					return `M${hscale(0)},${vscale(dimensions.man_height)}
-							
-							l${hscale(dimensions.block)},0 
+					return `M${hscale(0)+hscale(dimensions.block)},${vscale(dimensions.man_height)}
 							
 							l0,${vscale(dimensions.step)} 
 
@@ -470,10 +597,14 @@ function SwimmingPool(options) {
 
 							l0,${-vscale(dimensions.depth)} 
 
-							l0,${-vscale(dimensions.step)}
+							l0,${-vscale(dimensions.step)} `
 
-							l${hscale(dimensions.block)},0 ` 
+							//l${hscale(dimensions.block)},0 ` 
 				});
+		}
+
+		
+		
 }
 function Timeline(options) {
 

@@ -34,6 +34,10 @@ a {
             max-width: map-get($mq-breakpoints, $bp);
         }
     }
+
+    > div {
+        margin-bottom:100px;
+    }
 }
 
 .interactive-es6-headline {

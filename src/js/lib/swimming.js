@@ -16,3 +16,5 @@ export const dimensions = {
     false_start_rope:15,
     man_height:2
 }
+
+export const distances = [0,50,100,150,200];

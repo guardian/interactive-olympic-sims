@@ -7,6 +7,8 @@ import running_data400 from '../assets/data/men_running_400.json!json'
 import records from '../assets/data/records.json!json'
 import SwimmingSimulation from './components/SwimmingSimulation';
 import Swimming from './components/Swimming';
+import SwimmingExploded from './components/SwimmingExploded';
+import SwimmingLineChart from './components/SwimmingLineChart';
 
 import Running from './components/Running';
 
@@ -107,6 +109,32 @@ export function init(el, context, config, mediator) {
         multiplier:1,
         race:"100m"
     })*/
+
+    
+
+    new SwimmingLineChart(swimming_data,{
+        container:el.querySelector(".interactive-container"),
+        record:records.men_freestyle_100,
+        multiplier: 1,
+        margins: {
+            left:20,
+            right:160,
+            top:20,
+            bottom:20
+        }
+    })
+
+    new SwimmingExploded(swimming_data,{
+        container:el.querySelector(".interactive-container"),
+        record:records.men_freestyle_100,
+        multiplier: 1,
+        margins: {
+            left:5,
+            right:5,
+            top:5,
+            bottom:5
+        }
+    })
 
     new Swimming(swimming_data,{
         container:el.querySelector(".interactive-container"),

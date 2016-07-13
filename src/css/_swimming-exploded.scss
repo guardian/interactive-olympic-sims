@@ -1,0 +1,193 @@
+.swimming-exploded {
+
+	overflow:hidden;
+
+	$ratio:1;
+	
+	$width:620px;
+	$names_width: 140px;
+	$times_width: 45px;
+	
+	$swimming_pool_width:$width - $names_width - $times_width;
+
+	$height:500px;
+
+	$li_padding_top:0;
+
+	width:$width;
+	
+	ul {
+		margin:0;
+		padding:0;
+		width:100%;
+		list-style: none;
+		li {
+			width:100%;
+			height:$height/8;
+			> div {
+				float:left;
+			}
+			&.header {
+				height:18px;
+				.splits {
+					margin-left:$names_width;
+					.split {
+						@include fs-textSans(1);
+						line-height: 18px;
+						text-align: right;
+						color:#bdbdbd;
+						&.start-leg {
+							text-align: left;
+						}
+					}
+				}
+			}
+			.swimmer-name {
+				width:$names_width;
+				text-align: right;
+				@include fs-header(1);
+				line-height: $height/8;
+				span {
+					display: inline-block;
+					//margin-top:15px;
+				}
+			}
+			.swimmer-performances {
+				width:$times_width;
+				@include fs-headline(1);
+				text-align: right;
+				span {
+					display: block;
+					margin-top:$height/8/3;
+				}
+				i {
+					display: block;
+					color:#999;
+					margin-top:5px;
+				}
+				/* ul {
+					li {
+						@include fs-headline(1);
+						//line-height: $height/8;
+						span {
+							display: inline-block;
+							margin-top:17px;
+						}
+						ol {
+							margin:0;
+							padding:0;
+							display: block;
+							overflow: hidden;
+							li {
+								list-style: none;
+								float:left;
+								width:15px;
+								height:15px;
+								padding-top:0;
+								margin-right:3px;
+
+								@include fs-textSans(1);
+								line-height: 16px;
+								text-align: center;
+								
+								border-radius:10px;
+								border:2px solid #eee;
+
+								cursor: pointer;
+								
+								&.gold {
+									background-color:$gold_rgba_05;
+								}
+								&.silver {
+									background-color:$silver_rgba_05;
+								}
+								&.bronze {
+									background-color:$bronze_rgba_05;
+								}
+
+								&:hover {
+									border-color:#bdbdbd;
+									&.gold {
+										border-color:$gold;
+									}
+									&.silver {
+										border-color:$silver;
+									}
+									&.bronze {
+										border-color:$bronze;
+									}	
+								}
+								
+							}
+						}
+					}
+				} */
+			}
+			.splits {
+				overflow: hidden;
+				width:$swimming_pool_width;//$width - $names_width;
+				.split {
+					$margin:10px;
+					float:left;
+					width:$swimming_pool_width/5-($margin);//($width - $names_width)/5 - 20px;
+					margin:0 $margin 0 0;
+					overflow: hidden;
+					svg {
+						width:$swimming_pool_width;
+						height:$height/8;
+						margin-left:0;
+						.swimming-pool {
+							path.pool-line {
+								stroke-width:1;
+								stroke:#767676;
+								stroke-opacity:0.4;
+								fill:none;
+								shape-rendering:crispEdges;
+							}
+							.water {
+								rect {
+									stroke:none;
+									fill:#cbe7f4;
+									fill-opacity:0.7;
+								}
+							}	
+						}
+						.swimmer {
+							.leg {
+								path {
+									
+									stroke-width:5;
+									stroke-opacity:1;
+									fill:none;
+									stroke:#008BC9;
+									
+
+
+									&.gold {
+										stroke:$gold;
+									}
+									&.silver {
+										stroke:$silver;
+									}
+									&.bronze {
+										stroke:$bronze;
+									}
+								}
+
+								&.visible {
+									path {
+										stroke-opacity:1;
+									}
+								}
+							}
+						}
+						.water-color {
+							stop-color:$water;
+						}
+					}
+				}
+			}
+		}
+	}
+
+}
