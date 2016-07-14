@@ -37,6 +37,7 @@ import {
 	interval
 } from 'd3-timer';
 //import Barchart from './Barchart';
+import PerspT from 'perspective-transform';
 
 
 import {cancelAnimFrame, requestAnimFrame} from '../lib/raf';
@@ -117,55 +118,7 @@ export default function SwimmingLineChart(data,options) {
     	});
 
     	LEGS=range(swimmers_data[0].splits.length+1).map(d=>d*50);
-    	//console.log("LEGS",LEGS)
-
-    	/*WR={
-    	    		"swimmer":"WR",
-    	    		"value":"1:54.00",
-    				"reaction_time":{
-    					value:"0.66",
-    					time: 660
-    				},
-    				"splits":{
-    					0:{
-    						value:"0.66",
-    						time:660,
-    						cumulative_time:660,
-    						distance:0*50
-    					},
-    					50:{
-    						value:"28.5",
-    						time:28500,
-    						cumulative_time:28500*1,
-    						distance:1*50
-    					},
-    					100:{
-    						value:"57.0",
-    						time:28500,
-    						cumulative_time:28500*2,
-    						distance:2*50
-    					},
-    					150:{
-    						value:"1:25.5",
-    						time:28500,
-    						cumulative_time:28500*3,
-    						distance:3*50
-    					},
-    					200:{
-    						value:"1:54.00",
-    						time:28500,
-    						cumulative_time:28500*4,
-    						distance:4*50
-    					}
-    				},
-    				"entrant":{
-    					participant: {
-    						competitor: {
-    							lastName: "WR"
-    						}
-    					}
-    				}
-    	    	};*/
+    	
 
     	swimmers_data.forEach(swimmer=>{
     		if(!best_cumulative_times[0]) {
@@ -226,6 +179,64 @@ export default function SwimmingLineChart(data,options) {
 		yscale=scaleLinear().domain([0,time_extent[1]*1.1]).range([0,HEIGHT-(margins.top+margins.bottom)]);
 		
 		let svg=container.append("svg")
+
+
+
+		var srcCorners = [
+						0, 0, 
+						WIDTH, 0, 
+						0, HEIGHT, 
+						WIDTH, HEIGHT
+					];
+		var dstCorners = [
+						WIDTH*0.3, 0,
+						WIDTH*0.7, 0, 
+						0, HEIGHT, 
+						WIDTH, HEIGHT
+					];
+		var perspT = PerspT(srcCorners, dstCorners);
+		var srcPt = [250, 120];
+		var dstPt = perspT.transform(srcPt[0], srcPt[1]);
+
+		let pool=svg.append("g")
+						.attr("class","pool");
+		pool
+			.append("path")
+				.attr("d",()=>{
+					let points=[
+						[0,0],
+						[WIDTH,0],
+						[WIDTH,HEIGHT],
+						[0,HEIGHT]
+					];
+					return line(points.map(p=>{
+						console.log(p,perspT.transform(p[0],p[1]))
+						return perspT.transform(p[0],p[1])
+					}))
+				})
+				.style("fill","#eee")
+		let lanes=range(9).map(d=>{
+					let step=WIDTH/8;
+					return [[step*d,0],[step*d,HEIGHT]]
+				});
+		console.log("LANES",lanes)
+		pool.selectAll("path.border")
+				.data(lanes)
+				.enter()
+				.append("path")
+					.attr("class","border")
+					.style("stroke","#333")
+					.style("fill","none")
+					.attr("d",d=>{
+						console.log("b",d)
+						return line(d.map(p=>{
+							//console.log("border",p)
+							return perspT.transform(p[0],p[1])
+						}))
+					})
+
+
+		return;
 
 		let axes=svg
 					.append("g")

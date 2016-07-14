@@ -9,7 +9,8 @@ import {
 	max as d3_max,
 	min as d3_min,
 	extent,
-	sum as d3_sum
+	sum as d3_sum,
+	range
 } from 'd3-array';
 import {
 	nest
@@ -49,14 +50,15 @@ import {
 
 export default function Swimming(data,options) {
 
-	console.log("Swimming",data.olympics.eventUnit.result.entrant);
+	//console.log("Swimming",data.olympics.eventUnit.result.entrant);
 
 	let swimmers_data=[],
 		best_cumulative_times={},
-		CURRENT_LEG=0;
+		CURRENT_LEG=0,
+		LEGS=[];
 
 	let frameRequest = requestAnimFrame(function checkInnerHTML(time) {
-        ////console.log(time)
+        //////console.log(time)
         
         if(options.container && options.container.getBoundingClientRect().height) {
             cancelAnimFrame(checkInnerHTML);
@@ -98,6 +100,7 @@ export default function Swimming(data,options) {
     		}
     	});
 
+    	LEGS=range(swimmers_data[0].splits.length+1).map(d=>d*50);
     	
 
     	swimmers_data.forEach(swimmer=>{
@@ -127,8 +130,8 @@ export default function Swimming(data,options) {
     		best_cumulative_times[distance].times=best_cumulative_times[distance].times.sort((a,b)=>(a-b));
     		best_cumulative_times[distance].times=best_cumulative_times[distance].cumulative_times.sort((a,b)=>(a-b));
     	}
-    	console.log(swimmers_data)
-		console.log(best_cumulative_times)
+    	//console.log(swimmers_data)
+		//console.log(best_cumulative_times)
 		buildVisual();
 
 	}
@@ -144,9 +147,9 @@ export default function Swimming(data,options) {
 
 	    let timeline=new Timeline({
 		    	container:container,
-		    	steps:[0,50,100,150,200],
+		    	steps:LEGS,
 		    	clickCallback:(mt) => {
-		    		console.log(mt,swimmers_data);
+		    		//console.log(mt,swimmers_data);
 		    		swimmers_data.filter((d,i)=>(1)).forEach(s => {
 		    			s.swimmer.showLeg(mt)
 		    		})
@@ -178,7 +181,7 @@ export default function Swimming(data,options) {
 									    let WIDTH = options.width || box.width,
 									        HEIGHT = options.height || box.height;
 
-									    //console.log(WIDTH,HEIGHT)
+									    ////console.log(WIDTH,HEIGHT)
 									    let hscale=scaleLinear().domain([0,dimensions.length+dimensions.block*2]).range([0,WIDTH-(margins.left+margins.right)]),
 											vscale=scaleLinear().domain([0,dimensions.step+dimensions.depth+dimensions.man_height]).range([0,HEIGHT-(margins.top+margins.bottom)]);
 
@@ -188,6 +191,7 @@ export default function Swimming(data,options) {
 		    									hscale:hscale,
 		    									vscale:vscale,
 		    									best_times:best_cumulative_times,
+		    									legs:LEGS,
 		    									endCallback:(s) => {
 		    										//updateNames(split)
 		    										updateTimes(s);
@@ -217,7 +221,7 @@ export default function Swimming(data,options) {
 			.append("ol")
 				.selectAll("li")
 				.data(d=>{
-					console.log(d)
+					//console.log(d)
 					return ([{
 						value:d.reaction_time.value,
 						time:d.reaction_time.time,
@@ -247,10 +251,10 @@ export default function Swimming(data,options) {
 
 
 	    function updateTimes(s) {
-	    	console.log("updateTimes",s)
+	    	//console.log("updateTimes",s)
 	    	time_box.select("span")
 	    			.text(d=>{
-	    				//console.log(s)
+	    				////console.log(s)
 	    				if(s.distance===0) {
 	    					return d.reaction_time.value;
 	    				}
@@ -261,9 +265,11 @@ export default function Swimming(data,options) {
 	}
 }
 function Swimmer(data,options) {
-	console.log("Swimmer",data,options);
+	//console.log("Swimmer",data,options);
 
 	let line = d3_line().curve(curveCardinal)
+
+	let LEGS=options.legs;
 
 	let margins=options.margins || {left:0,top:0,right:0,bottom:0};
 
@@ -287,6 +293,12 @@ function Swimmer(data,options) {
 						.append("g")
 							.attr("rel",d=>("m"+d.distance))
 							.attr("class",d=>("leg m"+d.distance))
+							.attr("transform",(d,i)=>{
+								console.log(d);
+								let depth=(dimensions.depth/LEGS.length)*(LEGS.length - i),
+									y=vscale(depth);
+								return `translate(0,${y})`;
+							})
 	leg
 		.append("path")
 			.attr("d",d=>{
@@ -297,7 +309,7 @@ function Swimmer(data,options) {
 				let distance=d.distance || 3.5;
 				d.mt=distance*options.best_times[d.distance].best_cumulative/d.cumulative_time;
 				d.dmt=distance-d.mt;
-				console.log(d)
+				//console.log(d)
 
 				if(d.distance==0) {
 					return line([
@@ -331,9 +343,9 @@ function Swimmer(data,options) {
 			.classed("bronze",d=>{
 				return options.best_times[d.distance].cumulative_times.indexOf(d.cumulative_time)===2;
 			})
-			.attr("stroke-dasharray",function(d){
-				return "0 "+this.getTotalLength();
-			})
+			// .attr("stroke-dasharray",function(d){
+			// 	return "0 "+this.getTotalLength();
+			// })
 
 	this.showLeg = (mt) => {
 		leg
@@ -344,14 +356,14 @@ function Swimmer(data,options) {
 				return d.distance == mt;	
 			})
 			.each(function(d){
-				//console.log(d,this)
+				////console.log(d,this)
 				legTransition(this,d)
 			})
 	}
 
 	function legTransition(leg,split) {
 
-		console.log(leg,split)
+		//console.log(leg,split)
 
 		let __TIME=1000;//(time?time:info.leg_time)/multiplier;
 	  	select(leg)
@@ -367,7 +379,7 @@ function Swimmer(data,options) {
 				//.ease(info.leg===0?Running200mEasing:RunningLinear)
 				.attrTween("stroke-dasharray", function(d){return tweenDash(this,d)})
 				.on("end", function(d,i) {
-					console.log("end",d,i)
+					//console.log("end",d,i)
 					
 					if(options.endCallback) {
 						options.endCallback(d)
@@ -378,7 +390,7 @@ function Swimmer(data,options) {
 					// 	PREV[index]=this;
 
 					// 	if(options.splitCallback) {
-					// 		//console.log("SPLIT CALLBACK",index,CURRENT[index],split)
+					// 		////console.log("SPLIT CALLBACK",index,CURRENT[index],split)
 					// 		options.splitCallback(index,split)
 					// 	}
 
@@ -411,19 +423,19 @@ function Swimmer(data,options) {
 			if(position<snakeLength) {
 				let interpolate=interpolateString("0," + totalLength, totalLength + "," + totalLength)
 				dash=interpolate(t);
-				console.log("1",t,dash) //initial part shorter than swimmer
+				//console.log("1",t,dash) //initial part shorter than swimmer
 			} 
 			// else if (position>=gap) {
 			// 	dash="0,"+(position - snakeLength)+","+snakeLength+","+totalLength;
-			// 	console.log("2",t,dash)
+			// 	//console.log("2",t,dash)
 			// } 
 			else {
 				dash="0,"+(position - snakeLength)+","+snakeLength+","+totalLength;
-				console.log("3",t,dash) //part in middle
+				//console.log("3",t,dash) //part in middle
 			}
 			
-			//console.log(t,"---->",dash)
-            //console.log(dash)
+			////console.log(t,"---->",dash)
+            ////console.log(dash)
             return dash;
             // return interpolate(t);
 
@@ -434,7 +446,7 @@ function Swimmer(data,options) {
 }
 function SwimmingPool(options) {
 
-		//console.log("SwimmingPool",options)
+		////console.log("SwimmingPool",options)
 
 		let hscale=options.hscale,
 			vscale=options.vscale;
@@ -479,7 +491,7 @@ function Timeline(options) {
 
 	let timeline=options.container
 					.append("div")
-						.attr("class","timeline");
+						.attr("class","timeline l"+options.steps[options.steps.length-1])
 
 	let step=timeline.selectAll("div.step")
 						.data(options.steps)

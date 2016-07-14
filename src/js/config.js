@@ -31,9 +31,11 @@ System.config({
     "d3-selection": "npm:d3-selection@1.0.0",
     "d3-shape": "npm:d3-shape@1.0.0",
     "d3-time-format": "npm:d3-time-format@2.0.0",
+    "d3-timer": "npm:d3-timer@1.0.1",
     "d3-transition": "npm:d3-transition@1.0.0",
     "guardian/iframe-messenger": "github:guardian/iframe-messenger@master",
     "json": "github:systemjs/plugin-json@0.1.2",
+    "perspective-transform": "npm:perspective-transform@1.1.3",
     "reqwest": "github:ded/reqwest@1.1.5",
     "text": "github:systemjs/plugin-text@0.0.2",
     "github:jspm/nodelibs-assert@0.1.0": {

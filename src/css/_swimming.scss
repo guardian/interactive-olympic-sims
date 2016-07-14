@@ -133,8 +133,8 @@
 					.leg {
 						path {
 							
-							stroke-width:5;
-							stroke-opacity:0;
+							stroke-width:3;
+							stroke-opacity:1;
 							fill:none;
 							stroke:#008BC9;
 							
@@ -184,6 +184,11 @@
 				@include fs-textSans(1);
 				color:#555;
 				font-weight: normal;
+			}
+		}
+		&.l400 {
+			.step {
+				width:calc(100% / 9);
 			}
 		}
 	}
