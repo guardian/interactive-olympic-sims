@@ -1,5 +1,6 @@
 import mainHTML from './text/main.html!text'
 import swimming_data from '../assets/data/men_medley_400.json!json'
+import swimming_data200 from '../assets/data/men_medley_200.json!json'
 import running_data100 from '../assets/data/men_running_100.json!json'
 import running_data200 from '../assets/data/men_running_200.json!json'
 import running_data400 from '../assets/data/men_running_400.json!json'
@@ -11,6 +12,7 @@ import SwimmingExploded from './components/SwimmingExploded';
 import SwimmingLineChart from './components/SwimmingLineChart';
 
 import SwimmingPerspective from './components/SwimmingPerspective';
+import RunningPerspective from './components/RunningPerspective';
 
 import Running from './components/Running';
 
@@ -31,19 +33,19 @@ import TeamPursuit from './components/TeamPursuit';
 export function init(el, context, config, mediator) {
     el.innerHTML = mainHTML.replace(/%assetPath%/g, config.assetPath);
 
-    /*let team_pursuit=new TeamPursuit(men_team_pursuit,{
-        container:el.querySelector(".interactive-container"),
-        race:"team_pursuit",
-        title:"Team Pursuit, Men",
-        margins: {
-            left:40,
-            right:40,
-            top:40,
-            bottom:40
-        },
-        multiplier:1
-    })
-
+    // let team_pursuit=new TeamPursuit(men_team_pursuit,{
+    //     container:el.querySelector(".interactive-container"),
+    //     race:"team_pursuit",
+    //     title:"Team Pursuit, Men",
+    //     margins: {
+    //         left:40,
+    //         right:40,
+    //         top:40,
+    //         bottom:40
+    //     },
+    //     multiplier:1
+    // })
+/*
     let triathlon=new Triathlon(men_triathlon,{
         container:el.querySelector(".interactive-container"),
         race:"triathlon",
@@ -91,10 +93,10 @@ export function init(el, context, config, mediator) {
             top:20,
             bottom:20
         }
-    })
+    })*/
     
 
-    let race400=new Running(running_data400,{
+    /*let race400=new Running(running_data400,{
         container:el.querySelector(".interactive-container"),
         multiplier:1,
         race:"400m"
@@ -112,7 +114,19 @@ export function init(el, context, config, mediator) {
         race:"100m"
     })*/
 
-    new SwimmingPerspective(swimming_data,{
+    /*new SwimmingPerspective(swimming_data,{
+        container:el.querySelector(".interactive-container"),
+        record:records.men_freestyle_100,
+        multiplier: 1,
+        margins: {
+            left:10,
+            right:10,
+            top:10,
+            bottom:10
+        }
+    })*/
+
+    new RunningPerspective(running_data100,{
         container:el.querySelector(".interactive-container"),
         record:records.men_freestyle_100,
         multiplier: 1,
@@ -124,41 +138,41 @@ export function init(el, context, config, mediator) {
         }
     })
 
-    // new Swimming(swimming_data,{
-    //     container:el.querySelector(".interactive-container"),
-    //     record:records.men_freestyle_100,
-    //     multiplier: 1,
-    //     margins: {
-    //         left:5,
-    //         right:5,
-    //         top:5,
-    //         bottom:5
-    //     }
-    // })
+    /*new Swimming(swimming_data200,{
+        container:el.querySelector(".interactive-container"),
+        record:records.men_freestyle_100,
+        multiplier: 1,
+        margins: {
+            left:5,
+            right:5,
+            top:5,
+            bottom:5
+        }
+    })
 
-    // new SwimmingLineChart(swimming_data,{
-    //     container:el.querySelector(".interactive-container"),
-    //     record:records.men_freestyle_100,
-    //     multiplier: 1,
-    //     margins: {
-    //         left:10,
-    //         right:170,
-    //         top:20,
-    //         bottom:20
-    //     }
-    // })
+    new SwimmingLineChart(swimming_data,{
+        container:el.querySelector(".interactive-container"),
+        record:records.men_freestyle_100,
+        multiplier: 1,
+        margins: {
+            left:10,
+            right:170,
+            top:20,
+            bottom:20
+        }
+    })
 
-    // new SwimmingExploded(swimming_data,{
-    //     container:el.querySelector(".interactive-container"),
-    //     record:records.men_freestyle_100,
-    //     multiplier: 1,
-    //     margins: {
-    //         left:5,
-    //         right:5,
-    //         top:5,
-    //         bottom:5
-    //     }
-    // })
+    new SwimmingExploded(swimming_data,{
+        container:el.querySelector(".interactive-container"),
+        record:records.men_freestyle_100,
+        multiplier: 1,
+        margins: {
+            left:5,
+            right:5,
+            top:5,
+            bottom:5
+        }
+    })*/
 
     
 

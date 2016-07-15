@@ -293,12 +293,12 @@ function Swimmer(data,options) {
 						.append("g")
 							.attr("rel",d=>("m"+d.distance))
 							.attr("class",d=>("leg m"+d.distance))
-							.attr("transform",(d,i)=>{
+							/*.attr("transform",(d,i)=>{
 								console.log(d);
 								let depth=(dimensions.depth/LEGS.length)*(LEGS.length - i),
 									y=vscale(depth);
 								return `translate(0,${y})`;
-							})
+							})*/
 	leg
 		.append("path")
 			.attr("d",d=>{
@@ -343,9 +343,9 @@ function Swimmer(data,options) {
 			.classed("bronze",d=>{
 				return options.best_times[d.distance].cumulative_times.indexOf(d.cumulative_time)===2;
 			})
-			// .attr("stroke-dasharray",function(d){
-			// 	return "0 "+this.getTotalLength();
-			// })
+			.attr("stroke-dasharray",function(d){
+				return "0 "+this.getTotalLength();
+			})
 
 	this.showLeg = (mt) => {
 		leg
@@ -414,7 +414,7 @@ function Swimmer(data,options) {
 
 			let part = 0.7,
 				totalLength=path.getTotalLength(),
-				snakeLength = hscale(2),//totalLength * 0.08,
+				snakeLength = totalLength,//hscale(2),//totalLength * 0.08,
     			gap = totalLength - snakeLength,
     			position=totalLength*part + (totalLength*(1-part))*(t);
 

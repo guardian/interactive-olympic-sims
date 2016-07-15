@@ -51,15 +51,15 @@ import {
 
 import {
 	dimensions,
-	DiveEasing,
-	SwimmingLinear
-} from '../lib/swimming'
+	ReadyGoEasing,
+	RunningLinear
+} from '../lib/running'
 
 //import Velodrome from './Velodrome';
 
-export default function SwimmingLineChart(data,options) {
+export default function RunningLineChart(data,options) {
 
-	//console.log("SwimmingLineChart",data.olympics.eventUnit.result.entrant);
+	console.log("RunningLineChart",data.olympics.eventUnit.result.entrant);
 
 	let swimmers_data=[],
 		best_cumulative_times={},
@@ -101,27 +101,20 @@ export default function SwimmingLineChart(data,options) {
     				value:entrant.resultExtension[REACTION_TIME].value,
     				time: +entrant.resultExtension[REACTION_TIME].value * 1000
     			},
-    			"splits":entrant.resultExtension[SPLITS].extension.map((d,i)=>{
-    				let cumulative_time=convertTime(d.value),
-    					lap_time=cumulative_time-prev_cumulative_time;
-    				prev_cumulative_time=cumulative_time;
-
-
-
-    				return {
-    					value:d.value,
-    					time:lap_time,
-    					cumulative_time:cumulative_time,
-    					distance:+d.position*50
-    					//cumulative_time:distance==best_cumulative_time:x
-    				}
-    			}),
+    			"splits":[
+    				{
+    					value:entrant.value,
+	    				time:convertTime(entrant.value),
+	    				cumulative_time:convertTime(entrant.value),
+	    				distance:100
+	    			}
+    			],
     			"entrant":entrant,
     			"value":entrant.value
     		}
     	});
 
-    	LEGS=range(swimmers_data[0].splits.length+1).map(d=>d*50);
+    	LEGS=range(swimmers_data[0].splits.length+1).map(d=>d*100);
     	
 
     	swimmers_data.forEach(swimmer=>{

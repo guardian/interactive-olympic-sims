@@ -8,7 +8,8 @@ export const SwimmingEasing=bezier(0.1,0.15,0,0);
 
 export const dimensions = {
     block:2,
-    lan:2.5,
+    lane:2.5,
+    lanes_n:9,
     length:50,
     step:0.25,
     depth:3,

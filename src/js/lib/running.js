@@ -28,6 +28,7 @@ export const dimensions = {
 	radius:36.50,
 	lane:1.22,
 	lanes:9.76,
+	lanes_n:8,
 	line_width:0.05,
 	man_height:1.8,
 	block:2,

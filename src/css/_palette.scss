@@ -4,8 +4,8 @@
     @return map-get($pasteup-palette, $name);
 }
 
-$water:#91cbe7;
-$water_rgb:rgb(203, 231, 244);
+$water:#61C1E7; //#91cbe7;
+$water_rgb:rgb(97, 193, 231); //rgb(203, 231, 244);
 
 
 $gold:#ffd700;
@@ -20,3 +20,8 @@ $silver_rgba_05:rgba(192,192,192,0.5);
 $bronze:#cd7f32;
 $bronze_rgb:rgb(205, 127, 50);
 $bronze_rgba_05:rgba(205, 127, 50,0.5);
+
+$lane_green:#377173;
+$lane_blue:#334EE3;
+$lane_yellow:#EFD255;
+$lane_red:#9C0013;

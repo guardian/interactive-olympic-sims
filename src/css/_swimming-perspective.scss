@@ -1,0 +1,107 @@
+.swimming-perspective {
+
+	overflow:hidden;
+
+	$ratio:1;
+	
+	$width:620px;
+	$names_width: 140px;
+	$times_width: 150px;
+	
+	$swimming_pool_width:$width;// - $names_width - $times_width;
+
+	$height:400px;
+
+	$li_padding_top:0;
+
+	width:$width;
+	height:$height;
+
+	position: relative;
+	
+	svg {
+		width:$swimming_pool_width;
+		height:$height;
+		margin-left:0;
+		.swimming-pool {
+			path.pool-line {
+				stroke-width:1;
+				stroke:#767676;
+				fill:none;
+				shape-rendering:crispEdges;
+			}
+			.water {
+				path {
+					stroke:none;
+					fill:$water;//#f2f2f2;
+					fill-opacity:0.1;
+				}
+			}
+			.lane-ropes {
+				path.lane-rope {
+					stroke-width:3;
+					stroke:#333;
+					stroke-opacity:0.25;
+					&.r {
+						stroke:$lane_red;
+					}
+					&.g {
+						stroke:$lane_green;
+					}
+					&.b {
+						stroke:$lane_blue;
+					}
+					&.y {
+						stroke:$lane_yellow;
+					}
+				}
+			}
+		}
+		.swimmer {
+			.leg {
+				path {
+					
+					stroke-width:1;
+					stroke-opacity:0;
+					fill:#e0e0e0;
+					fill-opacity:0;
+					stroke:none;
+					
+				}
+
+				&.visible {
+					path {
+						fill-opacity:1;
+					}
+				}
+
+				&.m400 {
+					path {
+						fill-opacity:1;
+					}
+				}
+			}
+			&.gold {
+				.leg {
+					path {
+						fill:$gold;
+					}
+				}
+			}
+			&.silver {
+				.leg {
+					path {
+						fill:$silver;
+					}
+				}
+			}
+			&.bronze {
+				.leg {
+					path {
+						fill:$bronze;
+					}
+				}
+			}
+		}
+	}
+}
