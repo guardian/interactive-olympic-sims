@@ -96,7 +96,7 @@ export default function RunningLineChart(data,options) {
     		let prev_cumulative_time=0;
     		return {
     			"swimmer":entrant.participant.competitor.fullName,
-    			"lane":+entrant.order,
+    			"lane":+entrant.order-1,
     			"reaction_time":{
     				value:entrant.resultExtension[REACTION_TIME].value,
     				time: +entrant.resultExtension[REACTION_TIME].value * 1000
@@ -156,7 +156,7 @@ export default function RunningLineChart(data,options) {
     	
 	    let container=select(options.container)
 	    					.append("div")
-	    					.attr("class","swimming-perspective")
+	    					.attr("class","running-perspective")
 
 	    let box = container.node().getBoundingClientRect();
 	    let WIDTH = box.width,
@@ -173,13 +173,13 @@ export default function RunningLineChart(data,options) {
 	    
 
 		xscale=scaleLinear().domain([0,(dimensions.lanes_n+1)*dimensions.lane]).range([0,WIDTH-(margins.left+margins.right)]);
-		yscale=scaleLinear().domain([0,dimensions.length]).range([HEIGHT-(margins.top+margins.bottom),0]);
+		yscale=scaleLinear().domain([0,dimensions.length]).range([0,HEIGHT-(margins.top+margins.bottom)]);
 		
 		let svg=container.append("svg")
 
 		let pool={
 			w:xscale(dimensions.lane*(dimensions.lanes_n+1)),
-			h:yscale(0)
+			h:yscale(dimensions.length)
 		};
 
 		let srcCorners = [
@@ -189,8 +189,8 @@ export default function RunningLineChart(data,options) {
 						0, pool.h
 					];
 		let dstCorners = [
-						pool.w*0.3, 0,
-						pool.w*0.7, 0, 
+						pool.w*0.4, 0,
+						pool.w*0.6, 0, 
 						pool.w, pool.h,
 						0, pool.h
 					];
@@ -207,10 +207,12 @@ export default function RunningLineChart(data,options) {
 
 		let perspT = PerspT(srcCorners, dstCorners);
 
+		let defs=svg.append("defs");
 		//return;
 
-		new SwimmingPool({
+		new Track({
 				svg:svg,
+				defs:defs,
 				margins:margins,
 				hscale:xscale,
 				vscale:yscale,
@@ -219,15 +221,15 @@ export default function RunningLineChart(data,options) {
 
 	   	let lines=svg
 					.append("g")
-					.attr("class","swimmers")
+					.attr("class","runners")
 					.attr("transform",`translate(${margins.left},${margins.top})`)
 
 		let swimmer=lines
-					.selectAll("g.swimmer")
+					.selectAll("g.runner")
 					.data(swimmers_data)
 					.enter()
 					.append("g")
-						.attr("class","swimmer")
+						.attr("class","runner")
 						.classed("gold",d=>{
 							let t=d.splits[d.splits.length-1];
 							return best_cumulative_times[t.distance].cumulative_times.indexOf(t.cumulative_time)===0;
@@ -266,7 +268,7 @@ export default function RunningLineChart(data,options) {
 		leg.append("path")
 				.attr("d",s=>{
 
-					let x=xscale(s.lane*dimensions.lane + dimensions.lane/2),
+					let x=xscale((dimensions.lanes_n-s.lane)*dimensions.lane + dimensions.lane/2),
 						start_y=(s.distance%(dimensions.length*2)>0)?yscale(0):yscale(dimensions.length),
 						dist=s.distance-s.mt,
 						y=(s.distance%(dimensions.length*2)>0)?yscale(dimensions.length-dist):yscale(dist),
@@ -290,11 +292,12 @@ export default function RunningLineChart(data,options) {
 					}))*/
 				})
 				.transition()
-				.duration(best_cumulative_times[400].best_time/2)
-				.ease(SwimmingLinear)
+				.duration(best_cumulative_times[100].best_time)
+				//.ease(RunningLinear)
+				.ease(ReadyGoEasing)
 				.attr("d",s=>{
 
-					let x=xscale(s.lane*dimensions.lane + dimensions.lane/2),
+					let x=xscale((dimensions.lanes_n-s.lane)*dimensions.lane + dimensions.lane/2),
 						start_y=(s.distance%(dimensions.length*2)>0)?yscale(0):yscale(dimensions.length),
 						dist=s.distance-s.mt,
 						y=(s.distance%(dimensions.length*2)>0)?yscale(dimensions.length-dist):yscale(dist),
@@ -307,15 +310,6 @@ export default function RunningLineChart(data,options) {
 								perspT.transform(x-w/2,y),
 								perspT.transform(x-w/2,start_y)
 							]);
-
-					/*return line(splits.map(s=>{
-
-						s.diff=s.cumulative_time - best_cumulative_times[s.distance].best_cumulative;
-
-						return [xscale(s.distance),
-								yscale(s.diff)
-						]
-					}))*/
 				})
 
 		return;
@@ -492,7 +486,32 @@ export default function RunningLineChart(data,options) {
 
 	}
 }
-function SwimmingPool(options) {
+function Track(options) {
+
+		options.defs.append("linearGradient")
+				.attr("id","lineGradient")
+				.attr("x1",0)
+				.attr("x2",0)
+				.attr("y1",0)
+				.attr("y2",1)
+				.selectAll("stop")
+					.data([
+						{
+							"offset":"0%",
+							"stop-color":"#fff",
+							"stop-opacity":0
+						},
+						{
+							"offset":"80%",
+							"stop-color":"#fff",
+							"stop-opacity":1
+						}
+					])
+					.enter()
+					.append("stop")
+						.attr("stop-color",d=>d["stop-color"])
+						.attr("offset",d=>d.offset)
+						.attr("stop-opacity",d=>d["stop-opacity"]);
 
 		////console.log("SwimmingPool",options)
 
@@ -502,18 +521,18 @@ function SwimmingPool(options) {
 
 		let margins=options.margins || {left:0,top:0,right:0,bottom:0};
 
-	   	let pool=options.svg
+	   	let track=options.svg
 					.append("g")
-					.attr("class","swimming-pool")
+					.attr("class","track")
 					.attr("transform",`translate(${margins.left},${margins.top})`)
 		
 
 		let pool_coords=[]
 
 
-		pool
+		track
 			.append("g")
-				.attr("class","water")
+				.attr("class","tarmac")
 					.append("path")
 						.attr("d",()=>{
 							let points=[
@@ -531,33 +550,20 @@ function SwimmingPool(options) {
 		let lanes=[
 				{
 					lanes:range(dimensions.lanes_n).map(d=>{
-							return [[hscale(dimensions.lane*(d+1)),vscale.range()[0]],[hscale(dimensions.lane*(d+1)),vscale(5)]]
-					}),
-					colors:range(dimensions.lanes_n).map(d=>"r")
-
-				},
-				{
-					lanes:range(dimensions.lanes_n).map(d=>{
-							return [[hscale(dimensions.lane*(d+1)),vscale(dimensions.length-5)],[hscale(dimensions.lane*(d+1)),vscale(dimensions.length)]]
-					}),
-					colors:range(dimensions.lanes_n).map(d=>"r")
-				},
-				{
-					lanes:range(dimensions.lanes_n).map(d=>{
-						return [[hscale(dimensions.lane*(d+1)),vscale(dimensions.length-5)],[hscale(dimensions.lane*(d+1)),vscale(5)]]
+						return [[hscale(dimensions.lane*(d+1)),vscale(dimensions.length)],[hscale(dimensions.lane*(d+1)),vscale(0)]]
 					}),
 					colors:["g","b","b","y","y","y","b","b","g"]
 				}
 				
 		];
 		console.log("LANES",lanes)
-		pool
-			.selectAll("path.lane-ropes")
+		track
+			.selectAll("path.lane-lines")
 			.data(lanes)
 			.enter()
 				.append("g")
-					.attr("class","lane-ropes")
-					.selectAll("path.lane-rope")
+					.attr("class","lane-lines")
+					.selectAll("path.lane-line")
 						.data(d=>{ 
 							return d.lanes.map((l,i)=>{
 								//console.log("L",l,i,d)
@@ -569,7 +575,8 @@ function SwimmingPool(options) {
 						})
 						.enter()
 						.append("path")
-							.attr("class",d=>("lane-rope "+d.color))
+							//.attr("class",d=>("lane-line "+d.color))
+							.attr("class",d=>("lane-line"))
 							.style("fill","none")
 							.attr("d",d=>{
 								//console.log("rope",d.rope)
@@ -577,82 +584,9 @@ function SwimmingPool(options) {
 									return perspT.transform(p[0],p[1])
 								}))
 							})
+							.style("stroke","url(#lineGradient)")
 
-		/*pool
-			.append("path")
-				.attr("d",()=>{
-					let points=[
-						[0,0],
-						[WIDTH,0],
-						[WIDTH,HEIGHT],
-						[0,HEIGHT]
-					];
-					return line(points.map(p=>{
-						console.log(p,perspT.transform(p[0],p[1]))
-						return perspT.transform(p[0],p[1])
-					}))
-				})
-				.style("fill","#eee")
-		let lanes=range(9).map(d=>{
-					let step=WIDTH/8;
-					return [[step*d,0],[step*d,HEIGHT]]
-				});
-		console.log("LANES",lanes)
-		pool.selectAll("path.border")
-				.data(lanes)
-				.enter()
-				.append("path")
-					.attr("class","border")
-					.style("stroke","#333")
-					.style("fill","none")
-					.attr("d",d=>{
-						console.log("b",d)
-						return line(d.map(p=>{
-							//console.log("border",p)
-							return perspT.transform(p[0],p[1])
-						}))
-					})
-
-		pool.selectAll("circle")
-				.data(lanes.slice(0,8))
-				.enter()
-				.append("circle")
-					.attr("cx",d=>{
-						let coords=perspT.transform(d[1][0]+(WIDTH/8/2),d[1][1]-HEIGHT*0.1)
-						return coords[0];
-					})
-					.attr("cy",d=>{
-						let coords=perspT.transform(d[1][0]+(WIDTH/8/2),d[1][1]-HEIGHT*0.1)
-						return coords[1];
-					})
-					.attr("r",3)*/
+		
 		return;
-		pool
-			.append("g")
-				.attr("class","water")
-					.append("rect")
-						.attr("x",hscale(dimensions.block))
-						.attr("y",vscale(dimensions.step+dimensions.man_height))
-						.attr("width",hscale(dimensions.length))
-						.attr("height",vscale(dimensions.depth))
-
-		pool.append("path")
-				.attr("class","pool-line")
-				.attr("d",()=>{
-					return `M${hscale(0)},${vscale(dimensions.man_height)}
-							
-							l${hscale(dimensions.block)},0 
-							
-							l0,${vscale(dimensions.step)} 
-
-							l0,${vscale(dimensions.depth)} 
-
-							l${hscale(dimensions.length)},0 
-
-							l0,${-vscale(dimensions.depth)} 
-
-							l0,${-vscale(dimensions.step)}
-
-							l${hscale(dimensions.block)},0 ` 
-				});
+		
 }

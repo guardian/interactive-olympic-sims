@@ -138,6 +138,18 @@ export function init(el, context, config, mediator) {
         }
     })
 
+    new SwimmingPerspective(swimming_data200,{
+        container:el.querySelector(".interactive-container"),
+        record:records.men_freestyle_100,
+        multiplier: 1,
+        margins: {
+            left:10,
+            right:10,
+            top:10,
+            bottom:10
+        }
+    })
+
     /*new Swimming(swimming_data200,{
         container:el.querySelector(".interactive-container"),
         record:records.men_freestyle_100,

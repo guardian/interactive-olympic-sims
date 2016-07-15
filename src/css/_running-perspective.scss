@@ -1,10 +1,10 @@
-.swimming-perspective {
+.running-perspective {
 
 	overflow:hidden;
 
 	$ratio:1;
 	
-	$width:620px;
+	$width:320px;
 	$names_width: 140px;
 	$times_width: 150px;
 	
@@ -23,41 +23,28 @@
 		width:$swimming_pool_width;
 		height:$height;
 		margin-left:0;
-		.swimming-pool {
-			path.pool-line {
-				stroke-width:1;
-				stroke:#767676;
-				fill:none;
-				shape-rendering:crispEdges;
-			}
-			.water {
+		.track {
+			
+			.tarmac {
 				path {
 					stroke:none;
-					fill:$water;//#f2f2f2;
-					fill-opacity:0.1;
+					fill:$tarmac;//#f2f2f2;
+					fill-opacity:1;
 				}
 			}
-			.lane-ropes {
-				path.lane-rope {
-					stroke-width:3;
-					stroke:#333;
-					stroke-opacity:0.25;
-					&.r {
-						stroke:$lane_red;
-					}
-					&.g {
-						stroke:$lane_green;
-					}
-					&.b {
-						stroke:$lane_blue;
-					}
-					&.y {
-						stroke:$lane_yellow;
-					}
+			.lane-lines {
+				path.lane-line {
+					stroke-width:2;
+					//stroke:#fff;
+					//stroke-opacity:1;
+					fill:none;
+				}
+				.line-color {
+					stop-color:#ffffff;
 				}
 			}
 		}
-		.swimmer {
+		.runner {
 			.leg {
 				path {
 					
@@ -75,12 +62,7 @@
 					}
 				}
 
-				&.m200 {
-					path {
-						fill-opacity:1;
-					}
-				}
-				&.m400 {
+				&.m100 {
 					path {
 						fill-opacity:1;
 					}

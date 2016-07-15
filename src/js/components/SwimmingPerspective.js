@@ -297,7 +297,7 @@ export default function SwimmingLineChart(data,options) {
 					}))*/
 				})
 				.transition()
-				.duration(best_cumulative_times[400].best_time/2)
+				.duration(best_cumulative_times[200].best_time/2)
 				.ease(SwimmingLinear)
 				.attr("d",s=>{
 
@@ -584,82 +584,5 @@ function SwimmingPool(options) {
 									return perspT.transform(p[0],p[1])
 								}))
 							})
-
-		/*pool
-			.append("path")
-				.attr("d",()=>{
-					let points=[
-						[0,0],
-						[WIDTH,0],
-						[WIDTH,HEIGHT],
-						[0,HEIGHT]
-					];
-					return line(points.map(p=>{
-						console.log(p,perspT.transform(p[0],p[1]))
-						return perspT.transform(p[0],p[1])
-					}))
-				})
-				.style("fill","#eee")
-		let lanes=range(9).map(d=>{
-					let step=WIDTH/8;
-					return [[step*d,0],[step*d,HEIGHT]]
-				});
-		console.log("LANES",lanes)
-		pool.selectAll("path.border")
-				.data(lanes)
-				.enter()
-				.append("path")
-					.attr("class","border")
-					.style("stroke","#333")
-					.style("fill","none")
-					.attr("d",d=>{
-						console.log("b",d)
-						return line(d.map(p=>{
-							//console.log("border",p)
-							return perspT.transform(p[0],p[1])
-						}))
-					})
-
-		pool.selectAll("circle")
-				.data(lanes.slice(0,8))
-				.enter()
-				.append("circle")
-					.attr("cx",d=>{
-						let coords=perspT.transform(d[1][0]+(WIDTH/8/2),d[1][1]-HEIGHT*0.1)
-						return coords[0];
-					})
-					.attr("cy",d=>{
-						let coords=perspT.transform(d[1][0]+(WIDTH/8/2),d[1][1]-HEIGHT*0.1)
-						return coords[1];
-					})
-					.attr("r",3)*/
-		return;
-		pool
-			.append("g")
-				.attr("class","water")
-					.append("rect")
-						.attr("x",hscale(dimensions.block))
-						.attr("y",vscale(dimensions.step+dimensions.man_height))
-						.attr("width",hscale(dimensions.length))
-						.attr("height",vscale(dimensions.depth))
-
-		pool.append("path")
-				.attr("class","pool-line")
-				.attr("d",()=>{
-					return `M${hscale(0)},${vscale(dimensions.man_height)}
-							
-							l${hscale(dimensions.block)},0 
-							
-							l0,${vscale(dimensions.step)} 
-
-							l0,${vscale(dimensions.depth)} 
-
-							l${hscale(dimensions.length)},0 
-
-							l0,${-vscale(dimensions.depth)} 
-
-							l0,${-vscale(dimensions.step)}
-
-							l${hscale(dimensions.block)},0 ` 
-				});
+		
 }
