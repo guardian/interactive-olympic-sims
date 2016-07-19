@@ -2,6 +2,7 @@
 	
 	.entrant {
 		//width: 604px;
+		display:none;
 		height: 60px;
 		div.info {
 			@include fs-textSans(1);

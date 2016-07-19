@@ -23,5 +23,39 @@
 				                    "value": "46.91"
 				                }]
 				            }]
+	},
+	"men_medley_200":{
+		"athlete":"Ryan Lochte",
+		"country":"USA",
+		"time":"1:54.00",
+		"reaction_time":0.66,
+		"split_times":[
+				"24.89",
+				"53.48",
+				"1:26.51",
+				"1:54.00"
+			],
+		"date":"2011-07-28",
+		"where":"Shanghai, CHN",
+		"resultExtension": [{
+				                "type": "Reaction Time",
+				                "value": "0.66"
+				            }, {
+				                "type": "Split Times",
+				                "extension": [{
+				                    "position": "1",
+				                    "value": "24.89"
+				                }, {
+				                    "position": "2",
+				                    "value": "53.48"
+				                },
+				            	{
+				                    "position": "1",
+				                    "value": "1:26.51"
+				                }, {
+				                    "position": "2",
+				                    "value": "1:54.00"
+				                }]
+				            }]
 	}
 }

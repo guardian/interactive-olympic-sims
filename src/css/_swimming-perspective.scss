@@ -1,10 +1,10 @@
 .swimming-perspective {
 
-	overflow:hidden;
+	//overflow:hidden;
 
 	$ratio:1;
 	
-	$width:620px;
+	$width:400px;
 	$names_width: 140px;
 	$times_width: 150px;
 	
@@ -18,11 +18,38 @@
 	height:$height;
 
 	position: relative;
+	perspective: 550px;
+	perspective-origin: 130% 80%;
+	@include mq(tablet) {
+		perspective: 460px;
+		perspective-origin: 120% 50%;
+	}
+	backface-visibility: hidden;
 	
 	svg {
-		width:$swimming_pool_width;
+		width:$swimming_pool_width - 50px;
+		@include mq(tablet) {
+			width:$swimming_pool_width;
+		}
 		height:$height;
 		margin-left:0;
+
+		transform-style: preserve-3d;
+  		transition: transform 1s;
+
+		transform:rotateX(50deg) rotateY(0deg) rotateZ(20deg) translateZ(0px) translateX(130px) translateY(-25px);
+		@include mq(tablet) {
+  			transform:rotateX(60deg) rotateY(0deg) rotateZ(10deg) translateZ(0px) translateX(150px) translateY(-30px);
+  		}
+  		backface-visibility: hidden;
+		
+		&.end-side {
+			transform:rotateX(49deg) rotateY(1deg) rotateZ(10deg) translateZ(0px) translateX(41px) translateY(233px);
+			@include mq(tablet) {
+				transform:rotateX(60deg) rotateY(0deg) rotateZ(10deg) translateZ(0px) translateX(150px) translateY(230px);
+			}
+		}
+
 		.swimming-pool {
 			path.pool-line {
 				stroke-width:1;
@@ -48,7 +75,7 @@
 					&.g {
 						stroke:$lane_green;
 					}
-					&.b {
+					&.bl {
 						stroke:$lane_blue;
 					}
 					&.y {
@@ -75,7 +102,7 @@
 					}
 				}
 
-				&.m200 {
+				/* &.m200 {
 					path {
 						fill-opacity:1;
 					}
@@ -84,7 +111,7 @@
 					path {
 						fill-opacity:1;
 					}
-				}
+				} */
 			}
 			&.gold {
 				.leg {

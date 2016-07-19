@@ -67,7 +67,9 @@ export default function SwimmingLineChart(data,options) {
 		LEGS=[],
 		WR;
 
-	let athlete,
+	let svg,
+		leg,
+		athlete,
 		marker,
 		xscale,
 		yscale,
@@ -182,13 +184,26 @@ export default function SwimmingLineChart(data,options) {
 		xscale=scaleLinear().domain([0,(dimensions.lanes_n+1)*dimensions.lane]).range([0,WIDTH-(margins.left+margins.right)]);
 		yscale=scaleLinear().domain([0,dimensions.length]).range([HEIGHT-(margins.top+margins.bottom),0]);
 		
-		let svg=container.append("svg")
+		let ul=container.append("ul");
+					
+
+		svg=container.append("svg")
+
+		ul.selectAll("li")
+					.data([0,50,100,150,200])
+					.enter()
+					.append("li")
+						.text(d=>d)
+						.on("click",(d)=>{
+							//svg.classed("end-side",goTo)
+							goTo(d)
+						})
 
 		let pool={
 			w:xscale(dimensions.lane*(dimensions.lanes_n+1)),
 			h:yscale(0)
 		};
-
+		console.log("POOL",pool)
 		let srcCorners = [
 						0, 0, 
 						pool.w, 0,
@@ -203,12 +218,12 @@ export default function SwimmingLineChart(data,options) {
 					];
 
 		
-		// dstCorners = [
-		// 				0, 0, 
-		// 				xscale.range()[1], 0, 
-		// 				0, yscale.range()[1], 
-		// 				xscale.range()[1], yscale.range()[1]
-		// 			];
+		dstCorners = [
+						0, 0, 
+						pool.w-0, 0,
+						pool.w, pool.h,
+						0, pool.h
+					];
 
 		//console.log(srcCorners,dstCorners)
 
@@ -248,7 +263,7 @@ export default function SwimmingLineChart(data,options) {
 							return best_cumulative_times[t.distance].cumulative_times.indexOf(t.cumulative_time)===2;
 						})
 
-		let leg=swimmer
+		leg=swimmer
 					.selectAll("g.leg")
 					.data(ath=>{
 
@@ -296,7 +311,7 @@ export default function SwimmingLineChart(data,options) {
 						]
 					}))*/
 				})
-				.transition()
+				/*.transition()
 				.duration(best_cumulative_times[200].best_time/2)
 				.ease(SwimmingLinear)
 				.attr("d",s=>{
@@ -315,15 +330,8 @@ export default function SwimmingLineChart(data,options) {
 								perspT.transform(x-w/2,start_y)
 							]);
 
-					/*return line(splits.map(s=>{
-
-						s.diff=s.cumulative_time - best_cumulative_times[s.distance].best_cumulative;
-
-						return [xscale(s.distance),
-								yscale(s.diff)
-						]
-					}))*/
-				})
+				})*/
+		
 
 		return;
 		let prev_marker=-1000;
@@ -404,98 +412,74 @@ export default function SwimmingLineChart(data,options) {
 	}
 
 	function goTo(distance) {
-		//console.log("goTo",distance)
-		athlete
-			.select("path")
-					.attr("d",d=>{
-						//console.log(d)
-						// let splits=([{
-						// 	value:d.reaction_time.value,
-						// 	time:d.reaction_time.time,
-						// 	cumulative_time:d.reaction_time.time,
-						// 	distance:0
-						// }]).concat(d.splits);
+		svg.classed("end-side",(distance%100>0))
 
-						let splits=d.splits.filter(s=>{
-							return s.distance <= distance;
-						})
+		leg
+			.classed("visible",false)
+			.filter(d=>(d.distance===distance))
+				.classed("visible",true)
+				.select("path")
+					.attr("d",s=>{
 
-						return line(splits.map(s=>{
-							s.diff=s.cumulative_time - best_cumulative_times[s.distance].best_cumulative;	
-							return [xscale(s.distance),
-									yscale(s.diff)
-							]
-						}))
-					})
-		let prev_marker=-1000;
-		athlete
-			.sort((a,b)=>{
-
-				//console.log(a.splits)
-				
-				let legs=[
-					a.splits.find(s=>s.distance===(distance>0?distance-50:0)),
-					b.splits.find(s=>s.distance===(distance>0?distance-50:0))
-				];
-				return legs[0].diff - legs[1].diff
-			})
-			.select("g.marker")
-				.attr("transform",(d,i)=>{
-					let x=xscale(distance)+5,
-						leg=d.splits.find(s=>s.distance===(distance>0?distance-50:0)),
-						y=yscale(leg.diff)+5,
-						delta=y-prev_marker;
-
-					//console.log("->",d.swimmer,d,leg)
-
-					if(delta<15) {
-						y=prev_marker+15
-					}
-					prev_marker=y;
-					return `translate(${x},${y})`;
-				})
-				.select("tspan")
-					.text(d=>{
-						let leg=d.splits.find(s=>s.distance===distance),
-							diff=leg.diff,
-							_time=leg.value;
-						if(diff>0) {
-				    		_time="+"+formatSecondsMilliseconds(diff);
-				    	}
-						return _time;
-					})
-
-		prev_marker=-1000;
-		athlete
-			.sort((a,b)=>{
-
-				//console.log(a.splits)
-
-				let legs=[
-					a.splits.find(s=>s.distance===distance),
-					b.splits.find(s=>s.distance===distance)
-				];
-				return legs[0].diff - legs[1].diff
-			})
-			.select("g.marker")
-				.transition()
-				.duration(500)
-					.attr("transform",(d,i)=>{
-
-						let x=xscale(distance)+5,
-							leg=d.splits.find(s=>s.distance===distance),
-							y=yscale(leg.diff)+5,
-							delta=y-prev_marker;
-
-						//console.log("->",d.swimmer,d,leg)
-
-						if(delta<15) {
-							y=prev_marker+15
-						}
-						prev_marker=y;
-						return `translate(${x},${y})`;
-					})
+						let x=xscale(s.lane*dimensions.lane + dimensions.lane/2),
+							start_y=(s.distance%(dimensions.length*2)>0)?yscale(0):yscale(dimensions.length),
+							dist=(s.distance-s.mt),
+							y=(s.distance%(dimensions.length*2)>0)?yscale((dimensions.length-dist)-10):yscale(dist+10),
+							w=xscale(0.8);
 						
+						return line([
+									[x-w/2,start_y],
+									[x+w/2,start_y],
+									[x+w/2,y],
+									[x-w/2,y],
+									[x-w/2,start_y]
+								]);
+
+					})
+					.transition()
+					.duration(s=>{
+						return best_cumulative_times[s.distance].best_time*0.2
+					})
+					.ease(SwimmingLinear)
+						.attr("d",s=>{
+
+							let x=xscale(s.lane*dimensions.lane + dimensions.lane/2),
+								start_y=(s.distance%(dimensions.length*2)>0)?yscale(0):yscale(dimensions.length),
+								dist=s.distance-s.mt,
+								y=(s.distance%(dimensions.length*2)>0)?yscale(dimensions.length-dist):yscale(dist),
+								w=xscale(0.8);
+
+							return line([
+										[x-w/2,start_y],
+										[x+w/2,start_y],
+										[x+w/2,y],
+										[x-w/2,y],
+										[x-w/2,start_y]
+									]);
+
+						})
+				
+
+		/*.transition()
+				.duration(best_cumulative_times[200].best_time/2)
+				.ease(SwimmingLinear)
+				.attr("d",s=>{
+
+					let x=xscale(s.lane*dimensions.lane + dimensions.lane/2),
+						start_y=(s.distance%(dimensions.length*2)>0)?yscale(0):yscale(dimensions.length),
+						dist=s.distance-s.mt,
+						y=(s.distance%(dimensions.length*2)>0)?yscale(dimensions.length-dist):yscale(dist),
+						w=xscale(0.8)
+
+					return line([
+								perspT.transform(x-w/2,start_y),
+								perspT.transform(x+w/2,start_y),
+								perspT.transform(x+w/2,y),
+								perspT.transform(x-w/2,y),
+								perspT.transform(x-w/2,start_y)
+							]);
+
+				})*/
 
 	}
 }
@@ -553,7 +537,7 @@ function SwimmingPool(options) {
 					lanes:range(dimensions.lanes_n).map(d=>{
 						return [[hscale(dimensions.lane*(d+1)),vscale(dimensions.length-5)],[hscale(dimensions.lane*(d+1)),vscale(5)]]
 					}),
-					colors:["g","b","b","y","y","y","b","b","g"]
+					colors:["g","bl","bl","y","y","y","bl","bl","g"]
 				}
 				
 		];

@@ -3,11 +3,11 @@
 	overflow:hidden;
 
 	$ratio:1;
-	
+
 	$width:620px;
 	$names_width: 140px;
 	$times_width: 150px;
-	
+
 	$swimming_pool_width:$width - $names_width - $times_width;
 
 	$height:500px;
@@ -18,7 +18,7 @@
 	//height:$height;
 
 	position: relative;
-	
+
 	div.info {
 		float:left;
 		ul {
@@ -70,12 +70,12 @@
 							@include fs-textSans(1);
 							line-height: 16px;
 							text-align: center;
-							
+
 							border-radius:10px;
 							border:2px solid #eee;
 
 							cursor: pointer;
-							
+
 							&.gold {
 								background-color:$gold_rgba_05;
 							}
@@ -96,16 +96,16 @@
 								}
 								&.bronze {
 									border-color:$bronze;
-								}	
+								}
 							}
-							
+
 						}
 					}
 				}
 			}
 		}
 		&.swimming-pools {
-			
+
 			width:$swimming_pool_width;
 			li {
 				overflow: hidden;
@@ -125,20 +125,20 @@
 						rect {
 							stroke:none;
 							fill:#cbe7f4;
-							fill-opacity:0.7;
+							fill-opacity:1;
 						}
 					}
 				}
 				.swimmer {
 					.leg {
 						path {
-							
+
 							stroke-width:3;
 							stroke-opacity:0;
 							fill:none;
 							stroke:#008BC9;
-							
 
+							shape-rendering:crispEdges;
 
 							&.gold {
 								stroke:$gold;
@@ -162,7 +162,7 @@
 		}
 	}
 
-	
+
 
 	.timeline {
 		width:$width - $times_width;

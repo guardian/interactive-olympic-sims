@@ -100,7 +100,8 @@ export default function Swimming(data,options) {
     		}
     	});
 
-    	LEGS=range(swimmers_data[0].splits.length+1).map(d=>d*50);
+    	//LEGS=range(swimmers_data[0].splits.length+1).map(d=>d*50);
+    	LEGS=range(swimmers_data[0].splits.length).map(d=>((d+1)*50));
     	
 
     	swimmers_data.forEach(swimmer=>{
@@ -185,6 +186,13 @@ export default function Swimming(data,options) {
 									    let hscale=scaleLinear().domain([0,dimensions.length+dimensions.block*2]).range([0,WIDTH-(margins.left+margins.right)]),
 											vscale=scaleLinear().domain([0,dimensions.step+dimensions.depth+dimensions.man_height]).range([0,HEIGHT-(margins.top+margins.bottom)]);
 
+										new SwimmingPool({
+		    									svg:select(this),
+		    									margins:margins,
+		    									hscale:hscale,
+		    									vscale:vscale
+		    							})
+
 		    							d.swimmer=new Swimmer(d,{
 		    									svg:select(this),
 		    									margins:margins,
@@ -197,12 +205,7 @@ export default function Swimming(data,options) {
 		    										updateTimes(s);
 		    									}
 		    							});
-		    							new SwimmingPool({
-		    									svg:select(this),
-		    									margins:margins,
-		    									hscale:hscale,
-		    									vscale:vscale
-		    							})
+		    							
 		    						})
 
 	    let time_box=container.append("div")
@@ -222,6 +225,7 @@ export default function Swimming(data,options) {
 				.selectAll("li")
 				.data(d=>{
 					//console.log(d)
+					return d.splits;
 					return ([{
 						value:d.reaction_time.value,
 						time:d.reaction_time.time,
@@ -283,20 +287,21 @@ function Swimmer(data,options) {
 
 	let water_line=dimensions.man_height+dimensions.step;
 	let leg=swimmer.selectAll("g.leg")
-						.data(([{
+						/*.data(([{
 							value:data.reaction_time.value,
 	    					time:data.reaction_time.time,
 	    					cumulative_time:data.reaction_time.time,
 	    					distance:0
-						}]).concat(data.splits))
+						}]).concat(data.splits))*/
+						.data(data.splits)
 						.enter()
 						.append("g")
 							.attr("rel",d=>("m"+d.distance))
 							.attr("class",d=>("leg m"+d.distance))
 							/*.attr("transform",(d,i)=>{
 								console.log(d);
-								let depth=(dimensions.depth/LEGS.length)*(LEGS.length - i),
-									y=vscale(depth);
+								let thickness=Math.ceil(vscale(dimensions.depth/LEGS.length)),
+									y=thickness * ((LEGS.length-1) - i);
 								return `translate(0,${y})`;
 							})*/
 	leg
@@ -346,11 +351,23 @@ function Swimmer(data,options) {
 			.attr("stroke-dasharray",function(d){
 				return "0 "+this.getTotalLength();
 			})
+			.style("stroke-width",Math.ceil(vscale(dimensions.depth/LEGS.length))-1)
 
 	this.showLeg = (mt) => {
 		leg
-			.classed("visible",(d)=>{
-				return d.distance == mt;
+			.classed("visible",(d,i)=>{
+				let leg=LEGS.indexOf(mt);
+				return i<=leg;
+				//return d.distance == mt;
+			})
+			.attr("transform",(d,i)=>{
+				
+				let leg=LEGS.indexOf(mt),
+					thickness=Math.ceil(vscale(dimensions.depth/LEGS.length)),
+					y=thickness * (leg - i);
+
+				console.log("=====>",d,i,leg,y);
+				return `translate(0,${y})`;
 			})
 			.filter(d=>{
 				return d.distance == mt;	
