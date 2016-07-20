@@ -1,14 +1,17 @@
 .swimming-perspective {
 
-	//overflow:hidden;
+	overflow:hidden;
+	
+	border-top:1px solid #ddd;
+	border-bottom:1px solid #ddd;
 
 	$ratio:1;
 	
-	$width:400px;
+	$width:620px;
 	$names_width: 140px;
 	$times_width: 150px;
 	
-	$swimming_pool_width:$width;// - $names_width - $times_width;
+	$swimming_pool_width:500px;//$width;// - $names_width - $times_width;
 
 	$height:400px;
 
@@ -22,33 +25,38 @@
 	perspective-origin: 130% 80%;
 	@include mq(tablet) {
 		perspective: 460px;
-		perspective-origin: 120% 50%;
+		perspective-origin: 150% 50%;
 	}
 	backface-visibility: hidden;
 	
 	svg {
-		width:$swimming_pool_width - 50px;
+		width:100%;//$swimming_pool_width - 50px;
 		@include mq(tablet) {
-			width:$swimming_pool_width;
+			width:$height;//$swimming_pool_width;
 		}
-		height:$height;
+		height:$height;//$height;
 		margin-left:0;
 
 		transform-style: preserve-3d;
   		transition: transform 1s;
 
-		transform:rotateX(50deg) rotateY(0deg) rotateZ(20deg) translateZ(0px) translateX(130px) translateY(-25px);
+		//transform:rotateX(50deg) rotateY(0deg) rotateZ(20deg) translateZ(0px) translateX(130px) translateY(-25px);
 		@include mq(tablet) {
-  			transform:rotateX(60deg) rotateY(0deg) rotateZ(10deg) translateZ(0px) translateX(150px) translateY(-30px);
+  			//transform:rotateX(60deg) rotateY(0deg) rotateZ(10deg) translateZ(0px) translateX(150px) translateY(-130px);
+  			//transform:rotateX(60deg) rotateY(0deg) rotateZ(20deg) translateZ(150px) translateX(0px) translateY(-270px) scale(1.7)
+  			//transform:rotateX(60deg) rotateY(0deg) rotateZ(0deg) translateX(0px) translateY(-50px) translateZ(0px) scale(1);
+  			transform:rotateX(60deg) rotateY(0deg) rotateZ(10deg) translateX(430px) translateY(-30px) translateZ(60px) scale(1);
   		}
   		backface-visibility: hidden;
 		
 		&.end-side {
-			transform:rotateX(49deg) rotateY(1deg) rotateZ(10deg) translateZ(0px) translateX(41px) translateY(233px);
+			transform:rotateX(60deg) rotateY(0deg) rotateZ(10deg) translateX(270px) translateY(200px) translateZ(10px) scale(1);
 			@include mq(tablet) {
-				transform:rotateX(60deg) rotateY(0deg) rotateZ(10deg) translateZ(0px) translateX(150px) translateY(230px);
+				//transform:rotateX(60deg) rotateY(0deg) rotateZ(10deg) translateZ(0px) translateX(150px) translateY(230px);
+				//transform:rotateX(60deg) rotateY(0deg) rotateZ(10deg) translateZ(150px) translateX(0px) translateY(250px) scale(1.7);
 			}
 		}
+
 
 		.swimming-pool {
 			path.pool-line {

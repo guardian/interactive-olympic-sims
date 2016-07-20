@@ -162,15 +162,19 @@ export default function SwimmingLineChart(data,options) {
 
 		let margins=options.margins || {left:0,top:0,right:0,bottom:0};
 
+		let ul=select(options.container).append("ul");
     	
 	    let container=select(options.container)
 	    					.append("div")
 	    					.attr("class","swimming-perspective")
 
+	    svg=container.append("svg")
+
 	    let box = container.node().getBoundingClientRect();
-	    let WIDTH = box.width,
+	    let WIDTH = box.height,
 	        HEIGHT = box.height;
 	    
+	    console.log(WIDTH,"x",HEIGHT)
 	    
 
 	    let time_extent=extent(LEGS.map(l=>{
@@ -184,10 +188,10 @@ export default function SwimmingLineChart(data,options) {
 		xscale=scaleLinear().domain([0,(dimensions.lanes_n+1)*dimensions.lane]).range([0,WIDTH-(margins.left+margins.right)]);
 		yscale=scaleLinear().domain([0,dimensions.length]).range([HEIGHT-(margins.top+margins.bottom),0]);
 		
-		let ul=container.append("ul");
+		
 					
 
-		svg=container.append("svg")
+		
 
 		ul.selectAll("li")
 					.data([0,50,100,150,200])

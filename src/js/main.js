@@ -1,32 +1,32 @@
 import mainHTML from './text/main.html!text'
 import swimming_data from '../assets/data/men_medley_200.json!json'
-import swimming_data200 from '../assets/data/men_medley_200.json!json'
-import running_data100 from '../assets/data/men_running_100.json!json'
-import running_data200 from '../assets/data/men_running_200.json!json'
-import running_data400 from '../assets/data/men_running_400.json!json'
+// import swimming_data200 from '../assets/data/men_medley_200.json!json'
+// import running_data100 from '../assets/data/men_running_100.json!json'
+// import running_data200 from '../assets/data/men_running_200.json!json'
+// import running_data400 from '../assets/data/men_running_400.json!json'
 //import runnning_data from '../assets/data/men_running_4x100.json!json'
 import records from '../assets/data/records.json!json'
-import SwimmingSimulation from './components/SwimmingSimulation';
-import Swimming from './components/Swimming';
-import SwimmingExploded from './components/SwimmingExploded';
-import SwimmingLineChart from './components/SwimmingLineChart';
+// import SwimmingSimulation from './components/SwimmingSimulation';
+// import Swimming from './components/Swimming';
+// import SwimmingExploded from './components/SwimmingExploded';
+// import SwimmingLineChart from './components/SwimmingLineChart';
 
 import SwimmingPerspective from './components/SwimmingPerspective';
-import RunningPerspective from './components/RunningPerspective';
+// import RunningPerspective from './components/RunningPerspective';
 
-import Running from './components/Running';
+// import Running from './components/Running';
 
-import men_running_marathon from '../assets/data/men_running_marathon.json!json'
-import women_running_marathon from '../assets/data/women_running_marathon.json!json'
+// import men_running_marathon from '../assets/data/men_running_marathon.json!json'
+// import women_running_marathon from '../assets/data/women_running_marathon.json!json'
 
-import men_running_50km_walk from '../assets/data/men_running_50km_walk.json!json'
-import LongDistanceRace from './components/LongDistanceRace';
+// import men_running_50km_walk from '../assets/data/men_running_50km_walk.json!json'
+// import LongDistanceRace from './components/LongDistanceRace';
 
-import men_triathlon from '../assets/data/men_triathlon_2012.json!json'
-import Triathlon from './components/Triathlon';
+// import men_triathlon from '../assets/data/men_triathlon_2012.json!json'
+// import Triathlon from './components/Triathlon';
 
-import men_team_pursuit from '../assets/data/men_cycling_track_team_pursuit.json!json'
-import TeamPursuit from './components/TeamPursuit';
+// import men_team_pursuit from '../assets/data/men_cycling_track_team_pursuit.json!json'
+// import TeamPursuit from './components/TeamPursuit';
 
 
 
