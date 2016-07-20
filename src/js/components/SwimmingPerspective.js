@@ -290,6 +290,7 @@ export default function SwimmingLineChart(data,options) {
 						.attr("class",d=>("leg m"+d.distance));
 
 		leg.append("path")
+				.attr("id",s=>"leg_"+s.lane+"_"+s.distance)
 				.attr("d",s=>{
 
 					let x=xscale(s.lane*dimensions.lane + dimensions.lane/2),
@@ -335,7 +336,48 @@ export default function SwimmingLineChart(data,options) {
 							]);
 
 				})*/
-		
+
+		let text=leg.append("text")
+				.attr("class","swimmer-name")
+
+				/*.attr("x",s=>{
+					s.text_x=xscale(s.lane*dimensions.lane + dimensions.lane/2);;
+					return s.text_x;
+				})
+				.attr("y",s=>{
+					let start_y=(s.distance%(dimensions.length*2)>0)?yscale(0):yscale(dimensions.length),
+						dist=s.distance-s.mt,
+						y=(s.distance%(dimensions.length*2)>0)?yscale(dimensions.length-dist):yscale(dist);
+					s.text_y=y;
+					return s.text_y;
+				})*/
+				// .attr("transform",s=>{
+				// 	return "rotate(90 "+s.text_x+" "+s.text_y+")"
+				// })
+			    //.attr("x", 8)
+			    //.attr("dy", 28)
+			    .attr("x",s=>{
+			    	return (s.distance%100===0)?55:-5
+			    })
+			    //.attr("y",-10)
+			    .attr("dy",s=>{
+			    	return (s.distance%100===0)?10:-2
+			    })
+		text
+		  	.append("textPath")
+		    	.attr("xlink:href", s=>("#leg_"+s.lane+"_"+s.distance))
+		    	.attr("text-anchor","end")
+		    	.attr("startOffset",s=>(s.distance%100>0)?"50%":"50%")
+		    	.text(s=>{
+					let swimmer=swimmers_data.find(d=>(d.lane===s.lane))
+					return swimmer.entrant.participant.competitor.lastName;
+				})
+
+		// text.attr("x",function(s) {
+		// 	let box=this.getComputedTextLength();
+		// 	console.log("TEXT SIZE",box)
+		// 	return (s.distance%100===0)?(box*10):-5
+		// })
 
 		return;
 		let prev_marker=-1000;
@@ -418,10 +460,11 @@ export default function SwimmingLineChart(data,options) {
 	function goTo(distance) {
 		svg.classed("end-side",(distance%100>0))
 
-		leg
+		let selected_leg=leg
 			.classed("visible",false)
 			.filter(d=>(d.distance===distance))
-				.classed("visible",true)
+				.classed("visible",true);
+		selected_leg
 				.select("path")
 					.attr("d",s=>{
 
@@ -430,7 +473,8 @@ export default function SwimmingLineChart(data,options) {
 							dist=(s.distance-s.mt),
 							y=(s.distance%(dimensions.length*2)>0)?yscale((dimensions.length-dist)-10):yscale(dist+10),
 							w=xscale(0.8);
-						
+						//s.text_x=x;
+						s.text_start_y=y;
 						return line([
 									[x-w/2,start_y],
 									[x+w/2,start_y],
@@ -442,7 +486,7 @@ export default function SwimmingLineChart(data,options) {
 					})
 					.transition()
 					.duration(s=>{
-						return best_cumulative_times[s.distance].best_time*0.2
+						return best_cumulative_times[s.distance].best_time*0.2*0.5
 					})
 					.ease(SwimmingLinear)
 						.attr("d",s=>{
@@ -453,6 +497,8 @@ export default function SwimmingLineChart(data,options) {
 								y=(s.distance%(dimensions.length*2)>0)?yscale(dimensions.length-dist):yscale(dist),
 								w=xscale(0.8);
 
+							
+
 							return line([
 										[x-w/2,start_y],
 										[x+w/2,start_y],
@@ -462,7 +508,31 @@ export default function SwimmingLineChart(data,options) {
 									]);
 
 						})
-				
+		
+		selected_leg.select("text.swimmer-name")
+				.attr("y",s=>{
+					return s.text_start_y;
+				})
+				// .attr("transform",s=>{
+				// 	return "rotate(90 "+s.text_x+" "+s.text_y+")"
+				// })
+				.attr("x",function(s) {
+					let box=this.getComputedTextLength();
+					console.log("TEXT SIZE",box)
+					return (s.distance%100===0)?(box*1.5):-5
+				})
+				.transition()
+					.duration(s=>{
+						return best_cumulative_times[s.distance].best_time*0.2
+					})
+					.ease(SwimmingLinear)
+						.attr("class","swimmer-name")
+						/*.attr("x",s=>{
+							return s.text_x;
+						})*/
+						.attr("y",s=>{
+							return s.text_y;
+						})
 
 		/*.transition()
 				.duration(best_cumulative_times[200].best_time/2)

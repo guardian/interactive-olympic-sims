@@ -21,6 +21,10 @@
 	height:$height;
 
 	position: relative;
+
+	transform-style: preserve-3d;
+  	transition: perspective 1s, perspective-origin 1s;
+
 	perspective: 550px;
 	perspective-origin: 130% 80%;
 	@include mq(tablet) {
@@ -29,33 +33,45 @@
 	}
 	backface-visibility: hidden;
 	
+	&.from-blocks {
+		perspective-origin: 50% 50%;	
+		perspective: 245px;
+		svg {
+			//transform:rotateX(60deg) rotateY(0deg) rotateZ(0deg) translateX(0px) translateY(0px) translateZ(0px) scale(1);
+			transform:rotateX(60deg) rotateY(0deg) rotateZ(0deg) translateX(0px) translateY(-60px) translateZ(-40px) scale(1);
+		}
+	}
+
 	svg {
+		
+		margin-left:($width - $height)/2;
+
 		width:100%;//$swimming_pool_width - 50px;
 		@include mq(tablet) {
 			width:$height;//$swimming_pool_width;
 		}
 		height:$height;//$height;
-		margin-left:0;
-
-		transform-style: preserve-3d;
-  		transition: transform 1s;
+		
+		transition: transform 1s;
+		
 
 		//transform:rotateX(50deg) rotateY(0deg) rotateZ(20deg) translateZ(0px) translateX(130px) translateY(-25px);
 		@include mq(tablet) {
-  			//transform:rotateX(60deg) rotateY(0deg) rotateZ(10deg) translateZ(0px) translateX(150px) translateY(-130px);
-  			//transform:rotateX(60deg) rotateY(0deg) rotateZ(20deg) translateZ(150px) translateX(0px) translateY(-270px) scale(1.7)
-  			//transform:rotateX(60deg) rotateY(0deg) rotateZ(0deg) translateX(0px) translateY(-50px) translateZ(0px) scale(1);
-  			transform:rotateX(60deg) rotateY(0deg) rotateZ(10deg) translateX(430px) translateY(-30px) translateZ(60px) scale(1);
+  			
+  			transform:rotateX(60deg) rotateY(0deg) rotateZ(10deg) translateX(300px) translateY(-30px) translateZ(60px) scale(1);
+  			//transform:rotateX(60deg) rotateY(10deg) rotateZ(0deg) translateX(240px) translateY(20px) translateZ(60px) scale(1);
   		}
   		backface-visibility: hidden;
 		
 		&.end-side {
-			transform:rotateX(60deg) rotateY(0deg) rotateZ(10deg) translateX(270px) translateY(200px) translateZ(10px) scale(1);
+			//transform:rotateX(60deg) rotateY(0deg) rotateZ(10deg) translateX(270px) translateY(200px) translateZ(10px) scale(1);
+			transform:rotateX(60deg) rotateY(20deg) rotateZ(0deg) translateX(130px) translateY(250px) translateZ(10px) scale(1);
 			@include mq(tablet) {
 				//transform:rotateX(60deg) rotateY(0deg) rotateZ(10deg) translateZ(0px) translateX(150px) translateY(230px);
 				//transform:rotateX(60deg) rotateY(0deg) rotateZ(10deg) translateZ(150px) translateX(0px) translateY(250px) scale(1.7);
 			}
 		}
+		
 
 
 		.swimming-pool {
@@ -103,9 +119,20 @@
 					stroke:none;
 					
 				}
+				
+				.swimmer-name {
+					@include f-textSans;
+					font-size: 24px;
+					fill: #FFF;
+					//text-transform: uppercase;
+					fill-opacity:0
+				}
 
 				&.visible {
 					path {
+						fill-opacity:1;
+					}
+					text {
 						fill-opacity:1;
 					}
 				}
@@ -142,6 +169,7 @@
 					}
 				}
 			}
+
 		}
 	}
 }
