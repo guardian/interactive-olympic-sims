@@ -1,35 +1,117 @@
+.stand-first {
+	position:absolute;
+	z-index:9999;
+	top:0px;
+	left:0;
+	width:100%;
+	@include mq(tablet) {
+		width:75%;
+	}
+	@include mq(desktop) {
+		width:65%;
+	}
+	h1 {
+		@include fs-header(4);
+		
+		@include mq(tablet) {
+			font-size: 36px;
+			line-height: 42px;
+		}
+
+		@include mq(desktop) {
+			font-size: 44px;
+			line-height: 48px;
+		}
+
+		@include mq(wide) {
+			font-size: 52px;
+			line-height: 56px;
+		}
+		margin-bottom:15px;
+	}
+	p {
+		@include fs-bodyCopy(2);
+		@include mq(tablet) {
+			@include fs-bodyCopy(1);
+		}
+	}
+
+	button{
+		height: 42px;
+	    border: none;
+	    padding: 0 40px 0 20px;
+	    border-radius: 42px;
+	    @include fs-textSans(4);
+	    //float: right;
+	    margin-bottom: 0;
+	    margin-right: 38px;
+	    color:#333;
+	    background:#f4f4f4;
+	    background-image:url(./assets/imgs/arrow-right.svg);
+	    background-repeat:no-repeat;
+	    background-size:23px;
+	    background-position: 95% center;
+	    cursor:pointer;
+	    outline:none;
+	    &:hover{
+	    	background-color:#ddd;
+	    }
+	}
+
+}
 .swimming-perspective {
 
 	overflow:hidden;
 	
-	border-top:1px solid #ddd;
 	border-bottom:1px solid #ddd;
 
 	$ratio:1;
 	
-	$width:620px;
+	$width:100%;
 	$names_width: 140px;
 	$times_width: 150px;
 	
 	$swimming_pool_width:500px;//$width;// - $names_width - $times_width;
-
-	$height:400px;
-
+	
 	$li_padding_top:0;
 
+	$height:500px;
+	
 	width:$width;
-	height:$height;
+	height:100vh;
+
+	@include mq(tablet) {
+		height: 600px;
+	}
+
+	@include mq(desktop) {
+		height:$height;
+	}
+	
+
+	//width:$width;
+	//height:$height;
 
 	position: relative;
 
 	transform-style: preserve-3d;
   	transition: perspective 1s, perspective-origin 1s;
 
-	perspective: 550px;
-	perspective-origin: 130% 80%;
+	perspective: 520px;
+	perspective-origin: 140% 10%;
 	@include mq(tablet) {
-		perspective: 460px;
-		perspective-origin: 150% 50%;
+		perspective: 600px;
+		perspective-origin: 130% 0%;
+	}
+	@include mq(desktop) {
+		perspective: 600px;
+		perspective-origin: 100% 0%;
+	}
+	@include mq(wide) {
+		/*perspective: 600px;
+		perspective-origin: 100% -10%;*/
+		perspective: 600px;
+		perspective-origin: 100% 0%;
 	}
 	backface-visibility: hidden;
 	
@@ -41,35 +123,83 @@
 			transform:rotateX(60deg) rotateY(0deg) rotateZ(0deg) translateX(0px) translateY(-60px) translateZ(-40px) scale(1);
 		}
 	}
+	/*.overlay {
+		position:absolute;
+		display: none;
+		top:0;
+		left:0;
+		background-color:rgba(255,0,0,0.2);
+		backface-visibility: hidden;
+
+		.swimmer-info {
+			span {
+				position:absolute;
+				transform:rotate(-90deg);
+				transform-origin:50% 50%;
+				top:1000px;
+				left:100px;
+				
+				@include f-textSans;
+
+				font-size:50px;
+
+				outline: 1px solid transparent
+			}
+		}
+	}*/
+	
+	svg,.overlay {
+		transform:rotateX(65deg) rotateY(0deg) rotateZ(10deg) translateX(85px) translateY(-80px) translateZ(0px) scale(0.9);
+	}
+
+  	@include mq(tablet) {
+  		svg,.overlay {
+  			transform:rotateX(65deg) rotateY(0deg) rotateZ(10deg) translateX(105px) translateY(-230px) translateZ(90px) scale(1);
+  		}
+  	}
+  	@include mq(desktop) {
+  		svg,.overlay {
+  			transform:rotateX(65deg) rotateY(0deg) rotateZ(10deg) translateX(-55px) translateY(-620px) translateZ(90px) scale(1)
+  		}
+  	}
+  	@include mq(wide) {
+  		svg,.overlay {
+  			//transform:rotateX(60deg) rotateY(0deg) rotateZ(10deg) translateX(-75px) translateY(170px) translateZ(90px) scale(1);
+  			transform:rotateX(65deg) rotateY(0deg) rotateZ(10deg) translateX(-225px) translateY(-780px) translateZ(90px) scale(1);
+  		}
+  	}
 
 	svg {
 		
-		margin-left:($width - $height)/2;
+		//margin-left:($width - $height)/2;
 
-		width:100%;//$swimming_pool_width - 50px;
+		//width:100%;//$swimming_pool_width - 50px;
 		@include mq(tablet) {
-			width:$height;//$swimming_pool_width;
+		//	width:$width;//$swimming_pool_width;
+		//	height:$width * 2;
 		}
-		height:$height;//$height;
+		//height:$height;//$height;
 		
 		transition: transform 1s;
 		
 
 		//transform:rotateX(50deg) rotateY(0deg) rotateZ(20deg) translateZ(0px) translateX(130px) translateY(-25px);
-		@include mq(tablet) {
-  			
-  			transform:rotateX(60deg) rotateY(0deg) rotateZ(10deg) translateX(300px) translateY(-30px) translateZ(60px) scale(1);
-  			//transform:rotateX(60deg) rotateY(10deg) rotateZ(0deg) translateX(240px) translateY(20px) translateZ(60px) scale(1);
-  		}
+		
   		backface-visibility: hidden;
 		
 		&.end-side {
 			//transform:rotateX(60deg) rotateY(0deg) rotateZ(10deg) translateX(270px) translateY(200px) translateZ(10px) scale(1);
-			transform:rotateX(60deg) rotateY(20deg) rotateZ(0deg) translateX(130px) translateY(250px) translateZ(10px) scale(1);
+			transform:rotateX(60deg) rotateY(20deg) rotateZ(0deg) translateX(40px) translateY(270px) translateZ(-30px) scale(1);
 			@include mq(tablet) {
-				//transform:rotateX(60deg) rotateY(0deg) rotateZ(10deg) translateZ(0px) translateX(150px) translateY(230px);
-				//transform:rotateX(60deg) rotateY(0deg) rotateZ(10deg) translateZ(150px) translateX(0px) translateY(250px) scale(1.7);
+				transform:rotateX(60deg) rotateY(20deg) rotateZ(0deg) translateX(50px) translateY(240px) translateZ(-50px) scale(1);
 			}
+			
+			@include mq(desktop) {
+	  			transform:rotateX(60deg) rotateY(20deg) rotateZ(0deg) translateX(50px) translateY(150px) translateZ(-50px) scale(1);
+	  		}
+			@include mq(wide) {
+	  			transform:rotateX(60deg) rotateY(0deg) rotateZ(10deg) translateX(-145px) translateY(280px) translateZ(70px) scale(1);
+	  		}
 		}
 		
 
@@ -115,25 +245,41 @@
 					stroke-width:1;
 					stroke-opacity:0;
 					fill:#e0e0e0;
+
 					fill-opacity:0;
-					stroke:none;
+					stroke:#e0e0e0;
 					
 				}
 				
 				.swimmer-name {
 					@include f-textSans;
-					font-size: 24px;
+					font-size:20px;
+					@include mq(tablet) {
+						font-size: 40px;
+					}
+					letter-spacing: 2px;
 					fill: #FFF;
 					//text-transform: uppercase;
-					fill-opacity:0
+					fill-opacity:0;
+
+					&.stroke {
+						stroke-width:3;
+						stroke:#000;
+						stroke-opacity:0;
+					}
+					
 				}
 
 				&.visible {
 					path {
 						fill-opacity:1;
+						stroke-opacity:1;
 					}
 					text {
 						fill-opacity:1;
+						&.stroke {
+							stroke-opacity:0.5;
+						}
 					}
 				}
 
@@ -151,21 +297,21 @@
 			&.gold {
 				.leg {
 					path {
-						fill:$gold;
+						stroke:$gold;
 					}
 				}
 			}
 			&.silver {
 				.leg {
 					path {
-						fill:$silver;
+						stroke:$silver;
 					}
 				}
 			}
 			&.bronze {
 				.leg {
 					path {
-						fill:$bronze;
+						stroke:$bronze;
 					}
 				}
 			}

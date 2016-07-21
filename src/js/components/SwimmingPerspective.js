@@ -64,10 +64,12 @@ export default function SwimmingLineChart(data,options) {
 	let swimmers_data=[],
 		best_cumulative_times={},
 		CURRENT_LEG=0,
+		CURRENT_STEP=0,
 		LEGS=[],
 		WR;
 
-	let svg,
+	let overlay,
+		svg,
 		leg,
 		athlete,
 		marker,
@@ -164,15 +166,28 @@ export default function SwimmingLineChart(data,options) {
 
 		let ul=select(options.container).append("ul");
     	
+		buildTexts();
+
 	    let container=select(options.container)
 	    					.append("div")
-	    					.attr("class","swimming-perspective")
+	    					.attr("class","swimming-perspective");
+
 
 	    svg=container.append("svg")
+	    // overlay=container.append("div")
+	    // 			.attr("class","overlay")
 
 	    let box = container.node().getBoundingClientRect();
-	    let WIDTH = box.height,
-	        HEIGHT = box.height;
+	    let WIDTH = box.width,
+	        HEIGHT = box.width>414?box.width:box.height;
+
+	    svg
+	    	.attr("width",WIDTH)
+	    	.attr("height",HEIGHT)
+
+	   	// overlay
+	   	// 	.style("width",WIDTH+"px")
+	    // 	.style("height",HEIGHT+"px")
 	    
 	    console.log(WIDTH,"x",HEIGHT)
 	    
@@ -193,7 +208,7 @@ export default function SwimmingLineChart(data,options) {
 
 		
 
-		ul.selectAll("li")
+		/*ul.selectAll("li")
 					.data([0,50,100,150,200])
 					.enter()
 					.append("li")
@@ -201,7 +216,7 @@ export default function SwimmingLineChart(data,options) {
 						.on("click",(d)=>{
 							//svg.classed("end-side",goTo)
 							goTo(d)
-						})
+						})*/
 
 		let pool={
 			w:xscale(dimensions.lane*(dimensions.lanes_n+1)),
@@ -300,11 +315,14 @@ export default function SwimmingLineChart(data,options) {
 						w=xscale(0.8)
 
 					return line([
-								perspT.transform(x-w/2,start_y),
+								/*perspT.transform(x-w/2,start_y),
 								perspT.transform(x+w/2,start_y),
 								perspT.transform(x+w/2,start_y),
 								perspT.transform(x-w/2,start_y),
-								perspT.transform(x-w/2,start_y)
+								perspT.transform(x-w/2,start_y)*/
+								perspT.transform(x,start_y),
+								perspT.transform(x,start_y),
+								perspT.transform(x,start_y)
 							]);
 
 					/*return line(splits.map(s=>{
@@ -316,6 +334,7 @@ export default function SwimmingLineChart(data,options) {
 						]
 					}))*/
 				})
+				.style("stroke-width",xscale(1.2))
 				/*.transition()
 				.duration(best_cumulative_times[200].best_time/2)
 				.ease(SwimmingLinear)
@@ -337,107 +356,94 @@ export default function SwimmingLineChart(data,options) {
 
 				})*/
 
-		let text=leg.append("text")
-				.attr("class","swimmer-name")
-
-				/*.attr("x",s=>{
-					s.text_x=xscale(s.lane*dimensions.lane + dimensions.lane/2);;
-					return s.text_x;
-				})
-				.attr("y",s=>{
-					let start_y=(s.distance%(dimensions.length*2)>0)?yscale(0):yscale(dimensions.length),
-						dist=s.distance-s.mt,
-						y=(s.distance%(dimensions.length*2)>0)?yscale(dimensions.length-dist):yscale(dist);
-					s.text_y=y;
-					return s.text_y;
-				})*/
-				// .attr("transform",s=>{
-				// 	return "rotate(90 "+s.text_x+" "+s.text_y+")"
-				// })
-			    //.attr("x", 8)
-			    //.attr("dy", 28)
-			    .attr("x",s=>{
-			    	return (s.distance%100===0)?55:-5
+		leg.append("text")
+				.attr("class","swimmer-name stroke")
+			    .attr("dx",s=>{
+			    	return (s.distance%100===0)?5:-5
 			    })
-			    //.attr("y",-10)
 			    .attr("dy",s=>{
-			    	return (s.distance%100===0)?10:-2
+			    	return (s.distance%100===0)?9:6
 			    })
-		text
-		  	.append("textPath")
-		    	.attr("xlink:href", s=>("#leg_"+s.lane+"_"+s.distance))
-		    	.attr("text-anchor","end")
-		    	.attr("startOffset",s=>(s.distance%100>0)?"50%":"50%")
-		    	.text(s=>{
-					let swimmer=swimmers_data.find(d=>(d.lane===s.lane))
-					return swimmer.entrant.participant.competitor.lastName;
-				})
-
-		// text.attr("x",function(s) {
-		// 	let box=this.getComputedTextLength();
-		// 	console.log("TEXT SIZE",box)
-		// 	return (s.distance%100===0)?(box*10):-5
-		// })
-
-		return;
-		let prev_marker=-1000;
-		marker=athlete.append("g")
-							.attr("class","marker")
-							.attr("transform",(d,i)=>{
-								let x=xscale.range()[1]+5,
-									leg=d.splits.find(s=>s.distance===LEGS[LEGS.length-1]),
-									y=yscale(leg.diff)+5,
-									delta=y-prev_marker;
-
-								//console.log(d.swimmer,y,delta,prev_marker)
-
-								if(delta<15) {
-									y=prev_marker+15
-								}
-								prev_marker=y;
-								return `translate(${x},${y})`;
-							});
-		marker.append("text")
-				.text((d,i)=>{
-					return d.entrant.participant.competitor.lastName;
-				})
-				.append("tspan")
-					.attr("dx",5)
-					.text(d=>{
-						let last_split=d.splits[d.splits.length-1],
-							diff=last_split.cumulative_time - best_cumulative_times[last_split.distance].best_cumulative,
-							_time=last_split.value;
-						if(diff>0) {
-				    		_time="+"+formatSecondsMilliseconds(diff);
-				    	}
-						return _time;
+			  	.append("textPath")
+			    	.attr("xlink:href", s=>("#leg_"+s.lane+"_"+s.distance))
+			    	.attr("text-anchor",s=>(s.distance%100>0)?"end":"start")
+			    	.attr("startOffset",s=>(s.distance%100>0)?"50%":"50%")
+			    	.text(s=>{
+						let swimmer=swimmers_data.find(d=>(d.lane===s.lane))
+						return swimmer.entrant.participant.competitor.lastName;
 					})
 
-		/*let xAxis=axisBottom(xscale)
-						.tickFormat(d=>{
-							if(d===0) {
-								return "Start";//"Reaction time";
-							}
-							return d+(d===LEGS[LEGS.length-1]?"m.":"")
+		leg.append("text")
+				.attr("class","swimmer-name")
+				.attr("dx",s=>{
+			    	return (s.distance%100===0)?5:-5
+			    })
+			    .attr("dy",s=>{
+			    	return (s.distance%100===0)?9:6
+			    })
+				  	.append("textPath")
+				    	.attr("xlink:href", s=>("#leg_"+s.lane+"_"+s.distance))
+				    	.attr("text-anchor",s=>(s.distance%100>0)?"end":"start")
+				    	.attr("startOffset",s=>(s.distance%100>0)?"50%":"50%")
+				    	.text(s=>{
+							let swimmer=swimmers_data.find(d=>(d.lane===s.lane))
+							return swimmer.entrant.participant.competitor.lastName;
 						})
 
-		let xaxis=axes.append("g")
-				.attr("class","x axis")
-				.attr("transform",`translate(0,${yscale.range()[1]})`)
-				.call(xAxis)
+		/*overlay.selectAll("div.swimmer-info")
+					.data(swimmers_data)
+					.enter()
+					.append("div")
+						.attr("class","swimmer-info")
+						.append("span")
+							.text(s=>{
+								let swimmer=swimmers_data.find(d=>(d.lane===s.lane))
+								return swimmer.entrant.participant.competitor.lastName;
+							})*/
 
-		xaxis.selectAll(".tick")
-				.select("text")
-					.attr("dx",4)
 
-		xaxis.selectAll(".tick")
-				.select("line")
-					.attr("y1",-yscale.range()[1])
-					.attr("y2",18)*/
+		goTo(options.text[0].mt)
 
 		
-		//goTo(200)
-		//start();
+	}
+
+	function buildTexts() {
+		if(CURRENT_STEP===0) {
+			let standfirst=select(options.container)
+		    		.append("div")
+		    		.attr("class","stand-first");
+
+		    if(options.text[CURRENT_STEP].title) {
+		    	standfirst.append("h1")
+		    			.text(options.text[CURRENT_STEP].title)	
+		    }
+
+		    standfirst.append("p")
+		    			.text(options.text[CURRENT_STEP].text)
+
+		    
+		}
+		
+		let standfirst=select(options.container)
+		    				.select("div.stand-first")
+
+		let button=standfirst.selectAll("button")
+		    			.data([options.text[CURRENT_STEP].button]);
+
+	    button
+	    	.enter()
+	    	.append("button")
+		    	.on("click",()=>{
+					CURRENT_STEP=(CURRENT_STEP+1)%options.text.length;
+					console.log(CURRENT_STEP,options.text[CURRENT_STEP].mt)
+					goTo(options.text[CURRENT_STEP].mt,(d)=>{
+						buildTexts();
+					})
+				})
+			.merge(button)
+				.text(d=>d)
+	    			
+
 	}
 
 	this.goTo = (distance) => {
@@ -476,11 +482,14 @@ export default function SwimmingLineChart(data,options) {
 						//s.text_x=x;
 						s.text_start_y=y;
 						return line([
-									[x-w/2,start_y],
+									/*[x-w/2,start_y],
 									[x+w/2,start_y],
 									[x+w/2,y],
 									[x-w/2,y],
-									[x-w/2,start_y]
+									[x-w/2,start_y]*/
+									[x,start_y],
+									[x,y],
+									[x,start_y]
 								]);
 
 					})
@@ -488,6 +497,7 @@ export default function SwimmingLineChart(data,options) {
 					.duration(s=>{
 						return best_cumulative_times[s.distance].best_time*0.2*0.5
 					})
+					.delay(1000)
 					.ease(SwimmingLinear)
 						.attr("d",s=>{
 
@@ -500,16 +510,25 @@ export default function SwimmingLineChart(data,options) {
 							
 
 							return line([
-										[x-w/2,start_y],
+										/*[x-w/2,start_y],
 										[x+w/2,start_y],
 										[x+w/2,y],
 										[x-w/2,y],
-										[x-w/2,start_y]
+										[x-w/2,start_y]*/
+										[x,start_y],
+										[x,y],
+										[x,start_y]
 									]);
 
 						})
+						.on("end",d=>{
+							if(d.lane===1) {
+								buildTexts();
+							}
+						})
+
 		
-		selected_leg.select("text.swimmer-name")
+		/*selected_leg.select("text.swimmer-name")
 				.attr("y",s=>{
 					return s.text_start_y;
 				})
@@ -527,12 +546,9 @@ export default function SwimmingLineChart(data,options) {
 					})
 					.ease(SwimmingLinear)
 						.attr("class","swimmer-name")
-						/*.attr("x",s=>{
-							return s.text_x;
-						})*/
 						.attr("y",s=>{
 							return s.text_y;
-						})
+						})*/
 
 		/*.transition()
 				.duration(best_cumulative_times[200].best_time/2)

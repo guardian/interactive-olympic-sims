@@ -1,5 +1,6 @@
 import mainHTML from './text/main.html!text'
 import swimming_data from '../assets/data/men_medley_200.json!json'
+import swimming_text from '../assets/data/texts/men_medley_200.json!json'
 // import swimming_data200 from '../assets/data/men_medley_200.json!json'
 // import running_data100 from '../assets/data/men_running_100.json!json'
 // import running_data200 from '../assets/data/men_running_200.json!json'
@@ -106,6 +107,7 @@ export function init(el, context, config, mediator) {
 
     new SwimmingPerspective(swimming_data,{
         container:el.querySelector(".interactive-container"),
+        text:swimming_text,
         record:records.men_medley_200,
         multiplier: 1,
         margins: {
