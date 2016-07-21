@@ -147,7 +147,9 @@
 			}
 		}
 	}*/
-	
+	// * {
+	// 	transform:none !important;
+	// }
 	svg,.overlay {
 		transform:rotateX(65deg) rotateY(0deg) rotateZ(10deg) translateX(85px) translateY(-80px) translateZ(0px) scale(0.9);
 	}
@@ -249,8 +251,11 @@
 					fill-opacity:0;
 					stroke:#e0e0e0;
 					
+
 				}
-				
+				path.guide-text-path {
+					stroke-opacity:0 !important;
+				}
 				.swimmer-name {
 					@include f-textSans;
 					font-size:20px;
@@ -282,7 +287,11 @@
 						}
 					}
 				}
-
+				&.m0 {
+					text {
+						transition: fill-opacity 2s, stroke-opacity 2s;
+					}
+				}
 				/* &.m200 {
 					path {
 						fill-opacity:1;

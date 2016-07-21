@@ -288,7 +288,12 @@ export default function SwimmingLineChart(data,options) {
 
 						//console.log("SWIMMER",ath,best_cumulative_times)
 
-						
+						ath.splits=([{
+							value:ath.reaction_time.value,
+							time:ath.reaction_time.time,
+							cumulative_time:ath.reaction_time.time,
+							distance:0
+						}]).concat(ath.splits);
 
 						return ath.splits.map(d=>{
 
@@ -296,7 +301,9 @@ export default function SwimmingLineChart(data,options) {
 							d.mt=distance*best_cumulative_times[d.distance].best_cumulative/d.cumulative_time;
 							d.dmt=distance-d.mt;
 							d.lane=ath.lane;
-
+							if(d.distance===0) {
+								console.log(d)
+							}
 							return d;
 						});
 					})
@@ -356,9 +363,36 @@ export default function SwimmingLineChart(data,options) {
 
 				})*/
 
+		leg.filter(s=>(s.distance===0))
+				.append("path")
+				.attr("id",(s)=>("guide_"+s.lane+"_"+s.distance))
+				.attr("class","guide-text-path")
+				.attr("d", (s) => {
+					let x=xscale(s.lane*dimensions.lane + dimensions.lane/2),
+						y0=yscale(s.mt),
+						y1=yscale(50);
+					return `M${x},${y0}L${x},${y1}`;
+				});
+
 		leg.append("text")
 				.attr("class","swimmer-name stroke")
-			    .attr("dx",s=>{
+
+		leg.filter(s=>(s.distance===0))
+				.select("text.stroke")
+					.attr("dx",5)
+				    .attr("dy",9)
+					.append("textPath")
+				    	.attr("xlink:href", s=>("#guide_"+s.lane+"_"+s.distance))
+				    	.attr("text-anchor","start")
+				    	.attr("startOffset","0%")
+				    	.text(s=>{
+							let swimmer=swimmers_data.find(d=>(d.lane===s.lane))
+							return swimmer.entrant.participant.competitor.lastName;
+						})
+
+		leg.filter(s=>(s.distance>0))
+				.select("text.stroke")
+				.attr("dx",s=>{
 			    	return (s.distance%100===0)?5:-5
 			    })
 			    .attr("dy",s=>{
@@ -373,14 +407,34 @@ export default function SwimmingLineChart(data,options) {
 						return swimmer.entrant.participant.competitor.lastName;
 					})
 
+		
+
+		
+
 		leg.append("text")
 				.attr("class","swimmer-name")
-				.attr("dx",s=>{
-			    	return (s.distance%100===0)?5:-5
-			    })
-			    .attr("dy",s=>{
-			    	return (s.distance%100===0)?9:6
-			    })
+
+		leg.filter(s=>(s.distance===0))
+				.select("text:not(.stroke)")
+					.attr("dx",5)
+				    .attr("dy",9)
+					.append("textPath")
+				    	.attr("xlink:href", s=>("#guide_"+s.lane+"_"+s.distance))
+				    	.attr("text-anchor","start")
+				    	.attr("startOffset","0%")
+				    	.text(s=>{
+							let swimmer=swimmers_data.find(d=>(d.lane===s.lane))
+							return swimmer.entrant.participant.competitor.lastName;
+						})
+
+		leg.filter(s=>(s.distance>0))
+				.select("text:not(.stroke)")
+					.attr("dx",s=>{
+				    	return (s.distance%100===0)?5:-5
+				    })
+				    .attr("dy",s=>{
+				    	return (s.distance%100===0)?9:6
+				    })
 				  	.append("textPath")
 				    	.attr("xlink:href", s=>("#leg_"+s.lane+"_"+s.distance))
 				    	.attr("text-anchor",s=>(s.distance%100>0)?"end":"start")
@@ -436,6 +490,7 @@ export default function SwimmingLineChart(data,options) {
 		    	.on("click",()=>{
 					CURRENT_STEP=(CURRENT_STEP+1)%options.text.length;
 					console.log(CURRENT_STEP,options.text[CURRENT_STEP].mt)
+					CURRENT_STEP=CURRENT_STEP===0?1:CURRENT_STEP;
 					goTo(options.text[CURRENT_STEP].mt,(d)=>{
 						buildTexts();
 					})
@@ -476,10 +531,15 @@ export default function SwimmingLineChart(data,options) {
 
 						let x=xscale(s.lane*dimensions.lane + dimensions.lane/2),
 							start_y=(s.distance%(dimensions.length*2)>0)?yscale(0):yscale(dimensions.length),
-							dist=(s.distance-s.mt),
+							dist=s.distance>(s.distance-s.mt),
 							y=(s.distance%(dimensions.length*2)>0)?yscale((dimensions.length-dist)-10):yscale(dist+10),
 							w=xscale(0.8);
-						//s.text_x=x;
+						
+						if(s.distance===0) {
+							start_y=yscale(0);
+							y=start_y;
+						}
+
 						s.text_start_y=y;
 						return line([
 									/*[x-w/2,start_y],
@@ -495,6 +555,9 @@ export default function SwimmingLineChart(data,options) {
 					})
 					.transition()
 					.duration(s=>{
+						if(s.distance===0) {
+							return best_cumulative_times[s.distance].best_time;
+						}
 						return best_cumulative_times[s.distance].best_time*0.2*0.5
 					})
 					.delay(1000)
@@ -507,7 +570,10 @@ export default function SwimmingLineChart(data,options) {
 								y=(s.distance%(dimensions.length*2)>0)?yscale(dimensions.length-dist):yscale(dist),
 								w=xscale(0.8);
 
-							
+							if(s.distance===0) {
+								start_y=yscale(0);
+								y=yscale(s.mt);
+							}
 
 							return line([
 										/*[x-w/2,start_y],
