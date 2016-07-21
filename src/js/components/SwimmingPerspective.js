@@ -316,10 +316,11 @@ export default function SwimmingLineChart(data,options) {
 				.attr("d",s=>{
 
 					let x=xscale(s.lane*dimensions.lane + dimensions.lane/2),
-						start_y=(s.distance%(dimensions.length*2)>0)?yscale(0):yscale(dimensions.length),
+						start_y=(s.distance%(dimensions.length*2)>0)?yscale(0):yscale(dimensions.length);
+						/*,
 						dist=s.distance-s.mt,
-						y=(s.distance%(dimensions.length*2)>0)?yscale(dimensions.length-dist):yscale(dist),
-						w=xscale(0.8)
+						y=(s.distance%(dimensions.length*2)>0)?yscale(dimensions.length-dist):yscale(dist);
+						*/
 
 					return line([
 								/*perspT.transform(x-w/2,start_y),
@@ -531,10 +532,10 @@ export default function SwimmingLineChart(data,options) {
 
 						let x=xscale(s.lane*dimensions.lane + dimensions.lane/2),
 							start_y=(s.distance%(dimensions.length*2)>0)?yscale(0):yscale(dimensions.length),
-							dist=s.distance>(s.distance-s.mt),
-							y=(s.distance%(dimensions.length*2)>0)?yscale((dimensions.length-dist)-10):yscale(dist+10),
-							w=xscale(0.8);
-						
+							dist=s.distance-s.mt,
+							y=(s.distance%(dimensions.length*2)>0)?yscale(dimensions.length-dist-10):yscale(dist+10);
+
+
 						if(s.distance===0) {
 							start_y=yscale(0);
 							y=start_y;
@@ -567,8 +568,8 @@ export default function SwimmingLineChart(data,options) {
 							let x=xscale(s.lane*dimensions.lane + dimensions.lane/2),
 								start_y=(s.distance%(dimensions.length*2)>0)?yscale(0):yscale(dimensions.length),
 								dist=s.distance-s.mt,
-								y=(s.distance%(dimensions.length*2)>0)?yscale(dimensions.length-dist):yscale(dist),
-								w=xscale(0.8);
+								y=(s.distance%(dimensions.length*2)>0)?yscale(dimensions.length-dist-0):yscale(dist+0);
+
 
 							if(s.distance===0) {
 								start_y=yscale(0);
