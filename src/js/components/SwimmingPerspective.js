@@ -38,7 +38,7 @@ import {
 } from 'd3-timer';
 //import Barchart from './Barchart';
 import PerspT from 'perspective-transform';
-
+import {getOffset} from '../lib/dom';
 
 import {cancelAnimFrame, requestAnimFrame} from '../lib/raf';
 
@@ -65,10 +65,14 @@ export default function SwimmingLineChart(data,options) {
 		best_cumulative_times={},
 		CURRENT_LEG=0,
 		CURRENT_STEP=0,
+		CURRENT_DISTANCE=0,
 		LEGS=[],
 		WR;
 
-	let overlay,
+	let container,
+		overlay,
+		perspectives=[],
+		annotations_layer,
 		svg,
 		leg,
 		athlete,
@@ -166,12 +170,25 @@ export default function SwimmingLineChart(data,options) {
 
 		let ul=select(options.container).append("ul");
     	
-		buildTexts();
+		
 
-	    let container=select(options.container)
+		
+
+		
+
+	    container=select(options.container)
 	    					.append("div")
 	    					.attr("class","swimming-perspective");
 
+	    annotations_layer=container
+								.append("div")
+								.attr("class","annotations");
+
+	    overlay=container
+						.append("div")
+						.attr("class","overlay");
+
+		
 
 	    svg=container.append("svg")
 	    // overlay=container.append("div")
@@ -185,9 +202,9 @@ export default function SwimmingLineChart(data,options) {
 	    	.attr("width",WIDTH)
 	    	.attr("height",HEIGHT)
 
-	   	// overlay
-	   	// 	.style("width",WIDTH+"px")
-	    // 	.style("height",HEIGHT+"px")
+	   	overlay
+	   		.style("width",WIDTH+"px")
+	    	.style("height",HEIGHT+"px")
 	    
 	    console.log(WIDTH,"x",HEIGHT)
 	    
@@ -204,8 +221,9 @@ export default function SwimmingLineChart(data,options) {
 		yscale=scaleLinear().domain([0,dimensions.length]).range([HEIGHT-(margins.top+margins.bottom),0]);
 		
 		
+		//computePerspective();
 					
-
+		buildTexts("intro");
 		
 
 		/*ul.selectAll("li")
@@ -457,48 +475,96 @@ export default function SwimmingLineChart(data,options) {
 							})*/
 
 
-		goTo(options.text[0].mt)
+		goTo(options.text[0].mt,options.text[0].story==="intro")
 
 		
 	}
 
-	function buildTexts() {
-		if(CURRENT_STEP===0) {
-			let standfirst=select(options.container)
-		    		.append("div")
-		    		.attr("class","stand-first");
+	function buildTexts(type) {
+		
+		console.log("buildTexts",CURRENT_STEP)
 
-		    if(options.text[CURRENT_STEP].title) {
-		    	standfirst.append("h1")
-		    			.text(options.text[CURRENT_STEP].title)	
-		    }
+		
 
-		    standfirst.append("p")
-		    			.text(options.text[CURRENT_STEP].text)
+		let texts=options.text.filter(d=>d.type===(type || "story"));
 
-		    
-		}
+		console.log("TEXTS",texts,texts[CURRENT_STEP])
 		
 		let standfirst=select(options.container)
-		    				.select("div.stand-first")
+							.selectAll("div.stand-first")
+								.data([texts[CURRENT_STEP]]);
 
-		let button=standfirst.selectAll("button")
-		    			.data([options.text[CURRENT_STEP].button]);
+		standfirst=standfirst
+			.enter()
+		    .append("div")
+		    .attr("class","stand-first")
+			.merge(standfirst)
+    			.html(d=>{
+    				//console.log("!!!!",d)
+    				return "<p>"+d.text+"</p>";
+    			});
+
+		
+		let button=standfirst
+						.selectAll("button")
+		    				.data([texts[CURRENT_STEP].button]);
 
 	    button
 	    	.enter()
 	    	.append("button")
 		    	.on("click",()=>{
-					CURRENT_STEP=(CURRENT_STEP+1)%options.text.length;
-					console.log(CURRENT_STEP,options.text[CURRENT_STEP].mt)
-					CURRENT_STEP=CURRENT_STEP===0?1:CURRENT_STEP;
-					goTo(options.text[CURRENT_STEP].mt,(d)=>{
+					CURRENT_STEP=(CURRENT_STEP+1)%texts.length;
+					console.log(CURRENT_STEP,texts[CURRENT_STEP].mt)
+					//CURRENT_STEP=CURRENT_STEP===0?1:CURRENT_STEP;
+
+					goTo(options.text.filter(d=>d.type==="story")[CURRENT_STEP].mt,(d)=>{
 						buildTexts();
 					})
 				})
 			.merge(button)
+				.classed("replay",d=>(d.toLowerCase()==="replay"))
 				.text(d=>d)
-	    			
+
+	}
+	function removeAnnotations() {
+		annotations_layer.selectAll("div.annotation").remove();
+	}
+	function addAnnotation() {
+		console.log("addAnnotation",CURRENT_DISTANCE)
+
+		let annotations=options.text.filter(d=>(d.mt===CURRENT_DISTANCE && d.type==="annotation"));
+
+		let annotation=annotations_layer.selectAll("div.annotation").data(annotations);
+
+		console.log("ANNOTATIONS",annotations)
+
+		annotation
+			.enter()
+			.append("div")
+				.attr("class","annotation")
+			.merge(annotation)
+				.classed("side0",d=>(d.mt%(dimensions.length*2)===0))
+				.classed("side1",d=>(d.mt%(dimensions.length*2)>0))
+				.style("left",d=>{
+					
+					let x=xscale(d.lane*dimensions.lane + dimensions.lane/2),
+						y=(d.mt%(dimensions.length*2)>0)?yscale(dimensions.length):yscale(0);
+
+					let side=(d.mt%(dimensions.length*2)>0)?1:0;
+						
+					let overlayPersp=computePerspective(side);
+					d.coords=overlayPersp.transform(x,y)
+
+					return d.coords[0]+"px";
+				})
+				.style("top",d=>{
+					let offset=getOffset(annotations_layer.node());
+					console.log("OFFSET",offset)
+					return (d.coords[1]-(offset.top-17))+"px";
+				})
+				.html(d=>"<span>"+d.text+"</span>")
+
+		
 
 	}
 
@@ -519,8 +585,13 @@ export default function SwimmingLineChart(data,options) {
 		},1000)
 	}
 
-	function goTo(distance) {
-		svg.classed("end-side",(distance%100>0))
+	function goTo(distance,text_update) {
+
+		removeAnnotations();
+
+		CURRENT_DISTANCE=distance;
+
+		container.classed("end-side",(distance%100>0))
 
 		let selected_leg=leg
 			.classed("visible",false)
@@ -590,55 +661,78 @@ export default function SwimmingLineChart(data,options) {
 						})
 						.on("end",d=>{
 							if(d.lane===1) {
-								buildTexts();
+								if(text_update){
+									buildTexts();
+									addAnnotation();	
+								}
 							}
 						})
 
 		
-		/*selected_leg.select("text.swimmer-name")
-				.attr("y",s=>{
-					return s.text_start_y;
-				})
-				// .attr("transform",s=>{
-				// 	return "rotate(90 "+s.text_x+" "+s.text_y+")"
-				// })
-				.attr("x",function(s) {
-					let box=this.getComputedTextLength();
-					console.log("TEXT SIZE",box)
-					return (s.distance%100===0)?(box*1.5):-5
-				})
-				.transition()
-					.duration(s=>{
-						return best_cumulative_times[s.distance].best_time*0.2
-					})
-					.ease(SwimmingLinear)
-						.attr("class","swimmer-name")
-						.attr("y",s=>{
-							return s.text_y;
-						})*/
-
-		/*.transition()
-				.duration(best_cumulative_times[200].best_time/2)
-				.ease(SwimmingLinear)
-				.attr("d",s=>{
-
-					let x=xscale(s.lane*dimensions.lane + dimensions.lane/2),
-						start_y=(s.distance%(dimensions.length*2)>0)?yscale(0):yscale(dimensions.length),
-						dist=s.distance-s.mt,
-						y=(s.distance%(dimensions.length*2)>0)?yscale(dimensions.length-dist):yscale(dist),
-						w=xscale(0.8)
-
-					return line([
-								perspT.transform(x-w/2,start_y),
-								perspT.transform(x+w/2,start_y),
-								perspT.transform(x+w/2,y),
-								perspT.transform(x-w/2,y),
-								perspT.transform(x-w/2,start_y)
-							]);
-
-				})*/
+		
 
 	}
+
+	this.getPosition = (lane,distance) => {
+		return getPosition(lane,distance);
+	}
+
+	function getPosition(lane,distance) {
+
+		let x=xscale(lane*dimensions.lane + dimensions.lane/2),
+			y=(distance%(dimensions.length*2)>0)?yscale(dimensions.length):yscale(0);
+
+		console.log("POSITION",lane,distance,"->",x,y)
+
+		return [x,y];
+
+	}
+
+	function computePerspective(side) {
+
+		if(perspectives[side]) {
+			return perspectives[side];
+		}
+
+		let coords=[
+			[xscale.range()[0],yscale.range()[0]],
+			[xscale.range()[1],yscale.range()[0]],
+			[xscale.range()[1],yscale.range()[1]],
+			[xscale.range()[0],yscale.range()[1]]
+		]
+
+		let srcPts=[],
+			dstPts=[];
+
+		let point=overlay
+						.selectAll("div.overlay-point")
+						.data(coords);
+		point
+			.enter()
+				.append("div")
+				.attr("class","overlay-point")
+			.merge(point)
+				.style("left",d=>(d[0]+"px"))
+				.style("top",d=>(d[1]+"px"))
+				.each(function(d){
+					srcPts.push(d[0]);
+					srcPts.push(d[1]);
+
+					let coords=this.getBoundingClientRect();
+					console.log("CSS3 coords",coords)
+					dstPts.push(coords.left);
+					dstPts.push(coords.top);
+				});
+
+		
+
+		perspectives[side] = PerspT(srcPts, dstPts);
+
+		return perspectives[side];
+	}
+
+	
+
 }
 function SwimmingPool(options) {
 

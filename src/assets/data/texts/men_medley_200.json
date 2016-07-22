@@ -1,39 +1,68 @@
 [
 	{
+		"type":"intro",
 		"mt":200,
 		"lane":null,
-		"title":"Phelps beats Lochte to win Olympic 200m individual medley",
 		"text":"Michael Phelps summoned up one of the great swims of his life to beat Ryan Lochte in the final of the 200m individual medley. It was the 20th Olympic medal of his career.",
 		"button":"The final as it happened"
 	},
 	{
+		"type":"story",
 		"mt":0,
 		"lane":null,
-		"text":"Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sed dolorem voluptas asperiores ab, sunt excepturi facilis",
-		"button":"50 metre"
+		"text":"The swim started slow for Phelps and Lochte, beaten by Takakuwa with his 0.59s reaction time",
+		"button":"Butterfly - 50 metre"
 	},
 	{
+		"type":"story",
 		"mt":50,
 		"lane":null,
-		"text":"Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sed dolorem voluptas asperiores ab, sunt excepturi facilis",
-		"button":"100 metre, half way"
+		"text":"Butterfly, Lorem ipsum dolor sit amet, consectetur adipisicing elit.",
+		"button":"Backstroke - 100 metre"
 	},
 	{
+		"type":"story",
 		"mt":100,
 		"lane":null,
-		"text":"Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sed dolorem voluptas asperiores ab, sunt excepturi facilis",
-		"button":"150 metre"
+		"text":"Backstroke, Lorem ipsum dolor sit amet, consectetur adipisicing elit.",
+		"button":"Breaststroke - 150 metre"
 	},
 	{
+		"type":"story",
 		"mt":150,
 		"lane":null,
-		"text":"Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sed dolorem voluptas asperiores ab, sunt excepturi facilis",
-		"button":"The arrival, 200mt"
+		"text":"Breaststroke, Lorem ipsum dolor sit amet, consectetur adipisicing elit.",
+		"button":"Freestyle - 200 metre"
 	},
 	{
+		"type":"story",
 		"mt":200,
 		"lane":null,
-		"text":"Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sed dolorem voluptas asperiores ab, sunt excepturi facilis",
+		"text":"Freestyle, Lorem ipsum dolor sit amet, consectetur adipisicing elit.",
 		"button":"Replay"
+	},
+	{
+		"type":"annotation",
+		"mt":0,
+		"lane":7,
+		"text":"Takakuwa starts with the fastest reaction time"
+	},
+	{
+		"type":"annotation",
+		"mt":50,
+		"lane":3,
+		"text":"After the first 50 metres butterfly Phelps has already taken the lead"
+	},
+	{
+		"type":"annotation",
+		"mt":100,
+		"lane":6,
+		"text":"Pereira is the second fastest swimmer after 100mt, running for the silver medal"
+	},
+	{
+		"type":"annotation",
+		"mt":150,
+		"lane":3,
+		"text":"After 150 metre the order is Phelp 1st, Pereira 2nd and Lochte 3rd"
 	}
 ]

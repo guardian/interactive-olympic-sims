@@ -1,14 +1,14 @@
 .stand-first {
 	position:absolute;
 	z-index:9999;
-	top:0px;
-	left:0;
+	top:40px;
+	left:5%;
 	width:100%;
 	@include mq(tablet) {
-		width:75%;
+		width:40%;
 	}
 	@include mq(desktop) {
-		width:65%;
+		width:40%;
 	}
 	h1 {
 		@include fs-header(4);
@@ -31,8 +31,9 @@
 	}
 	p {
 		@include fs-bodyCopy(2);
+		color:#333;
 		@include mq(tablet) {
-			@include fs-bodyCopy(1);
+			@include fs-bodyCopy(2);
 		}
 	}
 
@@ -56,6 +57,9 @@
 	    &:hover{
 	    	background-color:#ddd;
 	    }
+	    &.replay {
+	    	background-image:url(./assets/imgs/replay.svg);
+	    }
 	}
 
 }
@@ -63,6 +67,7 @@
 
 	overflow:hidden;
 	
+	border-top:1px solid #ddd;
 	border-bottom:1px solid #ddd;
 
 	$ratio:1;
@@ -123,37 +128,9 @@
 			transform:rotateX(60deg) rotateY(0deg) rotateZ(0deg) translateX(0px) translateY(-60px) translateZ(-40px) scale(1);
 		}
 	}
-	/*.overlay {
-		position:absolute;
-		display: none;
-		top:0;
-		left:0;
-		background-color:rgba(255,0,0,0.2);
-		backface-visibility: hidden;
-
-		.swimmer-info {
-			span {
-				position:absolute;
-				transform:rotate(-90deg);
-				transform-origin:50% 50%;
-				top:1000px;
-				left:100px;
-				
-				@include f-textSans;
-
-				font-size:50px;
-
-				outline: 1px solid transparent
-			}
-		}
-	}*/
-	// * {
-	// 	transform:none !important;
-	// }
 	svg,.overlay {
 		transform:rotateX(65deg) rotateY(0deg) rotateZ(10deg) translateX(85px) translateY(-80px) translateZ(0px) scale(0.9);
 	}
-
   	@include mq(tablet) {
   		svg,.overlay {
   			transform:rotateX(65deg) rotateY(0deg) rotateZ(10deg) translateX(105px) translateY(-230px) translateZ(90px) scale(1);
@@ -166,10 +143,29 @@
   	}
   	@include mq(wide) {
   		svg,.overlay {
-  			//transform:rotateX(60deg) rotateY(0deg) rotateZ(10deg) translateX(-75px) translateY(170px) translateZ(90px) scale(1);
   			transform:rotateX(65deg) rotateY(0deg) rotateZ(10deg) translateX(-225px) translateY(-780px) translateZ(90px) scale(1);
   		}
   	}
+	
+	&.end-side {
+			svg,.overlay {
+				transform:rotateX(60deg) rotateY(20deg) rotateZ(0deg) translateX(40px) translateY(270px) translateZ(-30px) scale(1);
+				@include mq(tablet) {
+					transform:rotateX(60deg) rotateY(20deg) rotateZ(0deg) translateX(50px) translateY(240px) translateZ(-50px) scale(1);
+				}
+				
+				@include mq(desktop) {
+		  			transform:rotateX(60deg) rotateY(20deg) rotateZ(0deg) translateX(50px) translateY(150px) translateZ(-50px) scale(1);
+		  		}
+				@include mq(wide) {
+		  			transform:rotateX(60deg) rotateY(0deg) rotateZ(10deg) translateX(-145px) translateY(280px) translateZ(70px) scale(1);
+		  		}
+	  		}
+	}
+	
+	* {
+		//transform:none !important;
+	}
 
 	svg {
 		
@@ -189,20 +185,7 @@
 		
   		backface-visibility: hidden;
 		
-		&.end-side {
-			//transform:rotateX(60deg) rotateY(0deg) rotateZ(10deg) translateX(270px) translateY(200px) translateZ(10px) scale(1);
-			transform:rotateX(60deg) rotateY(20deg) rotateZ(0deg) translateX(40px) translateY(270px) translateZ(-30px) scale(1);
-			@include mq(tablet) {
-				transform:rotateX(60deg) rotateY(20deg) rotateZ(0deg) translateX(50px) translateY(240px) translateZ(-50px) scale(1);
-			}
-			
-			@include mq(desktop) {
-	  			transform:rotateX(60deg) rotateY(20deg) rotateZ(0deg) translateX(50px) translateY(150px) translateZ(-50px) scale(1);
-	  		}
-			@include mq(wide) {
-	  			transform:rotateX(60deg) rotateY(0deg) rotateZ(10deg) translateX(-145px) translateY(280px) translateZ(70px) scale(1);
-	  		}
-		}
+		
 		
 
 
@@ -325,6 +308,63 @@
 				}
 			}
 
+		}
+	}
+
+	.overlay {
+		position:absolute;
+		//display: none;
+		top:0;
+		left:0;
+		right:0;
+		bottom:0;
+		background-color:rgba(255,0,0,0);
+		backface-visibility: hidden;
+		.overlay-point {
+			position:absolute;
+			//background-color:#000;
+			width:1px;
+			height:1px;
+			border-radius:5px;
+		}
+	}
+	.annotations {
+		position:absolute;
+		top:0;
+		left:0;
+
+		.annotation {
+			position:absolute;
+			width:0px;
+			border:1px solid #ddd;
+			overflow:visible;
+
+			@include fs-textSans(1);
+			span {
+				position: absolute;
+				display: block;
+				width:150px;
+			}
+			&.side0 {
+				span {
+					top:0px;
+					left:-180px;
+					text-align: right;
+					border-right:1px solid #ddd;
+					padding-right:12px;
+				}
+				
+			}
+			&.side1 {
+
+				span {
+					bottom:15px;
+					left:-25px;
+					border-left:1px solid #ddd;
+					padding-left:10px;
+				}
+			}
+			
 		}
 	}
 }
