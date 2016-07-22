@@ -168,7 +168,7 @@ export default function SwimmingLineChart(data,options) {
 
 		let margins=options.margins || {left:0,top:0,right:0,bottom:0};
 
-		let ul=select(options.container).append("ul");
+		//let ul=select(options.container).append("ul");
     	
 		
 
@@ -186,7 +186,7 @@ export default function SwimmingLineChart(data,options) {
 
 	    overlay=container
 						.append("div")
-						.attr("class","overlay");
+						.attr("class","rio-overlay");
 
 		
 
@@ -559,8 +559,9 @@ export default function SwimmingLineChart(data,options) {
 				})
 				.style("top",d=>{
 					let offset=getOffset(annotations_layer.node());
-					console.log("OFFSET",offset)
-					return (d.coords[1]-(offset.top-17))+"px";
+					console.log("OFFSET",offset,getOffset(this))
+					//offset.top=0;
+					return (d.coords[1]-(offset.top))+"px";
 				})
 				.html(d=>"<span>"+d.text+"</span>")
 

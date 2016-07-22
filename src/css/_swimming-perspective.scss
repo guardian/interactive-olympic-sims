@@ -102,8 +102,10 @@
 	transform-style: preserve-3d;
   	transition: perspective 1s, perspective-origin 1s;
 
-	perspective: 520px;
-	perspective-origin: 140% 10%;
+	//perspective: 530px;
+	//perspective-origin: 50% 0%;
+	perspective: 680px;
+	perspective-origin: 100% -30%;
 	@include mq(tablet) {
 		perspective: 600px;
 		perspective-origin: 130% 0%;
@@ -125,31 +127,34 @@
 		perspective: 245px;
 		svg {
 			//transform:rotateX(60deg) rotateY(0deg) rotateZ(0deg) translateX(0px) translateY(0px) translateZ(0px) scale(1);
-			transform:rotateX(60deg) rotateY(0deg) rotateZ(0deg) translateX(0px) translateY(-60px) translateZ(-40px) scale(1);
+			transform:rotateX(90deg) rotateY(0deg) rotateZ(10deg) translateX(60px) translateY(-70px) translateZ(0px) scale(1);
 		}
 	}
-	svg,.overlay {
-		transform:rotateX(65deg) rotateY(0deg) rotateZ(10deg) translateX(85px) translateY(-80px) translateZ(0px) scale(0.9);
+
+	svg,.rio-overlay {
+		transform:rotateX(90deg) rotateY(0deg) rotateZ(0deg) translateX(40px) translateY(-80px) translateZ(0px) scale(1);
+		//transform:rotateX(65deg) rotateY(0deg) rotateZ(10deg) translateX(85px) translateY(-80px) translateZ(0px) scale(1);
 	}
   	@include mq(tablet) {
-  		svg,.overlay {
+  		svg,.rio-overlay {
   			transform:rotateX(65deg) rotateY(0deg) rotateZ(10deg) translateX(105px) translateY(-230px) translateZ(90px) scale(1);
   		}
   	}
   	@include mq(desktop) {
-  		svg,.overlay {
-  			transform:rotateX(65deg) rotateY(0deg) rotateZ(10deg) translateX(-55px) translateY(-620px) translateZ(90px) scale(1)
+  		svg,.rio-overlay {
+  			transform:rotateX(65deg) rotateY(0deg) rotateZ(10deg) translateX(-55px) translateY(-500px) translateZ(90px) scale(1)
   		}
   	}
   	@include mq(wide) {
-  		svg,.overlay {
+  		svg,.rio-overlay {
   			transform:rotateX(65deg) rotateY(0deg) rotateZ(10deg) translateX(-225px) translateY(-780px) translateZ(90px) scale(1);
   		}
   	}
 	
 	&.end-side {
-			svg,.overlay {
-				transform:rotateX(60deg) rotateY(20deg) rotateZ(0deg) translateX(40px) translateY(270px) translateZ(-30px) scale(1);
+			svg,.rio-overlay {
+				//transform:rotateX(60deg) rotateY(20deg) rotateZ(0deg) translateX(40px) translateY(270px) translateZ(-30px) scale(1);
+				transform:rotateX(90deg) rotateY(0deg) rotateZ(10deg) translateX(60px) translateY(370px) translateZ(0px) scale(1);
 				@include mq(tablet) {
 					transform:rotateX(60deg) rotateY(20deg) rotateZ(0deg) translateX(50px) translateY(240px) translateZ(-50px) scale(1);
 				}
@@ -311,7 +316,7 @@
 		}
 	}
 
-	.overlay {
+	.rio-overlay {
 		position:absolute;
 		//display: none;
 		top:0;
@@ -347,21 +352,23 @@
 			}
 			&.side0 {
 				span {
-					top:0px;
+					top:10px;
 					left:-180px;
 					text-align: right;
 					border-right:1px solid #ddd;
-					padding-right:12px;
+					padding-right:5px;
+					padding-top:5px;
 				}
 				
 			}
 			&.side1 {
 
 				span {
-					bottom:15px;
+					bottom:0px;
 					left:-25px;
 					border-left:1px solid #ddd;
-					padding-left:10px;
+					padding-left:5px;
+					padding-bottom:5px;
 				}
 			}
 			
