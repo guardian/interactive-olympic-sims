@@ -243,22 +243,39 @@
 				}
 				path.guide-text-path {
 					stroke-opacity:0 !important;
+					stroke:#000 !important;
+					stroke-width:2 !important;
 				}
 				.swimmer-name {
 					@include f-textSans;
-					font-size:20px;
+					font-size:16px;
+					text-rendering: optimizeSpeed;// optimizeLegibility;
+
 					@include mq(tablet) {
 						font-size: 40px;
+
+						&.time {
+							font-size:28px;
+						}
 					}
-					letter-spacing: 2px;
-					fill: #FFF;
+					fill:#222;
+					@include mq(tablet) {
+						letter-spacing: 2px;
+						fill: #FFF;
+					}
 					//text-transform: uppercase;
 					fill-opacity:0;
 
+
+
 					&.stroke {
 						stroke-width:3;
-						stroke:#000;
+						stroke:none;
 						stroke-opacity:0;
+						fill:none;
+						@include mq(tablet) {
+							stroke:#000;
+						}
 					}
 					
 				}
@@ -271,13 +288,19 @@
 					text {
 						fill-opacity:1;
 						&.stroke {
-							stroke-opacity:0.5;
+							stroke-opacity:0;
+							@include mq(tablet) {
+								stroke-opacity:0.5;
+							}
 						}
 					}
 				}
 				&.m0 {
 					text {
 						transition: fill-opacity 2s, stroke-opacity 2s;
+						&.time {
+							transition-delay:1.5s;
+						}
 					}
 				}
 				/* &.m200 {
@@ -353,7 +376,7 @@
 			&.side0 {
 				span {
 					top:10px;
-					left:-180px;
+					left:-150px;
 					text-align: right;
 					border-right:1px solid #ddd;
 					padding-right:5px;
@@ -365,11 +388,23 @@
 
 				span {
 					bottom:0px;
-					left:-25px;
+					left:0;//-25px;
 					border-left:1px solid #ddd;
 					padding-left:5px;
 					padding-bottom:5px;
 				}
+			}
+
+			div {
+				background-color: transparent;
+				border:2px solid #000;
+			    width: 10px;
+			    height: 10px;
+			    position: absolute;
+			    top: -5px;
+			    left: -5px;
+			    z-index: 9999;
+			    border-radius: 5px;
 			}
 			
 		}

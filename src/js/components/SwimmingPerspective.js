@@ -161,6 +161,17 @@ export default function SwimmingLineChart(data,options) {
     	}
     	console.log(swimmers_data)
 		console.log(best_cumulative_times)
+
+		
+		swimmers_data.forEach(s => {
+			options.text.push({
+				"type":"annotation",
+				"mt":200,
+				"lane":s.lane,
+				"text":s.value
+			})
+		})
+
 		buildVisual();
 
 	}
@@ -351,36 +362,10 @@ export default function SwimmingLineChart(data,options) {
 								perspT.transform(x,start_y)
 							]);
 
-					/*return line(splits.map(s=>{
 
-						s.diff=s.cumulative_time - best_cumulative_times[s.distance].best_cumulative;
-
-						return [xscale(s.distance),
-								yscale(s.diff)
-						]
-					}))*/
 				})
 				.style("stroke-width",xscale(1.2))
-				/*.transition()
-				.duration(best_cumulative_times[200].best_time/2)
-				.ease(SwimmingLinear)
-				.attr("d",s=>{
 
-					let x=xscale(s.lane*dimensions.lane + dimensions.lane/2),
-						start_y=(s.distance%(dimensions.length*2)>0)?yscale(0):yscale(dimensions.length),
-						dist=s.distance-s.mt,
-						y=(s.distance%(dimensions.length*2)>0)?yscale(dimensions.length-dist):yscale(dist),
-						w=xscale(0.8)
-
-					return line([
-								perspT.transform(x-w/2,start_y),
-								perspT.transform(x+w/2,start_y),
-								perspT.transform(x+w/2,y),
-								perspT.transform(x-w/2,y),
-								perspT.transform(x-w/2,start_y)
-							]);
-
-				})*/
 
 		leg.filter(s=>(s.distance===0))
 				.append("path")
@@ -392,22 +377,33 @@ export default function SwimmingLineChart(data,options) {
 						y1=yscale(50);
 					return `M${x},${y0}L${x},${y1}`;
 				});
+		leg.filter(s=>(s.distance===0))
+				.append("path")
+				.attr("id",(s)=>("t_guide_"+s.lane+"_"+s.distance))
+				.attr("class","guide-text-path")
+				.attr("d", (s) => {
+					let x=xscale(s.lane*dimensions.lane + dimensions.lane/2),
+						y0=yscale(0),
+						y1=yscale(s.mt);
+					return `M${x},${y0}L${x},${y1}`;
+				});
 
-		leg.append("text")
+		/*leg.append("text")
 				.attr("class","swimmer-name stroke")
 
 		leg.filter(s=>(s.distance===0))
 				.select("text.stroke")
 					.attr("dx",5)
-				    .attr("dy",9)
+				    .attr("dy","0.35em")
 					.append("textPath")
 				    	.attr("xlink:href", s=>("#guide_"+s.lane+"_"+s.distance))
 				    	.attr("text-anchor","start")
 				    	.attr("startOffset","0%")
 				    	.text(s=>{
 							let swimmer=swimmers_data.find(d=>(d.lane===s.lane))
-							return swimmer.entrant.participant.competitor.lastName;
+							return swimmer.reaction_time.value+"  "+swimmer.entrant.participant.competitor.lastName;
 						})
+
 
 		leg.filter(s=>(s.distance>0))
 				.select("text.stroke")
@@ -415,7 +411,7 @@ export default function SwimmingLineChart(data,options) {
 			    	return (s.distance%100===0)?5:-5
 			    })
 			    .attr("dy",s=>{
-			    	return (s.distance%100===0)?9:6
+			    	return (s.distance%100===0)?"0.35em":"0.35em"   //9:6
 			    })
 			  	.append("textPath")
 			    	.attr("xlink:href", s=>("#leg_"+s.lane+"_"+s.distance))
@@ -423,36 +419,58 @@ export default function SwimmingLineChart(data,options) {
 			    	.attr("startOffset",s=>(s.distance%100>0)?"50%":"50%")
 			    	.text(s=>{
 						let swimmer=swimmers_data.find(d=>(d.lane===s.lane))
-						return swimmer.entrant.participant.competitor.lastName;
-					})
+						return swimmer.entrant.participant.competitor.lastName+" "+swimmer.value;
+					})*/
 
 		
 
 		
-
-		leg.append("text")
-				.attr("class","swimmer-name")
 
 		leg.filter(s=>(s.distance===0))
-				.select("text:not(.stroke)")
-					.attr("dx",5)
-				    .attr("dy",9)
+			.selectAll("text")
+			.data(s=>([s,s,s,s]))
+			.enter()
+			.append("text")
+				.attr("class","swimmer-name")
+				.classed("stroke",(s,i)=>(i<2))
+
+		leg.filter(s=>(s.distance===0))
+				//.selectAll("text:not(.stroke)")
+				.selectAll("text")
+					.attr("dx",(s,i)=>(i%2)?5:-5)
+				    .attr("dy","0.35em")
+				    .classed("time",(s,i)=>!(i%2))
 					.append("textPath")
-				    	.attr("xlink:href", s=>("#guide_"+s.lane+"_"+s.distance))
-				    	.attr("text-anchor","start")
-				    	.attr("startOffset","0%")
-				    	.text(s=>{
+				    	.attr("xlink:href", (s,i)=>{
+				    		let t=(i%2)?"":"t_"
+				    		return `#${t}guide_${s.lane}_${s.distance}`
+				    	})
+				    	.attr("text-anchor",(s,i)=>((i%2)?"start":"end"))
+				    	.attr("startOffset",(s,i)=>((i%2)?"0%":"100%"))
+				    	//.style("fill",(s,i)=>(i?"#000":"#336699"))
+				    	.text((s,i)=>{
 							let swimmer=swimmers_data.find(d=>(d.lane===s.lane))
-							return swimmer.entrant.participant.competitor.lastName;
+							if(i%2) {
+								return swimmer.entrant.participant.competitor.lastName;
+							}
+							return swimmer.reaction_time.value;
 						})
+		leg.filter(s=>(s.distance>0))
+			.selectAll("text")
+			.data(s=>([s,s]))
+			.enter()
+			.append("text")
+				.attr("class","swimmer-name")
+				.classed("stroke",(s,i)=>(i<1))
 
 		leg.filter(s=>(s.distance>0))
-				.select("text:not(.stroke)")
+				//.selectAll("text:not(.stroke)")
+				.selectAll("text")
 					.attr("dx",s=>{
 				    	return (s.distance%100===0)?5:-5
 				    })
 				    .attr("dy",s=>{
-				    	return (s.distance%100===0)?9:6
+				    	return (s.distance%100===0)?"0.35em":"0.35em"   //9:6
 				    })
 				  	.append("textPath")
 				    	.attr("xlink:href", s=>("#leg_"+s.lane+"_"+s.distance))
@@ -462,18 +480,6 @@ export default function SwimmingLineChart(data,options) {
 							let swimmer=swimmers_data.find(d=>(d.lane===s.lane))
 							return swimmer.entrant.participant.competitor.lastName;
 						})
-
-		/*overlay.selectAll("div.swimmer-info")
-					.data(swimmers_data)
-					.enter()
-					.append("div")
-						.attr("class","swimmer-info")
-						.append("span")
-							.text(s=>{
-								let swimmer=swimmers_data.find(d=>(d.lane===s.lane))
-								return swimmer.entrant.participant.competitor.lastName;
-							})*/
-
 
 		goTo(options.text[0].mt,options.text[0].story==="intro")
 
@@ -538,6 +544,7 @@ export default function SwimmingLineChart(data,options) {
 
 		console.log("ANNOTATIONS",annotations)
 
+		let xy;
 		annotation
 			.enter()
 			.append("div")
@@ -554,18 +561,32 @@ export default function SwimmingLineChart(data,options) {
 						
 					let overlayPersp=computePerspective(side);
 					d.coords=overlayPersp.transform(x,y)
+					xy=[x,y];
+					console.log("COORDS",d.coords)
 
-					return d.coords[0]+"px";
+					let offset=getOffset(annotations_layer.node());
+					console.log("OFFSET",offset)
+
+					console.log("LEFT",(d.coords[0]-offset.left))
+
+					return (d.coords[0]-offset.left)+"px";
 				})
 				.style("top",d=>{
 					let offset=getOffset(annotations_layer.node());
-					console.log("OFFSET",offset,getOffset(this))
+					//console.log("OFFSET",offset,getOffset(this))
 					//offset.top=0;
+					console.log("TOP",(d.coords[1]-(offset.top)))
 					return (d.coords[1]-(offset.top))+"px";
 				})
 				.html(d=>"<span>"+d.text+"</span>")
 
-		
+		/*annotations_layer.selectAll("div.annotation").append("div")
+
+		svg.append("circle")
+				.attr("cx",xy[0])
+				.attr("cy",xy[1])
+				.attr("r",3)
+				.style("fill","#ff0000")*/
 
 	}
 
@@ -692,7 +713,9 @@ export default function SwimmingLineChart(data,options) {
 	function computePerspective(side) {
 
 		if(perspectives[side]) {
-			return perspectives[side];
+			//ideally saving the perspective to avoid recalculating it everytime
+			//but apparently doesn't cope well with scrollTop
+			//return perspectives[side]; 
 		}
 
 		let coords=[
