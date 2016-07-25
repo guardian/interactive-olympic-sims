@@ -80,6 +80,7 @@ export default function SwimmingLineChart(data,options) {
 		xscale,
 		yscale,
 		line = d3_line();//.curve(curveMonotoneX)
+	let swimming_pool;
 
 	let frameRequest = requestAnimFrame(function checkInnerHTML(time) {
         //////console.log(time)
@@ -162,11 +163,11 @@ export default function SwimmingLineChart(data,options) {
     	console.log(swimmers_data)
 		console.log(best_cumulative_times)
 
-		
 		swimmers_data.forEach(s => {
 			options.text.push({
 				"type":"annotation",
-				"mt":200,
+				"time":true,
+				"mt":(LEGS.length-1)*dimensions.length,
 				"lane":s.lane,
 				"text":s.value
 			})
@@ -279,13 +280,14 @@ export default function SwimmingLineChart(data,options) {
 
 		//return;
 
-		new SwimmingPool({
-				svg:svg,
-				margins:margins,
-				hscale:xscale,
-				vscale:yscale,
-				perspT:perspT
-		})
+		swimming_pool=new SwimmingPool({
+									svg:svg,
+									margins:margins,
+									hscale:xscale,
+									vscale:yscale,
+									perspT:perspT,
+									legs:LEGS
+							})
 
 	   	let lines=svg
 					.append("g")
@@ -522,9 +524,15 @@ export default function SwimmingLineChart(data,options) {
 					CURRENT_STEP=(CURRENT_STEP+1)%texts.length;
 					console.log(CURRENT_STEP,texts[CURRENT_STEP].mt)
 					//CURRENT_STEP=CURRENT_STEP===0?1:CURRENT_STEP;
-
+					buildTexts();
+					deactivateButton();
+					if(texts[CURRENT_STEP].type!=="intro") {
+						swimming_pool.setAxis(texts[CURRENT_STEP].mt)
+					} else {
+						swimming_pool.setAxis(0)
+					}
 					goTo(options.text.filter(d=>d.type==="story")[CURRENT_STEP].mt,(d)=>{
-						buildTexts();
+						activateButton();
 					})
 				})
 			.merge(button)
@@ -532,6 +540,25 @@ export default function SwimmingLineChart(data,options) {
 				.text(d=>d)
 
 	}
+
+	function deactivateButton() {
+		//alert("de-activate")
+		select(options.container)
+			.select("div.stand-first")
+				.select("button")
+					.classed("inactive",true)
+					//.attr("disabled","disabled")
+	}
+
+	function activateButton() {
+		//alert("activate")
+		select(options.container)
+			.select("div.stand-first")
+				.select("button")
+					.classed("inactive",false)
+					//.attr("disabled","false")
+	}
+
 	function removeAnnotations() {
 		annotations_layer.selectAll("div.annotation").remove();
 	}
@@ -552,6 +579,7 @@ export default function SwimmingLineChart(data,options) {
 			.merge(annotation)
 				.classed("side0",d=>(d.mt%(dimensions.length*2)===0))
 				.classed("side1",d=>(d.mt%(dimensions.length*2)>0))
+				.classed("time",d=>d.time)
 				.style("left",d=>{
 					
 					let x=xscale(d.lane*dimensions.lane + dimensions.lane/2),
@@ -685,8 +713,9 @@ export default function SwimmingLineChart(data,options) {
 							if(d.lane===1) {
 								if(text_update){
 									buildTexts();
-									addAnnotation();	
+									addAnnotation();
 								}
+								activateButton();
 							}
 						})
 
@@ -843,5 +872,30 @@ function SwimmingPool(options) {
 									return perspT.transform(p[0],p[1])
 								}))
 							})
+
+
+		pool.append("text")
+				.attr("id","label_side1")
+				.attr("class","axis")
+				.attr("x",hscale((dimensions.lanes_n)*dimensions.lane+dimensions.lane/2))
+				.attr("y",vscale(50))
+				.attr("dy","1em")
+				.attr("dx",hscale(0.1))
+				.text("50m")
+
+		pool.append("text")
+				.attr("id","label_side0")
+				.attr("class","axis")
+				.attr("x",hscale((dimensions.lanes_n)*dimensions.lane+dimensions.lane/2))
+				.attr("y",vscale(0))
+				.attr("dx",hscale(0.1))
+				.attr("dy",-5)
+				.text(((options.legs.length-1)*dimensions.length)+"m")
 		
+		this.setAxis = (distance) => {
+			//alert(distance+" "+(`#label_side${+(distance%(dimensions.length*2)>0)}`))
+			pool.select(`#label_side${+(distance%(dimensions.length*2)>0)}`)
+				.text(distance+"m")
+
+		}
 }

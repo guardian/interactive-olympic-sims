@@ -60,6 +60,11 @@
 	    &.replay {
 	    	background-image:url(./assets/imgs/replay.svg);
 	    }
+	    &.inactive {
+	    	color:#999;
+
+	    	pointer-events:none;
+	    }
 	}
 
 }
@@ -111,14 +116,14 @@
 		perspective-origin: 130% 0%;
 	}
 	@include mq(desktop) {
-		perspective: 600px;
-		perspective-origin: 100% 0%;
+		perspective: 700px;
+		perspective-origin: 90% 0%;
 	}
 	@include mq(wide) {
 		/*perspective: 600px;
 		perspective-origin: 100% -10%;*/
-		perspective: 600px;
-		perspective-origin: 100% 0%;
+		perspective: 700px;
+		perspective-origin: 90% 0%;
 	}
 	backface-visibility: hidden;
 	
@@ -147,7 +152,7 @@
   	}
   	@include mq(wide) {
   		svg,.rio-overlay {
-  			transform:rotateX(65deg) rotateY(0deg) rotateZ(10deg) translateX(-225px) translateY(-780px) translateZ(90px) scale(1);
+  			transform:rotateX(65deg) rotateY(0deg) rotateZ(10deg) translateX(-265px) translateY(-780px) translateZ(90px) scale(1);
   		}
   	}
 	
@@ -226,6 +231,16 @@
 						stroke:$lane_yellow;
 					}
 				}
+			}
+			text.axis {
+				@include fs-textSans(3);
+				font-size: 35px;
+			    letter-spacing: 2px;
+			    font-weight: bold;
+			    fill: $water;
+			    fill-opacity:0.6;
+			    text-rendering: optimizeLegibility;
+			    text-anchor:middle;
 			}
 		}
 		.swimmer {
@@ -364,10 +379,18 @@
 		.annotation {
 			position:absolute;
 			width:0px;
-			border:1px solid #ddd;
+			//border:1px solid #ddd;
 			overflow:visible;
 
 			@include fs-textSans(1);
+
+			&.time {
+				font-size:15px;
+				span {
+					border:none !important;
+				}
+			}
+
 			span {
 				position: absolute;
 				display: block;
