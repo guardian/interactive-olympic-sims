@@ -160,7 +160,7 @@ export default function RunningLineChart(data,options) {
 
 	    let box = container.node().getBoundingClientRect();
 	    let WIDTH = box.width,
-	        HEIGHT = box.height;
+	        HEIGHT = box.width>414?box.width*4:box.height;
 	    
 	    
 
@@ -176,6 +176,8 @@ export default function RunningLineChart(data,options) {
 		yscale=scaleLinear().domain([0,dimensions.length]).range([0,HEIGHT-(margins.top+margins.bottom)]);
 		
 		let svg=container.append("svg")
+					.attr("width",WIDTH)
+	    			.attr("height",HEIGHT);	
 
 		let pool={
 			w:xscale(dimensions.lane*(dimensions.lanes_n+1)),
@@ -195,6 +197,12 @@ export default function RunningLineChart(data,options) {
 						0, pool.h
 					];
 
+		dstCorners = [
+						0, 0, 
+						pool.w, 0,
+						pool.w, pool.h,
+						0, pool.h
+					];
 		
 		// dstCorners = [
 		// 				0, 0, 
@@ -265,6 +273,8 @@ export default function RunningLineChart(data,options) {
 					.append("g")
 						.attr("class",d=>("leg m"+d.distance));
 
+
+
 		leg.append("path")
 				.attr("d",s=>{
 
@@ -310,6 +320,11 @@ export default function RunningLineChart(data,options) {
 								perspT.transform(x-w/2,y),
 								perspT.transform(x-w/2,start_y)
 							]);
+				})
+				.on("start",(d,i)=>{
+					if(i===0) {
+						container.classed("end-side",true);
+					}
 				})
 
 		return;
