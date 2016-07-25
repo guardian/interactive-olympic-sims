@@ -40,30 +40,42 @@
 	button{
 		height: 42px;
 	    border: none;
-	    padding: 0 40px 0 20px;
+	    padding: 0 15px 0 20px;
 	    border-radius: 42px;
 	    @include fs-textSans(4);
 	    //float: right;
 	    margin-bottom: 0;
-	    margin-right: 38px;
+	    //margin-right: 38px;
 	    color:#333;
 	    background:#f4f4f4;
-	    background-image:url(./assets/imgs/arrow-right.svg);
-	    background-repeat:no-repeat;
-	    background-size:23px;
-	    background-position: 95% center;
 	    cursor:pointer;
 	    outline:none;
+	    &:after {
+	    	content: "";
+	    	display: block;
+	    	float:right;
+	    	background-image:url(./assets/imgs/arrow-right.svg);
+		    background-repeat:no-repeat;
+		    background-size:23px;
+		    background-position: center center;	
+		    width:23px;
+		    height:23px;
+		    padding-left:15px;
+	    }
 	    &:hover{
 	    	background-color:#ddd;
 	    }
 	    &.replay {
-	    	background-image:url(./assets/imgs/replay.svg);
+	    	&:after {
+	    		background-image:url(./assets/imgs/replay.svg);
+	    	}
 	    }
 	    &.inactive {
 	    	color:#999;
-
 	    	pointer-events:none;
+	    	&:after {
+				opacity: 0.3;
+	    	}
 	    }
 	}
 
@@ -285,10 +297,14 @@
 
 					&.stroke {
 						stroke-width:3;
+						@media (-webkit-min-device-pixel-ratio: 2) {
+							stroke-width:2;
+						}
 						stroke:none;
 						stroke-opacity:0;
 						fill:none;
 						@include mq(tablet) {
+
 							stroke:#000;
 						}
 					}
