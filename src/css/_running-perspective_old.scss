@@ -1,0 +1,182 @@
+.running-perspective {
+
+	overflow:hidden;
+	
+	border-top:1px solid #ddd;
+	border-bottom:1px solid #ddd;
+
+	$ratio:1;
+	
+	$width:100%;
+
+	$height:600px;
+
+	$li_padding_top:0;
+
+	width:$width;
+	height:$height;
+
+	position: relative;
+
+	
+	
+	perspective: 700px;
+	perspective-origin: 50% 0%;
+	@include mq(tablet) {
+		perspective: 600px;
+		perspective-origin: 130% 0%;
+	}
+	@include mq(desktop) {
+		perspective: 720px;
+		perspective-origin: 100% 0%;
+	}
+	@include mq(wide) {
+		/*perspective: 600px;
+		perspective-origin: 100% -10%;*/
+		perspective: 420px;
+		perspective-origin: 70% 50%;
+	}
+	
+	backface-visibility: hidden;
+	transform-style: preserve-3d;
+  	transition: perspective 5s, perspective-origin 5s;
+	transition-timing-function: linear;
+	
+	* {
+		//transform: none !important;
+		transition: none !important;
+	}
+
+	&.end-side {
+		svg,.rio-overlay {
+			transform:rotateX(0deg) rotateY(0deg) rotateZ(0deg) translateX(0px) translateY(0px) translateZ(0px) scale(1)
+		}
+	  	@include mq(tablet) {
+	  		svg,.rio-overlay {
+	  			transform:rotateX(65deg) rotateY(0deg) rotateZ(10deg) translateX(105px) translateY(-230px) translateZ(90px) scale(1);
+	  		}
+	  	}
+	  	@include mq(desktop) {
+	  		svg,.rio-overlay {
+	  			transform:rotateX(65deg) rotateY(0deg) rotateZ(10deg) translateX(-55px) translateY(-460px) translateZ(90px) scale(1)
+	  		}
+	  	}
+	  	@include mq(wide) {
+	  		svg,.rio-overlay {
+	  			//transform:rotateX(50deg) rotateY(0deg) rotateZ(0deg) translateX(0px) translateY(-4000px) translateZ(1600px) scale(1);
+	  			//transform:rotateX(50deg) rotateY(0deg) rotateZ(0deg) translateX(0px) translateY(0px) translateZ(0px) scale(1);
+	  			transform:rotateX(50deg) rotateY(0deg) rotateZ(10deg) translateX(70px) translateY(-3910px) translateZ(1820px) scale(1);
+	  		}
+	  	}
+  	}
+
+  	
+	svg,.rio-overlay {
+		transform:rotateX(90deg) rotateY(0deg) rotateZ(20deg) translateX(30px) translateY(390px) translateZ(0px) scale(1);
+		//transform:rotateX(90deg) rotateY(0deg) rotateZ(10deg) translateX(60px) translateY(370px) translateZ(0px) scale(1);
+		@include mq(tablet) {
+			transform:rotateX(60deg) rotateY(20deg) rotateZ(0deg) translateX(50px) translateY(240px) translateZ(-50px) scale(1);
+		}
+		
+		@include mq(desktop) {
+  			//transform:rotateX(60deg) rotateY(0deg) rotateZ(0deg) translateX(0px) translateY(150px) translateZ(-50px) scale(1);
+  			transform:rotateX(65deg) rotateY(0deg) rotateZ(10deg) translateX(-55px) translateY(200px) translateZ(90px) scale(1);
+  		}
+		@include mq(wide) {
+  			transform:rotateX(50deg) rotateY(0deg) rotateZ(10deg) translateX(130px) translateY(990px) translateZ(1820px) scale(1);
+  		}
+	}
+
+	svg {
+		transition: transform 5s;
+		transition-timing-function: linear;
+		transition-delay: 0s;
+		margin-left:0;
+		.track {
+			
+			.tarmac {
+				path {
+					stroke:none;
+					fill:$tarmac;//#f2f2f2;
+					fill-opacity:1;
+				}
+			}
+			.lane-lines {
+				path.lane-line {
+					stroke-width:2;
+					stroke:#fff;
+					stroke-opacity:1;
+					fill:none;
+				}
+				.line-color {
+					stop-color:#ffffff;
+				}
+			}
+			text.axis {
+				@include fs-textSans(1);
+				
+				font-size:12px;
+
+				@include mq(desktop) {
+					font-size: 25px;
+					letter-spacing: 0px;
+				}
+				@include mq(wide) {
+					font-size: 35px;
+					letter-spacing: 2px;
+				}
+			    
+			    font-weight: bold;
+			    fill: $water;
+			    fill-opacity:0.6;
+			    text-rendering: optimizeLegibility;
+			    text-anchor:start;
+			}
+		}
+		.runner {
+			.leg {
+				path {
+					
+					
+					stroke-opacity:1;
+					stroke:#e0e0e0;
+					fill:none;
+					
+				}
+
+				&.visible {
+					path {
+						stroke-opacity:1;
+					}
+				}
+
+				&.m100 {
+					path {
+						stroke-opacity:1;
+					}
+				}
+			}
+			&.gold {
+				.leg {
+					path {
+						stroke:$gold;
+					}
+				}
+			}
+			&.silver {
+				.leg {
+					path {
+						stroke:$silver;
+					}
+				}
+			}
+			&.bronze {
+				.leg {
+					path {
+						stroke:$bronze;
+					}
+				}
+			}
+		}
+	}
+}

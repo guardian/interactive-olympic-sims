@@ -1,3 +1,85 @@
+.stand-first {
+	position:absolute;
+	z-index:9999;
+	top:40px;
+	left:5%;
+	width:100%;
+	@include mq(tablet) {
+		width:40%;
+	}
+	@include mq(desktop) {
+		width:40%;
+	}
+	h1 {
+		@include fs-header(4);
+		
+		@include mq(tablet) {
+			font-size: 36px;
+			line-height: 42px;
+		}
+
+		@include mq(desktop) {
+			font-size: 44px;
+			line-height: 48px;
+		}
+
+		@include mq(wide) {
+			font-size: 52px;
+			line-height: 56px;
+		}
+		margin-bottom:15px;
+	}
+	p {
+		@include fs-bodyCopy(2);
+		color:#333;
+		@include mq(tablet) {
+			@include fs-bodyCopy(2);
+		}
+	}
+
+	button{
+		height: 42px;
+	    border: none;
+	    padding: 0 15px 0 20px;
+	    border-radius: 42px;
+	    @include fs-textSans(4);
+	    //float: right;
+	    margin-bottom: 0;
+	    //margin-right: 38px;
+	    color:#333;
+	    background:#f4f4f4;
+	    cursor:pointer;
+	    outline:none;
+	    &:after {
+	    	content: "";
+	    	display: block;
+	    	float:right;
+	    	background-image:url(./assets/imgs/arrow-right.svg);
+		    background-repeat:no-repeat;
+		    background-size:23px;
+		    background-position: center center;	
+		    width:23px;
+		    height:23px;
+		    padding-left:15px;
+	    }
+	    &:hover{
+	    	background-color:#ddd;
+	    }
+	    &.replay {
+	    	&:after {
+	    		background-image:url(./assets/imgs/replay.svg);
+	    	}
+	    }
+	    &.inactive {
+	    	color:#999;
+	    	pointer-events:none;
+	    	&:after {
+				opacity: 0.3;
+	    	}
+	    }
+	}
+
+}
 .running-perspective {
 
 	overflow:hidden;
@@ -8,20 +90,39 @@
 	$ratio:1;
 	
 	$width:100%;
-
-	$height:500px;
-
+	$names_width: 140px;
+	$times_width: 150px;
+	
+	$running_pool_width:500px;//$width;// - $names_width - $times_width;
+	
 	$li_padding_top:0;
 
+	$height:600px;
+	
 	width:$width;
-	height:$height;
+	height:100vh;
+
+	@include mq(tablet) {
+		height: 600px;
+	}
+
+	@include mq(desktop) {
+		height:$height;
+	}
+	
+
+	//width:$width;
+	//height:$height;
 
 	position: relative;
 
-	
-	
+	transform-style: preserve-3d;
+  	transition: perspective 1s, perspective-origin 1s;
+
+	//perspective: 530px;
+	//perspective-origin: 50% 0%;
 	perspective: 700px;
-	perspective-origin: 50% 0%;
+	perspective-origin: 70% -10%;
 	@include mq(tablet) {
 		perspective: 600px;
 		perspective-origin: 130% 0%;
@@ -33,18 +134,24 @@
 	@include mq(wide) {
 		/*perspective: 600px;
 		perspective-origin: 100% -10%;*/
-		perspective: 700px;
-		perspective-origin: 50% 100%;
+		perspective: 850px;
+		perspective-origin: 90% 0%;
+	}
+	backface-visibility: hidden;
+	
+	&.from-blocks {
+		perspective-origin: 50% 50%;	
+		perspective: 245px;
+		svg {
+			//transform:rotateX(60deg) rotateY(0deg) rotateZ(0deg) translateX(0px) translateY(0px) translateZ(0px) scale(1);
+			transform:rotateX(90deg) rotateY(0deg) rotateZ(10deg) translateX(60px) translateY(-70px) translateZ(0px) scale(1);
+		}
 	}
 	
-	backface-visibility: hidden;
-	transform-style: preserve-3d;
-  	transition: perspective 10s, perspective-origin 10s;
-	transition-timing-function: linear;
-
-	&.end-side {
+	&.side100 {
 		svg,.rio-overlay {
-			transform:rotateX(0deg) rotateY(0deg) rotateZ(0deg) translateX(0px) translateY(0px) translateZ(0px) scale(1)
+			//transform:rotateX(90deg) rotateY(0deg) rotateZ(0deg) translateX(40px) translateY(-80px) translateZ(0px) scale(1);
+			transform:rotateX(85deg) rotateY(0deg) rotateZ(20deg) translateX(80px) translateY(-120px) translateZ(-20px) scale(1)
 		}
 	  	@include mq(tablet) {
 	  		svg,.rio-overlay {
@@ -58,12 +165,33 @@
 	  	}
 	  	@include mq(wide) {
 	  		svg,.rio-overlay {
-	  			transform:rotateX(50deg) rotateY(0deg) rotateZ(0deg) translateX(0px) translateY(-4000px) translateZ(1600px) scale(1);
+	  			transform:rotateX(65deg) rotateY(0deg) rotateZ(10deg) translateX(-225px) translateY(-2500px) translateZ(1420px) scale(1);
 	  		}
 	  	}
-  	}
+	}
+	
+	&.side50 {
+		svg,.rio-overlay {
+			//transform:rotateX(90deg) rotateY(0deg) rotateZ(0deg) translateX(40px) translateY(-80px) translateZ(0px) scale(1);
+			transform:rotateX(85deg) rotateY(0deg) rotateZ(20deg) translateX(80px) translateY(-120px) translateZ(-20px) scale(1)
+		}
+	  	@include mq(tablet) {
+	  		svg,.rio-overlay {
+	  			transform:rotateX(65deg) rotateY(0deg) rotateZ(10deg) translateX(105px) translateY(-230px) translateZ(90px) scale(1);
+	  		}
+	  	}
+	  	@include mq(desktop) {
+	  		svg,.rio-overlay {
+	  			transform:rotateX(65deg) rotateY(0deg) rotateZ(10deg) translateX(-55px) translateY(-460px) translateZ(90px) scale(1)
+	  		}
+	  	}
+	  	@include mq(wide) {
+	  		svg,.rio-overlay {
+	  			transform:rotateX(65deg) rotateY(0deg) rotateZ(10deg) translateX(-205px) translateY(-650px) translateZ(1420px) scale(1);
+	  		}
+	  	}
+	}
 
-  	
 	svg,.rio-overlay {
 		transform:rotateX(90deg) rotateY(0deg) rotateZ(20deg) translateX(30px) translateY(390px) translateZ(0px) scale(1);
 		//transform:rotateX(90deg) rotateY(0deg) rotateZ(10deg) translateX(60px) translateY(370px) translateZ(0px) scale(1);
@@ -76,15 +204,34 @@
   			transform:rotateX(65deg) rotateY(0deg) rotateZ(10deg) translateX(-55px) translateY(200px) translateZ(90px) scale(1);
   		}
 		@include mq(wide) {
-  			transform:rotateX(50deg) rotateY(0deg) rotateZ(0deg) translateX(0px) translateY(600px) translateZ(1800px) scale(1);
+  			transform:rotateX(65deg) rotateY(0deg) rotateZ(10deg) translateX(-140px) translateY(1050px) translateZ(1440px) scale(1);
   		}
+	}
+	
+	
+	* {
+		//transform:none !important;
 	}
 
 	svg {
-		transition: transform 5s;
-		transition-timing-function: linear;
-		transition-delay: 2s;
-		margin-left:0;
+		
+		//margin-left:($width - $height)/2;
+
+		//width:100%;//$running_pool_width - 50px;
+		@include mq(tablet) {
+		//	width:$width;//$running_pool_width;
+		//	height:$width * 2;
+		}
+		//height:$height;//$height;
+		
+		transition: transform 1s;
+		
+
+		//transform:rotateX(50deg) rotateY(0deg) rotateZ(20deg) translateZ(0px) translateX(130px) translateY(-25px);
+		
+  		backface-visibility: hidden;
+		
+		
 		.track {
 			
 			.tarmac {
@@ -97,60 +244,301 @@
 			.lane-lines {
 				path.lane-line {
 					stroke-width:2;
-					//stroke:#fff;
-					//stroke-opacity:1;
+					stroke:#fff;
+					stroke-opacity:1;
 					fill:none;
 				}
 				.line-color {
 					stop-color:#ffffff;
 				}
 			}
+			text.axis {
+				@include fs-textSans(1);
+				
+				font-size:12px;
+
+				@include mq(desktop) {
+					font-size: 25px;
+					letter-spacing: 0px;
+				}
+				@include mq(wide) {
+					font-size: 28px;
+					letter-spacing: 0px;
+				}
+			    
+			    font-weight: bold;
+			    fill: #333;
+			    fill-opacity:0.6;
+			    text-rendering: optimizeLegibility;
+			    text-anchor:start;
+			}
 		}
-		.runner {
+
+		/*
+		.running-pool {
+			path.pool-line {
+				stroke-width:1;
+				stroke:#767676;
+				fill:none;
+				shape-rendering:crispEdges;
+			}
+			.water {
+				path {
+					stroke:none;
+					fill:$tarmac;//#f2f2f2;
+					fill-opacity:1;
+				}
+			}
+			.lane-ropes {
+				path.lane-rope {
+					stroke-width:3;
+					stroke:#333;
+					stroke-opacity:0.25;
+					&.r {
+						stroke:$lane_red;
+					}
+					&.g {
+						stroke:$lane_green;
+					}
+					&.bl {
+						stroke:$lane_blue;
+					}
+					&.y {
+						stroke:$lane_yellow;
+					}
+				}
+			}
+			text.axis {
+				@include fs-textSans(1);
+				
+				font-size:12px;
+
+				@include mq(desktop) {
+					font-size: 25px;
+					letter-spacing: 0px;
+				}
+				@include mq(wide) {
+					font-size: 35px;
+					letter-spacing: 2px;
+				}
+			    
+			    font-weight: bold;
+			    fill: $water;
+			    fill-opacity:0.6;
+			    text-rendering: optimizeLegibility;
+			    text-anchor:middle;
+			}
+		}
+		*/
+		.athlete {
 			.leg {
 				path {
 					
 					stroke-width:1;
 					stroke-opacity:0;
 					fill:#e0e0e0;
+
 					fill-opacity:0;
-					stroke:none;
+					stroke:#e0e0e0;
+					
+
+				}
+				path.guide-text-path {
+					stroke-opacity:0 !important;
+					stroke:#000 !important;
+					stroke-width:2 !important;
+				}
+				.athlete-name {
+					@include f-textSans;
+					font-size:16px;
+					text-rendering: optimizeSpeed;// optimizeLegibility;
+					
+					@include mq(tablet) {
+						font-size: 40px;
+						&.time {
+							font-size:19px;
+						}
+					}
+					
+					@include mq(wide) {
+						font-size: 40px;
+						&.time {
+							font-size:40px;
+						}
+					}
+					fill:#222;
+					@include mq(tablet) {
+						letter-spacing: 2px;
+						fill: #FFF;
+					}
+					//text-transform: uppercase;
+					fill-opacity:0;
+
+
+
+					&.stroke {
+						stroke-width:3;
+						@media (-webkit-min-device-pixel-ratio: 2) {
+							stroke-width:2;
+						}
+						stroke:none;
+						stroke-opacity:0;
+						fill:none;
+						@include mq(tablet) {
+
+							stroke:#000;
+						}
+					}
 					
 				}
 
 				&.visible {
 					path {
 						fill-opacity:1;
+						stroke-opacity:1;
+					}
+					text {
+						fill-opacity:1;
+						&.stroke {
+							stroke-opacity:0;
+							@include mq(tablet) {
+								stroke-opacity:0.5;
+							}
+						}
 					}
 				}
-
-				&.m100 {
+				&.m0 {
+					text {
+						transition: fill-opacity 2s, stroke-opacity 2s;
+						&.time {
+							transition-delay:1.5s;
+						}
+					}
+				}
+				/* &.m200 {
 					path {
 						fill-opacity:1;
 					}
 				}
+				&.m400 {
+					path {
+						fill-opacity:1;
+					}
+				} */
 			}
 			&.gold {
 				.leg {
 					path {
-						fill:$gold;
+						stroke:$gold;
 					}
 				}
 			}
 			&.silver {
 				.leg {
 					path {
-						fill:$silver;
+						stroke:$silver;
 					}
 				}
 			}
 			&.bronze {
 				.leg {
 					path {
-						fill:$bronze;
+						stroke:$bronze;
 					}
 				}
 			}
+
+		}
+	}
+
+	.rio-overlay {
+		position:absolute;
+		//display: none;
+		top:0;
+		left:0;
+		right:0;
+		bottom:0;
+		background-color:rgba(255,0,0,0);
+		backface-visibility: hidden;
+		.overlay-point {
+			position:absolute;
+			//background-color:#000;
+			width:1px;
+			height:1px;
+			border-radius:5px;
+		}
+	}
+	.annotations {
+		position:absolute;
+		top:0;
+		left:0;
+
+		.annotation {
+			position:absolute;
+			width:0px;
+			//border:1px solid #ddd;
+			overflow:visible;
+
+			@include fs-textSans(1);
+
+			&.time {
+				font-size:15px;
+				span {
+					border:none !important;
+				}
+			}
+
+			span {
+				position: absolute;
+				display: block;
+				width:150px;
+			}
+			&.side0 {
+				span {
+					top:10px;
+					left:-150px;
+					text-align: right;
+					border-right:1px solid #ddd;
+					padding-right:5px;
+					padding-top:5px;
+				}
+				
+			}
+			&.side1 {
+
+				span {
+					bottom:0px;
+					left:0;//-25px;
+					border-left:1px solid #ddd;
+					padding-left:5px;
+					padding-bottom:5px;
+				}
+			}
+
+			div {
+				background-color: transparent;
+				border:2px solid #000;
+			    width: 10px;
+			    height: 10px;
+			    position: absolute;
+			    top: -5px;
+			    left: -5px;
+			    z-index: 9999;
+			    border-radius: 5px;
+			}
+			
+		}
+	}
+}
+.stopwatch {
+	position:absolute;
+	right:0;
+	span.time {
+		text-align: right;
+	}
+	ul {
+		li {
+			text-align: right;
 		}
 	}
 }

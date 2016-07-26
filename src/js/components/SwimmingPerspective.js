@@ -57,6 +57,8 @@ import {
 
 //import Velodrome from './Velodrome';
 
+import StopWatch from "./StopWatch";
+
 export default function SwimmingLineChart(data,options) {
 
 	//console.log("SwimmingLineChart",data.olympics.eventUnit.result.entrant);
@@ -68,6 +70,10 @@ export default function SwimmingLineChart(data,options) {
 		CURRENT_DISTANCE=0,
 		LEGS=[],
 		WR;
+
+	let multiplier=options.multiplier || 1;
+
+	let stopWatch;
 
 	let container,
 		overlay,
@@ -121,8 +127,8 @@ export default function SwimmingLineChart(data,options) {
     					value:d.value,
     					time:lap_time,
     					cumulative_time:cumulative_time,
-    					distance:+d.position*50
-    					//cumulative_time:distance==best_cumulative_time:x
+    					distance:+d.position*dimensions.length,
+			    		calculated:(d.mt%dimensions.length)?true:false
     				}
     			}),
     			"entrant":entrant,
@@ -130,7 +136,7 @@ export default function SwimmingLineChart(data,options) {
     		}
     	});
 
-    	LEGS=range(swimmers_data[0].splits.length+1).map(d=>d*50);
+    	LEGS=range(swimmers_data[0].splits.length+1).map(d=>d*dimensions.length);
     	
 
     	swimmers_data.forEach(swimmer=>{
@@ -183,7 +189,10 @@ export default function SwimmingLineChart(data,options) {
 		//let ul=select(options.container).append("ul");
     	
 		
-
+		stopWatch=new StopWatch({
+			container:options.container,
+			multiplier:multiplier
+		});
 		
 
 		
@@ -390,43 +399,6 @@ export default function SwimmingLineChart(data,options) {
 					return `M${x},${y0}L${x},${y1}`;
 				});
 
-		/*leg.append("text")
-				.attr("class","swimmer-name stroke")
-
-		leg.filter(s=>(s.distance===0))
-				.select("text.stroke")
-					.attr("dx",5)
-				    .attr("dy","0.35em")
-					.append("textPath")
-				    	.attr("xlink:href", s=>("#guide_"+s.lane+"_"+s.distance))
-				    	.attr("text-anchor","start")
-				    	.attr("startOffset","0%")
-				    	.text(s=>{
-							let swimmer=swimmers_data.find(d=>(d.lane===s.lane))
-							return swimmer.reaction_time.value+"  "+swimmer.entrant.participant.competitor.lastName;
-						})
-
-
-		leg.filter(s=>(s.distance>0))
-				.select("text.stroke")
-				.attr("dx",s=>{
-			    	return (s.distance%100===0)?5:-5
-			    })
-			    .attr("dy",s=>{
-			    	return (s.distance%100===0)?"0.35em":"0.35em"   //9:6
-			    })
-			  	.append("textPath")
-			    	.attr("xlink:href", s=>("#leg_"+s.lane+"_"+s.distance))
-			    	.attr("text-anchor",s=>(s.distance%100>0)?"end":"start")
-			    	.attr("startOffset",s=>(s.distance%100>0)?"50%":"50%")
-			    	.text(s=>{
-						let swimmer=swimmers_data.find(d=>(d.lane===s.lane))
-						return swimmer.entrant.participant.competitor.lastName+" "+swimmer.value;
-					})*/
-
-		
-
-		
 
 		leg.filter(s=>(s.distance===0))
 			.selectAll("text")
@@ -643,6 +615,8 @@ export default function SwimmingLineChart(data,options) {
 
 		container.classed("end-side",(distance%100>0))
 
+		let delta=10;
+
 		let selected_leg=leg
 			.classed("visible",false)
 			.filter(d=>(d.distance===distance))
@@ -654,7 +628,7 @@ export default function SwimmingLineChart(data,options) {
 						let x=xscale(s.lane*dimensions.lane + dimensions.lane/2),
 							start_y=(s.distance%(dimensions.length*2)>0)?yscale(0):yscale(dimensions.length),
 							dist=s.distance-s.mt,
-							y=(s.distance%(dimensions.length*2)>0)?yscale(dimensions.length-dist-10):yscale(dist+10);
+							y=(s.distance%(dimensions.length*2)>0)?yscale(dimensions.length-dist-delta):yscale(dist+delta);
 
 
 						if(s.distance===0) {
@@ -709,6 +683,17 @@ export default function SwimmingLineChart(data,options) {
 									]);
 
 						})
+						.on("start",d=>{
+							if(d.lane===1) {
+								let duration=best_cumulative_times[d.distance].best_time*(delta/dimensions.length)*multiplier;
+								if(d.calculated) {
+									stopWatch.hide();
+								} else {
+									stopWatch.start(best_cumulative_times[d.distance].best_cumulative-duration);	
+								}
+								
+							}
+						})
 						.on("end",d=>{
 							if(d.lane===1) {
 								if(text_update){
@@ -717,6 +702,15 @@ export default function SwimmingLineChart(data,options) {
 								}
 								activateButton();
 							}
+
+							if(d.cumulative_time===best_cumulative_times[d.distance].best_cumulative) {
+								//console.log(d.time,best_cumulative_times[d.distance].best_cumulative,best_cumulative_times[d.distance])
+								stopWatch.stop(d.cumulative_time);
+							}
+							let delay=d.cumulative_time-best_cumulative_times[d.distance].best_cumulative;
+							setTimeout(()=>{
+								stopWatch.append(swimmers_data.find(a=>a.lane===d.lane),d)
+							},delay)
 						})
 
 		

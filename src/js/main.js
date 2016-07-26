@@ -1,8 +1,9 @@
 import mainHTML from './text/main.html!text'
 import swimming_data from '../assets/data/men_medley_200.json!json'
 import swimming_text from '../assets/data/texts/men_medley_200.json!json'
-// import swimming_data200 from '../assets/data/men_medley_200.json!json'
+//import swimming_data200 from '../assets/data/men_medley_200.json!json'
 import running_data100 from '../assets/data/men_running_100.json!json'
+import running_text from '../assets/data/texts/men_running_100.json!json'
 // import running_data200 from '../assets/data/men_running_200.json!json'
 // import running_data400 from '../assets/data/men_running_400.json!json'
 //import runnning_data from '../assets/data/men_running_4x100.json!json'
@@ -14,6 +15,10 @@ import records from '../assets/data/records.json!json'
 
 import SwimmingPerspective from './components/SwimmingPerspective';
 import RunningPerspective from './components/RunningPerspective';
+
+import {
+        dimensions100m        
+} from './lib/running';
 
 // import Running from './components/Running';
 
@@ -105,7 +110,7 @@ export function init(el, context, config, mediator) {
         race:"100m"
     })*/
 
-    /*new SwimmingPerspective(swimming_data,{
+    new SwimmingPerspective(swimming_data,{
         container:el.querySelector(".interactive-container"),
         text:swimming_text,
         record:records.men_medley_200,
@@ -116,31 +121,25 @@ export function init(el, context, config, mediator) {
             top:10,
             bottom:10
         }
-    })*/
-
-    new RunningPerspective(running_data100,{
-        container:el.querySelector(".interactive-container"),
-        record:records.men_freestyle_100,
-        multiplier: 1,
-        margins: {
-            left:10,
-            right:10,
-            top:10,
-            bottom:10
-        }
     })
 
-    /*new SwimmingPerspective(swimming_data200,{
+    
+
+    /*new RunningPerspective(running_data100,{
+        dimensions:dimensions100m,
+        text:running_text,
         container:el.querySelector(".interactive-container"),
         record:records.men_freestyle_100,
         multiplier: 1,
         margins: {
             left:10,
-            right:10,
+            right:80,
             top:10,
             bottom:10
         }
     })*/
+
+    
 
     /*new Swimming(swimming_data200,{
         container:el.querySelector(".interactive-container"),

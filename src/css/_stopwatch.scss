@@ -1,9 +1,30 @@
 .stopwatch {
 	
 	@include fs-headline(3);
+	
+	position: absolute;
 
-	span {
+	span.time {
+		display: block;
+		text-align: right;
+	}
+	
+	ul {
+		list-style: none;
+		margin:0;
+		padding:0;
 		
+		@include fs-textSans(2);
+		li {
+			span.result {
+				color:#666;
+				display: inline-block;
+				margin-left:5px;
+			}
+		}
 	}
 
+	&.hidden {
+		display: none;
+	}
 }
