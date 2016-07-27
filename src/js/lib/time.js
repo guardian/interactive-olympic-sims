@@ -2,6 +2,9 @@ import {
 	timeParse,
 	timeFormat
 } from 'd3-time-format';
+import {
+	format as numberFormat
+} from 'd3-format';
 
 export function convertTime(str_time) {
 
@@ -35,12 +38,12 @@ export function msToTime(milliseconds) {
 
 	return [h,m,s,ms];
 }
-export function formatSecondsMilliseconds(t) {
+export function formatSecondsMilliseconds(t,precision=2) {
 	let time_str=timeFormat("%S.%L")(t);
 	
 	time_str=time_str.replace(/^(0)([0-9])(.[\d]*)$/g,"$2$3");
 
-	return time_str;
+	return numberFormat(",."+precision+"f")(time_str);
 }
 export function convertTimeHMS(str_time) {
 

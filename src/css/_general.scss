@@ -40,6 +40,9 @@ a {
         margin-bottom:100px;
     }
 }
+.interactive-embed {
+    min-height: 10px;
+}
 
 .interactive-es6-headline {
 	@include fs-headline(5);

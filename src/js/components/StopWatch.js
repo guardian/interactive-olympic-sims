@@ -78,22 +78,22 @@ export default function StopWatch(options) {
 	}
 
 	this.append = (entrant,time) => {
-		console.log(entrant,time);
+		console.log(entrant);
 
 		list.push({
-			entrant:entrant,
-			time:time
+			entrant:entrant.name,
+			time:entrant.time
 		});
 
 		list_container.append("li")
 			.datum(list[list.length-1])
 			.text(d=>{
-				return d.entrant.entrant.participant.competitor.lastName;
+				return entrant.name;//d.entrant.entrant.participant.competitor.lastName;
 			})
 			.append("span")
 				.attr("class","result")
 				.text(d=>{
-					return d.time.value;
+					return entrant.time;//d.time.value;
 				})
 	}
 }

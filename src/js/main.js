@@ -11,7 +11,7 @@ import records from '../assets/data/records.json!json'
 // import SwimmingSimulation from './components/SwimmingSimulation';
 // import Swimming from './components/Swimming';
 // import SwimmingExploded from './components/SwimmingExploded';
-// import SwimmingLineChart from './components/SwimmingLineChart';
+//import SwimmingLineChart from './components/SwimmingLineChart';
 
 import SwimmingPerspective from './components/SwimmingPerspective';
 import RunningPerspective from './components/RunningPerspective';
@@ -139,7 +139,17 @@ export function init(el, context, config, mediator) {
         }
     })*/
 
-    
+    /*new SwimmingLineChart(swimming_data,{
+        container:el.querySelector(".interactive-container"),
+        record:records.men_freestyle_100,
+        multiplier: 1,
+        margins: {
+            left:10,
+            right:170,
+            top:20,
+            bottom:20
+        }
+    })*/
 
     /*new Swimming(swimming_data200,{
         container:el.querySelector(".interactive-container"),

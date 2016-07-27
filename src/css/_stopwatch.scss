@@ -1,6 +1,8 @@
 .stopwatch {
 	
-	@include fs-headline(3);
+	@include fs-textSans(3);
+	font-size:40px;
+	line-height:40px;
 	
 	position: absolute;
 

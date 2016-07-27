@@ -749,7 +749,13 @@ export default function RunningLineChart(data,options) {
 							}
 							let delay=d.cumulative_time-best_cumulative_times[d.distance].best_cumulative;
 							setTimeout(()=>{
-								stopWatch.append(athletes_data.find(a=>a.lane===d.lane),d)
+								let entrant=athletes_data.find(a=>a.lane===d.lane),
+									gap=d.cumulative_time-best_cumulative_times[d.distance].best_cumulative;
+
+								stopWatch.append({
+									name:entrant.entrant.participant.competitor.lastName,
+									time:(gap>0)?`+${formatSecondsMilliseconds(gap,2)}`:d.value
+								})
 							},delay)
 							
 						})

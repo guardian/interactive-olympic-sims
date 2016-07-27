@@ -228,7 +228,7 @@
 			}
 			.lane-ropes {
 				path.lane-rope {
-					stroke-width:3;
+					stroke-width:5;
 					stroke:#333;
 					stroke-opacity:0.25;
 					&.r {
@@ -283,6 +283,10 @@
 					stroke-opacity:0 !important;
 					stroke:#000 !important;
 					stroke-width:2 !important;
+				}
+				path.gap {
+					stroke-opacity:1 !important;
+					stroke-width:2;
 				}
 				.swimmer-name {
 					@include f-textSans;
@@ -418,7 +422,8 @@
 			@include fs-textSans(1);
 
 			&.time {
-				font-size:15px;
+				@include fs-textSans(2);
+				color:#666;
 				span {
 					border:none !important;
 				}
@@ -463,6 +468,21 @@
 			    border-radius: 5px;
 			}
 			
+		}
+	}
+}
+.stopwatch {
+	position:absolute;
+	right:0;
+	top:0;
+	margin-top:20px;
+	opacity:0.8;
+	span.time {
+		text-align: right;
+	}
+	ul {
+		li {
+			text-align: right;
 		}
 	}
 }

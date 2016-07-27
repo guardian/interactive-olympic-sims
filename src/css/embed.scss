@@ -1,4 +1,7 @@
 @import "fonts";
+@import "palette";
+@import "mq";
+
 
 html,
 body {
@@ -8,5 +11,32 @@ body {
     padding: 0;
 }
 
+@import "general";
+@import "stopwatch";
+@import "swimming-perspective";
+
 .interactive-embed {
+	min-height:10px;
+}
+
+.interactive-embed {
+    margin: 0 auto;
+    box-sizing: border-box;
+    background-color: white;
+    position: relative;
+
+    padding: 1px;
+    @include mq(mobileLandscape) {
+        padding: 1px;
+    }
+
+    @each $bp in (tablet, desktop, leftCol, wide) {
+        @include mq($bp) {
+            max-width: map-get($mq-breakpoints, $bp);
+        }
+    }
+
+    > div {
+        margin-bottom:100px;
+    }
 }

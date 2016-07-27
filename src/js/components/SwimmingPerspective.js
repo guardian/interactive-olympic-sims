@@ -74,6 +74,7 @@ export default function SwimmingLineChart(data,options) {
 	let multiplier=options.multiplier || 1;
 
 	let stopWatch;
+	let ts=[]; //timeouts for timing
 
 	let container,
 		overlay,
@@ -169,14 +170,32 @@ export default function SwimmingLineChart(data,options) {
     	console.log(swimmers_data)
 		console.log(best_cumulative_times)
 
+		/*
+		let entrant=swimmers_data.find(a=>a.lane===d.lane),
+										gap=d.cumulative_time-best_cumulative_times[d.distance].best_cumulative;
+
+									stopWatch.append({
+										name:entrant.entrant.participant.competitor.lastName,
+										time:(gap>0)?`+${formatSecondsMilliseconds(gap,2)}`:d.value
+									})
+		*/
+
+
 		swimmers_data.forEach(s => {
-			options.text.push({
-				"type":"annotation",
-				"time":true,
-				"mt":(LEGS.length-1)*dimensions.length,
-				"lane":s.lane,
-				"text":s.value
-			})
+			s.splits.forEach(split => {
+
+				let gap=split.cumulative_time-best_cumulative_times[split.distance].best_cumulative;
+
+				options.text.push({
+					"type":"annotation",
+					"time":true,
+					"mt":split.distance,//(LEGS.length-1)*dimensions.length,
+					"lane":s.lane,
+					"text":(gap>0)?`+${formatSecondsMilliseconds(gap,2)}`:split.value
+				})	
+
+			});
+			
 		})
 
 		buildVisual();
@@ -534,10 +553,11 @@ export default function SwimmingLineChart(data,options) {
 	function removeAnnotations() {
 		annotations_layer.selectAll("div.annotation").remove();
 	}
+	
 	function addAnnotation() {
 		console.log("addAnnotation",CURRENT_DISTANCE)
 
-		let annotations=options.text.filter(d=>(d.mt===CURRENT_DISTANCE && d.type==="annotation"));
+		let annotations=options.text.filter(d=>(d.mt===CURRENT_DISTANCE && d.type==="annotation" && !d.time));
 
 		let annotation=annotations_layer.selectAll("div.annotation").data(annotations);
 
@@ -590,6 +610,97 @@ export default function SwimmingLineChart(data,options) {
 
 	}
 
+	function removeGaps() {
+		svg.selectAll("path.gap").remove();
+	}
+	function showGap(el,s,best_time) {
+		console.log("showGap",el,s);
+
+		console.log("DURATION",s.cumulative_time-best_time)
+
+		el
+			.append("path")
+				.attr("class","gap")
+				.attr("d",()=>{
+
+					let x=xscale(s.lane*dimensions.lane + dimensions.lane/2),
+						start_y=(s.distance%(dimensions.length*2)>0)?yscale(s.mt%dimensions.length):yscale(s.distance-s.mt),
+						y=yscale(s.distance%(dimensions.length*2));
+					//console.log("GAP PATH",s.lane,s.distance,s.mt,start_y,y)
+					return line([
+								[x,start_y],
+								[x,start_y]
+							]);
+
+				})
+				.transition()
+				.duration(s.cumulative_time-best_time)
+				.ease(SwimmingLinear)
+						.attr("d",s=>{
+
+							let x=xscale(s.lane*dimensions.lane + dimensions.lane/2),
+								start_y=(s.distance%(dimensions.length*2)>0)?yscale(s.mt%dimensions.length):yscale(s.distance-s.mt),
+								y=yscale(s.distance%(dimensions.length*2));
+							console.log("GAP PATH",s.lane,s.distance,s.mt,start_y,y)
+							return line([
+										[x,start_y],
+										[x,y]
+									]);
+
+						})
+
+	}
+	function addTime(distance,lane) {
+		//console.log("addTime",distance,lane)
+
+		let annotations=options.text.find(d=>(d.mt===distance && d.lane===lane && d.type==="annotation" && d.time));
+
+		let annotation=annotations_layer.selectAll("div.annotation");//.data(annotations,d=>("time_"+distance+"lane"));
+
+		//console.log("ANNOTATIONS",annotations)
+
+		
+
+		let xy;
+		annotations_layer
+			//.enter()
+			.append("div")
+				.datum(annotations)
+				.attr("class","annotation time")
+			//.merge(annotation)
+				.classed("side0",d=>(d.mt%(dimensions.length*2)===0))
+				.classed("side1",d=>(d.mt%(dimensions.length*2)>0))
+				.classed("time",d=>d.time)
+				.style("left",d=>{
+					
+					let x=xscale(d.lane*dimensions.lane + dimensions.lane/2),
+						y=(d.mt%(dimensions.length*2)>0)?yscale(dimensions.length):yscale(0);
+
+					let side=(d.mt%(dimensions.length*2)>0)?1:0;
+						
+					let overlayPersp=computePerspective(side);
+					d.coords=overlayPersp.transform(x,y)
+					xy=[x,y];
+					//console.log("COORDS",d.coords)
+
+					let offset=getOffset(annotations_layer.node());
+					//console.log("OFFSET",offset)
+
+					//console.log("LEFT",(d.coords[0]-offset.left))
+
+					return (d.coords[0]-offset.left)+"px";
+				})
+				.style("top",d=>{
+					let offset=getOffset(annotations_layer.node());
+					//console.log("OFFSET",offset,getOffset(this))
+					//offset.top=0;
+					//console.log("TOP",(d.coords[1]-(offset.top)))
+					return (d.coords[1]-(offset.top))+"px";
+				})
+				.html(d=>"<span>"+d.text+"</span>")
+
+	}
+
 	this.goTo = (distance) => {
 		goTo(distance);
 	}
@@ -606,10 +717,11 @@ export default function SwimmingLineChart(data,options) {
 			}
 		},1000)
 	}
-
+	
 	function goTo(distance,text_update) {
 
 		removeAnnotations();
+		removeGaps();
 
 		CURRENT_DISTANCE=distance;
 
@@ -689,12 +801,18 @@ export default function SwimmingLineChart(data,options) {
 								if(d.calculated) {
 									stopWatch.hide();
 								} else {
+									
+									ts.forEach(t=>{
+										clearTimeout(t);
+										t=null;
+									});
+
 									stopWatch.start(best_cumulative_times[d.distance].best_cumulative-duration);	
 								}
 								
 							}
 						})
-						.on("end",d=>{
+						.on("end",function(d){
 							if(d.lane===1) {
 								if(text_update){
 									buildTexts();
@@ -703,14 +821,28 @@ export default function SwimmingLineChart(data,options) {
 								activateButton();
 							}
 
+							if(d.distance>0) {
+								showGap(select(this.parentNode),d,best_cumulative_times[d.distance].best_cumulative)	
+							}
+
 							if(d.cumulative_time===best_cumulative_times[d.distance].best_cumulative) {
-								//console.log(d.time,best_cumulative_times[d.distance].best_cumulative,best_cumulative_times[d.distance])
 								stopWatch.stop(d.cumulative_time);
 							}
+
 							let delay=d.cumulative_time-best_cumulative_times[d.distance].best_cumulative;
-							setTimeout(()=>{
-								stopWatch.append(swimmers_data.find(a=>a.lane===d.lane),d)
-							},delay)
+							ts.push(
+								setTimeout(()=>{
+									let entrant=swimmers_data.find(a=>a.lane===d.lane),
+										gap=d.cumulative_time-best_cumulative_times[d.distance].best_cumulative;
+
+									addTime(d.distance,d.lane);
+
+									/*stopWatch.append({
+										name:entrant.entrant.participant.competitor.lastName,
+										time:(gap>0)?`+${formatSecondsMilliseconds(gap,2)}`:d.value
+									})*/
+								},delay)
+							);
 						})
 
 		
