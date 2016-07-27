@@ -46,8 +46,8 @@
 	    //float: right;
 	    margin-bottom: 0;
 	    //margin-right: 38px;
-	    color:#333;
-	    background:#f4f4f4;
+	    color:#fff;
+	    background:#1991c6;
 	    cursor:pointer;
 	    outline:none;
 	    &:after {
@@ -63,7 +63,7 @@
 		    padding-left:15px;
 	    }
 	    &:hover{
-	    	background-color:#ddd;
+	    	background-color:#0082ba;
 	    }
 	    &.replay {
 	    	&:after {
@@ -100,10 +100,10 @@
 	$height:500px;
 	
 	width:$width;
-	height:100vh;
+	height:500px;;
 
 	@include mq(tablet) {
-		height: 600px;
+		height: 500px;
 	}
 
 	@include mq(desktop) {
@@ -121,7 +121,7 @@
 
 	//perspective: 530px;
 	//perspective-origin: 50% 0%;
-	perspective: 700px;
+	/*perspective: 700px;
 	perspective-origin: 70% -10%;
 	@include mq(tablet) {
 		perspective: 600px;
@@ -130,13 +130,11 @@
 	@include mq(desktop) {
 		perspective: 720px;
 		perspective-origin: 100% 0%;
-	}
-	@include mq(wide) {
-		/*perspective: 600px;
-		perspective-origin: 100% -10%;*/
-		perspective: 700px;
+	}*/
+	//@include mq(desktop) {
+		perspective: 750px;
 		perspective-origin: 90% 0%;
-	}
+	//}
 	backface-visibility: hidden;
 	
 	&.from-blocks {
@@ -148,7 +146,7 @@
 		}
 	}
 
-	svg,.rio-overlay {
+	/*svg,.rio-overlay {
 		//transform:rotateX(90deg) rotateY(0deg) rotateZ(0deg) translateX(40px) translateY(-80px) translateZ(0px) scale(1);
 		transform:rotateX(85deg) rotateY(0deg) rotateZ(20deg) translateX(80px) translateY(-120px) translateZ(-20px) scale(1)
 	}
@@ -156,21 +154,24 @@
   		svg,.rio-overlay {
   			transform:rotateX(65deg) rotateY(0deg) rotateZ(10deg) translateX(105px) translateY(-230px) translateZ(90px) scale(1);
   		}
-  	}
-  	@include mq(desktop) {
+  	}*/
+  	/*@include mq(desktop) {
   		svg,.rio-overlay {
   			transform:rotateX(65deg) rotateY(0deg) rotateZ(10deg) translateX(-55px) translateY(-460px) translateZ(90px) scale(1)
   		}
-  	}
-  	@include mq(wide) {
+  	}*/
+  	//@include mq(desktop) {
   		svg,.rio-overlay {
-  			transform:rotateX(65deg) rotateY(0deg) rotateZ(10deg) translateX(-265px) translateY(-780px) translateZ(90px) scale(1);
+  			transform: rotateX(65deg) rotateY(0deg) rotateZ(10deg) translateX(0%) translateY(-45%) translateZ(100px);
+			@include mq(desktop) {
+	  			transform:rotateX(65deg) rotateY(0deg) rotateZ(10deg) translateX(-20%) translateY(-62%) translateZ(100px);
+	  		}
   		}
-  	}
+  	//}
 	
 	&.end-side {
 			svg,.rio-overlay {
-				transform:rotateX(90deg) rotateY(0deg) rotateZ(20deg) translateX(30px) translateY(390px) translateZ(0px) scale(1);
+				/* transform:rotateX(90deg) rotateY(0deg) rotateZ(20deg) translateX(30px) translateY(390px) translateZ(0px) scale(1);
 				//transform:rotateX(90deg) rotateY(0deg) rotateZ(10deg) translateX(60px) translateY(370px) translateZ(0px) scale(1);
 				@include mq(tablet) {
 					transform:rotateX(60deg) rotateY(20deg) rotateZ(0deg) translateX(50px) translateY(240px) translateZ(-50px) scale(1);
@@ -182,7 +183,7 @@
 		  		}
 				@include mq(wide) {
 		  			transform:rotateX(60deg) rotateY(0deg) rotateZ(10deg) translateX(-145px) translateY(280px) translateZ(70px) scale(1);
-		  		}
+		  		} */
 	  		}
 	}
 	
@@ -202,6 +203,7 @@
 		//height:$height;//$height;
 		
 		transition: transform 1s;
+		
 		
 
 		//transform:rotateX(50deg) rotateY(0deg) rotateZ(20deg) translateZ(0px) translateX(130px) translateY(-25px);
@@ -285,7 +287,7 @@
 					stroke-width:2 !important;
 				}
 				path.gap {
-					stroke-opacity:1 !important;
+					stroke-opacity:0.5 !important;
 					stroke-width:2;
 				}
 				.swimmer-name {

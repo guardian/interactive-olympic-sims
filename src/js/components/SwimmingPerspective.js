@@ -38,7 +38,10 @@ import {
 } from 'd3-timer';
 //import Barchart from './Barchart';
 import PerspT from 'perspective-transform';
-import {getOffset} from '../lib/dom';
+import {
+	getOffset,
+	getPerspective
+} from '../lib/dom';
 
 import {cancelAnimFrame, requestAnimFrame} from '../lib/raf';
 
@@ -84,6 +87,8 @@ export default function SwimmingLineChart(data,options) {
 		leg,
 		athlete,
 		marker,
+		WIDTH,
+		HEIGHT,
 		xscale,
 		yscale,
 		line = d3_line();//.curve(curveMonotoneX)
@@ -208,26 +213,28 @@ export default function SwimmingLineChart(data,options) {
 		//let ul=select(options.container).append("ul");
     	
 		
-		stopWatch=new StopWatch({
-			container:options.container,
-			multiplier:multiplier
-		});
-		
-
 		
 
 	    container=select(options.container)
 	    					.append("div")
 	    					.attr("class","swimming-perspective");
 
+
+
 	    annotations_layer=container
 								.append("div")
 								.attr("class","annotations");
+
+
 
 	    overlay=container
 						.append("div")
 						.attr("class","rio-overlay");
 
+		stopWatch=new StopWatch({
+			container:options.container,
+			multiplier:multiplier
+		});
 		
 
 	    svg=container.append("svg")
@@ -235,8 +242,8 @@ export default function SwimmingLineChart(data,options) {
 	    // 			.attr("class","overlay")
 
 	    let box = container.node().getBoundingClientRect();
-	    let WIDTH = box.width,
-	        HEIGHT = box.width>414?box.width:box.height;
+	    WIDTH = box.width;
+		HEIGHT = box.width>414?box.width:box.height;
 
 	    svg
 	    	.attr("width",WIDTH)
@@ -248,6 +255,14 @@ export default function SwimmingLineChart(data,options) {
 	    
 	    console.log(WIDTH,"x",HEIGHT)
 	    
+	    /*overlay.style("transform",getPerspective(WIDTH,HEIGHT));
+	    svg.style("transform",getPerspective(WIDTH,HEIGHT,{
+	    	x:-WIDTH*0.2, 
+	    	y:-HEIGHT*0.65
+	    }));*/
+
+
+		
 
 	    let time_extent=extent(LEGS.map(l=>{
 	    	let leg_extent=extent(best_cumulative_times[l].cumulative_times);
@@ -281,39 +296,42 @@ export default function SwimmingLineChart(data,options) {
 			h:yscale(0)
 		};
 		console.log("POOL",pool)
-		let srcCorners = [
+		/*let srcCorners = [
 						0, 0, 
 						pool.w, 0,
 						pool.w, pool.h,
 						0, pool.h
 					];
 		let dstCorners = [
-						pool.w*0.3, 0,
-						pool.w*0.7, 0, 
-						pool.w, pool.h,
+						pool.w*0.5, pool.h*(-0.1),
+						pool.w*1.2, pool.h*(0.1), 
+						pool.w*2, pool.h*5,
 						0, pool.h
 					];
-
-		
-		dstCorners = [
-						0, 0, 
-						pool.w-0, 0,
-						pool.w, pool.h,
-						0, pool.h
-					];
-
-		//console.log(srcCorners,dstCorners)
 
 		let perspT = PerspT(srcCorners, dstCorners);
 
+		console.log(perspT.coeffs)		
+
+		var t = perspT.coeffs;
+		t = [	t[0], t[3], 0, t[6],
+				t[1], t[4], 0, t[7],
+				0   , 0   , 1, 0   ,
+				t[2], t[5], 0, t[8]
+			];
+		t = "matrix3d(" + t.join(", ") + ")";
+
+
+		container.style("transform",t)*/
 		//return;
+
+		
 
 		swimming_pool=new SwimmingPool({
 									svg:svg,
 									margins:margins,
 									hscale:xscale,
 									vscale:yscale,
-									perspT:perspT,
 									legs:LEGS
 							})
 
@@ -382,19 +400,14 @@ export default function SwimmingLineChart(data,options) {
 						*/
 
 					return line([
-								/*perspT.transform(x-w/2,start_y),
-								perspT.transform(x+w/2,start_y),
-								perspT.transform(x+w/2,start_y),
-								perspT.transform(x-w/2,start_y),
-								perspT.transform(x-w/2,start_y)*/
-								perspT.transform(x,start_y),
-								perspT.transform(x,start_y),
-								perspT.transform(x,start_y)
+								[x,start_y],
+								[x,start_y],
+								[x,start_y]
 							]);
 
 
 				})
-				.style("stroke-width",xscale(1.2))
+				.style("stroke-width",xscale(dimensions.lane*0.5))
 
 
 		leg.filter(s=>(s.distance===0))
@@ -633,6 +646,7 @@ export default function SwimmingLineChart(data,options) {
 							]);
 
 				})
+				.style("stroke-width",xscale(dimensions.lane*0.5))
 				.transition()
 				.duration(s.cumulative_time-best_time)
 				.ease(SwimmingLinear)
@@ -725,7 +739,23 @@ export default function SwimmingLineChart(data,options) {
 
 		CURRENT_DISTANCE=distance;
 
-		container.classed("end-side",(distance%100>0))
+		// overlay.style("transform",()=>{
+		// 	if(distance%(dimensions.length*2)>0) {
+		// 		return getPerspective(WIDTH,HEIGHT,{
+		// 					depth:yscale(0)*0.8
+		// 				});
+		// 	}
+		// 	return getPerspective(WIDTH,HEIGHT);
+		// })
+
+		// svg.style("transform",()=>{
+		// 	if(distance%(dimensions.length*2)>0) {
+		// 		return getPerspective(WIDTH,HEIGHT,{
+		// 					depth:yscale(0)*0.8
+		// 				});
+		// 	}
+		// 	return getPerspective(WIDTH,HEIGHT);
+		// })
 
 		let delta=10;
 
@@ -898,7 +928,7 @@ export default function SwimmingLineChart(data,options) {
 					srcPts.push(d[1]);
 
 					let coords=this.getBoundingClientRect();
-					console.log("CSS3 coords",coords)
+					//console.log("CSS3 coords",coords)
 					dstPts.push(coords.left);
 					dstPts.push(coords.top);
 				});
@@ -918,8 +948,7 @@ function SwimmingPool(options) {
 		////console.log("SwimmingPool",options)
 
 		let hscale=options.hscale,
-			vscale=options.vscale,
-			perspT=options.perspT;
+			vscale=options.vscale;
 
 		let margins=options.margins || {left:0,top:0,right:0,bottom:0};
 
@@ -944,8 +973,7 @@ function SwimmingPool(options) {
 								[hscale(0),vscale(dimensions.length)]
 							];
 							return d3_line()(points.map(p=>{
-								//console.log(p,perspT.transform(p[0],p[1]))
-								return perspT.transform(p[0],p[1])
+								return [p[0],p[1]]
 							}))
 						})
 
@@ -995,7 +1023,7 @@ function SwimmingPool(options) {
 							.attr("d",d=>{
 								//console.log("rope",d.rope)
 								return d3_line()(d.rope.map(p=>{
-									return perspT.transform(p[0],p[1])
+									return [p[0],p[1]]
 								}))
 							})
 
