@@ -21,13 +21,13 @@ System.config({
   map: {
     "babel": "npm:babel-core@5.8.38",
     "babel-runtime": "npm:babel-runtime@5.8.38",
-    "core-js": "npm:core-js@1.2.6",
+    "core-js": "npm:core-js@1.2.7",
     "d3-array": "npm:d3-array@1.0.0",
     "d3-axis": "npm:d3-axis@1.0.0",
     "d3-collection": "npm:d3-collection@1.0.0",
     "d3-format": "npm:d3-format@1.0.0",
     "d3-interpolate": "npm:d3-interpolate@1.1.0",
-    "d3-scale": "npm:d3-scale@1.0.0",
+    "d3-scale": "npm:d3-scale@1.0.1",
     "d3-selection": "npm:d3-selection@1.0.0",
     "d3-shape": "npm:d3-shape@1.0.0",
     "d3-time-format": "npm:d3-time-format@2.0.0",
@@ -48,7 +48,7 @@ System.config({
       "path-browserify": "npm:path-browserify@0.0.0"
     },
     "github:jspm/nodelibs-process@0.1.2": {
-      "process": "npm:process@0.11.5"
+      "process": "npm:process@0.11.6"
     },
     "github:jspm/nodelibs-util@0.1.0": {
       "util": "npm:util@0.10.3"
@@ -73,7 +73,7 @@ System.config({
       "isarray": "npm:isarray@1.0.0",
       "process": "github:jspm/nodelibs-process@0.1.2"
     },
-    "npm:core-js@1.2.6": {
+    "npm:core-js@1.2.7": {
       "fs": "github:jspm/nodelibs-fs@0.1.2",
       "path": "github:jspm/nodelibs-path@0.1.0",
       "process": "github:jspm/nodelibs-process@0.1.2",
@@ -82,7 +82,7 @@ System.config({
     "npm:d3-interpolate@1.1.0": {
       "d3-color": "npm:d3-color@1.0.0"
     },
-    "npm:d3-scale@1.0.0": {
+    "npm:d3-scale@1.0.1": {
       "d3-array": "npm:d3-array@1.0.0",
       "d3-collection": "npm:d3-collection@1.0.0",
       "d3-color": "npm:d3-color@1.0.0",
@@ -111,7 +111,7 @@ System.config({
     "npm:path-browserify@0.0.0": {
       "process": "github:jspm/nodelibs-process@0.1.2"
     },
-    "npm:process@0.11.5": {
+    "npm:process@0.11.6": {
       "assert": "github:jspm/nodelibs-assert@0.1.0",
       "fs": "github:jspm/nodelibs-fs@0.1.2",
       "vm": "github:jspm/nodelibs-vm@0.1.0"

@@ -176,17 +176,6 @@ export default function SwimmingLineChart(data,options) {
     	console.log(swimmers_data)
 		console.log(best_cumulative_times)
 
-		/*
-		let entrant=swimmers_data.find(a=>a.lane===d.lane),
-										gap=d.cumulative_time-best_cumulative_times[d.distance].best_cumulative;
-
-									stopWatch.append({
-										name:entrant.entrant.participant.competitor.lastName,
-										time:(gap>0)?`+${formatSecondsMilliseconds(gap,2)}`:d.value
-									})
-		*/
-
-
 		swimmers_data.forEach(s => {
 
 			let splits=([{
@@ -412,16 +401,14 @@ export default function SwimmingLineChart(data,options) {
 					.append("g")
 						.attr("class",d=>("leg m"+d.distance));
 
+
+
 		leg.append("path")
 				.attr("id",s=>"leg_"+s.lane+"_"+s.distance)
 				.attr("d",s=>{
 
 					let x=xscale(s.lane*dimensions.lane + dimensions.lane/2),
 						start_y=(s.distance%(dimensions.length*2)>0)?yscale(0):yscale(dimensions.length);
-						/*,
-						dist=s.distance-s.mt,
-						y=(s.distance%(dimensions.length*2)>0)?yscale(dimensions.length-dist):yscale(dist);
-						*/
 
 					return line([
 								[x,start_y],
@@ -431,8 +418,9 @@ export default function SwimmingLineChart(data,options) {
 
 
 				})
-				.style("stroke-width",xscale(dimensions.lane*0.5))
+				.attr("stroke-width",Math.floor(xscale(dimensions.lane*0.5)))
 
+		
 
 		leg.filter(s=>(s.distance===0))
 				.append("path")
@@ -444,16 +432,7 @@ export default function SwimmingLineChart(data,options) {
 						y1=yscale(50);
 					return `M${x},${y0}L${x},${y1}`;
 				});
-		/*leg.filter(s=>(s.distance===0))
-				.append("path")
-				.attr("id",(s)=>("t_guide_"+s.lane+"_"+s.distance))
-				.attr("class","guide-text-path")
-				.attr("d", (s) => {
-					let x=xscale(s.lane*dimensions.lane + dimensions.lane/2),
-						y0=yscale(0),
-						y1=yscale(s.mt);
-					return `M${x},${y0}L${x},${y1}`;
-				});*/
+
 
 
 		leg.filter(s=>(s.distance===0))
@@ -477,7 +456,7 @@ export default function SwimmingLineChart(data,options) {
 				    	.attr("text-anchor","start")
 				    	.attr("startOffset","0%")
 				    	.text((s,i)=>{
-							let swimmer=swimmers_data.find(d=>(d.lane===s.lane))
+							let swimmer=swimmers_data.filter(d=>(d.lane===s.lane))[0]
 							//if(i%2) {
 								return swimmer.entrant.participant.competitor.lastName;
 							//}
@@ -506,7 +485,7 @@ export default function SwimmingLineChart(data,options) {
 				    	.attr("text-anchor",s=>(s.distance%100>0)?"end":"start")
 				    	.attr("startOffset",s=>(s.distance%100>0)?"50%":"50%")
 				    	.text(s=>{
-							let swimmer=swimmers_data.find(d=>(d.lane===s.lane))
+							let swimmer=swimmers_data.filter(d=>(d.lane===s.lane))[0]
 							return swimmer.entrant.participant.competitor.lastName;
 						})
 
@@ -674,7 +653,7 @@ export default function SwimmingLineChart(data,options) {
 							]);
 
 				})
-				.style("stroke-width",xscale(dimensions.lane*0.5))
+				.attr("stroke-width",Math.floor(xscale(dimensions.lane*0.5)))
 				.transition()
 				.duration(s.cumulative_time-best_time)
 				.ease(SwimmingLinear)
@@ -696,7 +675,7 @@ export default function SwimmingLineChart(data,options) {
 	function addTime(distance,lane) {
 		//console.log("addTime",distance,lane)
 
-		let annotations=options.text.find(d=>(d.mt===distance && d.lane===lane && d.type==="annotation" && d.time));
+		let annotations=options.text.filter(d=>(d.mt===distance && d.lane===lane && d.type==="annotation" && d.time))[0];
 
 		let annotation=annotations_layer.selectAll("div.annotation");//.data(annotations,d=>("time_"+distance+"lane"));
 
@@ -784,17 +763,21 @@ export default function SwimmingLineChart(data,options) {
 				//container.style("perspective","700px").style("perspective-origin","90% 20%")
 				transform="rotateX(75deg) rotateY(0deg) rotateZ(10deg) translateX(67px) translateY(365px) translateZ(45px) scale(0.8)";
 			}
-	    	svg
-	    		.style("-webkit-transform",transform)
-	    		.style("-moz-transform",transform)
-	    		.style("-ms-transform",transform)
-	    		.style("transform",transform);
+			try {
+		    	svg
+		    		.style("-webkit-transform",transform)
+		    		.style("-moz-transform",transform)
+		    		.style("-ms-transform",transform)
+		    		.style("transform",transform);
 
-	    	overlay
-	    		.style("-webkit-transform",transform)
-	    		.style("-moz-transform",transform)
-	    		.style("-ms-transform",transform)
-	    		.style("transform",transform);	    
+		    	overlay
+		    		.style("-webkit-transform",transform)
+		    		.style("-moz-transform",transform)
+		    		.style("-ms-transform",transform)
+		    		.style("transform",transform);
+		    } catch(e) {
+
+			}
 	    } else {
 	    	//0m side
 
@@ -809,17 +792,22 @@ export default function SwimmingLineChart(data,options) {
 				transform=`rotateX(70deg) rotateY(0deg) rotateZ(10deg) translateX(80px) translateY(50px) translateZ(30px) scale(0.8)`;
 			}
 
-	    	svg
-	    		.style("-webkit-transform",transform)
-	    		.style("-moz-transform",transform)
-	    		.style("-ms-transform",transform)
-	    		.style("transform",transform);
-	    		
-	    	overlay
-	    		.style("-webkit-transform",transform)
-	    		.style("-moz-transform",transform)
-	    		.style("-ms-transform",transform)
-	    		.style("transform",transform);
+			try {
+				svg
+		    		.style("-webkit-transform",transform)
+		    		.style("-moz-transform",transform)
+		    		.style("-ms-transform",transform)
+		    		.style("transform",transform);
+		    		
+		    	overlay
+		    		.style("-webkit-transform",transform)
+		    		.style("-moz-transform",transform)
+		    		.style("-ms-transform",transform)
+		    		.style("transform",transform);	
+			} catch(e) {
+
+			}
+	    	
 	    }
 
 		let delta=10;
@@ -931,7 +919,7 @@ export default function SwimmingLineChart(data,options) {
 							let delay=d.cumulative_time-best_cumulative_times[d.distance].best_cumulative;
 							ts.push(
 								setTimeout(()=>{
-									let entrant=swimmers_data.find(a=>a.lane===d.lane),
+									let entrant=swimmers_data.filter(a=>a.lane===d.lane)[0],
 										gap=d.cumulative_time-best_cumulative_times[d.distance].best_cumulative;
 
 									addTime(d.distance,d.lane);
