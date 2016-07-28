@@ -4,7 +4,8 @@ import {
 } from 'd3-selection';
 import {
 	scaleLinear,
-	scalePoint
+	scalePoint,
+	scaleSqrt
 } from 'd3-scale';
 import {
 	max as d3_max,
@@ -255,13 +256,9 @@ export default function SwimmingLineChart(data,options) {
 	    
 	    console.log(WIDTH,"x",HEIGHT)
 	    
-	    /*overlay.style("transform",getPerspective(WIDTH,HEIGHT));
-	    svg.style("transform",getPerspective(WIDTH,HEIGHT,{
-	    	x:-WIDTH*0.2, 
-	    	y:-HEIGHT*0.65
-	    }));*/
 
 
+	    
 		
 
 	    let time_extent=extent(LEGS.map(l=>{
@@ -276,6 +273,20 @@ export default function SwimmingLineChart(data,options) {
 		yscale=scaleLinear().domain([0,dimensions.length]).range([HEIGHT-(margins.top+margins.bottom),0]);
 		
 		
+		/*overlay.style("transform",getPerspective(WIDTH,HEIGHT));
+	    svg.style("transform",getPerspective(WIDTH,HEIGHT,{
+	    	x:-WIDTH*0.2, 
+	    	y:-HEIGHT*0.65
+	    }));*/
+
+	    let sqrtScale=scaleLinear().domain([800,1260]).range([350,800]);
+
+	    // range(1260).forEach(d=>{
+	    // 	console.log(d,sqrtScale(d))
+	    // })
+	    let w=xscale.range()[1];
+	    svg.style("transform",`rotateX(65deg) rotateY(0deg) rotateZ(10deg) translateX(-1%) translateY(-${sqrtScale(w)}px) translateZ(150px)`);
+
 		//computePerspective();
 					
 		buildTexts("intro");
@@ -738,6 +749,21 @@ export default function SwimmingLineChart(data,options) {
 		removeGaps();
 
 		CURRENT_DISTANCE=distance;
+
+		
+		if(distance%(dimensions.length*2)>0) {
+
+			let transform=`rotateX(65deg) rotateY(0deg) rotateZ(10deg) translateX(-1%) translateY(${300}px) translateZ(150px)`;
+	    	svg.style("transform",transform);
+	    	overlay.style("transform",transform);	    
+	    } else {
+	    	let sqrtScale=scaleLinear().domain([800,1260]).range([350,800]);
+			let w=xscale.range()[1],
+				dy=-sqrtScale(w);
+			let transform=`rotateX(65deg) rotateY(0deg) rotateZ(10deg) translateX(-1%) translateY(${dy}px) translateZ(150px)`;	    	
+	    	svg.style("transform",transform);
+	    	overlay.style("transform",transform);
+	    }
 
 		// overlay.style("transform",()=>{
 		// 	if(distance%(dimensions.length*2)>0) {

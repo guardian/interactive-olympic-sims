@@ -162,10 +162,10 @@
   	}*/
   	//@include mq(desktop) {
   		svg,.rio-overlay {
-  			transform: rotateX(65deg) rotateY(0deg) rotateZ(10deg) translateX(0%) translateY(-45%) translateZ(100px);
+  			/* transform: rotateX(65deg) rotateY(0deg) rotateZ(10deg) translateX(0%) translateY(-45%) translateZ(100px);
 			@include mq(desktop) {
-	  			transform:rotateX(65deg) rotateY(0deg) rotateZ(10deg) translateX(-20%) translateY(-62%) translateZ(100px);
-	  		}
+	  			transform:rotateX(65deg) rotateY(0deg) rotateZ(10deg) translateX(-20%) translateY(-350px) translateZ(100px);
+	  		} */
   		}
   	//}
 	
@@ -252,11 +252,11 @@
 				
 				font-size:12px;
 
-				@include mq(desktop) {
-					font-size: 25px;
+				@include mq(tablet) {
+					font-size: 30px;
 					letter-spacing: 0px;
 				}
-				@include mq(wide) {
+				@include mq(desktop) {
 					font-size: 35px;
 					letter-spacing: 2px;
 				}
