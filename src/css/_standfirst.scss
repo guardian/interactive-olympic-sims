@@ -1,0 +1,82 @@
+.stand-first {
+	position:absolute;
+	z-index:9999;
+	top:40px;
+	left:5%;
+	width:100%;
+	@include mq(tablet) {
+		width:40%;
+	}
+	@include mq(desktop) {
+		width:40%;
+	}
+	h1 {
+		@include fs-header(4);
+		
+		@include mq(tablet) {
+			font-size: 36px;
+			line-height: 42px;
+		}
+
+		@include mq(desktop) {
+			font-size: 44px;
+			line-height: 48px;
+		}
+
+		@include mq(wide) {
+			font-size: 52px;
+			line-height: 56px;
+		}
+		margin-bottom:15px;
+	}
+	p {
+		@include fs-bodyCopy(2);
+		color:#333;
+		@include mq(tablet) {
+			@include fs-bodyCopy(2);
+		}
+	}
+
+	button{
+		height: 42px;
+	    border: none;
+	    padding: 0 15px 0 20px;
+	    border-radius: 42px;
+	    @include fs-textSans(4);
+	    
+	    margin-bottom: 0;
+	    
+	    color:#fff;
+	    background:#1991c6;
+	    cursor:pointer;
+	    outline:none;
+	    &:after {
+	    	content: "";
+	    	display: block;
+	    	float:right;
+	    	background-image:url(./assets/imgs/arrow-right.svg);
+		    background-repeat:no-repeat;
+		    background-size:23px;
+		    background-position: center center;	
+		    width:23px;
+		    height:23px;
+		    padding-left:15px;
+	    }
+	    &:hover{
+	    	background-color:#0082ba;
+	    }
+	    &.replay {
+	    	&:after {
+	    		background-image:url(./assets/imgs/replay.svg);
+	    	}
+	    }
+	    &.inactive {
+	    	color:#999;
+	    	pointer-events:none;
+	    	&:after {
+				opacity: 0.3;
+	    	}
+	    }
+	}
+
+}

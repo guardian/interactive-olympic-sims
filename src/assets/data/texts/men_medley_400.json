@@ -1,0 +1,72 @@
+[
+	{
+		"type":"intro",
+		"mt":400,
+		"lane":null,
+		"text":"U.S. overwhelming favorite Ryan Lochte pulled away from the rest of the field, including double defending champion Michael Phelps, over a wide margin to capture the Olympic title in the event.",
+		"button":"The final as it happened"
+	},
+	{
+		"type":"story",
+		"mt":0,
+		"lane":null,
+		"text":"lorem",
+		"button":"Butterfly - 50 metre"
+	},
+	{
+		"type":"story",
+		"mt":50,
+		"lane":null,
+		"text":"Butterfly, Lorem ipsum dolor sit amet, consectetur adipisicing elit.",
+		"button":"Butterfly - 100 metre"
+	},
+	{
+		"type":"story",
+		"mt":100,
+		"lane":null,
+		"text":"Backstroke, Lorem ipsum dolor sit amet, consectetur adipisicing elit.",
+		"button":"Backstroke - 150 metre"
+	},
+	{
+		"type":"story",
+		"mt":150,
+		"lane":null,
+		"text":"Breaststroke, Lorem ipsum dolor sit amet, consectetur adipisicing elit.",
+		"button":"Backstroke - 200 metre"
+	},
+	{
+		"type":"story",
+		"mt":200,
+		"lane":null,
+		"text":"Dominating the race from the start, Phelps held off a final showdown from Lochte on the freestyle leg to claim his sixteenth gold and twentieth career medal in 1:54.27",
+		"button":"Breaststroke - 250 metre"
+	},
+	{
+		"type":"story",
+		"mt":250,
+		"lane":null,
+		"text":"Butterfly, Lorem ipsum dolor sit amet, consectetur adipisicing elit.",
+		"button":"Breaststroke - 300 metre"
+	},
+	{
+		"type":"story",
+		"mt":300,
+		"lane":null,
+		"text":"Backstroke, Lorem ipsum dolor sit amet, consectetur adipisicing elit.",
+		"button":"Freestyle - 350 metre"
+	},
+	{
+		"type":"story",
+		"mt":350,
+		"lane":null,
+		"text":"Breaststroke, Lorem ipsum dolor sit amet, consectetur adipisicing elit.",
+		"button":"Freestyle - 400 metre"
+	},
+	{
+		"type":"story",
+		"mt":400,
+		"lane":null,
+		"text":"Dominating the race from the start, Phelps held off a final showdown from Lochte on the freestyle leg to claim his sixteenth gold and twentieth career medal in 1:54.27",
+		"button":"Replay"
+	}
+]

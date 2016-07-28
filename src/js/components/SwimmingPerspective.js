@@ -188,21 +188,34 @@ export default function SwimmingLineChart(data,options) {
 
 
 		swimmers_data.forEach(s => {
-			s.splits.forEach(split => {
 
-				let gap=split.cumulative_time-best_cumulative_times[split.distance].best_cumulative;
+			let splits=([{
+				value:s.reaction_time.value,
+				time:s.reaction_time.time,
+				cumulative_time:s.reaction_time.time,
+				distance:0
+			}]).concat(s.splits);
+
+
+			splits.forEach(split => {
+
+				let gap=split.cumulative_time-best_cumulative_times[split.distance].best_cumulative,
+					text=(gap>0)?`+${formatSecondsMilliseconds(gap,2)}`:split.value;
+
 
 				options.text.push({
 					"type":"annotation",
 					"time":true,
 					"mt":split.distance,//(LEGS.length-1)*dimensions.length,
 					"lane":s.lane,
-					"text":(gap>0)?`+${formatSecondsMilliseconds(gap,2)}`:split.value
+					"text":split.distance===0?split.value:text
 				})	
 
 			});
 			
 		})
+
+		console.log(options.text)
 
 		buildVisual();
 
@@ -285,7 +298,7 @@ export default function SwimmingLineChart(data,options) {
 	    // 	console.log(d,sqrtScale(d))
 	    // })
 	    let w=xscale.range()[1];
-	    svg.style("transform",`rotateX(65deg) rotateY(0deg) rotateZ(10deg) translateX(-1%) translateY(-${sqrtScale(w)}px) translateZ(150px)`);
+
 
 		//computePerspective();
 					
@@ -431,7 +444,7 @@ export default function SwimmingLineChart(data,options) {
 						y1=yscale(50);
 					return `M${x},${y0}L${x},${y1}`;
 				});
-		leg.filter(s=>(s.distance===0))
+		/*leg.filter(s=>(s.distance===0))
 				.append("path")
 				.attr("id",(s)=>("t_guide_"+s.lane+"_"+s.distance))
 				.attr("class","guide-text-path")
@@ -440,38 +453,37 @@ export default function SwimmingLineChart(data,options) {
 						y0=yscale(0),
 						y1=yscale(s.mt);
 					return `M${x},${y0}L${x},${y1}`;
-				});
+				});*/
 
 
 		leg.filter(s=>(s.distance===0))
 			.selectAll("text")
-			.data(s=>([s,s,s,s]))
+			//.data(s=>([s,s,s,s]))
+			.data(s=>([s,s]))
 			.enter()
 			.append("text")
 				.attr("class","swimmer-name")
-				.classed("stroke",(s,i)=>(i<2))
+				.classed("stroke",(s,i)=>(i<1))
 
 		leg.filter(s=>(s.distance===0))
 				//.selectAll("text:not(.stroke)")
 				.selectAll("text")
-					.attr("dx",(s,i)=>(i%2)?5:-5)
+					.attr("dx",5)
 				    .attr("dy","0.35em")
-				    .classed("time",(s,i)=>!(i%2))
 					.append("textPath")
 				    	.attr("xlink:href", (s,i)=>{
-				    		let t=(i%2)?"":"t_"
-				    		return `#${t}guide_${s.lane}_${s.distance}`
+				    		return `#guide_${s.lane}_${s.distance}`
 				    	})
-				    	.attr("text-anchor",(s,i)=>((i%2)?"start":"end"))
-				    	.attr("startOffset",(s,i)=>((i%2)?"0%":"100%"))
-				    	//.style("fill",(s,i)=>(i?"#000":"#336699"))
+				    	.attr("text-anchor","start")
+				    	.attr("startOffset","0%")
 				    	.text((s,i)=>{
 							let swimmer=swimmers_data.find(d=>(d.lane===s.lane))
-							if(i%2) {
+							//if(i%2) {
 								return swimmer.entrant.participant.competitor.lastName;
-							}
-							return swimmer.reaction_time.value;
+							//}
+							//return swimmer.reaction_time.value;
 						})
+
 		leg.filter(s=>(s.distance>0))
 			.selectAll("text")
 			.data(s=>([s,s]))
@@ -540,7 +552,7 @@ export default function SwimmingLineChart(data,options) {
 					console.log(CURRENT_STEP,texts[CURRENT_STEP].mt)
 					//CURRENT_STEP=CURRENT_STEP===0?1:CURRENT_STEP;
 					buildTexts();
-					deactivateButton();
+					//deactivateButton();
 					if(texts[CURRENT_STEP].type!=="intro") {
 						swimming_pool.setAxis(texts[CURRENT_STEP].mt)
 					} else {
@@ -619,8 +631,9 @@ export default function SwimmingLineChart(data,options) {
 					let offset=getOffset(annotations_layer.node());
 					//console.log("OFFSET",offset,getOffset(this))
 					//offset.top=0;
-					console.log("TOP",(d.coords[1]-(offset.top)))
-					return (d.coords[1]-(offset.top))+"px";
+					//console.log("TOP",(d.coords[1]-(offset.top)))
+					let dy=(d.mt%(dimensions.length*2)>0)?-24:18;
+					return (d.coords[1]-(offset.top)+dy)+"px";
 				})
 				.html(d=>"<span>"+d.text+"</span>")
 
@@ -635,6 +648,7 @@ export default function SwimmingLineChart(data,options) {
 	}
 
 	function removeGaps() {
+		svg.selectAll("path").interrupt();
 		svg.selectAll("path.gap").remove();
 	}
 	function showGap(el,s,best_time) {
@@ -648,9 +662,12 @@ export default function SwimmingLineChart(data,options) {
 				.attr("d",()=>{
 
 					let x=xscale(s.lane*dimensions.lane + dimensions.lane/2),
-						start_y=(s.distance%(dimensions.length*2)>0)?yscale(s.mt%dimensions.length):yscale(s.distance-s.mt),
-						y=yscale(s.distance%(dimensions.length*2));
-					//console.log("GAP PATH",s.lane,s.distance,s.mt,start_y,y)
+						side=s.distance%(dimensions.length*2),
+						start_y=(side>0)?yscale(side-s.dmt):yscale(s.dmt),
+						y=yscale(side);
+					
+					console.log("GAP PATH",s.lane,s.distance,s.mt,start_y,y)
+					
 					return line([
 								[x,start_y],
 								[x,start_y]
@@ -664,8 +681,9 @@ export default function SwimmingLineChart(data,options) {
 						.attr("d",s=>{
 
 							let x=xscale(s.lane*dimensions.lane + dimensions.lane/2),
-								start_y=(s.distance%(dimensions.length*2)>0)?yscale(s.mt%dimensions.length):yscale(s.distance-s.mt),
-								y=yscale(s.distance%(dimensions.length*2));
+								side=s.distance%(dimensions.length*2),
+								start_y=(side>0)?yscale(side-s.dmt):yscale(s.dmt),
+								y=yscale(side);
 							console.log("GAP PATH",s.lane,s.distance,s.mt,start_y,y)
 							return line([
 										[x,start_y],
@@ -745,48 +763,70 @@ export default function SwimmingLineChart(data,options) {
 	
 	function goTo(distance,text_update) {
 
+		ts.forEach(t=>{
+			clearTimeout(t);
+			t=null;
+		});
+
 		removeAnnotations();
 		removeGaps();
+		stopWatch.hide();
 
 		CURRENT_DISTANCE=distance;
 
 		
 		if(distance%(dimensions.length*2)>0) {
+			//50m side
+
 
 			let transform=`rotateX(65deg) rotateY(0deg) rotateZ(10deg) translateX(-1%) translateY(${300}px) translateZ(150px)`;
-	    	svg.style("transform",transform);
-	    	overlay.style("transform",transform);	    
+			if(WIDTH<400) {
+				//container.style("perspective","700px").style("perspective-origin","90% 20%")
+				transform="rotateX(75deg) rotateY(0deg) rotateZ(10deg) translateX(67px) translateY(365px) translateZ(45px) scale(0.8)";
+			}
+	    	svg
+	    		.style("-webkit-transform",transform)
+	    		.style("-moz-transform",transform)
+	    		.style("-ms-transform",transform)
+	    		.style("transform",transform);
+
+	    	overlay
+	    		.style("-webkit-transform",transform)
+	    		.style("-moz-transform",transform)
+	    		.style("-ms-transform",transform)
+	    		.style("transform",transform);	    
 	    } else {
+	    	//0m side
+
+
 	    	let sqrtScale=scaleLinear().domain([800,1260]).range([350,800]);
 			let w=xscale.range()[1],
 				dy=-sqrtScale(w);
-			let transform=`rotateX(65deg) rotateY(0deg) rotateZ(10deg) translateX(-1%) translateY(${dy}px) translateZ(150px)`;	    	
-	    	svg.style("transform",transform);
-	    	overlay.style("transform",transform);
+			let transform=`rotateX(65deg) rotateY(0deg) rotateZ(10deg) translateX(-1%) translateY(${dy}px) translateZ(150px)`;
+			  		    	
+			if(WIDTH<400) {
+				//container.style("perspective","700px").style("perspective-origin","90% 20%")
+				transform=`rotateX(70deg) rotateY(0deg) rotateZ(10deg) translateX(80px) translateY(50px) translateZ(30px) scale(0.8)`;
+			}
+
+	    	svg
+	    		.style("-webkit-transform",transform)
+	    		.style("-moz-transform",transform)
+	    		.style("-ms-transform",transform)
+	    		.style("transform",transform);
+	    		
+	    	overlay
+	    		.style("-webkit-transform",transform)
+	    		.style("-moz-transform",transform)
+	    		.style("-ms-transform",transform)
+	    		.style("transform",transform);
 	    }
-
-		// overlay.style("transform",()=>{
-		// 	if(distance%(dimensions.length*2)>0) {
-		// 		return getPerspective(WIDTH,HEIGHT,{
-		// 					depth:yscale(0)*0.8
-		// 				});
-		// 	}
-		// 	return getPerspective(WIDTH,HEIGHT);
-		// })
-
-		// svg.style("transform",()=>{
-		// 	if(distance%(dimensions.length*2)>0) {
-		// 		return getPerspective(WIDTH,HEIGHT,{
-		// 					depth:yscale(0)*0.8
-		// 				});
-		// 	}
-		// 	return getPerspective(WIDTH,HEIGHT);
-		// })
 
 		let delta=10;
 
 		let selected_leg=leg
 			.classed("visible",false)
+			.interrupt()
 			.filter(d=>(d.distance===distance))
 				.classed("visible",true);
 		selected_leg
@@ -852,16 +892,19 @@ export default function SwimmingLineChart(data,options) {
 
 						})
 						.on("start",d=>{
+
+							ts.forEach(t=>{
+								clearTimeout(t);
+								t=null;
+							});
+
 							if(d.lane===1) {
 								let duration=best_cumulative_times[d.distance].best_time*(delta/dimensions.length)*multiplier;
 								if(d.calculated) {
 									stopWatch.hide();
 								} else {
 									
-									ts.forEach(t=>{
-										clearTimeout(t);
-										t=null;
-									});
+									
 
 									stopWatch.start(best_cumulative_times[d.distance].best_cumulative-duration);	
 								}
@@ -874,11 +917,11 @@ export default function SwimmingLineChart(data,options) {
 									buildTexts();
 									addAnnotation();
 								}
-								activateButton();
+								//activateButton();
 							}
 
 							if(d.distance>0) {
-								showGap(select(this.parentNode),d,best_cumulative_times[d.distance].best_cumulative)	
+								showGap(select(this.parentNode),d,best_cumulative_times[d.distance].best_cumulative);
 							}
 
 							if(d.cumulative_time===best_cumulative_times[d.distance].best_cumulative) {

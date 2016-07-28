@@ -16,7 +16,7 @@ window.init = function init(el, config) {
     console.log("SWIMMING SwimmingPerspective",el)
 
     new SwimmingPerspective(swimming_data,{
-        container:el,//.querySelector(".interactive-embed"),
+        container:el,
         text:swimming_text,
         record:records.men_medley_200,
         multiplier: 1,

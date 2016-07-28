@@ -38,7 +38,7 @@ export default function StopWatch(options) {
 
 	function setTime(time) {
 		let t=msToTime(time);
-		timeDOM.text((t[1]?(t[1]+":"):"")+t[2]+"."+(t[3]));
+		timeDOM.text((t[1]?(t[1]+":"):"")+(t[1]&&t[2]<10?"0":"")+t[2]+"."+(t[3]));
 	}
 
 	function updateTime(time) {
@@ -46,13 +46,15 @@ export default function StopWatch(options) {
 			diff=(current_time - start_time)+delta_time,
 			t=msToTime(diff*multiplier);
 
-		timeDOM.text((t[1]?(t[1]+":"):"")+t[2]+"."+(t[3]));
+		timeDOM.text((t[1]?(t[1]+":"):"")+(t[1]&&t[2]<10?"0":"")+t[2]+"."+(t[3]));
 
 		frameRequest = requestAnimFrame(updateTime);
 		
 	}
 
 	this.start = (time=0) => {
+
+		cancelAnimFrame(frameRequest);
 
 		delta_time=time;
 
@@ -74,6 +76,7 @@ export default function StopWatch(options) {
 	}
 
 	this.hide = () => {
+		cancelAnimFrame(frameRequest);
 		stopwatch.classed("hidden",true)
 	}
 

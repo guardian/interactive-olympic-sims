@@ -12,6 +12,7 @@ body {
 }
 
 @import "general";
+@import "standfirst";
 @import "stopwatch";
 @import "swimming-perspective";
 
@@ -20,21 +21,14 @@ body {
 }
 
 .interactive-embed {
+
+    border-radius:10px;
+
     margin: 0 auto;
     box-sizing: border-box;
     background-color: white;
     position: relative;
 
     padding: 1px;
-    /* @include mq(mobileLandscape) {
-        padding: 1px;
-    }
-
-    @each $bp in (tablet, desktop, leftCol, wide) {
-        @include mq($bp) {
-            max-width: map-get($mq-breakpoints, $bp);
-        }
-    } */
-
     
 }

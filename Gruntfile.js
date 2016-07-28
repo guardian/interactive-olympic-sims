@@ -15,7 +15,7 @@ module.exports = function(grunt) {
             },
             css: {
                 files: ['src/css/**/*'],
-                tasks: ['sass'],
+                tasks: ['sass','autoprefixer'],
             },
             assets: {
                 files: ['src/assets/**/*'],
@@ -43,6 +43,22 @@ module.exports = function(grunt) {
             embed: {
                 files: {
                     'build/embed.css': 'src/css/embed.scss'
+                }
+            }
+        },
+
+        autoprefixer: {
+            options: {
+                browsers: ['last 10 versions', 'ie > 8']
+            },
+            interactive: {
+                files: {
+                    'build/main.css': 'build/main.css'
+                }
+            },
+            embed: {
+                files: {
+                    'build/embed.css': 'build/embed.css'
                 }
             }
         },
@@ -225,13 +241,14 @@ module.exports = function(grunt) {
         grunt.log.writeln(grunt.template.process('<%= visuals.s3.domain %><%= visuals.s3.path %>/embed/embed.html'))
     })
 
-    grunt.registerTask('embed', ['shell:embed', 'template:embed', 'sass:embed']);
-    grunt.registerTask('interactive', ['shell:interactive', 'template:bootjs', 'sass:interactive']);
+    grunt.registerTask('embed', ['shell:embed', 'template:embed', 'sass:embed', 'autoprefixer:embed']);
+    grunt.registerTask('interactive', ['shell:interactive', 'template:bootjs', 'sass:interactive', 'autoprefixer:interactive']);
     grunt.registerTask('all', ['interactive', 'embed', 'copy:assets'])
     grunt.registerTask('default', ['clean', 'copy:harness', 'all', 'connect', 'watch']);
     grunt.registerTask('build', ['clean', 'all']);
     grunt.registerTask('deploy', ['loadDeployConfig', 'prompt:visuals', 'build', 'copy:deploy', 'aws_s3', 'boot_url']);
 
     grunt.loadNpmTasks('grunt-aws');
+    grunt.loadNpmTasks('grunt-autoprefixer');
 
 }
