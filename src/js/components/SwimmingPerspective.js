@@ -3,9 +3,7 @@ import {
     selectAll
 } from 'd3-selection';
 import {
-	scaleLinear,
-	scalePoint,
-	scaleSqrt
+	scaleLinear
 } from 'd3-scale';
 import {
 	max as d3_max,
@@ -14,29 +12,24 @@ import {
 	sum as d3_sum,
 	range
 } from 'd3-array';
-import {
+/*import {
 	nest
-} from 'd3-collection';
+} from 'd3-collection';*/
 import {
 	format as d3_format
 } from 'd3-format';
 import {
-	line as d3_line,
-	curveCardinal,
-	curveMonotoneX
+	line as d3_line
 } from 'd3-shape';
 import {
 	transition
 } from 'd3-transition';
-import {
-	interpolateString
-} from 'd3-interpolate';
-import {
+/*import {
 	axisBottom
-} from 'd3-axis';
-import {
+} from 'd3-axis';*/
+/*import {
 	interval
-} from 'd3-timer';
+} from 'd3-timer';*/
 //import Barchart from './Barchart';
 import PerspT from 'perspective-transform';
 import {
@@ -50,7 +43,8 @@ import {
 	convertTimeHMS,
 	convertTime,
 	formatSecondsMilliseconds,
-	getDistance
+	getDistance,
+	getTimeForDistance
 } from '../lib/time';
 
 import {
@@ -252,9 +246,9 @@ export default function SwimmingLineChart(data,options) {
 	    	.attr("width",WIDTH)
 	    	.attr("height",HEIGHT)
 
-	   	overlay
+	   	/*overlay
 	   		.style("width",WIDTH+"px")
-	    	.style("height",HEIGHT+"px")
+	    	.style("height",HEIGHT+"px")*/
 	    
 	    console.log(WIDTH,"x",HEIGHT)
 	    
@@ -274,7 +268,12 @@ export default function SwimmingLineChart(data,options) {
 		xscale=scaleLinear().domain([0,(dimensions.lanes_n+1)*dimensions.lane]).range([0,WIDTH-(margins.left+margins.right)]);
 		yscale=scaleLinear().domain([0,dimensions.length]).range([HEIGHT-(margins.top+margins.bottom),0]);
 		
-		
+		overlay
+			.style("top",margins.left+"px")
+	    	.style("left",margins.top+"px")
+	   		.style("width",xscale.range()[1]+"px")
+	    	.style("height",yscale.range()[0]+"px")
+
 		/*overlay.style("transform",getPerspective(WIDTH,HEIGHT));
 	    svg.style("transform",getPerspective(WIDTH,HEIGHT,{
 	    	x:-WIDTH*0.2, 
@@ -579,6 +578,7 @@ export default function SwimmingLineChart(data,options) {
 		console.log("ANNOTATIONS",annotations)
 
 		let xy;
+		let offset=getOffset(annotations_layer.node());
 		annotation
 			.enter()
 			.append("div")
@@ -597,17 +597,17 @@ export default function SwimmingLineChart(data,options) {
 					let overlayPersp=computePerspective(side);
 					d.coords=overlayPersp.transform(x,y)
 					xy=[x,y];
-					console.log("COORDS",d.coords)
+					/*console.log("COORDS",d.coords)
 
-					let offset=getOffset(annotations_layer.node());
+					
 					console.log("OFFSET",offset)
 
-					console.log("LEFT",(d.coords[0]-offset.left))
+					console.log("LEFT",(d.coords[0]-offset.left))*/
 
 					return (d.coords[0]-offset.left)+"px";
 				})
 				.style("top",d=>{
-					let offset=getOffset(annotations_layer.node());
+					//let offset=getOffset(annotations_layer.node());
 					//console.log("OFFSET",offset,getOffset(this))
 					//offset.top=0;
 					//console.log("TOP",(d.coords[1]-(offset.top)))
@@ -684,6 +684,8 @@ export default function SwimmingLineChart(data,options) {
 		
 
 		let xy;
+		let offset=getOffset(annotations_layer.node());
+
 		annotations_layer
 			//.enter()
 			.append("div")
@@ -703,41 +705,27 @@ export default function SwimmingLineChart(data,options) {
 					let overlayPersp=computePerspective(side);
 					d.coords=overlayPersp.transform(x,y)
 					xy=[x,y];
-					//console.log("COORDS",d.coords)
 
-					let offset=getOffset(annotations_layer.node());
-					//console.log("OFFSET",offset)
-
-					//console.log("LEFT",(d.coords[0]-offset.left))
+					
 
 					return (d.coords[0]-offset.left)+"px";
 				})
 				.style("top",d=>{
-					let offset=getOffset(annotations_layer.node());
-					//console.log("OFFSET",offset,getOffset(this))
-					//offset.top=0;
-					//console.log("TOP",(d.coords[1]-(offset.top)))
+					//let offset=getOffset(annotations_layer.node());
 					return (d.coords[1]-(offset.top))+"px";
 				})
 				.html(d=>"<span>"+d.text+"</span>")
+				.select("span")
+					.style("margin-left",function(d){
+						let coords=this.getBoundingClientRect();
+						console.log(coords)
+						return (-coords.width/2)+"px";
+					})
 
 	}
 
 	this.goTo = (distance) => {
 		goTo(distance);
-	}
-	this.start = () => {
-		start();
-	}
-	function start() {
-		let t=interval((elapsed)=>{
-			goTo(CURRENT_LEG);
-			//console.log(CURRENT_LEG)
-			CURRENT_LEG+=50;
-			if(CURRENT_LEG>LEGS[LEGS.length-1]) {
-				t.stop();
-			}
-		},1000)
 	}
 	
 	function goTo(distance,text_update) {
@@ -782,9 +770,9 @@ export default function SwimmingLineChart(data,options) {
 	    	//0m side
 
 
-	    	let sqrtScale=scaleLinear().domain([800,1260]).range([350,800]);
+	    	let dyScale=scaleLinear().domain([800,1260]).range([350,800]);
 			let w=xscale.range()[1],
-				dy=-sqrtScale(w);
+				dy=-dyScale(w);
 			let transform=`rotateX(65deg) rotateY(0deg) rotateZ(10deg) translateX(-1%) translateY(${dy}px) translateZ(150px)`;
 			  		    	
 			if(WIDTH<400) {
@@ -850,7 +838,8 @@ export default function SwimmingLineChart(data,options) {
 						if(s.distance===0) {
 							return best_cumulative_times[s.distance].best_time;
 						}
-						return best_cumulative_times[s.distance].best_time*0.2*0.5
+						return getTimeForDistance(best_cumulative_times[s.distance].best_time,dimensions.length,delta)
+						//return best_cumulative_times[s.distance].best_time*0.2*0.5
 					})
 					.delay(1000)
 					.ease(SwimmingLinear)

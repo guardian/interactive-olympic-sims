@@ -3,8 +3,7 @@ import {
     selectAll
 } from 'd3-selection';
 import {
-	scaleLinear,
-	scalePoint
+	scaleLinear
 } from 'd3-scale';
 import {
 	max as d3_max,
@@ -14,28 +13,16 @@ import {
 	range
 } from 'd3-array';
 import {
-	nest
-} from 'd3-collection';
-import {
 	format as d3_format
 } from 'd3-format';
 import {
-	line as d3_line,
-	curveCardinal,
-	curveMonotoneX
+	line as d3_line
 } from 'd3-shape';
 import {
 	transition
 } from 'd3-transition';
-import {
-	interpolateString
-} from 'd3-interpolate';
-import {
-	axisBottom
-} from 'd3-axis';
-import {
-	interval
-} from 'd3-timer';
+
+
 //import Barchart from './Barchart';
 import PerspT from 'perspective-transform';
 import {getOffset} from '../lib/dom';
@@ -46,7 +33,8 @@ import {
 	convertTimeHMS,
 	convertTime,
 	formatSecondsMilliseconds,
-	getDistance
+	getDistance,
+	getTimeForDistance
 } from '../lib/time';
 
 import {
@@ -73,9 +61,12 @@ export default function RunningLineChart(data,options) {
 	let multiplier=options.multiplier || 1;
 
 	let stopWatch;
+	let ts=[]; //timeouts for timing
 
 	let container,
 		overlay,
+		WIDTH,
+		HEIGHT,
 		perspectives=[],
 		annotations_layer,
 		svg,
@@ -194,15 +185,33 @@ export default function RunningLineChart(data,options) {
     	console.log(athletes_data)
 		console.log(best_cumulative_times)
 
-		/*athletes_data.forEach(s => {
-			options.text.push({
-				"type":"annotation",
-				"time":true,
-				"mt":(LEGS.length-1)*dimensions.length,
-				"lane":s.lane,
-				"text":s.value
-			})
-		})*/
+		athletes_data.forEach(s => {
+
+			let splits=([{
+				value:s.reaction_time.value,
+				time:s.reaction_time.time,
+				cumulative_time:s.reaction_time.time,
+				distance:0
+			}]).concat(s.splits);
+
+
+			splits.forEach(split => {
+
+				let gap=split.cumulative_time-best_cumulative_times[split.distance].best_cumulative,
+					text=(gap>0)?`+${formatSecondsMilliseconds(gap,2)}`:split.value;
+
+
+				options.text.push({
+					"type":"annotation",
+					"time":true,
+					"mt":split.distance,//(LEGS.length-1)*dimensions.length,
+					"lane":s.lane,
+					"text":split.distance===0?split.value:text
+				})	
+
+			});
+			
+		})
 
 		buildVisual();
 
@@ -213,10 +222,7 @@ export default function RunningLineChart(data,options) {
 
 		//let ul=select(options.container).append("ul");
     	
-		stopWatch=new StopWatch({
-			container:options.container,
-			multiplier:multiplier
-		});
+		
 
 		
 
@@ -234,23 +240,24 @@ export default function RunningLineChart(data,options) {
 						.append("div")
 						.attr("class","rio-overlay");
 
-		
+		stopWatch=new StopWatch({
+			container:options.container,
+			multiplier:multiplier
+		});
 
 	    svg=container.append("svg")
 	    // overlay=container.append("div")
 	    // 			.attr("class","overlay")
 
 	    let box = container.node().getBoundingClientRect();
-	    let WIDTH = box.width,
-	        HEIGHT = box.width>414?box.width*3:box.height;
+	    WIDTH = box.width;
+		HEIGHT = box.width>414?box.width*3:box.height;
 
 	    svg
 	    	.attr("width",WIDTH)
 	    	.attr("height",HEIGHT)
 
-	   	overlay
-	   		.style("width",WIDTH+"px")
-	    	.style("height",HEIGHT+"px")
+	   	
 	    
 	    console.log(WIDTH,"x",HEIGHT)
 	    
@@ -266,62 +273,25 @@ export default function RunningLineChart(data,options) {
 		xscale=scaleLinear().domain([0,(dimensions.lanes_n+1)*dimensions.lane]).range([0,WIDTH-(margins.left+margins.right)]);
 		yscale=scaleLinear().domain([0,dimensions.length]).range([0,HEIGHT-(margins.top+margins.bottom)]);
 		
-		
+		overlay
+			.style("top",margins.left+"px")
+	    	.style("left",margins.top+"px")
+	   		.style("width",xscale.range()[1]+"px")
+	    	.style("height",yscale.range()[1]+"px")
+
 		//computePerspective();
 					
 		buildTexts("intro");
 		
 
-		/*ul.selectAll("li")
-					.data([0,50,100,150,200])
-					.enter()
-					.append("li")
-						.text(d=>d)
-						.on("click",(d)=>{
-							//svg.classed("end-side",goTo)
-							goTo(d)
-						})*/
+		
 
 		let pool={
 			w:xscale(dimensions.lane*(dimensions.lanes_n+1)),
 			h:yscale(0)
 		};
-		console.log("POOL",pool)
-		let srcCorners = [
-						0, 0, 
-						pool.w, 0,
-						pool.w, pool.h,
-						0, pool.h
-					];
-		let dstCorners = [
-						pool.w*0.3, 0,
-						pool.w*0.7, 0, 
-						pool.w, pool.h,
-						0, pool.h
-					];
 
 		
-		dstCorners = [
-						0, 0, 
-						pool.w-0, 0,
-						pool.w, pool.h,
-						0, pool.h
-					];
-
-		//console.log(srcCorners,dstCorners)
-
-		//let perspT = PerspT(srcCorners, dstCorners);
-
-		//return;
-
-		/*swimming_pool=new SwimmingPool({
-									svg:svg,
-									margins:margins,
-									hscale:xscale,
-									vscale:yscale,
-									perspT:perspT,
-									legs:LEGS
-							})*/
 		track=new Track({
 			svg:svg,
 			margins:margins,
@@ -404,9 +374,76 @@ export default function RunningLineChart(data,options) {
 
 
 				})
-				.style("stroke-width",xscale(dimensions.lane*0.8))
+				//.style("stroke-width",xscale(dimensions.lane*0.8))
+				.attr("stroke-width",Math.floor(xscale(dimensions.lane*0.5)))
+
+		leg.filter(s=>(s.distance===0))
+				.append("path")
+				.attr("id",(s)=>("guide_"+s.lane+"_"+s.distance))
+				.attr("class","guide-text-path")
+				.attr("d", (s) => {
+					let x=xscale(s.lane*dimensions.lane + dimensions.lane/2),
+						y0=yscale(50),
+						y1=yscale(s.mt);
+					return `M${x},${y0}L${x},${y1}`;
+				});
 
 
+
+		leg.filter(s=>(s.distance===0))
+			.selectAll("text")
+			//.data(s=>([s,s,s,s]))
+			.data(s=>([s,s]))
+			.enter()
+			.append("text")
+				.attr("class","athlete-name")
+				.classed("stroke",(s,i)=>(i<1))
+
+		leg.filter(s=>(s.distance===0))
+				//.selectAll("text:not(.stroke)")
+				.selectAll("text")
+					.attr("dx",-5)
+				    .attr("dy","0.35em")
+					.append("textPath")
+				    	.attr("xlink:href", (s,i)=>{
+				    		return `#guide_${s.lane}_${s.distance}`
+				    	})
+				    	.attr("text-anchor","end")
+				    	.attr("startOffset","100%")
+				    	.text((s,i)=>{
+							let athlete=athletes_data.filter(d=>(d.lane===s.lane))[0]
+							//if(i%2) {
+								return athlete.entrant.participant.competitor.lastName;
+							//}
+							//return athlete.reaction_time.value;
+						})
+
+		leg.filter(s=>(s.distance>0))
+			.selectAll("text")
+			.data(s=>([s,s]))
+			.enter()
+			.append("text")
+				.attr("class","athlete-name")
+				.classed("stroke",(s,i)=>(i<1))
+
+		leg.filter(s=>(s.distance>0))
+				//.selectAll("text:not(.stroke)")
+				.selectAll("text")
+					.attr("dx",s=>{
+				    	return (s.distance%100===0)?5:-5
+				    })
+				    .attr("dy",s=>{
+				    	return (s.distance%100===0)?"0.35em":"0.35em"   //9:6
+				    })
+				  	.append("textPath")
+				    	.attr("xlink:href", s=>("#leg_"+s.lane+"_"+s.distance))
+				    	.attr("text-anchor",s=>(s.distance%100>0)?"end":"start")
+				    	.attr("startOffset",s=>(s.distance%100>0)?"50%":"50%")
+				    	.text(s=>{
+							let athlete=athletes_data.filter(d=>(d.lane===s.lane))[0]
+							return athlete.entrant.participant.competitor.lastName;
+						})
+		/*
 		leg.filter(s=>(s.distance===0))
 				.append("path")
 				.attr("id",(s)=>("guide_"+s.lane+"_"+s.distance))
@@ -479,7 +516,7 @@ export default function RunningLineChart(data,options) {
 							let athlete=athletes_data.find(d=>(d.lane===s.lane))
 							return athlete.entrant.participant.competitor.lastName;
 						})
-
+		*/
 		goTo(options.text[0].mt,options.text[0].story==="intro")
 
 		
@@ -559,16 +596,18 @@ export default function RunningLineChart(data,options) {
 	function removeAnnotations() {
 		annotations_layer.selectAll("div.annotation").remove();
 	}
+	
 	function addAnnotation() {
 		console.log("addAnnotation",CURRENT_DISTANCE)
 
-		let annotations=options.text.filter(d=>(d.mt===CURRENT_DISTANCE && d.type==="annotation"));
+		let annotations=options.text.filter(d=>(d.mt===CURRENT_DISTANCE && d.type==="annotation" && !d.time));
 
 		let annotation=annotations_layer.selectAll("div.annotation").data(annotations);
 
 		console.log("ANNOTATIONS",annotations)
 
 		let xy;
+		let offset=getOffset(annotations_layer.node());
 		annotation
 			.enter()
 			.append("div")
@@ -587,31 +626,126 @@ export default function RunningLineChart(data,options) {
 					let overlayPersp=computePerspective(side);
 					d.coords=overlayPersp.transform(x,y)
 					xy=[x,y];
-					console.log("COORDS",d.coords)
+					/*console.log("COORDS",d.coords)
 
-					let offset=getOffset(annotations_layer.node());
+					
 					console.log("OFFSET",offset)
 
-					console.log("LEFT",(d.coords[0]-offset.left))
+					console.log("LEFT",(d.coords[0]-offset.left))*/
 
 					return (d.coords[0]-offset.left)+"px";
 				})
 				.style("top",d=>{
-					let offset=getOffset(annotations_layer.node());
-					//console.log("OFFSET",offset,getOffset(this))
-					//offset.top=0;
-					console.log("TOP",(d.coords[1]-(offset.top)))
-					return (d.coords[1]-(offset.top))+"px";
+					//let offset=getOffset(annotations_layer.node());
+					let dy=(d.mt%(dimensions.length*2)>0)?-24:18;
+					return (d.coords[1]-(offset.top)+dy)+"px";
 				})
 				.html(d=>"<span>"+d.text+"</span>")
 
-		/*annotations_layer.selectAll("div.annotation").append("div")
+	}
 
-		svg.append("circle")
-				.attr("cx",xy[0])
-				.attr("cy",xy[1])
-				.attr("r",3)
-				.style("fill","#ff0000")*/
+	function removeGaps() {
+		svg.selectAll("path").interrupt();
+		svg.selectAll("path.gap").remove();
+	}
+	function showGap(el,s,best_time) {
+		console.log("showGap",el,s);
+
+		console.log("DURATION",s.cumulative_time-best_time)
+
+		el
+			.append("path")
+				.attr("class","gap")
+				.attr("d",()=>{
+
+					let x=xscale(s.lane*dimensions.lane + dimensions.lane/2),
+						side=s.distance%(dimensions.length*2),
+						start_y=(side>0)?yscale(side-s.dmt):yscale(s.dmt),
+						y=yscale(side);
+					
+					console.log("GAP PATH",s.lane,s.distance,s.mt,start_y,y)
+					
+					return line([
+								[x,start_y],
+								[x,start_y]
+							]);
+
+				})
+				.attr("stroke-width",Math.floor(xscale(dimensions.lane*0.5)))
+				.transition()
+				.duration(s.cumulative_time-best_time)
+				.ease(RunningLinear)
+						.attr("d",s=>{
+
+							let x=xscale(s.lane*dimensions.lane + dimensions.lane/2),
+								side=s.distance%(dimensions.length*2),
+								start_y=(side>0)?yscale(side-s.dmt):yscale(s.dmt),
+								y=yscale(side);
+							console.log("GAP PATH",s.lane,s.distance,s.mt,start_y,y)
+							return line([
+										[x,start_y],
+										[x,y]
+									]);
+
+						})
+
+	}
+	function addTime(distance,lane) {
+		//console.log("addTime",distance,lane)
+
+		let annotations=options.text.filter(d=>(d.mt===distance && d.lane===lane && d.type==="annotation" && d.time))[0];
+
+		let annotation=annotations_layer.selectAll("div.annotation");//.data(annotations,d=>("time_"+distance+"lane"));
+
+		//console.log("ANNOTATIONS",annotations)
+
+		
+
+		let xy,
+			offset=getOffset(annotations_layer.node());
+
+		annotations_layer
+			//.enter()
+			.append("div")
+				.datum(annotations)
+				.attr("class","annotation time")
+			//.merge(annotation)
+				.classed("side0",d=>(d.mt%(dimensions.length*2)===0))
+				.classed("side1",d=>(d.mt%(dimensions.length*2)>0))
+				.classed("time",d=>d.time)
+				.style("left",d=>{
+					
+					let x=xscale(d.lane*dimensions.lane + dimensions.lane/2),
+						y=(d.mt%(dimensions.length*2)>0)?yscale(dimensions.length):yscale(0);
+
+					let side=(d.mt%(dimensions.length*2)>0)?1:0;
+						
+					let overlayPersp=computePerspective(side);
+					d.coords=overlayPersp.transform(x,y)
+					xy=[x,y];
+					//console.log("COORDS",d.coords)
+
+					
+					//console.log("OFFSET",offset)
+
+					//console.log("LEFT",(d.coords[0]-offset.left))
+
+					return (d.coords[0]-offset.left)+"px";
+				})
+				.style("top",d=>{
+					//let offset=getOffset(annotations_layer.node());
+					
+					let dy=(d.mt%(dimensions.length*2)>0)?-24:18;
+
+					return (d.coords[1]-(offset.top)+dy)+"px";
+				})
+				.html(d=>"<span>"+d.text+"</span>")
+				.select("span")
+					.style("margin-left",function(d){
+						let coords=this.getBoundingClientRect();
+						console.log(coords)
+						return (-coords.width/2)+"px";
+					})
 
 	}
 
@@ -634,12 +768,75 @@ export default function RunningLineChart(data,options) {
 
 	function goTo(distance,text_update) {
 
+		ts.forEach(t=>{
+			clearTimeout(t);
+			t=null;
+		});
+
 		removeAnnotations();
+		removeGaps();
+		stopWatch.hide();
 
 		CURRENT_DISTANCE=distance;
 
 		container.classed("side50",(distance===50));
 		container.classed("side100",(distance===100));
+
+		if(distance%(dimensions.length*2)>0) {
+			//50m side
+
+
+			let transform=`rotateX(65deg) rotateY(0deg) rotateZ(10deg) translateX(-1%) translateY(${300}px) translateZ(150px)`;
+			if(WIDTH<400) {
+				//container.style("perspective","700px").style("perspective-origin","90% 20%")
+				transform="rotateX(75deg) rotateY(0deg) rotateZ(10deg) translateX(67px) translateY(365px) translateZ(45px) scale(0.8)";
+			}
+			try {
+		    	svg
+		    		.style("-webkit-transform",transform)
+		    		.style("-moz-transform",transform)
+		    		.style("-ms-transform",transform)
+		    		.style("transform",transform);
+
+		    	overlay
+		    		.style("-webkit-transform",transform)
+		    		.style("-moz-transform",transform)
+		    		.style("-ms-transform",transform)
+		    		.style("transform",transform);
+		    } catch(e) {
+
+			}
+	    } else {
+	    	//0m side
+
+
+	    	let dyScale=scaleLinear().domain([800,1260]).range([350,800]);
+			let w=xscale.range()[1],
+				dy=-dyScale(w);
+			let transform=`rotateX(65deg) rotateY(0deg) rotateZ(10deg) translateX(-1%) translateY(${dy}px) translateZ(150px)`;
+			  		    	
+			if(WIDTH<400) {
+				//container.style("perspective","700px").style("perspective-origin","90% 20%")
+				transform=`rotateX(70deg) rotateY(0deg) rotateZ(10deg) translateX(80px) translateY(50px) translateZ(30px) scale(0.8)`;
+			}
+
+			try {
+				svg
+		    		.style("-webkit-transform",transform)
+		    		.style("-moz-transform",transform)
+		    		.style("-ms-transform",transform)
+		    		.style("transform",transform);
+		    		
+		    	overlay
+		    		.style("-webkit-transform",transform)
+		    		.style("-moz-transform",transform)
+		    		.style("-ms-transform",transform)
+		    		.style("transform",transform);	
+			} catch(e) {
+
+			}
+	    	
+	    }
 
 		let delta=20;
 
@@ -682,12 +879,19 @@ export default function RunningLineChart(data,options) {
 
 					})
 					.transition()
-					.duration(s=>{
+					/*.duration(s=>{
 						if(s.distance===0) {
 							return best_cumulative_times[s.distance].best_time;
 						}
 						console.log("-------> DURATION",best_cumulative_times[s.distance].best_time*(delta/dimensions.length))
 						return best_cumulative_times[s.distance].best_time*(delta/dimensions.length)*multiplier
+					})*/
+					.duration(s=>{
+						if(s.distance===0) {
+							return best_cumulative_times[s.distance].best_time;
+						}
+						return getTimeForDistance(best_cumulative_times[s.distance].best_time,dimensions.length,delta)
+						//return best_cumulative_times[s.distance].best_time*multiplier
 					})
 					.delay(1000)
 					.ease(RunningLinear)
@@ -723,7 +927,7 @@ export default function RunningLineChart(data,options) {
 									]);
 
 						})
-						.on("start",d=>{
+						/*.on("start",d=>{
 							if(d.lane===1) {
 								let duration=best_cumulative_times[d.distance].best_time*(delta/dimensions.length)*multiplier;
 								if(d.calculated) {
@@ -733,8 +937,8 @@ export default function RunningLineChart(data,options) {
 								}
 								
 							}
-						})
-						.on("end",d=>{
+						})*/
+						/*.on("__end",d=>{
 							if(d.lane===1) {
 								if(text_update){
 									buildTexts();
@@ -758,6 +962,54 @@ export default function RunningLineChart(data,options) {
 								})
 							},delay)
 							
+						})*/
+						.on("start",d=>{
+
+							ts.forEach(t=>{
+								clearTimeout(t);
+								t=null;
+							});
+
+							if(d.lane===1) {
+								let duration=best_cumulative_times[d.distance].best_time*(delta/dimensions.length)*multiplier;
+								if(d.calculated) {
+									stopWatch.hide();
+								} else {
+									
+									
+
+									stopWatch.start(best_cumulative_times[d.distance].best_cumulative-duration);	
+								}
+								
+							}
+						})
+						.on("end",function(d){
+							if(d.lane===1) {
+								if(text_update){
+									buildTexts();
+									addAnnotation();
+								}
+								//activateButton();
+							}
+
+							if(d.distance>0) {
+								showGap(select(this.parentNode),d,best_cumulative_times[d.distance].best_cumulative);
+							}
+
+							if(d.cumulative_time===best_cumulative_times[d.distance].best_cumulative) {
+								stopWatch.stop(d.cumulative_time);
+							}
+
+							let delay=d.cumulative_time-best_cumulative_times[d.distance].best_cumulative;
+							ts.push(
+								setTimeout(()=>{
+									let entrant=athletes_data.filter(a=>a.lane===d.lane)[0],
+										gap=d.cumulative_time-best_cumulative_times[d.distance].best_cumulative;
+
+									addTime(d.distance,d.lane);
+
+								},delay)
+							);
 						})
 
 		
@@ -813,7 +1065,7 @@ export default function RunningLineChart(data,options) {
 					srcPts.push(d[1]);
 
 					let coords=this.getBoundingClientRect();
-					console.log("CSS3 coords",coords)
+					//console.log("CSS3 coords",coords)
 					dstPts.push(coords.left);
 					dstPts.push(coords.top);
 				});

@@ -39,7 +39,7 @@
 
 	//perspective: 530px;
 	//perspective-origin: 50% 0%;
-	perspective: 700px;
+	/* perspective: 700px;
 	perspective-origin: 70% -10%;
 	@include mq(tablet) {
 		perspective: 600px;
@@ -50,11 +50,19 @@
 		perspective-origin: 100% 0%;
 	}
 	@include mq(wide) {
-		/*perspective: 600px;
-		perspective-origin: 100% -10%;*/
 		perspective: 850px;
 		perspective-origin: 90% 0%;
+	} */
+	
+	perspective: 700px;
+	perspective-origin: 90% 20%;
+	
+	@include mq(mobile) {
+		perspective: 750px;
+		perspective-origin: 90% 0%;
 	}
+	
+
 	backface-visibility: hidden;
 	
 	&.from-blocks {
@@ -67,7 +75,7 @@
 	}
 	
 	&.side100 {
-		svg,.rio-overlay {
+		/* svg,.rio-overlay {
 			//transform:rotateX(90deg) rotateY(0deg) rotateZ(0deg) translateX(40px) translateY(-80px) translateZ(0px) scale(1);
 			transform:rotateX(85deg) rotateY(0deg) rotateZ(20deg) translateX(80px) translateY(-120px) translateZ(-20px) scale(1)
 		}
@@ -85,11 +93,11 @@
 	  		svg,.rio-overlay {
 	  			transform:rotateX(65deg) rotateY(0deg) rotateZ(10deg) translateX(-225px) translateY(-2500px) translateZ(1420px) scale(1);
 	  		}
-	  	}
+	  	} */
 	}
 	
 	&.side50 {
-		svg,.rio-overlay {
+		/* svg,.rio-overlay {
 			//transform:rotateX(90deg) rotateY(0deg) rotateZ(0deg) translateX(40px) translateY(-80px) translateZ(0px) scale(1);
 			transform:rotateX(85deg) rotateY(0deg) rotateZ(20deg) translateX(80px) translateY(-120px) translateZ(-20px) scale(1)
 		}
@@ -107,11 +115,11 @@
 	  		svg,.rio-overlay {
 	  			transform:rotateX(65deg) rotateY(0deg) rotateZ(10deg) translateX(-205px) translateY(-650px) translateZ(1420px) scale(1);
 	  		}
-	  	}
+	  	} */
 	}
 
 	svg,.rio-overlay {
-		transform:rotateX(90deg) rotateY(0deg) rotateZ(20deg) translateX(30px) translateY(390px) translateZ(0px) scale(1);
+		/* transform:rotateX(90deg) rotateY(0deg) rotateZ(20deg) translateX(30px) translateY(390px) translateZ(0px) scale(1);
 		//transform:rotateX(90deg) rotateY(0deg) rotateZ(10deg) translateX(60px) translateY(370px) translateZ(0px) scale(1);
 		@include mq(tablet) {
 			transform:rotateX(60deg) rotateY(20deg) rotateZ(0deg) translateX(50px) translateY(240px) translateZ(-50px) scale(1);
@@ -123,7 +131,7 @@
   		}
 		@include mq(wide) {
   			transform:rotateX(65deg) rotateY(0deg) rotateZ(10deg) translateX(-140px) translateY(1050px) translateZ(1440px) scale(1);
-  		}
+  		} */
 	}
 	
 	
@@ -252,7 +260,7 @@
 			.leg {
 				path {
 					
-					stroke-width:1;
+					//stroke-width:1;
 					stroke-opacity:0;
 					fill:#e0e0e0;
 
@@ -261,10 +269,14 @@
 					
 
 				}
+				
 				path.guide-text-path {
 					stroke-opacity:0 !important;
 					stroke:#000 !important;
 					stroke-width:2 !important;
+				}
+				path.gap {
+					stroke-opacity:0.5 !important;
 				}
 				.athlete-name {
 					@include f-textSans;
@@ -369,84 +381,7 @@
 		}
 	}
 
-	.rio-overlay {
-		position:absolute;
-		//display: none;
-		top:0;
-		left:0;
-		right:0;
-		bottom:0;
-		background-color:rgba(255,0,0,0);
-		backface-visibility: hidden;
-		.overlay-point {
-			position:absolute;
-			//background-color:#000;
-			width:1px;
-			height:1px;
-			border-radius:5px;
-		}
-	}
-	.annotations {
-		position:absolute;
-		top:0;
-		left:0;
-
-		.annotation {
-			position:absolute;
-			width:0px;
-			//border:1px solid #ddd;
-			overflow:visible;
-
-			@include fs-textSans(1);
-
-			&.time {
-				font-size:15px;
-				span {
-					border:none !important;
-				}
-			}
-
-			span {
-				position: absolute;
-				display: block;
-				width:150px;
-			}
-			&.side0 {
-				span {
-					top:10px;
-					left:-150px;
-					text-align: right;
-					border-right:1px solid #ddd;
-					padding-right:5px;
-					padding-top:5px;
-				}
-				
-			}
-			&.side1 {
-
-				span {
-					bottom:0px;
-					left:0;//-25px;
-					border-left:1px solid #ddd;
-					padding-left:5px;
-					padding-bottom:5px;
-				}
-			}
-
-			div {
-				background-color: transparent;
-				border:2px solid #000;
-			    width: 10px;
-			    height: 10px;
-			    position: absolute;
-			    top: -5px;
-			    left: -5px;
-			    z-index: 9999;
-			    border-radius: 5px;
-			}
-			
-		}
-	}
+	@import "annotations";
 }
 .stopwatch {
 	position:absolute;

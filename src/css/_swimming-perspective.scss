@@ -245,85 +245,8 @@
 		}
 	}
 
-	.rio-overlay {
-		position:absolute;
-		
-		top:0;
-		left:0;
-		right:0;
-		bottom:0;
-		background-color:rgba(255,0,0,0);
-		backface-visibility: hidden;
-		.overlay-point {
-			position:absolute;
-			
-			width:1px;
-			height:1px;
-			border-radius:5px;
-		}
-	}
-	.annotations {
-		position:absolute;
-		top:0;
-		left:0;
-
-		.annotation {
-			position:absolute;
-			width:0px;
-			
-			overflow:visible;
-
-			@include fs-textSans(1);
-
-			&.time {
-				@include fs-textSans(2);
-				color:#666;
-				span {
-					border:none !important;
-				}
-			}
-
-			span {
-				position: absolute;
-				display: block;
-				width:150px;
-			}
-			&.side0 {
-				span {
-					top:10px;
-					left:-150px;
-					text-align: right;
-					border-right:1px solid #ddd;
-					padding-right:5px;
-					padding-top:5px;
-				}
-				
-			}
-			&.side1 {
-
-				span {
-					bottom:0px;
-					left:0;
-					border-left:1px solid #ddd;
-					padding-left:5px;
-					padding-bottom:5px;
-				}
-			}
-
-			div {
-				background-color: transparent;
-				border:2px solid #000;
-			    width: 10px;
-			    height: 10px;
-			    position: absolute;
-			    top: -5px;
-			    left: -5px;
-			    z-index: 9999;
-			    border-radius: 5px;
-			}
-			
-		}
-	}
+	
+	@import "annotations";
 }
 .stopwatch {
 	position:absolute;
