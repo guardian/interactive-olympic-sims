@@ -53,13 +53,13 @@
 		perspective: 850px;
 		perspective-origin: 90% 0%;
 	} */
-	
+
 	perspective: 700px;
 	perspective-origin: 90% 20%;
 	
 	@include mq(mobile) {
-		perspective: 750px;
-		perspective-origin: 90% 0%;
+		perspective: 1000px;
+		perspective-origin: 80% 50%;
 	}
 	
 
@@ -382,6 +382,25 @@
 	}
 
 	@import "annotations";
+
+	.annotations {
+		.annotation {
+			&.side0 {
+				&.time {
+					span {
+						margin-top:-50px;
+					}
+				}
+			}
+			&.side1 {
+				&.time {
+					span {
+						margin-top:25px;
+					}
+				}
+			}
+		}
+	}
 }
 .stopwatch {
 	position:absolute;

@@ -2,8 +2,20 @@
 	position:absolute;
 	z-index:9999;
 	top:40px;
-	left:5%;
+	left:0;
+	margin-left:0;
 	width:100%;
+
+	@media (min-width: 61.25em) {
+	    margin-left: 0rem;
+	}
+	@media (min-width: 71.25em) {
+	    margin-left: 10rem;
+	}
+	@media (min-width: 81.25em) {
+	    margin-left: 15rem;
+	}
+
 	@include mq(tablet) {
 		width:40%;
 	}

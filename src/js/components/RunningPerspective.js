@@ -63,6 +63,8 @@ export default function RunningLineChart(data,options) {
 	let stopWatch;
 	let ts=[]; //timeouts for timing
 
+	let margins=options.margins || {left:0,top:0,right:0,bottom:0};
+
 	let container,
 		overlay,
 		WIDTH,
@@ -218,7 +220,7 @@ export default function RunningLineChart(data,options) {
 	}
 	function buildVisual() {
 
-		let margins=options.margins || {left:0,top:0,right:0,bottom:0};
+		
 
 		//let ul=select(options.container).append("ul");
     	
@@ -743,8 +745,7 @@ export default function RunningLineChart(data,options) {
 				.select("span")
 					.style("margin-left",function(d){
 						let coords=this.getBoundingClientRect();
-						console.log(coords)
-						return (-coords.width/2)+"px";
+						return (-coords.width/(d.mt===0?1.25:0.75))+"px";
 					})
 
 	}
@@ -782,11 +783,59 @@ export default function RunningLineChart(data,options) {
 		container.classed("side50",(distance===50));
 		container.classed("side100",(distance===100));
 
-		if(distance%(dimensions.length*2)>0) {
-			//50m side
+		let box = container.node().getBoundingClientRect();
+			
+		let hmargins=margins.left+margins.right;
+		let dxScale=scaleLinear().domain([800-hmargins,1260-hmargins]).range([15,23]);
+		let dyScale=scaleLinear().domain([800-hmargins,1260-hmargins]).range([1660,2960]);
+		let dzScale=scaleLinear().domain([800-hmargins,1260-hmargins]).range([500,900]);
 
+		let ddScale=scaleLinear().domain([0,100]).range([0.93*yscale.range()[1],0]);
 
-			let transform=`rotateX(65deg) rotateY(0deg) rotateZ(10deg) translateX(-1%) translateY(${300}px) translateZ(150px)`;
+		let w=xscale.range()[1],
+			dx=dxScale(w),
+			dy=dyScale(w),
+			dz=dzScale(w),
+			dd=ddScale(distance);
+		let transform=`rotateX(45deg) rotateY(0deg) rotateZ(15deg) translateX(-${dx}%) translateY(${-dy+dd}px) translateZ(${dz}px)`;
+		//dy=0;
+		//let transform=`rotateX(65deg) rotateY(0deg) rotateZ(10deg) translateX(-1%) translateY(${300}px) translateZ(150px)`;
+		if(WIDTH<400) {
+			//container.style("perspective","700px").style("perspective-origin","90% 20%")
+			transform="rotateX(75deg) rotateY(0deg) rotateZ(10deg) translateX(67px) translateY(365px) translateZ(45px) scale(0.8)";
+		}
+		try {
+	    	svg
+	    		.style("-webkit-transform",transform)
+	    		.style("-moz-transform",transform)
+	    		.style("-ms-transform",transform)
+	    		.style("transform",transform);
+
+	    	overlay
+	    		.style("-webkit-transform",transform)
+	    		.style("-moz-transform",transform)
+	    		.style("-ms-transform",transform)
+	    		.style("transform",transform);
+	    } catch(e) {
+
+		}
+
+		/*if(distance%(dimensions.length*2)>0) {
+			//100m side
+
+			let box = container.node().getBoundingClientRect();
+			
+			let hmargins=margins.left+margins.right;
+			let dxScale=scaleLinear().domain([800-hmargins,1260-hmargins]).range([15,23]);
+			let dyScale=scaleLinear().domain([800-hmargins,1260-hmargins]).range([1660,2960]);
+			let dzScale=scaleLinear().domain([800-hmargins,1260-hmargins]).range([500,900]);
+			let w=xscale.range()[1],
+				dx=dxScale(w),
+				dy=dyScale(w),
+				dz=dzScale(w);
+			let transform=`rotateX(45deg) rotateY(0deg) rotateZ(15deg) translateX(-${dx}%) translateY(-${dy}px) translateZ(${dz}px)`;
+			//dy=0;
+			//let transform=`rotateX(65deg) rotateY(0deg) rotateZ(10deg) translateX(-1%) translateY(${300}px) translateZ(150px)`;
 			if(WIDTH<400) {
 				//container.style("perspective","700px").style("perspective-origin","90% 20%")
 				transform="rotateX(75deg) rotateY(0deg) rotateZ(10deg) translateX(67px) translateY(365px) translateZ(45px) scale(0.8)";
@@ -810,10 +859,15 @@ export default function RunningLineChart(data,options) {
 	    	//0m side
 
 
-	    	let dyScale=scaleLinear().domain([800,1260]).range([350,800]);
+	    	let hmargins=margins.left+margins.right;
+			let dxScale=scaleLinear().domain([800-hmargins,1260-hmargins]).range([15,23]);
+			let dyScale=scaleLinear().domain([800-hmargins,1260-hmargins]).range([1660,2960]);
+			let dzScale=scaleLinear().domain([800-hmargins,1260-hmargins]).range([500,900]);
 			let w=xscale.range()[1],
-				dy=-dyScale(w);
-			let transform=`rotateX(65deg) rotateY(0deg) rotateZ(10deg) translateX(-1%) translateY(${dy}px) translateZ(150px)`;
+				dx=dxScale(w),
+				dy=dyScale(w),
+				dz=dzScale(w);
+			let transform=`rotateX(45deg) rotateY(0deg) rotateZ(15deg) translateX(-${dx}%) translateY(${-dy+yscale.range()[1]*0.93}px) translateZ(${dz}px)`;
 			  		    	
 			if(WIDTH<400) {
 				//container.style("perspective","700px").style("perspective-origin","90% 20%")
@@ -836,7 +890,7 @@ export default function RunningLineChart(data,options) {
 
 			}
 	    	
-	    }
+	    }*/
 
 		let delta=20;
 
@@ -992,7 +1046,7 @@ export default function RunningLineChart(data,options) {
 								//activateButton();
 							}
 
-							if(d.distance>0) {
+							if(d.distance===dimensions.length) {
 								showGap(select(this.parentNode),d,best_cumulative_times[d.distance].best_cumulative);
 							}
 
@@ -1000,16 +1054,20 @@ export default function RunningLineChart(data,options) {
 								stopWatch.stop(d.cumulative_time);
 							}
 
-							let delay=d.cumulative_time-best_cumulative_times[d.distance].best_cumulative;
-							ts.push(
-								setTimeout(()=>{
-									let entrant=athletes_data.filter(a=>a.lane===d.lane)[0],
-										gap=d.cumulative_time-best_cumulative_times[d.distance].best_cumulative;
+							if(d.distance%dimensions.length===0) {
+								let delay=d.cumulative_time-best_cumulative_times[d.distance].best_cumulative;
+								ts.push(
+									setTimeout(()=>{
+										let entrant=athletes_data.filter(a=>a.lane===d.lane)[0],
+											gap=d.cumulative_time-best_cumulative_times[d.distance].best_cumulative;
 
-									addTime(d.distance,d.lane);
+										addTime(d.distance,d.lane);
 
-								},delay)
-							);
+									},delay)
+								);	
+							}
+
+							
 						})
 
 		

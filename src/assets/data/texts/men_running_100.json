@@ -15,6 +15,13 @@
 	},
 	{
 		"type":"story",
+		"mt":50,
+		"lane":null,
+		"text":"Usain Bolt wins gold in 9.63sec, with Blake second and Gatlin taking bronze.",
+		"button":"Replay"
+	},
+	{
+		"type":"story",
 		"mt":100,
 		"lane":null,
 		"text":"Usain Bolt wins gold in 9.63sec, with Blake second and Gatlin taking bronze.",
