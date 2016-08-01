@@ -2,8 +2,8 @@
 
 	overflow:hidden;
 	
-	border-top:1px solid #ddd;
-	border-bottom:1px solid #ddd;
+	// border-top:1px solid #ddd;
+	// border-bottom:1px solid #ddd;
 
 	$ratio:1;
 	
@@ -92,7 +92,10 @@
 			}
 			.lane-ropes {
 				path.lane-rope {
-					stroke-width:5;
+					stroke-width:2;
+					@include mq(tablet) {
+						stroke-width:5;
+					}
 					stroke:#333;
 					stroke-opacity:0.25;
 					&.r {
@@ -247,13 +250,33 @@
 
 	
 	@import "annotations";
+
+	.annotations {
+		.annotation {
+			&.side0 {
+				&.time {
+					span {
+						margin-top:5px;
+					}
+				}
+			}
+			&.side1 {
+				&.time {
+					span {
+						margin-top:-25px;
+					}
+				}
+			}
+		}
+	}
 }
 .stopwatch {
 	position:absolute;
 	right:0;
 	top:0;
 	margin-top:20px;
-	opacity:0.8;
+	margin-right:20px;
+	opacity:0.5;
 	span.time {
 		text-align: right;
 	}

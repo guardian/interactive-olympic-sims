@@ -28,7 +28,7 @@ export function convertTime(str_time) {
 
 	return mseconds + seconds *1000 + minutes * 60 * 1000;
 }
-export function msToTime(milliseconds) {
+export function msToTime(milliseconds,precision=2) {
 
 	let date = new Date(milliseconds),
 		h = date.getHours(),
@@ -36,7 +36,7 @@ export function msToTime(milliseconds) {
 		s = date.getSeconds(),
 		ms = date.getMilliseconds();
 
-	return [h,m,s,ms];
+	return [h,m,s,(ms+"").substr(0,precision)];
 }
 export function formatSecondsMilliseconds(t,precision=2) {
 	let time_str=timeFormat("%S.%L")(t);

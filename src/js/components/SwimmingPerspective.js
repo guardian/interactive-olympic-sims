@@ -12,9 +12,6 @@ import {
 	sum as d3_sum,
 	range
 } from 'd3-array';
-/*import {
-	nest
-} from 'd3-collection';*/
 import {
 	format as d3_format
 } from 'd3-format';
@@ -24,13 +21,6 @@ import {
 import {
 	transition
 } from 'd3-transition';
-/*import {
-	axisBottom
-} from 'd3-axis';*/
-/*import {
-	interval
-} from 'd3-timer';*/
-//import Barchart from './Barchart';
 import PerspT from 'perspective-transform';
 import {
 	getOffset,
@@ -53,7 +43,6 @@ import {
 	SwimmingLinear
 } from '../lib/swimming'
 
-//import Velodrome from './Velodrome';
 
 import StopWatch from "./StopWatch";
 
@@ -104,18 +93,36 @@ export default function SwimmingLineChart(data,options) {
 
     function buildEvent() {
     	
-    	let REACTION_TIME=0,
-    		SPLITS=1;
+    	
 
     	//swimmers_data=data.olympics.eventUnit.result.entrant.sort((a,b)=>(+a.order - +b.order)).map(entrant => {
     	swimmers_data=data.olympics.eventUnit.result.entrant.map(entrant => {
+
+    		let REACTION_TIME,
+	    		SPLITS,
+	    		LEG_BREAKDOWN;
+
+    		entrant.resultExtension.forEach((t,i)=>{
+    			if(t.type==="Reaction Time") {
+    				REACTION_TIME=i
+    			}
+    			if(t.type==="Split Times") {
+    				SPLITS=i;
+    			}
+    			if(t.type==="Leg Breakdown") {
+    				LEG_BREAKDOWN=i;
+    			}
+    		})
+    		console.log(REACTION_TIME,SPLITS,LEG_BREAKDOWN)
+    		let swimmer=options.team?entrant.country.identifier:entrant.participant.competitor.fullName;
+
     		let prev_cumulative_time=0;
     		return {
-    			"swimmer":entrant.participant.competitor.fullName,
+    			"swimmer":swimmer,
     			"lane":+entrant.order,
     			"reaction_time":{
-    				value:entrant.resultExtension[REACTION_TIME].value,
-    				time: +entrant.resultExtension[REACTION_TIME].value * 1000
+    				value: (typeof REACTION_TIME=='undefined') ? "DQF" : entrant.resultExtension[REACTION_TIME].value,
+    				time: (typeof REACTION_TIME=='undefined') ? "DQF" : +entrant.resultExtension[REACTION_TIME].value*1000
     			},
     			"splits":entrant.resultExtension[SPLITS].extension.map((d,i)=>{
     				let cumulative_time=convertTime(d.value),
@@ -133,7 +140,22 @@ export default function SwimmingLineChart(data,options) {
     				}
     			}),
     			"entrant":entrant,
-    			"value":entrant.value
+    			"value":(()=>{
+    				if(typeof entrant.value != 'undefined') {
+    					return entrant.value;
+    				}
+    				
+    				return entrant.property.value;
+    				
+    			}()),
+    			"records":(()=>{
+    				let records=[];
+    				if(typeof entrant.property.length !== 'undefined') {
+    					records = entrant.property.filter(r=>r.type==="Record Set").map(r=>r.value)	
+    				}
+    				return records.indexOf("WR")>-1?records.filter(r=>(r==="WR")):records.filter(r=>(r==="OR"))
+    				//return records.filter(r=>(r==="WR"));
+    			}())
     		}
     	});
 
@@ -147,8 +169,11 @@ export default function SwimmingLineChart(data,options) {
     				times:[]
 				}
 			}
-			best_cumulative_times[0].times.push(swimmer.reaction_time.time)
-			best_cumulative_times[0].cumulative_times.push(swimmer.reaction_time.time)
+			
+			if(swimmer.reaction_time.time!=="DQF") {
+				best_cumulative_times[0].times.push(swimmer.reaction_time.time)
+				best_cumulative_times[0].cumulative_times.push(swimmer.reaction_time.time)
+			}
 
     		swimmer.splits.forEach(split=>{
     			if(!best_cumulative_times[split.distance]) {
@@ -157,8 +182,12 @@ export default function SwimmingLineChart(data,options) {
     					times:[]
     				}
     			}
-    			best_cumulative_times[split.distance].times.push(split.time)
+    			if(split.time>0) {
+    				best_cumulative_times[split.distance].times.push(split.time)
+    			}
+
     			best_cumulative_times[split.distance].cumulative_times.push(split.cumulative_time)
+    			
     		})
     	})
     	for(let distance in best_cumulative_times) {
@@ -172,15 +201,17 @@ export default function SwimmingLineChart(data,options) {
 
 		swimmers_data.forEach(s => {
 
-			let splits=([{
-				value:s.reaction_time.value,
-				time:s.reaction_time.time,
-				cumulative_time:s.reaction_time.time,
+			s.splits=([{
+				value:s.reaction_time.value==="DQF" ? "DQF" : s.reaction_time.value,
+				time:s.reaction_time.value==="DQF" ? best_cumulative_times[0].times[best_cumulative_times[0].times.length-1] : s.reaction_time.time,
+				cumulative_time:s.reaction_time.value==="DQF" ? best_cumulative_times[0].times[best_cumulative_times[0].times.length-1] : s.reaction_time.time,
 				distance:0
 			}]).concat(s.splits);
 
+			//s.splits=splits;
 
-			splits.forEach(split => {
+
+			s.splits.forEach(split => {
 
 				let gap=split.cumulative_time-best_cumulative_times[split.distance].best_cumulative,
 					text=(gap>0)?`+${formatSecondsMilliseconds(gap,2)}`:split.value;
@@ -191,7 +222,8 @@ export default function SwimmingLineChart(data,options) {
 					"time":true,
 					"mt":split.distance,//(LEGS.length-1)*dimensions.length,
 					"lane":s.lane,
-					"text":split.distance===0?split.value:text
+					"text":split.distance===0?split.value:text,
+					"records":split.distance===LEGS[LEGS.length-1]?s.records:[]
 				})	
 
 			});
@@ -207,10 +239,6 @@ export default function SwimmingLineChart(data,options) {
 
 		let margins=options.margins || {left:0,top:0,right:0,bottom:0};
 
-		//let ul=select(options.container).append("ul");
-    	
-		
-		
 
 	    container=select(options.container)
 	    					.append("div")
@@ -235,8 +263,6 @@ export default function SwimmingLineChart(data,options) {
 		
 
 	    svg=container.append("svg")
-	    // overlay=container.append("div")
-	    // 			.attr("class","overlay")
 
 	    let box = container.node().getBoundingClientRect();
 	    WIDTH = box.width;
@@ -245,17 +271,8 @@ export default function SwimmingLineChart(data,options) {
 	    svg
 	    	.attr("width",WIDTH)
 	    	.attr("height",HEIGHT)
-
-	   	/*overlay
-	   		.style("width",WIDTH+"px")
-	    	.style("height",HEIGHT+"px")*/
 	    
 	    console.log(WIDTH,"x",HEIGHT)
-	    
-
-
-	    
-		
 
 	    let time_extent=extent(LEGS.map(l=>{
 	    	let leg_extent=extent(best_cumulative_times[l].cumulative_times);
@@ -274,70 +291,17 @@ export default function SwimmingLineChart(data,options) {
 	   		.style("width",xscale.range()[1]+"px")
 	    	.style("height",yscale.range()[0]+"px")
 
-		/*overlay.style("transform",getPerspective(WIDTH,HEIGHT));
-	    svg.style("transform",getPerspective(WIDTH,HEIGHT,{
-	    	x:-WIDTH*0.2, 
-	    	y:-HEIGHT*0.65
-	    }));*/
-
 	    let sqrtScale=scaleLinear().domain([800,1260]).range([350,800]);
 
-	    // range(1260).forEach(d=>{
-	    // 	console.log(d,sqrtScale(d))
-	    // })
 	    let w=xscale.range()[1];
-
-
-		//computePerspective();
 					
 		buildTexts("intro");
-		
-
-		/*ul.selectAll("li")
-					.data([0,50,100,150,200])
-					.enter()
-					.append("li")
-						.text(d=>d)
-						.on("click",(d)=>{
-							//svg.classed("end-side",goTo)
-							goTo(d)
-						})*/
 
 		let pool={
 			w:xscale(dimensions.lane*(dimensions.lanes_n+1)),
 			h:yscale(0)
 		};
-		console.log("POOL",pool)
-		/*let srcCorners = [
-						0, 0, 
-						pool.w, 0,
-						pool.w, pool.h,
-						0, pool.h
-					];
-		let dstCorners = [
-						pool.w*0.5, pool.h*(-0.1),
-						pool.w*1.2, pool.h*(0.1), 
-						pool.w*2, pool.h*5,
-						0, pool.h
-					];
-
-		let perspT = PerspT(srcCorners, dstCorners);
-
-		console.log(perspT.coeffs)		
-
-		var t = perspT.coeffs;
-		t = [	t[0], t[3], 0, t[6],
-				t[1], t[4], 0, t[7],
-				0   , 0   , 1, 0   ,
-				t[2], t[5], 0, t[8]
-			];
-		t = "matrix3d(" + t.join(", ") + ")";
-
-
-		container.style("transform",t)*/
-		//return;
-
-		
+		console.log("POOL",pool)		
 
 		swimming_pool=new SwimmingPool({
 									svg:svg,
@@ -375,14 +339,15 @@ export default function SwimmingLineChart(data,options) {
 					.selectAll("g.leg")
 					.data(ath=>{
 
-						//console.log("SWIMMER",ath,best_cumulative_times)
+						//console.log("SWIMMER",ath)
 
-						ath.splits=([{
+						/*ath.splits=([{
 							value:ath.reaction_time.value,
 							time:ath.reaction_time.time,
 							cumulative_time:ath.reaction_time.time,
 							distance:0
-						}]).concat(ath.splits);
+						}]).concat(ath.splits);*/
+						
 
 						return ath.splits.map(d=>{
 
@@ -390,9 +355,7 @@ export default function SwimmingLineChart(data,options) {
 							d.mt=distance*best_cumulative_times[d.distance].best_cumulative/d.cumulative_time;
 							d.dmt=distance-d.mt;
 							d.lane=ath.lane;
-							if(d.distance===0) {
-								console.log(d)
-							}
+							
 							return d;
 						});
 					})
@@ -407,11 +370,12 @@ export default function SwimmingLineChart(data,options) {
 				.attr("d",s=>{
 
 					let x=xscale(s.lane*dimensions.lane + dimensions.lane/2),
-						start_y=(s.distance%(dimensions.length*2)>0)?yscale(0):yscale(dimensions.length);
+						start_y=(s.distance%(dimensions.length*2)>0)?yscale(0):yscale(dimensions.length),
+						y=(s.distance%(dimensions.length*2)>0)?yscale(dimensions.length):yscale(0);
 
 					return line([
 								[x,start_y],
-								[x,start_y],
+								[x,y],
 								[x,start_y]
 							]);
 
@@ -433,15 +397,13 @@ export default function SwimmingLineChart(data,options) {
 				});
 
 
-
 		leg.filter(s=>(s.distance===0))
 			.selectAll("text")
-			//.data(s=>([s,s,s,s]))
-			.data(s=>([s,s]))
+			.data(s=>(WIDTH<400?[s]:[s,s]))
 			.enter()
 			.append("text")
 				.attr("class","swimmer-name")
-				.classed("stroke",(s,i)=>(i<1))
+				.classed("stroke",(s,i)=>(i<1 && WIDTH>400))
 
 		leg.filter(s=>(s.distance===0))
 				//.selectAll("text:not(.stroke)")
@@ -455,23 +417,22 @@ export default function SwimmingLineChart(data,options) {
 				    	.attr("text-anchor","start")
 				    	.attr("startOffset","0%")
 				    	.text((s,i)=>{
-							let swimmer=swimmers_data.filter(d=>(d.lane===s.lane))[0]
-							//if(i%2) {
-								return swimmer.entrant.participant.competitor.lastName;
-							//}
-							//return swimmer.reaction_time.value;
+							let swimmer=swimmers_data.filter(d=>(d.lane===s.lane))[0];
+							if(options.team) {
+								return swimmer.entrant.country.identifier;
+							}
+							return swimmer.entrant.participant.competitor.lastName;
 						})
 
 		leg.filter(s=>(s.distance>0))
 			.selectAll("text")
-			.data(s=>([s,s]))
+			.data(s=>(WIDTH<400?[s]:[s,s]))
 			.enter()
 			.append("text")
 				.attr("class","swimmer-name")
-				.classed("stroke",(s,i)=>(i<1))
+				.classed("stroke",(s,i)=>(i<1 && WIDTH>400))
 
 		leg.filter(s=>(s.distance>0))
-				//.selectAll("text:not(.stroke)")
 				.selectAll("text")
 					.attr("dx",s=>{
 				    	return (s.distance%100===0)?5:-5
@@ -485,6 +446,9 @@ export default function SwimmingLineChart(data,options) {
 				    	.attr("startOffset",s=>(s.distance%100>0)?"50%":"50%")
 				    	.text(s=>{
 							let swimmer=swimmers_data.filter(d=>(d.lane===s.lane))[0]
+							if(options.team) {
+								return swimmer.entrant.country.identifier;
+							}
 							return swimmer.entrant.participant.competitor.lastName;
 						})
 
@@ -616,13 +580,7 @@ export default function SwimmingLineChart(data,options) {
 				})
 				.html(d=>"<span>"+d.text+"</span>")
 
-		/*annotations_layer.selectAll("div.annotation").append("div")
-
-		svg.append("circle")
-				.attr("cx",xy[0])
-				.attr("cy",xy[1])
-				.attr("r",3)
-				.style("fill","#ff0000")*/
+		
 
 	}
 
@@ -714,13 +672,20 @@ export default function SwimmingLineChart(data,options) {
 					//let offset=getOffset(annotations_layer.node());
 					return (d.coords[1]-(offset.top))+"px";
 				})
-				.html(d=>"<span>"+d.text+"</span>")
+				.html(d=>{
+					let b="";
+					if(d.records.length) {
+						b=` ${d.records.join(",")}`;
+					}
+					return `<span>${d.text}${b}</span>`;
+				})
 				.select("span")
 					.style("margin-left",function(d){
 						let coords=this.getBoundingClientRect();
-						console.log(coords)
+						//console.log(coords)
 						return (-coords.width/2)+"px";
 					})
+
 
 	}
 
@@ -740,7 +705,6 @@ export default function SwimmingLineChart(data,options) {
 		stopWatch.hide();
 
 		CURRENT_DISTANCE=distance;
-
 		
 		if(distance%(dimensions.length*2)>0) {
 			//50m side
@@ -805,7 +769,40 @@ export default function SwimmingLineChart(data,options) {
 			.interrupt()
 			.filter(d=>(d.distance===distance))
 				.classed("visible",true);
+
 		selected_leg
+				.style("transform",s=>{
+
+					//console.log("S",s)
+					let distance=(s.distance%(dimensions.length*2)>0)?yscale(dimensions.length):yscale(0),
+						dy=(s.distance%(dimensions.length*2)>0)?0:yscale(dimensions.length-(s.dmt+delta));
+					
+					return `translateY(${(-(dy))}px)`;
+
+				})
+				.style("transition",s=>{
+					let ms=0;
+					if(s.distance===0) {
+						ms=best_cumulative_times[s.distance].best_time;
+					} else {
+						ms=getTimeForDistance(best_cumulative_times[s.distance].best_time,dimensions.length,delta)
+					}
+					
+					return `transform ${ms}ms`;
+				})
+
+		selected_leg
+				.style("transform",s=>{
+
+					console.log("S",s)
+					let distance=(s.distance%(dimensions.length*2)>0)?yscale(dimensions.length):yscale(0),
+						dy=(s.distance%(dimensions.length*2)>0)?0:yscale(dimensions.length-(s.dmt));
+					
+					return `translateY(${(-(dy))}px)`;
+
+				})
+
+		/*selected_leg
 				.select("path")
 					.attr("d",s=>{
 
@@ -822,11 +819,6 @@ export default function SwimmingLineChart(data,options) {
 
 						s.text_start_y=y;
 						return line([
-									/*[x-w/2,start_y],
-									[x+w/2,start_y],
-									[x+w/2,y],
-									[x-w/2,y],
-									[x-w/2,start_y]*/
 									[x,start_y],
 									[x,y],
 									[x,start_y]
@@ -857,11 +849,6 @@ export default function SwimmingLineChart(data,options) {
 							}
 
 							return line([
-										/*[x-w/2,start_y],
-										[x+w/2,start_y],
-										[x+w/2,y],
-										[x-w/2,y],
-										[x-w/2,start_y]*/
 										[x,start_y],
 										[x,y],
 										[x,start_y]
@@ -875,21 +862,19 @@ export default function SwimmingLineChart(data,options) {
 								t=null;
 							});
 
-							if(d.lane===1) {
+							if(d.lane===4) {
+
 								let duration=best_cumulative_times[d.distance].best_time*(delta/dimensions.length)*multiplier;
 								if(d.calculated) {
 									stopWatch.hide();
 								} else {
-									
-									
-
 									stopWatch.start(best_cumulative_times[d.distance].best_cumulative-duration);	
 								}
 								
 							}
 						})
 						.on("end",function(d){
-							if(d.lane===1) {
+							if(d.lane===4) {
 								if(text_update){
 									buildTexts();
 									addAnnotation();
@@ -913,13 +898,11 @@ export default function SwimmingLineChart(data,options) {
 
 									addTime(d.distance,d.lane);
 
-									/*stopWatch.append({
-										name:entrant.entrant.participant.competitor.lastName,
-										time:(gap>0)?`+${formatSecondsMilliseconds(gap,2)}`:d.value
-									})*/
+									
 								},delay)
 							);
 						})
+		*/
 
 		
 		

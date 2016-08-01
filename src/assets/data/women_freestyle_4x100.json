@@ -1,0 +1,869 @@
+{
+    "olympics": {
+        "eventUnit": {
+            "identifier": "SWW411101",
+            "description": "Women's 4 x 100m Freestyle Relay Final",
+            "unitType": "Team",
+            "medalEvent": "Yes",
+            "disciplineDescription": {
+                "identifier": "swimming",
+                "value": "Swimming"
+            },
+            "phaseDescription": {
+                "identifier": "SWW4111",
+                "value": "Final"
+            },
+            "result": {
+                "type": "Official",
+                "timestamp": "2013-11-13T12:15:01Z",
+                "entrant": [{
+                    "order": "4",
+                    "type": "Team",
+                    "code": "SWW411AUS01",
+                    "rank": "1",
+                    "value": "3:33.15",
+                    "property": [{
+                        "type": "Medal Awarded",
+                        "value": "Gold"
+                    }, {
+                        "type": "Record Set",
+                        "value": "OR"
+                    }, {
+                        "type": "Result Type",
+                        "value": "Time"
+                    }],
+                    "resultExtension": [{
+                        "type": "Reaction Time",
+                        "value": "0.70"
+                    }, {
+                        "type": "Split Times",
+                        "extension": [{
+                            "position": "1",
+                            "value": "26.14"
+                        }, {
+                            "position": "2",
+                            "value": "53.90"
+                        }, {
+                            "position": "3",
+                            "value": "1:18.90"
+                        }, {
+                            "position": "4",
+                            "value": "1:47.09"
+                        }, {
+                            "position": "5",
+                            "value": "2:12.80"
+                        }, {
+                            "position": "6",
+                            "value": "2:40.50"
+                        }, {
+                            "position": "7",
+                            "value": "3:06.05"
+                        }, {
+                            "position": "8",
+                            "value": "3:33.15"
+                        }]
+                    }, {
+                        "type": "Leg Breakdown",
+                        "extension": [{
+                            "position": "1",
+                            "value": "26.14"
+                        }, {
+                            "position": "2",
+                            "value": "53.90"
+                        }, {
+                            "position": "3",
+                            "value": "1:18.90"
+                        }, {
+                            "position": "4",
+                            "value": "1:47.09"
+                        }, {
+                            "position": "5",
+                            "value": "2:12.80"
+                        }, {
+                            "position": "6",
+                            "value": "2:40.50"
+                        }, {
+                            "position": "7",
+                            "value": "3:06.05"
+                        }, {
+                            "position": "8",
+                            "value": "3:33.15"
+                        }]
+                    }],
+                    "country": {
+                        "identifier": "AUS",
+                        "name": "Australia",
+                        "longName": "Australia"
+                    },
+                    "participant": [{
+                        "order": "1",
+                        "competitor": {
+                            "identifier": "1116528",
+                            "firstName": "Alicia",
+                            "lastName": "Coutts",
+                            "fullName": "Alicia Coutts"
+                        }
+                    }, {
+                        "order": "2",
+                        "competitor": {
+                            "identifier": "1116527",
+                            "firstName": "Cate",
+                            "lastName": "Campbell",
+                            "fullName": "Cate Campbell"
+                        }
+                    }, {
+                        "order": "3",
+                        "competitor": {
+                            "identifier": "1116530",
+                            "firstName": "Brittany",
+                            "lastName": "Elmslie",
+                            "fullName": "Brittany Elmslie"
+                        }
+                    }, {
+                        "order": "4",
+                        "competitor": {
+                            "identifier": "1116550",
+                            "firstName": "Melanie",
+                            "lastName": "Schlanger",
+                            "fullName": "Melanie Schlanger"
+                        }
+                    }]
+                }, {
+                    "order": "3",
+                    "type": "Team",
+                    "code": "SWW411NED01",
+                    "rank": "2",
+                    "value": "3:33.79",
+                    "property": [{
+                        "type": "Medal Awarded",
+                        "value": "Silver"
+                    }, {
+                        "type": "Result Type",
+                        "value": "Time"
+                    }],
+                    "resultExtension": [{
+                        "type": "Reaction Time",
+                        "value": "0.72"
+                    }, {
+                        "type": "Split Times",
+                        "extension": [{
+                            "position": "1",
+                            "value": "25.86"
+                        }, {
+                            "position": "2",
+                            "value": "54.67"
+                        }, {
+                            "position": "3",
+                            "value": "1:19.96"
+                        }, {
+                            "position": "4",
+                            "value": "1:48.47"
+                        }, {
+                            "position": "5",
+                            "value": "2:13.93"
+                        }, {
+                            "position": "6",
+                            "value": "2:41.86"
+                        }, {
+                            "position": "7",
+                            "value": "3:06.57"
+                        }, {
+                            "position": "8",
+                            "value": "3:33.79"
+                        }]
+                    }, {
+                        "type": "Leg Breakdown",
+                        "extension": [{
+                            "position": "1",
+                            "value": "25.86"
+                        }, {
+                            "position": "2",
+                            "value": "54.67"
+                        }, {
+                            "position": "3",
+                            "value": "1:19.96"
+                        }, {
+                            "position": "4",
+                            "value": "1:48.47"
+                        }, {
+                            "position": "5",
+                            "value": "2:13.93"
+                        }, {
+                            "position": "6",
+                            "value": "2:41.86"
+                        }, {
+                            "position": "7",
+                            "value": "3:06.57"
+                        }, {
+                            "position": "8",
+                            "value": "3:33.79"
+                        }]
+                    }],
+                    "country": {
+                        "identifier": "NED",
+                        "name": "Netherlands",
+                        "longName": "Netherlands"
+                    },
+                    "participant": [{
+                        "order": "1",
+                        "competitor": {
+                            "identifier": "1119285",
+                            "firstName": "Inge",
+                            "lastName": "Dekker",
+                            "fullName": "Inge Dekker"
+                        }
+                    }, {
+                        "order": "2",
+                        "competitor": {
+                            "identifier": "1119341",
+                            "firstName": "Marleen",
+                            "lastName": "Veldhuis",
+                            "fullName": "Marleen Veldhuis"
+                        }
+                    }, {
+                        "order": "3",
+                        "competitor": {
+                            "identifier": "1119296",
+                            "firstName": "Femke",
+                            "lastName": "Heemskerk",
+                            "fullName": "Femke Heemskerk"
+                        }
+                    }, {
+                        "order": "4",
+                        "competitor": {
+                            "identifier": "1119309",
+                            "firstName": "Ranomi",
+                            "lastName": "Kromowidjojo",
+                            "fullName": "Ranomi Kromowidjojo"
+                        }
+                    }]
+                }, {
+                    "order": "5",
+                    "type": "Team",
+                    "code": "SWW411USA01",
+                    "rank": "3",
+                    "value": "3:34.24",
+                    "property": [{
+                        "type": "Medal Awarded",
+                        "value": "Bronze"
+                    }, {
+                        "type": "Record Set",
+                        "value": "AM"
+                    }, {
+                        "type": "Result Type",
+                        "value": "Time"
+                    }],
+                    "resultExtension": [{
+                        "type": "Reaction Time",
+                        "value": "0.78"
+                    }, {
+                        "type": "Split Times",
+                        "extension": [{
+                            "position": "1",
+                            "value": "26.05"
+                        }, {
+                            "position": "2",
+                            "value": "53.52"
+                        }, {
+                            "position": "3",
+                            "value": "1:18.71"
+                        }, {
+                            "position": "4",
+                            "value": "1:47.05"
+                        }, {
+                            "position": "5",
+                            "value": "2:12.86"
+                        }, {
+                            "position": "6",
+                            "value": "2:40.70"
+                        }, {
+                            "position": "7",
+                            "value": "3:06.23"
+                        }, {
+                            "position": "8",
+                            "value": "3:34.24"
+                        }]
+                    }, {
+                        "type": "Leg Breakdown",
+                        "extension": [{
+                            "position": "1",
+                            "value": "26.05"
+                        }, {
+                            "position": "2",
+                            "value": "53.52"
+                        }, {
+                            "position": "3",
+                            "value": "1:18.71"
+                        }, {
+                            "position": "4",
+                            "value": "1:47.05"
+                        }, {
+                            "position": "5",
+                            "value": "2:12.86"
+                        }, {
+                            "position": "6",
+                            "value": "2:40.70"
+                        }, {
+                            "position": "7",
+                            "value": "3:06.23"
+                        }, {
+                            "position": "8",
+                            "value": "3:34.24"
+                        }]
+                    }],
+                    "country": {
+                        "identifier": "USA",
+                        "name": "United States",
+                        "longName": "United States of America"
+                    },
+                    "participant": [{
+                        "order": "1",
+                        "competitor": {
+                            "identifier": "1132902",
+                            "firstName": "Missy",
+                            "lastName": "Franklin",
+                            "fullName": "Missy Franklin"
+                        }
+                    }, {
+                        "order": "2",
+                        "competitor": {
+                            "identifier": "1134700",
+                            "firstName": "Jessica",
+                            "lastName": "Hardy",
+                            "fullName": "Jessica Hardy"
+                        }
+                    }, {
+                        "order": "3",
+                        "competitor": {
+                            "identifier": "1133103",
+                            "firstName": "Lia",
+                            "lastName": "Neal",
+                            "fullName": "Lia Neal"
+                        }
+                    }, {
+                        "order": "4",
+                        "competitor": {
+                            "identifier": "1133648",
+                            "firstName": "Allison",
+                            "lastName": "Schmitt",
+                            "fullName": "Allison Schmitt"
+                        }
+                    }]
+                }, {
+                    "order": "6",
+                    "type": "Team",
+                    "code": "SWW411CHN01",
+                    "rank": "4",
+                    "value": "3:36.75",
+                    "property": {
+                        "type": "Result Type",
+                        "value": "Time"
+                    },
+                    "resultExtension": [{
+                        "type": "Reaction Time",
+                        "value": "0.71"
+                    }, {
+                        "type": "Split Times",
+                        "extension": [{
+                            "position": "1",
+                            "value": "25.99"
+                        }, {
+                            "position": "2",
+                            "value": "53.58"
+                        }, {
+                            "position": "3",
+                            "value": "1:19.46"
+                        }, {
+                            "position": "4",
+                            "value": "1:48.07"
+                        }, {
+                            "position": "5",
+                            "value": "2:14.05"
+                        }, {
+                            "position": "6",
+                            "value": "2:42.10"
+                        }, {
+                            "position": "7",
+                            "value": "3:08.36"
+                        }, {
+                            "position": "8",
+                            "value": "3:36.75"
+                        }]
+                    }, {
+                        "type": "Leg Breakdown",
+                        "extension": [{
+                            "position": "1",
+                            "value": "25.99"
+                        }, {
+                            "position": "2",
+                            "value": "53.58"
+                        }, {
+                            "position": "3",
+                            "value": "1:19.46"
+                        }, {
+                            "position": "4",
+                            "value": "1:48.07"
+                        }, {
+                            "position": "5",
+                            "value": "2:14.05"
+                        }, {
+                            "position": "6",
+                            "value": "2:42.10"
+                        }, {
+                            "position": "7",
+                            "value": "3:08.36"
+                        }, {
+                            "position": "8",
+                            "value": "3:36.75"
+                        }]
+                    }],
+                    "country": {
+                        "identifier": "CHN",
+                        "name": "China",
+                        "longName": "People's Republic of China"
+                    },
+                    "participant": [{
+                        "order": "1",
+                        "competitor": {
+                            "identifier": "1072491",
+                            "firstName": "Yi",
+                            "lastName": "Tang",
+                            "fullName": "Yi Tang"
+                        }
+                    }, {
+                        "order": "2",
+                        "competitor": {
+                            "identifier": "1072455",
+                            "firstName": "Yuhan",
+                            "lastName": "Qiu",
+                            "fullName": "Yuhan Qiu"
+                        }
+                    }, {
+                        "order": "3",
+                        "competitor": {
+                            "identifier": "1072492",
+                            "firstName": "Haibing",
+                            "lastName": "Wang",
+                            "fullName": "Haibing Wang"
+                        }
+                    }, {
+                        "order": "4",
+                        "competitor": {
+                            "identifier": "1072484",
+                            "firstName": "Jiaying",
+                            "lastName": "Pang",
+                            "fullName": "Jiaying Pang"
+                        }
+                    }]
+                }, {
+                    "order": "8",
+                    "type": "Team",
+                    "code": "SWW411GBR01",
+                    "rank": "5",
+                    "value": "3:37.02",
+                    "property": {
+                        "type": "Result Type",
+                        "value": "Time"
+                    },
+                    "resultExtension": [{
+                        "type": "Reaction Time",
+                        "value": "0.68"
+                    }, {
+                        "type": "Split Times",
+                        "extension": [{
+                            "position": "1",
+                            "value": "26.13"
+                        }, {
+                            "position": "2",
+                            "value": "54.27"
+                        }, {
+                            "position": "3",
+                            "value": "1:19.51"
+                        }, {
+                            "position": "4",
+                            "value": "1:47.56"
+                        }, {
+                            "position": "5",
+                            "value": "2:13.47"
+                        }, {
+                            "position": "6",
+                            "value": "2:42.21"
+                        }, {
+                            "position": "7",
+                            "value": "3:08.04"
+                        }, {
+                            "position": "8",
+                            "value": "3:37.02"
+                        }]
+                    }, {
+                        "type": "Leg Breakdown",
+                        "extension": [{
+                            "position": "1",
+                            "value": "26.13"
+                        }, {
+                            "position": "2",
+                            "value": "54.27"
+                        }, {
+                            "position": "3",
+                            "value": "1:19.51"
+                        }, {
+                            "position": "4",
+                            "value": "1:47.56"
+                        }, {
+                            "position": "5",
+                            "value": "2:13.47"
+                        }, {
+                            "position": "6",
+                            "value": "2:42.21"
+                        }, {
+                            "position": "7",
+                            "value": "3:08.04"
+                        }, {
+                            "position": "8",
+                            "value": "3:37.02"
+                        }]
+                    }],
+                    "country": {
+                        "identifier": "GBR",
+                        "name": "Great Britain",
+                        "longName": "Great Britain"
+                    },
+                    "participant": [{
+                        "order": "1",
+                        "competitor": {
+                            "identifier": "1098567",
+                            "firstName": "Amy",
+                            "lastName": "Smith",
+                            "fullName": "Amy Smith"
+                        }
+                    }, {
+                        "order": "2",
+                        "competitor": {
+                            "identifier": "1098544",
+                            "firstName": "Francesca",
+                            "lastName": "Halsall",
+                            "fullName": "Francesca Halsall"
+                        }
+                    }, {
+                        "order": "3",
+                        "competitor": {
+                            "identifier": "1098550",
+                            "firstName": "Jess",
+                            "lastName": "Lloyd",
+                            "fullName": "Jess Lloyd"
+                        }
+                    }, {
+                        "order": "4",
+                        "competitor": {
+                            "identifier": "1098557",
+                            "firstName": "Caitlin",
+                            "lastName": "Mcclatchey",
+                            "fullName": "Caitlin Mcclatchey"
+                        }
+                    }]
+                }, {
+                    "order": "7",
+                    "type": "Team",
+                    "code": "SWW411DEN01",
+                    "rank": "6",
+                    "value": "3:37.45",
+                    "property": {
+                        "type": "Result Type",
+                        "value": "Time"
+                    },
+                    "resultExtension": [{
+                        "type": "Reaction Time",
+                        "value": "0.77"
+                    }, {
+                        "type": "Split Times",
+                        "extension": [{
+                            "position": "1",
+                            "value": "26.42"
+                        }, {
+                            "position": "2",
+                            "value": "54.52"
+                        }, {
+                            "position": "3",
+                            "value": "1:20.30"
+                        }, {
+                            "position": "4",
+                            "value": "1:48.56"
+                        }, {
+                            "position": "5",
+                            "value": "2:15.49"
+                        }, {
+                            "position": "6",
+                            "value": "2:44.21"
+                        }, {
+                            "position": "7",
+                            "value": "3:09.72"
+                        }, {
+                            "position": "8",
+                            "value": "3:37.45"
+                        }]
+                    }, {
+                        "type": "Leg Breakdown",
+                        "extension": [{
+                            "position": "1",
+                            "value": "26.42"
+                        }, {
+                            "position": "2",
+                            "value": "54.52"
+                        }, {
+                            "position": "3",
+                            "value": "1:20.30"
+                        }, {
+                            "position": "4",
+                            "value": "1:48.56"
+                        }, {
+                            "position": "5",
+                            "value": "2:15.49"
+                        }, {
+                            "position": "6",
+                            "value": "2:44.21"
+                        }, {
+                            "position": "7",
+                            "value": "3:09.72"
+                        }, {
+                            "position": "8",
+                            "value": "3:37.45"
+                        }]
+                    }],
+                    "country": {
+                        "identifier": "DEN",
+                        "name": "Denmark",
+                        "longName": "Denmark"
+                    },
+                    "participant": [{
+                        "order": "1",
+                        "competitor": {
+                            "identifier": "1081506",
+                            "firstName": "Pernille",
+                            "lastName": "Blume",
+                            "fullName": "Pernille Blume"
+                        }
+                    }, {
+                        "order": "2",
+                        "competitor": {
+                            "identifier": "1081831",
+                            "firstName": "Mie",
+                            "lastName": "Nielsen",
+                            "fullName": "Mie Nielsen"
+                        }
+                    }, {
+                        "order": "3",
+                        "competitor": {
+                            "identifier": "1068227",
+                            "firstName": "Lotte",
+                            "lastName": "Friis",
+                            "fullName": "Lotte Friis"
+                        }
+                    }, {
+                        "order": "4",
+                        "competitor": {
+                            "identifier": "1078310",
+                            "firstName": "Jeanette",
+                            "lastName": "Ottesen Gray",
+                            "fullName": "Jeanette Ottesen Gray"
+                        }
+                    }]
+                }, {
+                    "order": "2",
+                    "type": "Team",
+                    "code": "SWW411JPN01",
+                    "rank": "7",
+                    "value": "3:37.96",
+                    "property": {
+                        "type": "Result Type",
+                        "value": "Time"
+                    },
+                    "resultExtension": [{
+                        "type": "Reaction Time",
+                        "value": "0.74"
+                    }, {
+                        "type": "Split Times",
+                        "extension": [{
+                            "position": "1",
+                            "value": "26.24"
+                        }, {
+                            "position": "2",
+                            "value": "54.34"
+                        }, {
+                            "position": "3",
+                            "value": "1:20.45"
+                        }, {
+                            "position": "4",
+                            "value": "1:48.86"
+                        }, {
+                            "position": "5",
+                            "value": "2:14.46"
+                        }, {
+                            "position": "6",
+                            "value": "2:43.29"
+                        }, {
+                            "position": "7",
+                            "value": "3:09.54"
+                        }, {
+                            "position": "8",
+                            "value": "3:37.96"
+                        }]
+                    }, {
+                        "type": "Leg Breakdown",
+                        "extension": [{
+                            "position": "1",
+                            "value": "26.24"
+                        }, {
+                            "position": "2",
+                            "value": "54.34"
+                        }, {
+                            "position": "3",
+                            "value": "1:20.45"
+                        }, {
+                            "position": "4",
+                            "value": "1:48.86"
+                        }, {
+                            "position": "5",
+                            "value": "2:14.46"
+                        }, {
+                            "position": "6",
+                            "value": "2:43.29"
+                        }, {
+                            "position": "7",
+                            "value": "3:09.54"
+                        }, {
+                            "position": "8",
+                            "value": "3:37.96"
+                        }]
+                    }],
+                    "country": {
+                        "identifier": "JPN",
+                        "name": "Japan",
+                        "longName": "Japan"
+                    },
+                    "participant": [{
+                        "order": "1",
+                        "competitor": {
+                            "identifier": "1026948",
+                            "firstName": "Haruka",
+                            "lastName": "Ueda",
+                            "fullName": "Haruka Ueda"
+                        }
+                    }, {
+                        "order": "2",
+                        "competitor": {
+                            "identifier": "1026946",
+                            "firstName": "Yayoi",
+                            "lastName": "Matsumoto",
+                            "fullName": "Yayoi Matsumoto"
+                        }
+                    }, {
+                        "order": "3",
+                        "competitor": {
+                            "identifier": "1026962",
+                            "firstName": "Miki",
+                            "lastName": "Uchida",
+                            "fullName": "Miki Uchida"
+                        }
+                    }, {
+                        "order": "4",
+                        "competitor": {
+                            "identifier": "1026950",
+                            "firstName": "Hanae",
+                            "lastName": "Ito",
+                            "fullName": "Hanae Ito"
+                        }
+                    }]
+                }, {
+                    "order": "1",
+                    "type": "Team",
+                    "code": "SWW411SWE01",
+                    "property": {
+                        "type": "Invalid Result Mark",
+                        "value": "Disqualified"
+                    },
+                    "resultExtension": [{
+                        "type": "Split Times",
+                        "extension": [{
+                            "position": "1",
+                            "value": "26.31"
+                        }, {
+                            "position": "2",
+                            "value": "54.57"
+                        }, {
+                            "position": "3",
+                            "value": "1:20.45"
+                        }, {
+                            "position": "4",
+                            "value": "1:48.48"
+                        }, {
+                            "position": "5",
+                            "value": "2:14.71"
+                        }, {
+                            "position": "6",
+                            "value": "2:43.49"
+                        }]
+                    }, {
+                        "type": "Leg Breakdown",
+                        "extension": [{
+                            "position": "1",
+                            "value": "26.31"
+                        }, {
+                            "position": "2",
+                            "value": "54.57"
+                        }, {
+                            "position": "3",
+                            "value": "1:20.45"
+                        }, {
+                            "position": "4",
+                            "value": "1:48.48"
+                        }, {
+                            "position": "5",
+                            "value": "2:14.71"
+                        }, {
+                            "position": "6",
+                            "value": "2:43.49"
+                        }]
+                    }],
+                    "country": {
+                        "identifier": "SWE",
+                        "name": "Sweden",
+                        "longName": "Sweden"
+                    },
+                    "participant": [{
+                        "order": "1",
+                        "competitor": {
+                            "identifier": "1036214",
+                            "firstName": "Michelle",
+                            "lastName": "Coleman",
+                            "fullName": "Michelle Coleman"
+                        }
+                    }, {
+                        "order": "2",
+                        "competitor": {
+                            "identifier": "1036219",
+                            "firstName": "Sarah",
+                            "lastName": "Sjostrom",
+                            "fullName": "Sarah Sjostrom"
+                        }
+                    }, {
+                        "order": "3",
+                        "competitor": {
+                            "identifier": "1058026",
+                            "firstName": "Ida",
+                            "lastName": "Marko-Varga",
+                            "fullName": "Ida Marko-Varga"
+                        }
+                    }, {
+                        "order": "4",
+                        "competitor": {
+                            "identifier": "1036209",
+                            "firstName": "Gabriella",
+                            "lastName": "Fagundez",
+                            "fullName": "Gabriella Fagundez"
+                        }
+                    }]
+                }]
+            }
+        }
+    }
+}
