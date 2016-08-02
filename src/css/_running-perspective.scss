@@ -59,7 +59,8 @@
 	
 	@include mq(mobile) {
 		perspective: 1000px;
-		perspective-origin: 80% 50%;
+		//perspective-origin: 80% 50%;
+		perspective-origin: 50% 0%;
 	}
 	
 

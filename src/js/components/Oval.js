@@ -37,7 +37,9 @@ export default function Oval(options) {
 
 	
 
-
+	dimensions.length=dimensions200m.length;
+	dimensions.staggers=dimensions200m.staggers;
+	
 
 	let addPathFunction={
 		"100m":addPath100,
@@ -56,12 +58,20 @@ export default function Oval(options) {
     					.append("div")
     					.attr("class","oval")
 
-    let svg=container
-    					.append("svg");
 
-    let box = svg.node().getBoundingClientRect();
+
+    let box = container.node().getBoundingClientRect();
     let WIDTH = options.width || box.width,
         HEIGHT = options.height || box.height;
+
+    let ratio=(84.39+36.5*2)/73.5;
+
+    let svg=container
+				.append("svg")
+				.attr("width",WIDTH)
+				.attr("height",WIDTH/ratio)
+
+    console.log(WIDTH,HEIGHT,ratio,WIDTH/ratio);
 
     let splits=[];
 
@@ -101,8 +111,8 @@ export default function Oval(options) {
 
     //console.log(WIDTH,HEIGHT)
 
-    let hscale=scaleLinear().domain([0,dimensions.radius*2+dimensions.field.width]).range([0,WIDTH]),
-    	vscale=scaleLinear().domain([0,dimensions.lanes*2+dimensions.field.height]).range([0,HEIGHT]);
+    let hscale=scaleLinear().domain([0,dimensions.radius*2+dimensions.field.width]).rangeRound([0,WIDTH]),
+    	vscale=scaleLinear().domain([0,dimensions.lanes*2+dimensions.field.height]).rangeRound([0,HEIGHT]);
 
     hscale=vscale.copy();
 

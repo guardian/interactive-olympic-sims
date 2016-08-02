@@ -804,6 +804,7 @@ export default function RunningLineChart(data,options) {
 			//container.style("perspective","700px").style("perspective-origin","90% 20%")
 			transform="rotateX(75deg) rotateY(0deg) rotateZ(10deg) translateX(67px) translateY(365px) translateZ(45px) scale(0.8)";
 		}
+		transform="translateY(-44%) scale(0.1)";
 		try {
 	    	svg
 	    		.style("-webkit-transform",transform)
@@ -820,77 +821,7 @@ export default function RunningLineChart(data,options) {
 
 		}
 
-		/*if(distance%(dimensions.length*2)>0) {
-			//100m side
-
-			let box = container.node().getBoundingClientRect();
-			
-			let hmargins=margins.left+margins.right;
-			let dxScale=scaleLinear().domain([800-hmargins,1260-hmargins]).range([15,23]);
-			let dyScale=scaleLinear().domain([800-hmargins,1260-hmargins]).range([1660,2960]);
-			let dzScale=scaleLinear().domain([800-hmargins,1260-hmargins]).range([500,900]);
-			let w=xscale.range()[1],
-				dx=dxScale(w),
-				dy=dyScale(w),
-				dz=dzScale(w);
-			let transform=`rotateX(45deg) rotateY(0deg) rotateZ(15deg) translateX(-${dx}%) translateY(-${dy}px) translateZ(${dz}px)`;
-			//dy=0;
-			//let transform=`rotateX(65deg) rotateY(0deg) rotateZ(10deg) translateX(-1%) translateY(${300}px) translateZ(150px)`;
-			if(WIDTH<400) {
-				//container.style("perspective","700px").style("perspective-origin","90% 20%")
-				transform="rotateX(75deg) rotateY(0deg) rotateZ(10deg) translateX(67px) translateY(365px) translateZ(45px) scale(0.8)";
-			}
-			try {
-		    	svg
-		    		.style("-webkit-transform",transform)
-		    		.style("-moz-transform",transform)
-		    		.style("-ms-transform",transform)
-		    		.style("transform",transform);
-
-		    	overlay
-		    		.style("-webkit-transform",transform)
-		    		.style("-moz-transform",transform)
-		    		.style("-ms-transform",transform)
-		    		.style("transform",transform);
-		    } catch(e) {
-
-			}
-	    } else {
-	    	//0m side
-
-
-	    	let hmargins=margins.left+margins.right;
-			let dxScale=scaleLinear().domain([800-hmargins,1260-hmargins]).range([15,23]);
-			let dyScale=scaleLinear().domain([800-hmargins,1260-hmargins]).range([1660,2960]);
-			let dzScale=scaleLinear().domain([800-hmargins,1260-hmargins]).range([500,900]);
-			let w=xscale.range()[1],
-				dx=dxScale(w),
-				dy=dyScale(w),
-				dz=dzScale(w);
-			let transform=`rotateX(45deg) rotateY(0deg) rotateZ(15deg) translateX(-${dx}%) translateY(${-dy+yscale.range()[1]*0.93}px) translateZ(${dz}px)`;
-			  		    	
-			if(WIDTH<400) {
-				//container.style("perspective","700px").style("perspective-origin","90% 20%")
-				transform=`rotateX(70deg) rotateY(0deg) rotateZ(10deg) translateX(80px) translateY(50px) translateZ(30px) scale(0.8)`;
-			}
-
-			try {
-				svg
-		    		.style("-webkit-transform",transform)
-		    		.style("-moz-transform",transform)
-		    		.style("-ms-transform",transform)
-		    		.style("transform",transform);
-		    		
-		    	overlay
-		    		.style("-webkit-transform",transform)
-		    		.style("-moz-transform",transform)
-		    		.style("-ms-transform",transform)
-		    		.style("transform",transform);	
-			} catch(e) {
-
-			}
-	    	
-	    }*/
+		
 
 		let delta=20;
 

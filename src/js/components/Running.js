@@ -16,7 +16,8 @@ import {
 	convertTime
 } from '../lib/time';
 import {
-	dimensions
+	dimensions,
+	dimensions200m
 } from '../lib/running'
 
 export default function Running(data,options) {
@@ -42,6 +43,9 @@ export default function Running(data,options) {
         if(options.container && options.container.getBoundingClientRect().height) {
             cancelAnimFrame(checkInnerHTML);
            	
+            dimensions.length=dimensions200m.length;
+			dimensions.staggers=dimensions200m.staggers;
+
             oval=new Oval({
             	race:options.race,
 				container:runningEvent.node(),
