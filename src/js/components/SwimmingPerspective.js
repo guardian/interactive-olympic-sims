@@ -55,6 +55,7 @@ export default function SwimmingLineChart(data,options) {
 		CURRENT_LEG=0,
 		CURRENT_STEP=0,
 		CURRENT_DISTANCE=0,
+		GOLD_LANE,
 		LEGS=[],
 		WR;
 
@@ -117,6 +118,11 @@ export default function SwimmingLineChart(data,options) {
     		let swimmer=options.team?entrant.country.identifier:entrant.participant.competitor.fullName;
 
     		let prev_cumulative_time=0;
+
+    		if(!GOLD_LANE) {
+    			GOLD_LANE=+entrant.order;
+    		}
+
     		return {
     			"swimmer":swimmer,
     			"lane":+entrant.order,
@@ -136,7 +142,8 @@ export default function SwimmingLineChart(data,options) {
     					time:lap_time,
     					cumulative_time:cumulative_time,
     					distance:+d.position*dimensions.length,
-			    		calculated:(d.mt%dimensions.length)?true:false
+			    		calculated:(d.mt%dimensions.length)?true:false,
+			    		position:+d.position
     				}
     			}),
     			"entrant":entrant,
@@ -256,23 +263,33 @@ export default function SwimmingLineChart(data,options) {
 						.append("div")
 						.attr("class","rio-overlay");
 
-		stopWatch=new StopWatch({
-			container:options.container,
-			multiplier:multiplier
-		});
+		
 		
 
-	    svg=container.append("svg")
+	    
+
+
 
 	    let box = container.node().getBoundingClientRect();
 	    WIDTH = box.width;
 		HEIGHT = box.width>414?box.width:box.height;
 
-	    svg
-	    	.attr("width",WIDTH)
-	    	.attr("height",HEIGHT)
-	    
+	    svg=container.append("svg")
+		    	.attr("width",WIDTH)
+		    	.attr("height",HEIGHT)
+		    	.each(function(){
+		    		stopWatch=new StopWatch({
+						container:options.container,
+						svg:this,
+						multiplier:multiplier
+					});
+		    	})
+
+
+
 	    console.log(WIDTH,"x",HEIGHT)
+
+	    
 
 	    let time_extent=extent(LEGS.map(l=>{
 	    	let leg_extent=extent(best_cumulative_times[l].cumulative_times);
@@ -589,9 +606,9 @@ export default function SwimmingLineChart(data,options) {
 		svg.selectAll("path.gap").remove();
 	}
 	function showGap(el,s,best_time) {
-		console.log("showGap",el,s);
+		//console.log("showGap",el,s);
 
-		console.log("DURATION",s.cumulative_time-best_time)
+		//console.log("DURATION",s.cumulative_time-best_time)
 
 		el
 			.append("path")
@@ -603,7 +620,7 @@ export default function SwimmingLineChart(data,options) {
 						start_y=(side>0)?yscale(side-s.dmt):yscale(s.dmt),
 						y=yscale(side);
 					
-					console.log("GAP PATH",s.lane,s.distance,s.mt,start_y,y)
+					//console.log("GAP PATH",s.lane,s.distance,s.mt,start_y,y)
 					
 					return line([
 								[x,start_y],
@@ -615,13 +632,13 @@ export default function SwimmingLineChart(data,options) {
 				.transition()
 				.duration(s.cumulative_time-best_time)
 				.ease(SwimmingLinear)
-						.attr("d",s=>{
+						.attr("d",()=>{
 
 							let x=xscale(s.lane*dimensions.lane + dimensions.lane/2),
 								side=s.distance%(dimensions.length*2),
 								start_y=(side>0)?yscale(side-s.dmt):yscale(s.dmt),
 								y=yscale(side);
-							console.log("GAP PATH",s.lane,s.distance,s.mt,start_y,y)
+							//console.log("GAP PATH",s.lane,s.distance,s.mt,start_y,y)
 							return line([
 										[x,start_y],
 										[x,y]
@@ -769,40 +786,114 @@ export default function SwimmingLineChart(data,options) {
 			.interrupt()
 			.filter(d=>(d.distance===distance))
 				.classed("visible",true);
-
+		/*
+		function getDuration(s) {
+			//return "10s";
+			let ms=0;
+			if(s.distance===0) {
+				ms=best_cumulative_times[s.distance].best_time;
+			} else {
+				ms=getTimeForDistance(best_cumulative_times[s.distance].best_time,dimensions.length,delta)
+			}
+			return ms+"ms";
+		}
+		*/
+		/*
 		selected_leg
+				.style("transition", "none")
 				.style("transform",s=>{
 
-					//console.log("S",s)
+					console.log("S",s)
 					let distance=(s.distance%(dimensions.length*2)>0)?yscale(dimensions.length):yscale(0),
 						dy=(s.distance%(dimensions.length*2)>0)?0:yscale(dimensions.length-(s.dmt+delta));
 					
+					if(s.distance===0) {
+						dy=-yscale(0)
+
+						console.log(yscale(0),yscale(s.dmt),yscale(s.mt))
+
+					}
+
+					console.log("transform",dy,s.dmt,delta,s.dmt+delta)
+
 					return `translateY(${(-(dy))}px)`;
 
 				})
-				.style("transition",s=>{
-					let ms=0;
-					if(s.distance===0) {
-						ms=best_cumulative_times[s.distance].best_time;
-					} else {
-						ms=getTimeForDistance(best_cumulative_times[s.distance].best_time,dimensions.length,delta)
-					}
-					
-					return `transform ${ms}ms`;
-				})
+				.style("transition", s=>("transform linear "+getDuration(s)))
+		//return;
+	    setTimeout(()=>{
 
-		selected_leg
+	    	selected_leg
 				.style("transform",s=>{
 
 					console.log("S",s)
 					let distance=(s.distance%(dimensions.length*2)>0)?yscale(dimensions.length):yscale(0),
 						dy=(s.distance%(dimensions.length*2)>0)?0:yscale(dimensions.length-(s.dmt));
-					
+
+					if(s.distance===0) {
+						dy=-yscale(s.mt)
+					}
+
+					s.translateY=dy;
 					return `translateY(${(-(dy))}px)`;
 
 				})
+				.each(function(d){
+					ts.forEach(t=>{
+						clearTimeout(t);
+						t=null;
+					});
 
-		/*selected_leg
+					if(d.lane===GOLD_LANE) {
+
+						let duration=best_cumulative_times[d.distance].best_time*(delta/dimensions.length)*multiplier;
+						if(d.calculated) {
+							stopWatch.hide();
+						} else {
+							stopWatch.start(best_cumulative_times[d.distance].best_cumulative-duration);	
+						}
+						
+					}
+				})
+				.on("transitionend",function(d){
+
+					console.log("transitionend",d,this)
+
+					if(d.lane===GOLD_LANE) {
+						if(text_update){
+							buildTexts();
+							addAnnotation();
+						}
+						//activateButton();
+					}
+
+					if(d.distance>0) {
+						console.log("showGap",this,d,best_cumulative_times[d.distance].best_cumulative)
+						showGap(select(this),d,best_cumulative_times[d.distance].best_cumulative);
+
+					}
+
+					if(d.cumulative_time===best_cumulative_times[d.distance].best_cumulative) {
+						stopWatch.stop(d.cumulative_time);
+					}
+
+					let delay=d.cumulative_time-best_cumulative_times[d.distance].best_cumulative;
+					ts.push(
+						setTimeout(()=>{
+							let entrant=swimmers_data.filter(a=>a.lane===d.lane)[0],
+								gap=d.cumulative_time-best_cumulative_times[d.distance].best_cumulative;
+
+							addTime(d.distance,d.lane);
+
+							
+						},delay)
+					);
+				})
+	    },10)
+	    */
+		
+
+		selected_leg
 				.select("path")
 					.attr("d",s=>{
 
@@ -862,24 +953,45 @@ export default function SwimmingLineChart(data,options) {
 								t=null;
 							});
 
-							if(d.lane===4) {
+							if(d.lane===GOLD_LANE) {
+
+								if(d.distance>0) {
+									let position=d.position-1,
+										record=options.record.split_times[position];
+									let trecord=convertTime(record);
+									stopWatch.showRecord(options.record.split_times[d.position-1],false,position<LEGS.length-2)	
+								} else {
+									stopWatch.hideRecord();
+								}
 
 								let duration=best_cumulative_times[d.distance].best_time*(delta/dimensions.length)*multiplier;
 								if(d.calculated) {
 									stopWatch.hide();
 								} else {
-									stopWatch.start(best_cumulative_times[d.distance].best_cumulative-duration);	
+									stopWatch.start(best_cumulative_times[d.distance].best_cumulative-duration,false);	
 								}
 								
 							}
 						})
 						.on("end",function(d){
-							if(d.lane===4) {
+							if(d.lane===GOLD_LANE) {
 								if(text_update){
 									buildTexts();
 									addAnnotation();
 								}
-								//activateButton();
+								if(d.distance>0) {
+									//console.log("!!!!!!!",d)
+									let position=d.position-1,//LEGS.indexOf(+d.distance),
+										record=options.record.split_times[position];
+									//console.log(position,options.record.split_times)
+									let trecord=convertTime(record),
+										gap=best_cumulative_times[d.distance].best_cumulative-trecord;
+									//console.log("!!!!!!!!",record,trecord,gap,formatSecondsMilliseconds(gap))	
+									stopWatch.showRecord(options.record.split_times[d.position-1],gap,position<LEGS.length-2)	
+								} else {
+									stopWatch.hideRecord();
+								}
+								
 							}
 
 							if(d.distance>0) {
@@ -891,18 +1003,28 @@ export default function SwimmingLineChart(data,options) {
 							}
 
 							let delay=d.cumulative_time-best_cumulative_times[d.distance].best_cumulative;
+
+
+
 							ts.push(
 								setTimeout(()=>{
 									let entrant=swimmers_data.filter(a=>a.lane===d.lane)[0],
 										gap=d.cumulative_time-best_cumulative_times[d.distance].best_cumulative;
 
 									addTime(d.distance,d.lane);
-
-									
 								},delay)
 							);
 						})
-		*/
+						.filter((d)=>(d.lane===GOLD_LANE))
+							.attrTween("nothing",(s)=>{
+								return function(t) {
+									//console.log(Math.round(t*1000/10)*10)
+									stopWatch.update();
+									//stopWatch.setTime(Math.round(t*1000/10)*10)
+									return "";
+								}
+							})
+		
 
 		
 		

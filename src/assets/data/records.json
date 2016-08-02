@@ -57,5 +57,58 @@
 				                    "value": "1:54.00"
 				                }]
 				            }]
+	},
+	"women_freestyle_4x100":{
+		"athlete":"Australia",
+		"country":"AUS",
+		"time":"3:30.98",
+		"split_times":[
+				"25.76",
+				"53.15",
+				"1:18.72",
+				"1:45.91",
+				"2:11.63",
+				"2:38.82",
+				"3:03.51",
+				"3:30.98"
+			],
+		"date":"2014-07-24",
+		"where":"Glasgow, GBR",
+		"resultExtension": [{
+				                "type": "Reaction Time",
+				                "value": "0.66"
+				            }, {
+				                "type": "Split Times",
+				                "extension": [
+				                	{
+					                    "position": "1",
+					                    "value": "25.76"
+					                }, {
+					                    "position": "2",
+					                    "value": "53.15"
+					                },
+					            	{
+					                    "position": "3",
+					                    "value": "1:18.72"
+					                }, {
+					                    "position": "4",
+					                    "value": "1:45.91"
+					                },
+					                {
+					                    "position": "5",
+					                    "value": "2:11.63"
+					                }, {
+					                    "position": "6",
+					                    "value": "2:38.82"
+					                },
+					            	{
+					                    "position": "7",
+					                    "value": "3:03.51"
+					                }, {
+					                    "position": "8",
+					                    "value": "3:30.98"
+					                }
+					           	]
+				            }]
 	}
 }

@@ -74,7 +74,10 @@
 		
 		
 		transition: transform 1s;
-  		backface-visibility: hidden;
+  		backface-visibility: hidden;	
+		
+		
+		
 
 		.swimming-pool {
 			path.pool-line {
@@ -134,7 +137,11 @@
 			}
 		}
 		.swimmer {
+
 			.leg {
+				transition: transform linear 2s;
+				//transition-delay:1s;
+
 				path {
 					
 					
@@ -271,18 +278,5 @@
 	}
 }
 .stopwatch {
-	position:absolute;
-	right:0;
-	top:0;
-	margin-top:20px;
-	margin-right:20px;
-	opacity:0.5;
-	span.time {
-		text-align: right;
-	}
-	ul {
-		li {
-			text-align: right;
-		}
-	}
+	
 }

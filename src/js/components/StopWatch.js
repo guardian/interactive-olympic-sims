@@ -2,7 +2,8 @@ import {
     select
 } from 'd3-selection';
 import {
-	msToTime
+	msToTime,
+	formatSecondsMilliseconds
 } from '../lib/time';
 import {cancelAnimFrame, requestAnimFrame} from '../lib/raf';
 
@@ -17,55 +18,90 @@ export default function StopWatch(options) {
 
 	let stopwatch;
 
-	let timeDOM;
+	let timeDOM,
+		wrDOM,
+		gapDOM;
 
-	let list=[],
-		list_container;
+	let CURRENT_TIME;
+
+	/*let list=[],
+		list_container;*/
 
 	let multiplier=options.multiplier || 1;
 
-	function buildWatch() {
+	function buildWatchDOM() {
 		stopwatch=select(options.container)
 			.append("div")
 			.attr("class","stopwatch")
 
 		timeDOM=stopwatch.append("span").attr("class","time");
 
-		list_container=stopwatch.append("ul");
+		//list_container=stopwatch.append("ul");
 
+	}
+	function buildWatch() {
+		console.log(options)
+		stopwatch=select(options.container)
+					.append("svg")
+					.attr("class","stopwatch")
+						.append("g")
+
+		timeDOM=stopwatch.append("text").attr("class","time");
+		wrDOM=stopwatch.append("text").attr("class","wr").attr("transform","translate(0,20)");
+		gapDOM=stopwatch.append("text").attr("class","wr").attr("transform","translate(0,34)");
 	}
 	buildWatch();
 
 	function setTime(time) {
-		let t=msToTime(time);
-		timeDOM.text((t[1]?(t[1]+":"):"")+(t[1]&&t[2]<10?"0":"")+t[2]+"."+(t[3]));
-	}
 
-	function updateTime(time) {
-		let current_time=new Date().getTime(),
-			diff=(current_time - start_time)+delta_time,
-			t=msToTime(diff*multiplier);
+		if(CURRENT_TIME!==time) {
 
-		timeDOM.text((t[1]?(t[1]+":"):"")+(t[1]&&t[2]<10?"0":"")+t[2]+"."+(t[3]));
+			//console.log(CURRENT_TIME,"!==",time)
 
-		frameRequest = requestAnimFrame(updateTime);
+			let t=msToTime(time);
+			timeDOM.text((t[1]?(t[1]+":"):"")+(t[1]&&t[2]<10?"0":"")+t[2]+"."+(t[3]));	
+
+			CURRENT_TIME=time;
+		}
 		
 	}
+	this.setTime = (time) => {
+		setTime(time);
+	}
 
-	this.start = (time=0) => {
+	function updateTime(raf=true) {
+		let current_time=new Date().getTime(),
+			diff=(current_time - start_time)+delta_time,
+			_t=Math.round(diff*multiplier/100)*100,
+			t=msToTime(_t,1);
+		if(CURRENT_TIME!==_t) {
+			//console.log(_t,CURRENT_TIME)
+			timeDOM.text((t[1]?(t[1]+":"):"")+(t[1]&&t[2]<10?"0":"")+t[2]+"."+(t[3]));
+			CURRENT_TIME=_t;
+		}
 
-		cancelAnimFrame(frameRequest);
+		if(raf) {
+			frameRequest = requestAnimFrame(updateTime);	
+		}
+	}
+	this.update = () => {
+		updateTime(false);
+	}
+
+	this.start = (time=0,raf=true) => {
+		if(frameRequest) {
+			cancelAnimFrame(frameRequest);	
+		}
 
 		delta_time=time;
 
 		start_time=new Date().getTime();
 
-		list=[];
-		list_container.selectAll("li").remove();
-
 		stopwatch.classed("hidden",false);
 
-		frameRequest = requestAnimFrame(updateTime);
+		if(raf) {
+			frameRequest = requestAnimFrame(updateTime);	
+		}
 	}
 
 	this.stop = (time=false) => {
@@ -77,10 +113,46 @@ export default function StopWatch(options) {
 
 	this.hide = () => {
 		cancelAnimFrame(frameRequest);
+		wrDOM.text("");
+		gapDOM.text("");
 		stopwatch.classed("hidden",true)
 	}
+	this.show = (x,y) => {
+		//cancelAnimFrame(frameRequest);
+		if(x && y) {
+			stopwatch
+				.attr("transform",`translate(${x},${y})`)	
+		}
+		
+		stopwatch
+			.classed("hidden",false)
+	}
 
-	this.append = (entrant,time) => {
+	this.showRecord = (record,gap,split=false) => {
+
+		
+		if(split) {
+			wrDOM.text(`WR Split ${record}`);
+		} else {
+			wrDOM.text(`WR ${record}`);
+		}
+		if(!gap) {
+			gapDOM.text("")
+			return;	
+		}
+
+		console.log(gap)
+
+		gapDOM.text(`${gap>0?"+":"-"}${formatSecondsMilliseconds(Math.abs(gap))}`);
+
+	}
+
+	this.hideRecord = () => {
+		wrDOM.text("");
+		gapDOM.text("");
+	}
+
+	/*this.append = (entrant,time) => {
 		console.log(entrant);
 
 		list.push({
@@ -98,5 +170,5 @@ export default function StopWatch(options) {
 				.text(d=>{
 					return entrant.time;//d.time.value;
 				})
-	}
+	}*/
 }

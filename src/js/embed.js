@@ -27,7 +27,7 @@ window.init = function init(el, config) {
     new SwimmingPerspective(swimming_data,{
         container:el,
         text:swimming_text,
-        record:records.men_medley_200,
+        record:records["women_freestyle_4x100"],
         team:true,
         multiplier: 1,
         margins: {

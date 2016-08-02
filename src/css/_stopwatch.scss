@@ -6,25 +6,34 @@
 	font-weight:bold;
 	
 	position: absolute;
+	top:0;
+	right:0;
+	z-index:9999;
 
-	span.time {
-		display: block;
-		text-align: right;
-	}
 	
-	ul {
-		list-style: none;
-		margin:0;
-		padding:0;
+	width:150px;
+	height:80px;
+
+	margin-right:20px;
+
+	g {
+		transform: translate(150px,40px);	
 		
-		@include fs-textSans(2);
-		li {
-			span.result {
-				color:#666;
-				display: inline-block;
-				margin-left:5px;
+		text {
+			text-anchor:end;
+			fill-opacity:0.6;
+
+			&.time {
+				fill:#333;
+			}
+			&.wr {
+				font-size:14px;
+				font-weight: normal;
+				fill:#333;
 			}
 		}
+
+		
 	}
 
 	&.hidden {
