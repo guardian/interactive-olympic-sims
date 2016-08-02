@@ -1,0 +1,478 @@
+{
+    "olympics": {
+        "eventUnit": {
+            "identifier": "SWW014101",
+            "description": "Women's 400m Freestyle Final",
+            "unitType": "Individuals",
+            "medalEvent": "Yes",
+            "disciplineDescription": {
+                "identifier": "swimming",
+                "value": "Swimming"
+            },
+            "phaseDescription": {
+                "identifier": "SWW0141",
+                "value": "Final"
+            },
+            "result": {
+                "type": "Official",
+                "timestamp": "2013-11-13T12:15:00Z",
+                "entrant": [{
+                    "order": "4",
+                    "type": "Individual",
+                    "code": "1121594",
+                    "rank": "1",
+                    "value": "4:01.45",
+                    "property": [{
+                        "type": "Medal Awarded",
+                        "value": "Gold"
+                    }, {
+                        "type": "Record Set",
+                        "value": "OR"
+                    }, {
+                        "type": "Result Type",
+                        "value": "Time"
+                    }],
+                    "resultExtension": [{
+                        "type": "Reaction Time",
+                        "value": "0.69"
+                    }, {
+                        "type": "Split Times",
+                        "extension": [{
+                            "position": "1",
+                            "value": "27.61"
+                        }, {
+                            "position": "2",
+                            "value": "57.83"
+                        }, {
+                            "position": "3",
+                            "value": "1:28.66"
+                        }, {
+                            "position": "4",
+                            "value": "1:59.50"
+                        }, {
+                            "position": "5",
+                            "value": "2:29.89"
+                        }, {
+                            "position": "6",
+                            "value": "3:00.67"
+                        }, {
+                            "position": "7",
+                            "value": "3:31.13"
+                        }, {
+                            "position": "8",
+                            "value": "4:01.45"
+                        }]
+                    }],
+                    "country": {
+                        "identifier": "FRA",
+                        "name": "France",
+                        "longName": "France"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "competitor": {
+                            "identifier": "1121594",
+                            "firstName": "Camille",
+                            "lastName": "Muffat",
+                            "fullName": "Camille Muffat"
+                        }
+                    }
+                }, {
+                    "order": "5",
+                    "type": "Individual",
+                    "code": "1133648",
+                    "rank": "2",
+                    "value": "4:01.77",
+                    "property": [{
+                        "type": "Medal Awarded",
+                        "value": "Silver"
+                    }, {
+                        "type": "Record Set",
+                        "value": "AM"
+                    }, {
+                        "type": "Result Type",
+                        "value": "Time"
+                    }],
+                    "resultExtension": [{
+                        "type": "Reaction Time",
+                        "value": "0.75"
+                    }, {
+                        "type": "Split Times",
+                        "extension": [{
+                            "position": "1",
+                            "value": "28.05"
+                        }, {
+                            "position": "2",
+                            "value": "58.11"
+                        }, {
+                            "position": "3",
+                            "value": "1:28.84"
+                        }, {
+                            "position": "4",
+                            "value": "1:59.88"
+                        }, {
+                            "position": "5",
+                            "value": "2:30.36"
+                        }, {
+                            "position": "6",
+                            "value": "3:01.11"
+                        }, {
+                            "position": "7",
+                            "value": "3:31.68"
+                        }, {
+                            "position": "8",
+                            "value": "4:01.77"
+                        }]
+                    }],
+                    "country": {
+                        "identifier": "USA",
+                        "name": "United States",
+                        "longName": "United States of America"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "competitor": {
+                            "identifier": "1133648",
+                            "firstName": "Allison",
+                            "lastName": "Schmitt",
+                            "fullName": "Allison Schmitt"
+                        }
+                    }
+                }, {
+                    "order": "8",
+                    "type": "Individual",
+                    "code": "1062467",
+                    "rank": "3",
+                    "value": "4:03.01",
+                    "property": [{
+                        "type": "Medal Awarded",
+                        "value": "Bronze"
+                    }, {
+                        "type": "Result Type",
+                        "value": "Time"
+                    }],
+                    "resultExtension": [{
+                        "type": "Reaction Time",
+                        "value": "0.74"
+                    }, {
+                        "type": "Split Times",
+                        "extension": [{
+                            "position": "1",
+                            "value": "28.35"
+                        }, {
+                            "position": "2",
+                            "value": "58.97"
+                        }, {
+                            "position": "3",
+                            "value": "1:29.86"
+                        }, {
+                            "position": "4",
+                            "value": "2:00.90"
+                        }, {
+                            "position": "5",
+                            "value": "2:31.64"
+                        }, {
+                            "position": "6",
+                            "value": "3:02.79"
+                        }, {
+                            "position": "7",
+                            "value": "3:33.35"
+                        }, {
+                            "position": "8",
+                            "value": "4:03.01"
+                        }]
+                    }],
+                    "country": {
+                        "identifier": "GBR",
+                        "name": "Great Britain",
+                        "longName": "Great Britain"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "competitor": {
+                            "identifier": "1062467",
+                            "firstName": "Rebecca",
+                            "lastName": "Adlington",
+                            "fullName": "Rebecca Adlington"
+                        }
+                    }
+                }, {
+                    "order": "2",
+                    "type": "Individual",
+                    "code": "1068227",
+                    "rank": "4",
+                    "value": "4:03.98",
+                    "property": {
+                        "type": "Result Type",
+                        "value": "Time"
+                    },
+                    "resultExtension": [{
+                        "type": "Reaction Time",
+                        "value": "0.75"
+                    }, {
+                        "type": "Split Times",
+                        "extension": [{
+                            "position": "1",
+                            "value": "28.37"
+                        }, {
+                            "position": "2",
+                            "value": "58.80"
+                        }, {
+                            "position": "3",
+                            "value": "1:29.64"
+                        }, {
+                            "position": "4",
+                            "value": "2:00.53"
+                        }, {
+                            "position": "5",
+                            "value": "2:31.74"
+                        }, {
+                            "position": "6",
+                            "value": "3:02.97"
+                        }, {
+                            "position": "7",
+                            "value": "3:34.13"
+                        }, {
+                            "position": "8",
+                            "value": "4:03.98"
+                        }]
+                    }],
+                    "country": {
+                        "identifier": "DEN",
+                        "name": "Denmark",
+                        "longName": "Denmark"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "competitor": {
+                            "identifier": "1068227",
+                            "firstName": "Lotte",
+                            "lastName": "Friis",
+                            "fullName": "Lotte Friis"
+                        }
+                    }
+                }, {
+                    "order": "1",
+                    "type": "Individual",
+                    "code": "1095748",
+                    "rank": "5",
+                    "value": "4:04.50",
+                    "property": {
+                        "type": "Result Type",
+                        "value": "Time"
+                    },
+                    "resultExtension": [{
+                        "type": "Reaction Time",
+                        "value": "0.69"
+                    }, {
+                        "type": "Split Times",
+                        "extension": [{
+                            "position": "1",
+                            "value": "28.13"
+                        }, {
+                            "position": "2",
+                            "value": "58.47"
+                        }, {
+                            "position": "3",
+                            "value": "1:29.30"
+                        }, {
+                            "position": "4",
+                            "value": "2:00.62"
+                        }, {
+                            "position": "5",
+                            "value": "2:31.56"
+                        }, {
+                            "position": "6",
+                            "value": "3:02.99"
+                        }, {
+                            "position": "7",
+                            "value": "3:34.15"
+                        }, {
+                            "position": "8",
+                            "value": "4:04.50"
+                        }]
+                    }],
+                    "country": {
+                        "identifier": "ITA",
+                        "name": "Italy",
+                        "longName": "Italy"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "competitor": {
+                            "identifier": "1095748",
+                            "firstName": "Federica",
+                            "lastName": "Pellegrini",
+                            "fullName": "Federica Pellegrini"
+                        }
+                    }
+                }, {
+                    "order": "3",
+                    "type": "Individual",
+                    "code": "1121549",
+                    "rank": "6",
+                    "value": "4:05.95",
+                    "property": {
+                        "type": "Result Type",
+                        "value": "Time"
+                    },
+                    "resultExtension": [{
+                        "type": "Reaction Time",
+                        "value": "0.73"
+                    }, {
+                        "type": "Split Times",
+                        "extension": [{
+                            "position": "1",
+                            "value": "28.42"
+                        }, {
+                            "position": "2",
+                            "value": "58.75"
+                        }, {
+                            "position": "3",
+                            "value": "1:29.44"
+                        }, {
+                            "position": "4",
+                            "value": "2:00.49"
+                        }, {
+                            "position": "5",
+                            "value": "2:31.45"
+                        }, {
+                            "position": "6",
+                            "value": "3:02.67"
+                        }, {
+                            "position": "7",
+                            "value": "3:34.30"
+                        }, {
+                            "position": "8",
+                            "value": "4:05.95"
+                        }]
+                    }],
+                    "country": {
+                        "identifier": "FRA",
+                        "name": "France",
+                        "longName": "France"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "competitor": {
+                            "identifier": "1121549",
+                            "firstName": "Coralie",
+                            "lastName": "Balmy",
+                            "fullName": "Coralie Balmy"
+                        }
+                    }
+                }, {
+                    "order": "7",
+                    "type": "Individual",
+                    "code": "1076831",
+                    "rank": "7",
+                    "value": "4:06.24",
+                    "property": {
+                        "type": "Result Type",
+                        "value": "Time"
+                    },
+                    "resultExtension": [{
+                        "type": "Reaction Time",
+                        "value": "0.72"
+                    }, {
+                        "type": "Split Times",
+                        "extension": [{
+                            "position": "1",
+                            "value": "28.66"
+                        }, {
+                            "position": "2",
+                            "value": "59.54"
+                        }, {
+                            "position": "3",
+                            "value": "1:30.94"
+                        }, {
+                            "position": "4",
+                            "value": "2:02.37"
+                        }, {
+                            "position": "5",
+                            "value": "2:33.88"
+                        }, {
+                            "position": "6",
+                            "value": "3:05.51"
+                        }, {
+                            "position": "7",
+                            "value": "3:36.57"
+                        }, {
+                            "position": "8",
+                            "value": "4:06.24"
+                        }]
+                    }],
+                    "country": {
+                        "identifier": "CAN",
+                        "name": "Canada",
+                        "longName": "Canada"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "competitor": {
+                            "identifier": "1076831",
+                            "firstName": "Brittany",
+                            "lastName": "Maclean",
+                            "fullName": "Brittany Maclean"
+                        }
+                    }
+                }, {
+                    "order": "6",
+                    "type": "Individual",
+                    "code": "1125090",
+                    "rank": "8",
+                    "value": "4:06.25",
+                    "property": {
+                        "type": "Result Type",
+                        "value": "Time"
+                    },
+                    "resultExtension": [{
+                        "type": "Reaction Time",
+                        "value": "0.79"
+                    }, {
+                        "type": "Split Times",
+                        "extension": [{
+                            "position": "1",
+                            "value": "28.57"
+                        }, {
+                            "position": "2",
+                            "value": "59.15"
+                        }, {
+                            "position": "3",
+                            "value": "1:29.93"
+                        }, {
+                            "position": "4",
+                            "value": "2:01.08"
+                        }, {
+                            "position": "5",
+                            "value": "2:32.44"
+                        }, {
+                            "position": "6",
+                            "value": "3:04.06"
+                        }, {
+                            "position": "7",
+                            "value": "3:35.58"
+                        }, {
+                            "position": "8",
+                            "value": "4:06.25"
+                        }]
+                    }],
+                    "country": {
+                        "identifier": "NZL",
+                        "name": "New Zealand",
+                        "longName": "New Zealand"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "competitor": {
+                            "identifier": "1125090",
+                            "firstName": "Lauren",
+                            "lastName": "Boyle",
+                            "fullName": "Lauren Boyle"
+                        }
+                    }
+                }]
+            }
+        }
+    }
+}

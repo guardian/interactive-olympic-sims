@@ -1,7 +1,7 @@
 import iframeMessenger from 'guardian/iframe-messenger'
 import embedHTML from './text/embed.html!text'
 
-import swimming_data from '../assets/data/women_freestyle_4x100.json!json'
+import swimming_data from '../assets/data/women_freestyle_400.json!json'
 import swimming_text from '../assets/data/texts/women_freestyle_4x100.json!json'
 
 //import running_data100 from '../assets/data/men_running_100.json!json'
@@ -27,8 +27,8 @@ window.init = function init(el, config) {
     new SwimmingPerspective(swimming_data,{
         container:el,
         text:swimming_text,
-        record:records["women_freestyle_4x100"],
-        team:true,
+        record:records["women_freestyle_400"],
+        team:false,
         multiplier: 1,
         margins: {
             left:10,

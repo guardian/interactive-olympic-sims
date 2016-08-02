@@ -143,7 +143,9 @@ export default function SwimmingLineChart(data,options) {
     					cumulative_time:cumulative_time,
     					distance:+d.position*dimensions.length,
 			    		calculated:(d.mt%dimensions.length)?true:false,
-			    		position:+d.position
+			    		position:+d.position,
+			    		name_country:entrant.participant.competitor.lastName+" "+entrant.country.identifier,
+						country_name:entrant.country.identifier+" "+entrant.participant.competitor.lastName
     				}
     			}),
     			"entrant":entrant,
@@ -435,10 +437,14 @@ export default function SwimmingLineChart(data,options) {
 				    	.attr("startOffset","0%")
 				    	.text((s,i)=>{
 							let swimmer=swimmers_data.filter(d=>(d.lane===s.lane))[0];
+
 							if(options.team) {
 								return swimmer.entrant.country.identifier;
 							}
-							return swimmer.entrant.participant.competitor.lastName;
+
+							//console.log("TEXTPATH",s)
+
+							return swimmer.entrant.participant.competitor.lastName+" "+swimmer.entrant.country.identifier
 						})
 
 		leg.filter(s=>(s.distance>0))
@@ -466,7 +472,7 @@ export default function SwimmingLineChart(data,options) {
 							if(options.team) {
 								return swimmer.entrant.country.identifier;
 							}
-							return swimmer.entrant.participant.competitor.lastName;
+							return swimmer.entrant.participant.competitor.lastName+" "+swimmer.entrant.country.identifier
 						})
 
 		goTo(options.text[0].mt,options.text[0].story==="intro")
@@ -785,113 +791,22 @@ export default function SwimmingLineChart(data,options) {
 			.classed("visible",false)
 			.interrupt()
 			.filter(d=>(d.distance===distance))
-				.classed("visible",true);
-		/*
-		function getDuration(s) {
-			//return "10s";
-			let ms=0;
-			if(s.distance===0) {
-				ms=best_cumulative_times[s.distance].best_time;
-			} else {
-				ms=getTimeForDistance(best_cumulative_times[s.distance].best_time,dimensions.length,delta)
-			}
-			return ms+"ms";
-		}
-		*/
-		/*
-		selected_leg
-				.style("transition", "none")
-				.style("transform",s=>{
+				.classed("visible",true);		
 
-					console.log("S",s)
-					let distance=(s.distance%(dimensions.length*2)>0)?yscale(dimensions.length):yscale(0),
-						dy=(s.distance%(dimensions.length*2)>0)?0:yscale(dimensions.length-(s.dmt+delta));
+		if(!options.team) {
+			selected_leg
+				.selectAll("textPath")
+				.filter(s=>s.distance>0)
+				.text(s=>{
+					//console.log("TEXTPATH",s)
+					let name=(s.distance%(dimensions.length*2)>0) ?
+								s.country_name
+								:
+								s.name_country
 					
-					if(s.distance===0) {
-						dy=-yscale(0)
-
-						console.log(yscale(0),yscale(s.dmt),yscale(s.mt))
-
-					}
-
-					console.log("transform",dy,s.dmt,delta,s.dmt+delta)
-
-					return `translateY(${(-(dy))}px)`;
-
+					return name;
 				})
-				.style("transition", s=>("transform linear "+getDuration(s)))
-		//return;
-	    setTimeout(()=>{
-
-	    	selected_leg
-				.style("transform",s=>{
-
-					console.log("S",s)
-					let distance=(s.distance%(dimensions.length*2)>0)?yscale(dimensions.length):yscale(0),
-						dy=(s.distance%(dimensions.length*2)>0)?0:yscale(dimensions.length-(s.dmt));
-
-					if(s.distance===0) {
-						dy=-yscale(s.mt)
-					}
-
-					s.translateY=dy;
-					return `translateY(${(-(dy))}px)`;
-
-				})
-				.each(function(d){
-					ts.forEach(t=>{
-						clearTimeout(t);
-						t=null;
-					});
-
-					if(d.lane===GOLD_LANE) {
-
-						let duration=best_cumulative_times[d.distance].best_time*(delta/dimensions.length)*multiplier;
-						if(d.calculated) {
-							stopWatch.hide();
-						} else {
-							stopWatch.start(best_cumulative_times[d.distance].best_cumulative-duration);	
-						}
-						
-					}
-				})
-				.on("transitionend",function(d){
-
-					console.log("transitionend",d,this)
-
-					if(d.lane===GOLD_LANE) {
-						if(text_update){
-							buildTexts();
-							addAnnotation();
-						}
-						//activateButton();
-					}
-
-					if(d.distance>0) {
-						console.log("showGap",this,d,best_cumulative_times[d.distance].best_cumulative)
-						showGap(select(this),d,best_cumulative_times[d.distance].best_cumulative);
-
-					}
-
-					if(d.cumulative_time===best_cumulative_times[d.distance].best_cumulative) {
-						stopWatch.stop(d.cumulative_time);
-					}
-
-					let delay=d.cumulative_time-best_cumulative_times[d.distance].best_cumulative;
-					ts.push(
-						setTimeout(()=>{
-							let entrant=swimmers_data.filter(a=>a.lane===d.lane)[0],
-								gap=d.cumulative_time-best_cumulative_times[d.distance].best_cumulative;
-
-							addTime(d.distance,d.lane);
-
-							
-						},delay)
-					);
-				})
-	    },10)
-	    */
-		
+		}
 
 		selected_leg
 				.select("path")

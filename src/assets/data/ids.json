@@ -2,5 +2,13 @@
 	{
 		"id":"SWW411101",
 		"description":"Women's 4 x 100m Freestyle Relay Final"
+	},
+	{
+		"id":"SWW014101",
+		"description":"Women's 400m Freestyle Final"
+	},
+	{
+		"id":"SWM012101",
+		"description":"Men's 200m Freestyle Final"
 	}
 ]
