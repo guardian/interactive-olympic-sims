@@ -44,14 +44,15 @@ window.init = function init(el, config) {
         container:el,
         text:running_text,
         record:records["women_freestyle_400"],
+        dimensions:dimensions200m,
         team:false,
         multiplier: 1,
         race:"200m",
         margins: {
-            left:10,
-            right:10,
-            top:10,
-            bottom:10
+            left:0,
+            right:0,
+            top:0,
+            bottom:0
         }
     })
 
@@ -66,10 +67,10 @@ window.init = function init(el, config) {
         multiplier: 1,
         race:"200m",
         margins: {
-            left:10,
-            right:80,
-            top:10,
-            bottom:10
+            left:0,
+            right:0,
+            top:0,
+            bottom:0
         }
     })
 

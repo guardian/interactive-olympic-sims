@@ -27,6 +27,7 @@ import {
 } from '../lib/time';
 import {
 	describeArc,
+	describeInverseArc,
 	getAngle,
 	toRad
 } from '../lib/geometry';
@@ -549,15 +550,27 @@ export default function Oval(options) {
 
 		let start_angle=getAngle(staggers[lane],__RADIUS)
 		start_angle=0;
-		let starting_arc=describeArc(hscale(x+dimensions.field.width),vscale.range()[1]/2,hscale(__RADIUS),180-start_angle,0),
-			ending_arc=describeArc(hscale(x),vscale.range()[1]/2,hscale(__RADIUS),0,180);
-
-		
-		return `${starting_arc.path}
+		//let starting_arc=describeArc(hscale(x+dimensions.field.width),vscale.range()[1]/2,hscale(__RADIUS),0,180),
+		//	ending_arc=describeArc(hscale(x),vscale.range()[1]/2,hscale(__RADIUS),180,0);
+		let starting_arc=describeInverseArc(hscale(x),vscale.range()[1]/2,hscale(__RADIUS),180,0),
+			ending_arc=describeInverseArc(hscale(x+dimensions.field.width),vscale.range()[1]/2,hscale(__RADIUS),0,180);
+		console.log("BG BG BG BG",starting_arc)
+		return `M${hscale(x+dimensions.field.width)},${starting_arc.start[1]}
+				L${hscale(x)},${starting_arc.start[1]}
+				${starting_arc.arc}
+				L${hscale(x+dimensions.field.width)},${starting_arc.end[1]}
+				${ending_arc.arc}`;
+				/*
 				L${hscale(x)},${starting_arc.end[1]}
 				${ending_arc.arc}
+				L${hscale(x+dimensions.field.width)},${ending_arc.start[1]}
+				`;*/
+		
+		return `${starting_arc.path}`
+				/*L${hscale(x)},${starting_arc.end[1]}
+				${ending_arc.arc}
 				L${hscale(x+dimensions.field.width)},${ending_arc.end[1]}
-				`;
+				`;*/
 
 		
 	}
@@ -575,7 +588,7 @@ export default function Oval(options) {
 				.attr("class","background")
 				.append("path")
 					.attr("d",addBackground(lane))
-					.attr("id","bg"+lane)
+					.attr("id","bg_"+lane)
 					.style("stroke-width",hscale(dimensions.lane-dimensions.line_width*2)*0.9)
 		/*
 		let athlete=runners

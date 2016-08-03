@@ -44,7 +44,8 @@ import {
 
 import {
 	dimensions,
-	RunningLinear
+	RunningLinear,
+	Running200mEasing
 } from '../lib/running'
 
 import StopWatch from "./StopWatch";
@@ -106,9 +107,11 @@ export default function RunningPerspectiveOval(data,options) {
     		SPLITS=1;
 
     	for(var k in options.dimensions) {
+    		console.log("setting",k,dimensions[k],"to",options.dimensions[k])
 	    	dimensions[k]=options.dimensions[k];
     	}
-    	
+
+
 
     	console.log(data.olympics.eventUnit.result)
     	//athletes_data=data.olympics.eventUnit.result.entrant.sort((a,b)=>(+a.order - +b.order)).map(entrant => {
@@ -135,6 +138,7 @@ export default function RunningPerspectiveOval(data,options) {
     				let prev_time=0;
     				return options.text.filter(d=>(d.mt>0 && d.type==="story")).map(d=>{
     					let time=convertTime(entrant.value)*(d.mt / dimensions.length);
+    					console.log("TIME TIME TIME",entrant.value,convertTime(entrant.value),d.mt,"/",dimensions.length,"=",d.mt / dimensions.length)
     					let leg={
 		    					value:entrant.value,
 			    				time:time-prev_time,
@@ -239,7 +243,7 @@ export default function RunningPerspectiveOval(data,options) {
 
 	    container=select(options.container)
 	    					.append("div")
-	    					.attr("class","running-perspective oval");
+	    					.attr("class","running-perspective-oval oval");
 
 	    annotations_layer=container
 								.append("div")
@@ -264,7 +268,7 @@ export default function RunningPerspectiveOval(data,options) {
 		HEIGHT = box.width>414?box.width*3:box.height;*/
 
 		let box = container.node().getBoundingClientRect();
-		WIDTH = options.width || box.width,
+		WIDTH = options.width || box.width*4,
         HEIGHT = options.height || box.height;
 
 	    let ratio=(84.39+36.5*2)/73.5;
@@ -288,6 +292,8 @@ export default function RunningPerspectiveOval(data,options) {
 	    		container:container.node(),
             	race:options.race,
 				svg:svg,
+				width:WIDTH,
+				height:HEIGHT,
 				margins:options.margins || {
 					top:0,
 					bottom:0,
@@ -375,7 +381,7 @@ export default function RunningPerspectiveOval(data,options) {
 
 						return ath.splits.map(d=>{
 
-							let distance=d.distance || 5;
+							let distance=d.distance || 10;
 							d.mt=distance*best_cumulative_times[d.distance].best_cumulative/d.cumulative_time;
 							d.dmt=distance-d.mt;
 							d.lane=ath.lane;
@@ -394,7 +400,8 @@ export default function RunningPerspectiveOval(data,options) {
 				.attr("d",s=>{
 					return oval.getPath(s.lane);
 				})
-				.attr("stroke-width",Math.floor(xscale(dimensions.lane*0.5)))
+				//.attr("stroke-width",Math.floor(xscale(dimensions.lane*0.5)))
+				.attr("stroke-width",yscale(dimensions.lane-dimensions.line_width*2)*0.9)
 				/*.attr("d",s=>{
 
 					let x=xscale(s.lane*dimensions.lane + dimensions.lane/2),
@@ -435,10 +442,19 @@ export default function RunningPerspectiveOval(data,options) {
 				    .attr("dy","0.35em")
 					.append("textPath")
 				    	.attr("xlink:href", (s,i)=>{
-				    		return `#guide_${s.lane}_${s.distance}`
+				    		return `#bg_${s.lane+1}`;
 				    	})
 				    	.attr("text-anchor","start")
-				    	.attr("startOffset","0%")
+				    	.attr("startOffset",s=>{
+				    		
+				    		let d=dimensions.lane_staggers[s.lane]/400;
+				    		
+				    		console.log(s.lane,dimensions.lane_staggers,dimensions,(50 - d*100) + "%")
+				    		if(s.lane===7) {
+				    			return "44%";
+				    		}
+				    		return (50 - d*100 + (s.lane-1)*0.1) + "%";
+				    	})
 				    	.text((s,i)=>{
 							let athlete=athletes_data.filter(d=>(d.lane===s.lane))[0];
 
@@ -469,8 +485,8 @@ export default function RunningPerspectiveOval(data,options) {
 				    })
 				  	.append("textPath")
 				    	.attr("xlink:href", s=>("#leg_"+s.lane+"_"+s.distance))
-				    	.attr("text-anchor",s=>(s.distance%100>0)?"end":"start")
-				    	.attr("startOffset",s=>(s.distance%100>0)?"50%":"50%")
+				    	.attr("text-anchor",s=>(s.distance>0)?"end":"start")
+				    	.attr("startOffset",s=>(s.distance>0)?"100%":"0%")
 				    	.text(s=>{
 							let athlete=athletes_data.filter(d=>(d.lane===s.lane))[0]
 							if(options.team) {
@@ -754,7 +770,7 @@ export default function RunningPerspectiveOval(data,options) {
 	function showGap(el,s,best_time) {
 		console.log("showGap",el,s);
 
-		console.log("DURATION",s.cumulative_time-best_time)
+		//console.log("DURATION",s.cumulative_time-best_time)
 
 		el
 			.append("path")
@@ -789,10 +805,17 @@ export default function RunningPerspectiveOval(data,options) {
 					return interpolate(t);
 
 				})
-				.attr("stroke-width",Math.floor(xscale(dimensions.lane*0.5)))
+				//.attr("stroke-width",Math.floor(xscale(dimensions.lane*0.5)))
+				.attr("stroke-width",yscale(dimensions.lane-dimensions.line_width*2)*0.9)
 				.transition()
 				.duration(s.cumulative_time-best_time)
 				.ease(RunningLinear)
+				/*.ease(()=>{
+					if(s.distance===0) {
+						//return Running200mEasing;
+					}
+					return RunningLinear;
+				})*/
 						.attr("stroke-dasharray", function(d){
 
 							let l=this.getTotalLength();
@@ -909,33 +932,59 @@ export default function RunningPerspectiveOval(data,options) {
 			dy=dyScale(w),
 			dz=dzScale(w),
 			dd=ddScale(distance);
-		let transform=`rotateX(45deg) rotateY(0deg) rotateZ(15deg) translateX(-${dx}%) translateY(${-dy+dd}px) translateZ(${dz}px)`;
+		
 		//dy=0;
 		//let transform=`rotateX(65deg) rotateY(0deg) rotateZ(10deg) translateX(-1%) translateY(${300}px) translateZ(150px)`;
-		if(WIDTH<400) {
-			//container.style("perspective","700px").style("perspective-origin","90% 20%")
-			transform="rotateX(75deg) rotateY(0deg) rotateZ(10deg) translateX(67px) translateY(365px) translateZ(45px) scale(0.8)";
-		}
-		transform="translateY(-44%) scale(0.1)";
-		/*try {
-	    	svg
-	    		.style("-webkit-transform",transform)
-	    		.style("-moz-transform",transform)
-	    		.style("-ms-transform",transform)
-	    		.style("transform",transform);
-
-	    	overlay
-	    		.style("-webkit-transform",transform)
-	    		.style("-moz-transform",transform)
-	    		.style("-ms-transform",transform)
-	    		.style("transform",transform);
-	    } catch(e) {
-
-		}*/
-
 		
+		
+		
+		function transformTransition(status=0) {
 
-		let delta=20;
+			let transform = `rotateX(30deg) rotateY(0deg) rotateZ(70deg) translateZ(500px) translateX(-1780px) translateY(315px)`;
+			
+			transform = `rotateX(40deg) rotateY(0deg) rotateZ(70deg) translateZ(500px) translateX(-1700px) translateY(315px)`;
+			if(distance===0) {
+				transform = `rotateX(31deg) rotateY(0deg) rotateZ(0deg) translateZ(500px) translateX(-280px) translateY(285px)`;
+			}
+			if(distance===100) {
+				transform = `rotateX(50deg) rotateY(0deg) rotateZ(-30deg) translateZ(500px) translateX(810px) translateY(-1965px)`;
+			}
+
+			if(WIDTH<400) {
+				//container.style("perspective","700px").style("perspective-origin","90% 20%")
+				transform="rotateX(75deg) rotateY(0deg) rotateZ(10deg) translateX(67px) translateY(365px) translateZ(45px) scale(0.8)";
+			}
+			
+			if(status===0) {
+				transform = `rotateX(60deg) rotateY(0deg) rotateZ(50deg) translateZ(500px) translateX(-640px) translateY(295px)`;
+			}
+
+			try {
+		    	svg
+		    		.style("-webkit-transform",transform)
+		    		.style("-moz-transform",transform)
+		    		.style("-ms-transform",transform)
+		    		.style("transform",transform);
+
+		    	overlay
+		    		.style("-webkit-transform",transform)
+		    		.style("-moz-transform",transform)
+		    		.style("-ms-transform",transform)
+		    		.style("transform",transform);
+		    } catch(e) {
+
+			}
+			if(status===0) {
+				setTimeout(()=>{
+					transformTransition(1)
+				},1000)	
+			}
+			
+		}
+		
+		transformTransition();
+
+		let delta=30;
 
 		let selected_leg=leg
 			.classed("visible",false)
@@ -947,6 +996,36 @@ export default function RunningPerspectiveOval(data,options) {
 			.attr("stroke-dasharray",function(d){
 				return "0 "+this.getTotalLength();
 			})
+
+		selected_leg
+				.filter(d=>(d.distance===distance && d.distance>0))
+				.selectAll("textPath")
+				    	.attr("startOffset",s=>{
+
+				    		return (((s.mt-delta) / dimensions.length)*100)+"%";
+
+				    		return (s.distance>0)?"100%":"0%";
+				    	})
+				    	.transition()
+				    	.duration(s=>{
+
+							if(s.distance===0) {
+								return best_cumulative_times[s.distance].best_time;
+							}
+							//let t=getTimeForDistance(best_cumulative_times[s.distance].best_cumulative,dimensions.length,delta)
+							
+							let t=getTimeForDistance(best_cumulative_times[s.distance].cumulative_times[s.lane],dimensions.length,delta)
+
+							return t;
+						})
+						.delay(2000)
+						.ease(RunningLinear)
+				    	.attr("startOffset",s=>{
+
+				    		return (((s.mt) / dimensions.length)*100)+"%";
+
+				    		return (s.distance>0)?"100%":"0%";
+				    	})
 
 		selected_leg
 				.select("path")
@@ -991,13 +1070,19 @@ export default function RunningPerspectiveOval(data,options) {
 					*/
 					.transition()
 					.duration(s=>{
+
 						if(s.distance===0) {
 							return best_cumulative_times[s.distance].best_time;
 						}
-						return getTimeForDistance(best_cumulative_times[s.distance].best_time,dimensions.length,delta)
-						//return best_cumulative_times[s.distance].best_time*multiplier
+						//let t=getTimeForDistance(best_cumulative_times[s.distance].best_cumulative,dimensions.length,delta)
+						
+						let t=getTimeForDistance(best_cumulative_times[s.distance].cumulative_times[s.lane],dimensions.length,delta)
+
+						console.log("DURATION",t)
+
+						return t;
 					})
-					//.delay(1000)
+					.delay(2000)
 					.ease(RunningLinear)
 					.attr("stroke-dasharray", function(s){
 
@@ -1009,7 +1094,8 @@ export default function RunningPerspectiveOval(data,options) {
 
 						return interpolate(t);
 
-					})/*
+					})
+					/*
 						.attr("d",s=>{
 
 							let x=xscale(s.lane*dimensions.lane + dimensions.lane/2),

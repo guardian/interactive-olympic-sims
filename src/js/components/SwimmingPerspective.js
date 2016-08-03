@@ -836,7 +836,9 @@ export default function SwimmingLineChart(data,options) {
 						if(s.distance===0) {
 							return best_cumulative_times[s.distance].best_time;
 						}
-						return getTimeForDistance(best_cumulative_times[s.distance].best_time,dimensions.length,delta)
+						//return getTimeForDistance(best_cumulative_times[s.distance].best_time,dimensions.length,delta)
+						let t=getTimeForDistance(best_cumulative_times[s.distance].cumulative_times[s.lane],dimensions.length,delta)
+						return t;
 						//return best_cumulative_times[s.distance].best_time*0.2*0.5
 					})
 					.delay(1000)

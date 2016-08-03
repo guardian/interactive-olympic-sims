@@ -87,6 +87,8 @@ export function getDistance(time,speed) {
 }
 export function getTimeForDistance(time_for_leg,leg_length,distance) {
 
+	console.log("getTimeForDistance",time_for_leg,leg_length,distance);
+
 	//t:leg=x:distance
 	return distance*time_for_leg/leg_length
 
