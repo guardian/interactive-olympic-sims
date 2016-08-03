@@ -1,0 +1,30 @@
+[
+	{
+		"type":"intro",
+		"mt":200,
+		"lane":null,
+		"text":"There's no stopping Bolt who wins in 9.63! A new Olympic record! Yohan Blake is second in 9.75 secs, Justin Gatlin third in 9.79 and Tyson Gay fourth in 9.80 sec. Seven of the eight finalists break 10 seconds",
+		"button":"The final as it happened"
+	},
+	{
+		"type":"story",
+		"mt":0,
+		"lane":null,
+		"text":"Gay and Martina do get a dream start, with fantastic reaction times",
+		"button":"Run! Run! Run!"
+	},
+	{
+		"type":"story",
+		"mt":100,
+		"lane":null,
+		"text":"Usain Bolt wins gold in 9.63sec, with Blake second and Gatlin taking bronze.",
+		"button":"Replay"
+	},
+	{
+		"type":"story",
+		"mt":200,
+		"lane":null,
+		"text":"Usain Bolt wins gold in 9.63sec, with Blake second and Gatlin taking bronze.",
+		"button":"Replay"
+	}
+]

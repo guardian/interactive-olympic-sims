@@ -64,12 +64,16 @@ export default function Oval(options) {
     let WIDTH = options.width || box.width,
         HEIGHT = options.height || box.height;
 
+
+
     let ratio=(84.39+36.5*2)/73.5;
 
-    let svg=container
-				.append("svg")
-				.attr("width",WIDTH)
-				.attr("height",WIDTH/ratio)
+    HEIGHT=WIDTH/ratio;
+
+    let svg=options.svg || container
+								.append("svg")
+								.attr("width",WIDTH)
+								.attr("height",HEIGHT);
 
     console.log(WIDTH,HEIGHT,ratio,WIDTH/ratio);
 
@@ -80,36 +84,6 @@ export default function Oval(options) {
     	mult1=1;
 
     let internal_cuve_length=(dimensions.radius)*Math.PI*mult;
-
- //    dimensions.lane=dimensions.lane/mult1;
-	// dimensions.lanes=dimensions.lanes/mult1;
-	// dimensions.line_width=dimensions.line_width/mult1;
-
- //    dimensions.radius=internal_cuve_length/Math.PI;
-
- //    dimensions.field.width=dimensions.field.width*mult;
- //    dimensions.field.height=dimensions.field.height*mult;
-
- //    dimensions.field.start.x=dimensions.radius;
- //    dimensions.field.start.y=dimensions.radius;
-
- //    hundred=hundred*mult;
-
-
-
-    /*dimensions.lane_staggers=dimensions.lane_staggers.map(d=>{
-    	//console.log("STAGGER",d)
-    	//d=d*1.1
-    	//d=d+(d>0?0.65:0);
-
-    	return d;
-    })*/
-
-    //console.log("STAGGERS",dimensions.lane_staggers)
-    //console.log("NEW STUFF","radius:",dimensions.radius,"curve:",internal_cuve_length,"straight:",dimensions.field.width)
-
-
-    //console.log(WIDTH,HEIGHT)
 
     let hscale=scaleLinear().domain([0,dimensions.radius*2+dimensions.field.width]).rangeRound([0,WIDTH]),
     	vscale=scaleLinear().domain([0,dimensions.lanes*2+dimensions.field.height]).rangeRound([0,HEIGHT]);
@@ -192,6 +166,61 @@ export default function Oval(options) {
 
 	}
 
+	this.getPath = (lane) => {
+		//lane = lane-1;
+
+		let staggers=dimensions200m.lane_staggers.slice();
+
+		if(!splits[lane]) {
+			splits[lane]=[];
+		}
+
+		let x=dimensions.lanes+dimensions.radius,
+			l=lane*dimensions.lane,
+			y=dimensions.lanes+dimensions.field.height + l,
+			angle=staggers[lane]/(dimensions.radius+dimensions.running_line+dimensions.lane*lane)*(180/Math.PI);
+		
+		let __RADIUS=dimensions.radius+dimensions.running_line[lane]+dimensions.lane*lane
+
+		let curve_length=__RADIUS*Math.PI,
+			arc_length=curve_length-staggers[lane];
+
+		console.log(lane,"CURVE_LENGTH",curve_length,"ARC_LENGTH:",arc_length,"distance to 100",arc_length-100)
+		
+		let hundreds=[];
+		
+		let last_coords=[];
+
+		//0-100
+		let start_angle=getAngle(staggers[lane],__RADIUS),
+			end_angle=getAngle(staggers[lane]+100,__RADIUS);
+		
+		let arc=describeArc(hscale(x),vscale.range()[1]/2,hscale(__RADIUS),-end_angle,-start_angle);
+		
+		hundreds.push(`${arc.path}`);
+		splits[lane].push(arc.end);
+
+		last_coords={
+			curve:1,
+			coords:arc.end,
+			arc:arc,
+			end_angle:end_angle,
+			remaining_curve:curve_length-(hundred+staggers[lane])
+		};
+
+		//100-200
+		let end_arc=describeArc(hscale(x),vscale.range()[1]/2,hscale(__RADIUS),-180,-end_angle);
+			hundreds.push(`${end_arc.arc}L${end_arc.end[0]+hscale(dimensions.field.width)},${end_arc.end[1]}`)
+		
+		return hundreds.join("");
+
+		return [
+			hundreds[0] || "",
+			hundreds[1] || "",
+			hundreds[2] || ""
+ 		];
+	}
+
 	function addPath200(lane) {
 		lane = lane-1;
 
@@ -217,23 +246,36 @@ export default function Oval(options) {
 		
 		let last_coords=[];
 
-
-		//0-100
+		//0-5
 		let start_angle=getAngle(staggers[lane],__RADIUS),
-			end_angle=getAngle(staggers[lane]+100,__RADIUS);
+			end_angle=getAngle(staggers[lane]+5,__RADIUS);
 		
-		//console.log(lane,"lane","from",start_angle,"to",end_angle)
-		let starting_arc=describeArc(hscale(x),vscale.range()[1]/2,hscale(__RADIUS),-end_angle,-start_angle);
+		let arc=describeArc(hscale(x),vscale.range()[1]/2,hscale(__RADIUS),-end_angle,-start_angle);
 		
-		//hundreds.push("")
-		hundreds.push(`${starting_arc.path}`);
-		
-		splits[lane].push(starting_arc.end);
+		hundreds.push(`${arc.path}`);
+		splits[lane].push(arc.end);
 
 		last_coords={
 			curve:1,
-			coords:starting_arc.end,
-			arc:starting_arc,
+			coords:arc.end,
+			arc:arc,
+			end_angle:end_angle,
+			remaining_curve:curve_length-(hundred+staggers[lane])
+		};
+
+		//5-100
+		start_angle=end_angle,
+		end_angle=getAngle(staggers[lane]+100,__RADIUS);
+		
+		arc=describeArc(hscale(x),vscale.range()[1]/2,hscale(__RADIUS),-end_angle,-start_angle);
+		
+		hundreds.push(`${arc.path}`);
+		splits[lane].push(arc.end);
+
+		last_coords={
+			curve:1,
+			coords:arc.end,
+			arc:arc,
 			end_angle:end_angle,
 			remaining_curve:curve_length-(hundred+staggers[lane])
 		};
@@ -245,8 +287,9 @@ export default function Oval(options) {
 
 		return [
 			hundreds[0] || "",
-			hundreds[1] || ""
-		];
+			hundreds[1] || "",
+			hundreds[2] || ""
+ 		];
 
 	}
 
@@ -486,10 +529,6 @@ export default function Oval(options) {
 			
 	}
 
-	function addPath800(lane) {
-		
-	}
-
 	function addBackground(lane) {
 
 		lane = lane-1;
@@ -525,10 +564,11 @@ export default function Oval(options) {
 
 
 
-	this.addRunner = (lane,runner) => {
+	this.addRunner = (ath) => {
 		//console.log("-------------------------------->","adding runner at lane",lane)
 
-		
+		let lane=ath.entrant.order,
+			runner=ath.entrant;
 
 		background
 				.append("g")
@@ -537,7 +577,7 @@ export default function Oval(options) {
 					.attr("d",addBackground(lane))
 					.attr("id","bg"+lane)
 					.style("stroke-width",hscale(dimensions.lane-dimensions.line_width*2)*0.9)
-
+		/*
 		let athlete=runners
 						.append("g")
 							.attr("class","runner");
@@ -594,22 +634,18 @@ export default function Oval(options) {
 						})
 		split.append("circle")
 				.attr("r",2)
-
-		// let inside_path=1927.094970703125;
-		// //console.log("PATH LENGTH",lane,p.node().getTotalLength())
-		// //console.log(dimensions.measurments[lane-1][1]/dimensions.measurments[0][1])
-		// //console.log(p.node().getTotalLength()/inside_path)
+		*/
 
 	}
 
-	this.updateRunner = (lane,info) => {
-		laneTransition(lane,info);
+	this.updateRunner = (ath,info) => {
+		laneTransition(ath,info);
 		//console.log(lane,info)
 	}
 
-	function laneTransition(lane,info) {
+	function laneTransition(ath,info) {
 
-		lane = lane-1;
+		let lane = ath.entrant.order-1;
 		let time=info.leg_time;
 
 		if(dimensions.race[options.race]) {
@@ -625,9 +661,6 @@ export default function Oval(options) {
 		  			.filter((d,i)=>(i===info.leg))
 				  		.transition()
 						.duration((time?time:info.leg_time)/multiplier)
-						//.ease(info.start?Running400mEasing:RunningLinear)
-						//.ease(Running400mEasing)
-						//.ease(RunningLinear)
 						.ease(info.leg===0?Running200mEasing:RunningLinear)
 						.attrTween("stroke-dasharray", function(d){return tweenDash(this)})
 
