@@ -118,14 +118,14 @@ export default function Oval(options) {
 					.attr("transform",`translate(${margins.left},${margins.top})`)
 
 	scaffolding.append("line")
-				.attr("x1",hscale(dimensions.lanes+dimensions.radius))
+				.attr("x1",hscale(dimensions.lanes+dimensions.radius)+2)
 				.attr("y1",0)
-				.attr("x2",hscale(dimensions.lanes+dimensions.radius))
+				.attr("x2",hscale(dimensions.lanes+dimensions.radius)+2)
 				.attr("y2",HEIGHT)
 	scaffolding.append("line")
-				.attr("x1",hscale(dimensions.lanes+dimensions.radius+dimensions.field.width))
+				.attr("x1",hscale(dimensions.lanes+dimensions.radius+dimensions.field.width)+2)
 				.attr("y1",0)
-				.attr("x2",hscale(dimensions.lanes+dimensions.radius+dimensions.field.width))
+				.attr("x2",hscale(dimensions.lanes+dimensions.radius+dimensions.field.width)+2)
 				.attr("y2",HEIGHT)
 
 	function setLegRatio() {

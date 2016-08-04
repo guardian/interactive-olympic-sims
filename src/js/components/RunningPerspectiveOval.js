@@ -114,11 +114,24 @@ export default function RunningPerspectiveOval(data,options) {
 
 
     	console.log(data.olympics.eventUnit.result)
-    	//athletes_data=data.olympics.eventUnit.result.entrant.sort((a,b)=>(+a.order - +b.order)).map(entrant => {
+
+
+		
+
+
     	athletes_data=data.olympics.eventUnit.result.entrant.map(entrant => {
-    		let prev_cumulative_time=0;
+ 
+    		let athlete=options.team?entrant.country.identifier:entrant.participant.competitor.fullName;
+
+			let prev_cumulative_time=0;
+
+			if(!GOLD_LANE) {
+				GOLD_LANE=+entrant.order;
+			}
+
+
     		return {
-    			"athlete":entrant.participant.competitor.fullName,
+    			"athlete":athlete,
     			"lane":(+entrant.order-1),
     			"reaction_time":{
     				value: (typeof REACTION_TIME=='undefined') ? "DQF" : entrant.resultExtension[REACTION_TIME].value,
@@ -249,9 +262,7 @@ export default function RunningPerspectiveOval(data,options) {
 								.append("div")
 								.attr("class","annotations");
 
-	    overlay=container
-						.append("div")
-						.attr("class","rio-overlay");
+	    
 
 		/*stopWatch=new StopWatch({
 			container:options.container,
@@ -260,8 +271,9 @@ export default function RunningPerspectiveOval(data,options) {
 
 	    svg=container.append("svg")
 	    
-	    overlay=container.append("div")
-	     			.attr("class","overlay")
+	    overlay=container
+						.append("div")
+						.attr("class","rio-overlay");
 
 	    /*let box = container.node().getBoundingClientRect();
 	    WIDTH = box.width;
@@ -773,7 +785,7 @@ export default function RunningPerspectiveOval(data,options) {
 		//console.log("DURATION",s.cumulative_time-best_time)
 
 		el
-			.append("path")
+			.insert("path","path")
 				.attr("class","gap")
 				.attr("d",()=>{
 					return oval.getPath(s.lane);
@@ -938,7 +950,7 @@ export default function RunningPerspectiveOval(data,options) {
 		
 		
 		
-		function transformTransition(status=0) {
+		function transformTransition(status=1) {
 
 			let transform = `rotateX(30deg) rotateY(0deg) rotateZ(70deg) translateZ(500px) translateX(-1780px) translateY(315px)`;
 			
@@ -1122,7 +1134,7 @@ export default function RunningPerspectiveOval(data,options) {
 										[x,start_y]
 									]);
 
-						})
+						})*/
 						.on("start",d=>{
 
 							ts.forEach(t=>{
@@ -1130,21 +1142,35 @@ export default function RunningPerspectiveOval(data,options) {
 								t=null;
 							});
 
-							if(d.lane===1) {
-								let duration=best_cumulative_times[d.distance].best_time*(delta/dimensions.length)*multiplier;
+							
+
+							if(d.lane===GOLD_LANE) {
+
+							
+
+								let duration;
+								if(d.distance===0) {
+									duration=best_cumulative_times[d.distance].best_time;
+								}
+								//let t=getTimeForDistance(best_cumulative_times[s.distance].best_cumulative,dimensions.length,delta)
+								
+								duration=getTimeForDistance(best_cumulative_times[d.distance].cumulative_times[d.lane],dimensions.length,delta)
+
+								console.log("DURATION",duration)
+
 								if(d.calculated) {
 									stopWatch.hide();
 								} else {
 									
-									
+									console.log("STARTING STOP WATCH AT ",best_cumulative_times[d.distance].best_cumulative,"-",duration)
 
-									stopWatch.start(best_cumulative_times[d.distance].best_cumulative-duration);	
+									stopWatch.start(best_cumulative_times[d.distance].best_cumulative-duration);
 								}
 								
 							}
-						})*/
+						})
 						.on("end",function(d){
-							if(d.lane===1) {
+							if(d.lane===GOLD_LANE) {
 								if(text_update){
 									buildTexts();
 									addAnnotation();
@@ -1155,11 +1181,11 @@ export default function RunningPerspectiveOval(data,options) {
 							if(d.distance===dimensions.length) {
 								showGap(select(this.parentNode),d,best_cumulative_times[d.distance].best_cumulative);
 							}
-							return;
+							
 							if(d.cumulative_time===best_cumulative_times[d.distance].best_cumulative) {
 								stopWatch.stop(d.cumulative_time);
 							}
-
+							return;
 							if(d.distance%dimensions.length===0) {
 								let delay=d.cumulative_time-best_cumulative_times[d.distance].best_cumulative;
 								ts.push(

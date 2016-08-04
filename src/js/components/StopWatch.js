@@ -44,11 +44,12 @@ export default function StopWatch(options) {
 		stopwatch=select(options.container)
 					.append("svg")
 					.attr("class","stopwatch")
-						.append("g")
+					
+		let stopwatch_g=stopwatch.append("g");
 
-		timeDOM=stopwatch.append("text").attr("class","time");
-		wrDOM=stopwatch.append("text").attr("class","wr").attr("transform","translate(0,20)");
-		gapDOM=stopwatch.append("text").attr("class","wr").attr("transform","translate(0,34)");
+		timeDOM=stopwatch_g.append("text").attr("class","time");
+		wrDOM=stopwatch_g.append("text").attr("class","wr").attr("transform","translate(0,20)");
+		gapDOM=stopwatch_g.append("text").attr("class","wr").attr("transform","translate(0,34)");
 	}
 	buildWatch();
 

@@ -151,7 +151,7 @@
 		}
 		//height:$height;//$height;
 		
-		transition: transform 1s ;
+		transition: transform 2s ;
 		transition-timing-function: ease-in-out;
 
 		transform:rotateX(40deg) rotateY(0deg) rotateZ(10deg) translateZ(470px) translateX(-120px) translateY(515px);
@@ -210,7 +210,7 @@
 					fill:none;
 					
 					stroke-opacity:0;
-					stroke:#1991C6;
+					stroke:#8EBE6F;
 					
 
 				}
@@ -252,9 +252,9 @@
 
 
 					&.stroke {
-						stroke-width:3;
+						stroke-width:2;
 						@media (-webkit-min-device-pixel-ratio: 2) {
-							stroke-width:2;
+							stroke-width:1;
 						}
 						stroke:none;
 						stroke-opacity:0;
@@ -277,7 +277,7 @@
 						&.stroke {
 							stroke-opacity:0;
 							@include mq(tablet) {
-								stroke-opacity:0.5;
+								stroke-opacity:1;
 							}
 						}
 					}
