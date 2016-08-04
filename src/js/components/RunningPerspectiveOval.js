@@ -990,10 +990,10 @@ export default function RunningPerspectiveOval(data,options) {
 			//620
 			transform = `rotateX(40deg) rotateY(10deg) rotateZ(17deg) translateZ(330px) translateX(-1130px) translateY(-110px)`;
 
-			dxScale=scaleLinear().domain([620,1260]).range([1130,2640]);
-			dyScale=scaleLinear().domain([620,1260]).range([110,1040]);
+			dxScale=scaleLinear().domain([620,1260]).range([-1130,-2575]);
+			dyScale=scaleLinear().domain([620,1260]).range([-110,-1120]);
 
-			transform = `rotateX(40deg) rotateY(10deg) rotateZ(17deg) translateZ(330px) translateX(-${dxScale(w)}px) translateY(-${dyScale(w)}px)`;
+			transform = `rotateX(40deg) rotateY(10deg) rotateZ(17deg) translateZ(330px) translateX(${dxScale(w)}px) translateY(${dyScale(w)}px)`;
 
 			if(distance===0) {
 				transform = `rotateX(31deg) rotateY(0deg) rotateZ(0deg) translateZ(500px) translateX(-280px) translateY(285px)`;
@@ -1021,8 +1021,8 @@ export default function RunningPerspectiveOval(data,options) {
 				transform = `rotateX(40deg) rotateY(0deg) rotateZ(-15deg) translateZ(460px) translateX(400px) translateY(-2015px)`;
 				transform = `rotateX(40deg) rotateY(0deg) rotateZ(-15deg) translateZ(460px) translateX(400px) translateY(-2375px)`;
 
-				drxScale=scaleLinear().domain([620,1260]).range([50,40]);
-				dxScale=scaleLinear().domain([620,1260]).range([-10,50]);
+				drxScale=scaleLinear().domain([620,1260]).range([50,45]);
+				dxScale=scaleLinear().domain([620,1260]).range([-10,120]);
 				dyScale=scaleLinear().domain([620,1260]).range([-630,-2000]);
 				dzScale=scaleLinear().domain([620,1260]).range([190,360]);
 
