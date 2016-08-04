@@ -1,18 +1,5 @@
 .oval {
-	//(84.39+36.5*2)/73.50
-	$ratio:(84.39+36.5*2)/73.5;
-	$width:1200px;
-
-	width:$width;
-	height:$width/$ratio;
 	
-
-	perspective: 700px;
-	perspective-origin: 30% 50%;
-
-	transform-style: preserve-3d;
-
-	backface-visibility: hidden;
 
 	svg {
 		//width:$width*1;

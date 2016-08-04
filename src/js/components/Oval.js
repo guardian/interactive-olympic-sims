@@ -140,7 +140,7 @@ export default function Oval(options) {
 				
 				let __RADIUS=dimensions.radius+dimensions.running_line[lane]+dimensions.lane*lane+dimensions.lane/2
 				
-				let angle=getAngle(d,__RADIUS-dimensions.lane/2);
+				let angle=getAngle(d-0.2,__RADIUS-dimensions.lane/2);
 
 				//console.log(d,__RADIUS,angle,toRad(angle))
 				let coords1=polarToCartesian(x1,y1,hscale(__RADIUS-dimensions.lane),-angle);
@@ -226,15 +226,13 @@ export default function Oval(options) {
 		
 		let last_coords=[];
 
+		
 		//0-100
 		let start_angle=getAngle(staggers[lane],__RADIUS),
 			end_angle=getAngle(staggers[lane]+100,__RADIUS);
 		
 		let arc=describeArc(hscale(x),vscale.range()[1]/2,hscale(__RADIUS),-end_angle,-start_angle);
 		
-		//console.log("RADIUS",lane,__RADIUS,hscale(__RADIUS))
-		//console.log("ARC",lane,staggers[lane],start_angle,arc)
-
 		hundreds.push(`${arc.path}`);
 		splits[lane].push(arc.end);
 
@@ -249,6 +247,9 @@ export default function Oval(options) {
 		//100-200
 		let end_arc=describeArc(hscale(x),vscale.range()[1]/2,hscale(__RADIUS),-180,-end_angle);
 			hundreds.push(`${end_arc.arc}L${end_arc.end[0]+hscale(dimensions.field.width)},${end_arc.end[1]}`)
+		
+
+		
 		
 		return hundreds.join("");
 
@@ -566,7 +567,7 @@ export default function Oval(options) {
 			
 	}
 
-	function addBackground(lane) {
+	function addBackground(lane,antiClockWise=false) {
 
 		lane = lane-1;
 		
@@ -584,26 +585,35 @@ export default function Oval(options) {
 			y=dimensions.lanes+dimensions.field.height + l,
 			angle=staggers[lane]/(dimensions.radius+dimensions.lane/2+dimensions.lane*lane)*(180/Math.PI);
 
-		let start_angle=getAngle(staggers[lane],__RADIUS)
-		start_angle=0;
-		//let starting_arc=describeArc(hscale(x+dimensions.field.width),vscale.range()[1]/2,hscale(__RADIUS),0,180),
-		//	ending_arc=describeArc(hscale(x),vscale.range()[1]/2,hscale(__RADIUS),180,0);
-		let starting_arc=describeInverseArc(hscale(x),vscale.range()[1]/2,hscale(__RADIUS),180,0),
-			ending_arc=describeInverseArc(hscale(x+dimensions.field.width),vscale.range()[1]/2,hscale(__RADIUS),0,180);
-		//console.log("BG BG BG BG",starting_arc)
+		if(antiClockWise) {
+			let start_angle=getAngle(staggers[lane],__RADIUS)
+			start_angle=0;
+			
+			let starting_arc=describeInverseArc(hscale(x),vscale.range()[1]/2,hscale(__RADIUS),180,0),
+				ending_arc=describeInverseArc(hscale(x+dimensions.field.width),vscale.range()[1]/2,hscale(__RADIUS),0,180);
 
-		//console.log("RADIUS",lane,__RADIUS,hscale(__RADIUS),ending_arc.start[1])
+			return `M${hscale(x+dimensions.field.width)},${starting_arc.start[1]}
+					L${hscale(x)},${starting_arc.start[1]}
+					${starting_arc.arc}
+					L${hscale(x+dimensions.field.width)},${starting_arc.end[1]}
+					${ending_arc.arc}`;
+		} else {
+			let start_angle=getAngle(staggers[lane],__RADIUS)
+			start_angle=0;
+			
+			let starting_arc=describeArc(hscale(x+dimensions.field.width),vscale.range()[1]/2,hscale(__RADIUS),180,0),
+				ending_arc=describeArc(hscale(x),vscale.range()[1]/2,hscale(__RADIUS),0,180);
+			//console.log("BG BG BG BG",starting_arc)
 
-		return `M${hscale(x+dimensions.field.width)},${starting_arc.start[1]}
-				L${hscale(x)},${starting_arc.start[1]}
-				${starting_arc.arc}
-				L${hscale(x+dimensions.field.width)},${starting_arc.end[1]}
-				${ending_arc.arc}`;
-				/*
-				L${hscale(x)},${starting_arc.end[1]}
-				${ending_arc.arc}
-				L${hscale(x+dimensions.field.width)},${ending_arc.start[1]}
-				`;*/
+			//console.log("RADIUS",lane,__RADIUS,hscale(__RADIUS),ending_arc.start[1])
+
+			return `M${hscale(x+dimensions.field.width)},${starting_arc.start[1]}
+					${starting_arc.arc}
+					L${hscale(x)},${starting_arc.end[1]}
+					${ending_arc.arc}
+					L${hscale(x+dimensions.field.width)},${ending_arc.end[1]}`;
+		}
+		
 		
 		return `${starting_arc.path}`
 				/*L${hscale(x)},${starting_arc.end[1]}
@@ -626,10 +636,21 @@ export default function Oval(options) {
 				.append("g")
 				.attr("class","background")
 				.append("path")
+					.attr("d",addBackground(lane,true))
+					.attr("id","bg_o_"+lane)
+					//.style("stroke-width",hscale(dimensions.lane))
+					.style("stroke-width",hscale(dimensions.lane-dimensions.line_width*1)*1);
+
+		background
+				.append("g")
+				.attr("class","background")
+				.append("path")
 					.attr("d",addBackground(lane))
 					.attr("id","bg_"+lane)
 					//.style("stroke-width",hscale(dimensions.lane))
-					.style("stroke-width",hscale(dimensions.lane-dimensions.line_width*2)*0.86)
+					.style("stroke-width",1)
+
+
 		/*
 		let athlete=runners
 						.append("g")

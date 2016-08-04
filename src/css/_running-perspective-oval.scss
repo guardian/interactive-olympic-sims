@@ -2,23 +2,19 @@
 
 	overflow:hidden;
 	
-	border-top:1px solid #ddd;
-	border-bottom:1px solid #ddd;
+	// border-top:1px solid #ddd;
+	// border-bottom:1px solid #ddd;
 
 	$ratio:1;
 	
 	$width:100%;
-	$names_width: 140px;
-	$times_width: 150px;
-	
-	$running_pool_width:500px;//$width;// - $names_width - $times_width;
 	
 	$li_padding_top:0;
 
 	$height:600px;
 	
 	width:$width;
-	height:100vh;
+	height:500px;
 
 	@include mq(tablet) {
 		height: 600px;
@@ -59,11 +55,11 @@
 	
 	@include mq(mobile) {
 		perspective: 1000px;
-		//perspective-origin: 80% 50%;
-		perspective-origin: 50% 0%;
+		perspective-origin: 100% 100%;
 	}
 	
 
+	transform-style: preserve-3d;
 	backface-visibility: hidden;
 	
 	&.from-blocks {
