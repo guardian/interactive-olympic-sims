@@ -957,11 +957,12 @@ export default function RunningPerspectiveOval(data,options) {
 
 		let ddScale=scaleLinear().domain([0,100]).range([0.93*yscale.range()[1],0]);
 
-		let w=xscale.range()[1],
+		let w=box.width,
 			dx=dxScale(w),
 			dy=dyScale(w),
 			dz=dzScale(w),
-			dd=ddScale(distance);
+			dd=ddScale(distance),
+			drxScale;
 		
 		//dy=0;
 		//let transform=`rotateX(65deg) rotateY(0deg) rotateZ(10deg) translateX(-1%) translateY(${300}px) translateZ(150px)`;
@@ -979,18 +980,59 @@ export default function RunningPerspectiveOval(data,options) {
 			transform = `rotateX(20deg) rotateY(10deg) rotateZ(40deg) translateZ(60px) translateX(-2470px) translateY(-500px)`;
 
 			transform = `rotateX(50deg) rotateY(10deg) rotateZ(30deg) translateZ(400px) translateX(-3160px) translateY(-500px)`;
+
+			//1260
+			transform = `rotateX(40deg) rotateY(10deg) rotateZ(17deg) translateZ(330px) translateX(-2640px) translateY(-1040px)`;
+
+			//800
+			transform = `rotateX(40deg) rotateY(10deg) rotateZ(17deg) translateZ(330px) translateX(-1500px) translateY(-400px)`;
+
+			//620
+			transform = `rotateX(40deg) rotateY(10deg) rotateZ(17deg) translateZ(330px) translateX(-1130px) translateY(-110px)`;
+
+			dxScale=scaleLinear().domain([620,1260]).range([1130,2640]);
+			dyScale=scaleLinear().domain([620,1260]).range([110,1040]);
+
+			transform = `rotateX(40deg) rotateY(10deg) rotateZ(17deg) translateZ(330px) translateX(-${dxScale(w)}px) translateY(-${dyScale(w)}px)`;
+
 			if(distance===0) {
 				transform = `rotateX(31deg) rotateY(0deg) rotateZ(0deg) translateZ(500px) translateX(-280px) translateY(285px)`;
 				transform = `rotateX(0deg) rotateY(0deg) rotateZ(0deg) translateZ(0px) translateX(0px) translateY(0px)`;
 				transform = `rotateX(20deg) rotateY(0deg) rotateZ(-10deg) translateZ(160px) translateX(0px) translateY(-340px)`;
 				transform = `rotateX(30deg) rotateY(0deg) rotateZ(-30deg) translateZ(460px) translateX(400px) translateY(-790px)`;
 				transform = `rotateX(30deg) rotateY(0deg) rotateZ(0deg) translateZ(600px) translateX(-140px) translateY(230px)`;
+
+				//1260
+				transform = `rotateX(30deg) rotateY(0deg) rotateZ(-10deg) translateZ(500px) translateX(-50px) translateY(-100px)`;
+				//800
+				//620
+				transform = `rotateX(30deg) rotateY(0deg) rotateZ(-10deg) translateZ(300px) translateX(-50px) translateY(150px)`;
+
+				drxScale=scaleLinear().domain([620,1260]).range([30,20]);
+				dxScale=scaleLinear().domain([620,1260]).range([-50,-30]);
+				dyScale=scaleLinear().domain([620,1260]).range([150,-170]);
+
+				transform = `rotateX(${drxScale(w)}deg) rotateY(0deg) rotateZ(-10deg) translateZ(300px) translateX(${dxScale(w)}px) translateY(${dyScale(w)}px)`;
+
 			}
 			if(distance!==0 && distance !==dimensions.length) {
 				transform = `rotateX(50deg) rotateY(0deg) rotateZ(-30deg) translateZ(500px) translateX(810px) translateY(-1965px)`;
 				transform = `rotateX(43deg) rotateY(0deg) rotateZ(-10deg) translateZ(0px) translateX(520px) translateY(-2085px)`;
 				transform = `rotateX(40deg) rotateY(0deg) rotateZ(-15deg) translateZ(460px) translateX(400px) translateY(-2015px)`;
 				transform = `rotateX(40deg) rotateY(0deg) rotateZ(-15deg) translateZ(460px) translateX(400px) translateY(-2375px)`;
+
+				drxScale=scaleLinear().domain([620,1260]).range([50,40]);
+				dxScale=scaleLinear().domain([620,1260]).range([-10,50]);
+				dyScale=scaleLinear().domain([620,1260]).range([-630,-2000]);
+				dzScale=scaleLinear().domain([620,1260]).range([190,360]);
+
+				//620
+				transform = `rotateX(50deg) rotateY(0deg) rotateZ(-10deg) translateZ(190px) translateX(-10px) translateY(-630px)`
+
+				//1260
+				transform = `rotateX(40deg) rotateY(0deg) rotateZ(-10deg) translateZ(360px) translateX(50px) translateY(-2000px)`
+
+				transform = `rotateX(${drxScale(w)}deg) rotateY(0deg) rotateZ(-10deg) translateZ(${dzScale(w)}px) translateX(${dxScale(w)}px) translateY(${dyScale(w)}px)`;
 			}
 
 			/*if(WIDTH<400) {

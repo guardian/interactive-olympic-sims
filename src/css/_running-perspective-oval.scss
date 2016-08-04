@@ -11,13 +11,13 @@
 	
 	$li_padding_top:0;
 
-	$height:600px;
+	$height:500px;
 	
 	width:$width;
 	height:500px;
 
 	@include mq(tablet) {
-		height: 600px;
+		height: 500px;
 	}
 
 	@include mq(desktop) {
@@ -50,8 +50,8 @@
 		perspective-origin: 90% 0%;
 	} */
 
-	perspective: 700px;
-	perspective-origin: 90% 20%;
+	perspective: 1000px;
+	perspective-origin: 100% 100%;
 	
 	@include mq(mobile) {
 		perspective: 1000px;
