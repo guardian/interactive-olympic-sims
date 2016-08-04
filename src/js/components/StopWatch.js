@@ -20,7 +20,8 @@ export default function StopWatch(options) {
 
 	let timeDOM,
 		wrDOM,
-		gapDOM;
+		gapDOM,
+		wr_visible=false;
 
 	let CURRENT_TIME;
 
@@ -44,7 +45,7 @@ export default function StopWatch(options) {
 		stopwatch=select(options.container)
 					.append("svg")
 					.attr("class","stopwatch")
-					
+
 		let stopwatch_g=stopwatch.append("g");
 
 		timeDOM=stopwatch_g.append("text").attr("class","time");
@@ -146,11 +147,17 @@ export default function StopWatch(options) {
 
 		gapDOM.text(`${gap>0?"+":"-"}${formatSecondsMilliseconds(Math.abs(gap))}`);
 
+		wr_visible=true;
 	}
 
 	this.hideRecord = () => {
+		wr_visible=false;
 		wrDOM.text("");
 		gapDOM.text("");
+	}
+
+	this.isRecordHidden = () => {
+		return !wr_visible;
 	}
 
 	/*this.append = (entrant,time) => {

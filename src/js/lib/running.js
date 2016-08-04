@@ -32,7 +32,8 @@ export const dimensions = {
 	line_width:0.05,
 	man_height:1.8,
 	block:2,
-	running_line:[0.3,0.2,0.2,0.2,0.2,0.2,0.2,0.2],
+	//running_line:[0.3,0.2,0.2,0.2,0.2,0.2,0.2,0.2],
+	running_line:[0,0,0,0,0,0,0,0],
 	measurments: [ //Lane:[Total length,Radius,Semi-circle length,Delta,Angle]
 		[1,400.00,36.80,115.61,0.00,0.00],
 		[2,407.67,38.02,119.44,3.83,5.78],

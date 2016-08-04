@@ -29,7 +29,8 @@ import {
 	describeArc,
 	describeInverseArc,
 	getAngle,
-	toRad
+	toRad,
+	polarToCartesian
 } from '../lib/geometry';
 
 export default function Oval(options) {
@@ -76,7 +77,7 @@ export default function Oval(options) {
 								.attr("width",WIDTH)
 								.attr("height",HEIGHT);
 
-    console.log(WIDTH,HEIGHT,ratio,WIDTH/ratio);
+    //console.log(WIDTH,HEIGHT,ratio,WIDTH/ratio);
 
     let splits=[];
 
@@ -86,8 +87,8 @@ export default function Oval(options) {
 
     let internal_cuve_length=(dimensions.radius)*Math.PI*mult;
 
-    let hscale=scaleLinear().domain([0,dimensions.radius*2+dimensions.field.width]).rangeRound([0,WIDTH]),
-    	vscale=scaleLinear().domain([0,dimensions.lanes*2+dimensions.field.height]).rangeRound([0,HEIGHT]);
+    let hscale=scaleLinear().domain([0,dimensions.radius*2+dimensions.field.width]).range([0,WIDTH]),
+    	vscale=scaleLinear().domain([0,dimensions.lanes*2+dimensions.field.height]).range([0,HEIGHT]);
 
     hscale=vscale.copy();
 
@@ -97,7 +98,7 @@ export default function Oval(options) {
 						.attr("transform",`translate(${margins.left+hscale(dimensions.lane/2)},${margins.top+vscale(dimensions.lane/2)})`)
 
 	/*innerBorder.append("path")
-					.attr("d",()=>{
+					.attr("d",()=>{s
 						
 						return addPath(0);
 
@@ -117,16 +118,50 @@ export default function Oval(options) {
 					.attr("class","scaffolding")
 					.attr("transform",`translate(${margins.left},${margins.top})`)
 
-	scaffolding.append("line")
+	/*scaffolding.append("line")
 				.attr("x1",hscale(dimensions.lanes+dimensions.radius)+2)
 				.attr("y1",0)
 				.attr("x2",hscale(dimensions.lanes+dimensions.radius)+2)
-				.attr("y2",HEIGHT)
+				.attr("y2",HEIGHT)*/
 	scaffolding.append("line")
 				.attr("x1",hscale(dimensions.lanes+dimensions.radius+dimensions.field.width)+2)
 				.attr("y1",0)
 				.attr("x2",hscale(dimensions.lanes+dimensions.radius+dimensions.field.width)+2)
 				.attr("y2",HEIGHT)
+
+	scaffolding.selectAll("line.stagger")
+			.data(dimensions.lane_staggers.map((d,lane)=>{
+				let x=dimensions.lanes+dimensions.radius,
+					l=lane*dimensions.lane,
+					y=dimensions.lanes+dimensions.field.height + l,
+					x1=hscale(x),
+					y1=vscale.range()[1]/2;
+					
+				
+				let __RADIUS=dimensions.radius+dimensions.running_line[lane]+dimensions.lane*lane+dimensions.lane/2
+				
+				let angle=getAngle(d,__RADIUS-dimensions.lane/2);
+
+				//console.log(d,__RADIUS,angle,toRad(angle))
+				let coords1=polarToCartesian(x1,y1,hscale(__RADIUS-dimensions.lane),-angle);
+				let coords2=polarToCartesian(x1,y1,hscale(__RADIUS),-angle);
+				//console.log("COORDS",coords)
+				return {
+					x1:coords1.x,
+					y1:coords1.y,
+					x2:coords2.x,//hscale(__RADIUS)*Math.sin(toRad(angle))+x1,
+					y2:coords2.y//hscale(__RADIUS)*Math.cos(toRad(angle))+y1
+				}
+
+			}))
+			.enter()
+			.append("line")
+			.attr("class","stagger")
+			.attr("x1",d=>d.x1)
+			.attr("y1",d=>d.y1)
+			.attr("x2",d=>d.x2)
+			.attr("y2",d=>d.y2)
+
 
 	function setLegRatio() {
 		let curves=[];
@@ -170,7 +205,7 @@ export default function Oval(options) {
 	this.getPath = (lane) => {
 		//lane = lane-1;
 
-		let staggers=dimensions200m.lane_staggers.slice();
+		let staggers=dimensions200m.lane_staggers;//.slice();
 
 		if(!splits[lane]) {
 			splits[lane]=[];
@@ -178,15 +213,14 @@ export default function Oval(options) {
 
 		let x=dimensions.lanes+dimensions.radius,
 			l=lane*dimensions.lane,
-			y=dimensions.lanes+dimensions.field.height + l,
-			angle=staggers[lane]/(dimensions.radius+dimensions.running_line+dimensions.lane*lane)*(180/Math.PI);
+			y=dimensions.lanes+dimensions.field.height + l;
 		
 		let __RADIUS=dimensions.radius+dimensions.running_line[lane]+dimensions.lane*lane
 
 		let curve_length=__RADIUS*Math.PI,
 			arc_length=curve_length-staggers[lane];
 
-		console.log(lane,"CURVE_LENGTH",curve_length,"ARC_LENGTH:",arc_length,"distance to 100",arc_length-100)
+		//console.log(lane,"CURVE_LENGTH",curve_length,"ARC_LENGTH:",arc_length,"distance to 100",arc_length-100)
 		
 		let hundreds=[];
 		
@@ -198,6 +232,9 @@ export default function Oval(options) {
 		
 		let arc=describeArc(hscale(x),vscale.range()[1]/2,hscale(__RADIUS),-end_angle,-start_angle);
 		
+		//console.log("RADIUS",lane,__RADIUS,hscale(__RADIUS))
+		//console.log("ARC",lane,staggers[lane],start_angle,arc)
+
 		hundreds.push(`${arc.path}`);
 		splits[lane].push(arc.end);
 
@@ -233,8 +270,7 @@ export default function Oval(options) {
 
 		let x=dimensions.lanes+dimensions.radius,
 			l=lane*dimensions.lane,
-			y=dimensions.lanes+dimensions.field.height + l,
-			angle=staggers[lane]/(dimensions.radius+dimensions.running_line+dimensions.lane*lane)*(180/Math.PI);
+			y=dimensions.lanes+dimensions.field.height + l;
 		
 		let __RADIUS=dimensions.radius+dimensions.running_line[lane]+dimensions.lane*lane
 
@@ -541,7 +577,7 @@ export default function Oval(options) {
 			staggers=dimensions200m.lane_staggers.slice();
 		}
 
-		console.log("STAGGERS",options.race,staggers)
+		//console.log("STAGGERS",options.race,staggers)
 
 		let x=dimensions.lanes+dimensions.radius,
 			l=lane*dimensions.lane,
@@ -554,7 +590,10 @@ export default function Oval(options) {
 		//	ending_arc=describeArc(hscale(x),vscale.range()[1]/2,hscale(__RADIUS),180,0);
 		let starting_arc=describeInverseArc(hscale(x),vscale.range()[1]/2,hscale(__RADIUS),180,0),
 			ending_arc=describeInverseArc(hscale(x+dimensions.field.width),vscale.range()[1]/2,hscale(__RADIUS),0,180);
-		console.log("BG BG BG BG",starting_arc)
+		//console.log("BG BG BG BG",starting_arc)
+
+		//console.log("RADIUS",lane,__RADIUS,hscale(__RADIUS),ending_arc.start[1])
+
 		return `M${hscale(x+dimensions.field.width)},${starting_arc.start[1]}
 				L${hscale(x)},${starting_arc.start[1]}
 				${starting_arc.arc}
@@ -589,7 +628,8 @@ export default function Oval(options) {
 				.append("path")
 					.attr("d",addBackground(lane))
 					.attr("id","bg_"+lane)
-					.style("stroke-width",hscale(dimensions.lane-dimensions.line_width*2)*0.9)
+					//.style("stroke-width",hscale(dimensions.lane))
+					.style("stroke-width",hscale(dimensions.lane-dimensions.line_width*2)*0.86)
 		/*
 		let athlete=runners
 						.append("g")

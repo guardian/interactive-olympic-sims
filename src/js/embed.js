@@ -43,7 +43,7 @@ window.init = function init(el, config) {
     new RunningPerspectiveOval(running_data200,{
         container:el,
         text:running_text,
-        record:records["women_freestyle_400"],
+        record:records["men_running_200"],
         dimensions:dimensions200m,
         team:false,
         multiplier: 1,
@@ -63,7 +63,7 @@ window.init = function init(el, config) {
         container:el,
         dimensions:dimensions200m,
         text:running_text,
-        record:records.men_medley_200,
+        record:records.men_running_200,
         multiplier: 1,
         race:"200m",
         margins: {

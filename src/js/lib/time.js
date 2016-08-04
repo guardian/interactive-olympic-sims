@@ -23,8 +23,8 @@ export function convertTime(str_time) {
 		tens=10*(3-split_seconds[1].length),
 		mseconds=+split_seconds[1]*(tens || 1);
 
-	// console.log("seconds",seconds)
-	// console.log("mseconds",mseconds)
+	// //console.log("seconds",seconds)
+	// //console.log("mseconds",mseconds)
 
 	return mseconds + seconds *1000 + minutes * 60 * 1000;
 }
@@ -64,7 +64,7 @@ export function convertTimeHMS(str_time) {
 	str_time="01/01/1970 "+(colon===1?"00:":(colon===0?"00:00:":""))+str_time;
 
 	//console.log(str_time)
-	// console.log(parseTime(str_time))
+	// //console.log(parseTime(str_time))
 	//console.log(colon,str_time,parseTime(str_time))
 
 	return (parseTime(str_time).getTime()+(milliseconds)) - new Date(1970,0,1).getTime();
@@ -82,12 +82,12 @@ export function getDistance(time,speed) {
 	//speed:hour=dist:minutes
 	//dist=speed*minutes/hour
 	let dist=speed*minutes/hour;
-	console.log(dist)
+	//console.log(dist)
 
 }
 export function getTimeForDistance(time_for_leg,leg_length,distance) {
 
-	console.log("getTimeForDistance",time_for_leg,leg_length,distance);
+	//console.log("getTimeForDistance",time_for_leg,leg_length,distance);
 
 	//t:leg=x:distance
 	return distance*time_for_leg/leg_length

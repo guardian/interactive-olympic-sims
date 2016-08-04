@@ -21,12 +21,13 @@
 		backface-visibility: hidden;
 		//transform:rotateX(45deg) rotateY(0deg) rotateZ(-10deg) translateX(220px) translateY(160px) translateZ(0px) scale(1);
 		transform-style: preserve-3d;
-
+	
 		.inner-border {
 			path {
 				stroke:#333;
 				stroke-width:1;
 				fill:none;
+				stroke-linecap:butt;
 			}
 		}
 		
@@ -34,7 +35,13 @@
 			line {
 				stroke:#fff;
 				stroke-width:4;
+				stroke-linecap:butt;
 				//shape-rendering:crispEdges;
+
+				&.stagger {
+					stroke-width:8;
+					stroke:#fff;
+				}
 			}	
 		}
 		

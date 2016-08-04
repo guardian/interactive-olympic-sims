@@ -58,5 +58,17 @@
 			],
 		"date":"2014-08-23",
 		"where":"Gold Coas, AUS"
+	},
+	"men_running_200":{
+		"athlete":"Usain Bolt",
+		"country":"JAM",
+		"time":"19.19",
+		"reaction_time":"0.66",
+		"split_times":[
+				"9.595",
+				"19.19"
+			],
+		"date":"2009-08-20",
+		"where":"Berlin, Germany"
 	}
 }
