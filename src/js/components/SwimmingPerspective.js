@@ -286,7 +286,7 @@ export default function SwimmingLineChart(data,options) {
 	    select(options.container)
 	    		.append("div")
 	    		.attr("class","notes")
-	    		.html("The position are based on the athletes' average speed<br/>Source: Press Association")
+	    		.html("The positions are based on the athletes' average speed. Source: Press Association")
 
 	    annotations_layer=container
 								.append("div")
