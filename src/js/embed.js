@@ -1,7 +1,7 @@
 import iframeMessenger from 'guardian/iframe-messenger'
 import embedHTML from './text/embed.html!text'
 
-import swimming_data from '../assets/data/women_freestyle_400.json!json'
+import swimming_data from '../assets/data/women_freestyle_4x100.json!json'
 //import swimming_text from '../assets/data/texts/women_freestyle_4x100.json!json'
 
 //import running_data200 from '../assets/data/men_running_200.json!json'
@@ -31,7 +31,7 @@ window.init = function init(el, config) {
 
    	//console.log("SWIMMING SwimmingPerspective",el)
 
-   	d3_json("http://interactive.guim.co.uk/docsdata-test/1Qx2_oITx9455H4C_Kv8X4rPYtwnY_KwE-vxPe1cFx4M.json",(json)=>{
+   	d3_json("https://interactive.guim.co.uk/docsdata-test/1Qx2_oITx9455H4C_Kv8X4rPYtwnY_KwE-vxPe1cFx4M.json",(json)=>{
    		new SwimmingPerspective(swimming_data,{
 	        container:el,
 	        text:json.embed_sim.map(d=>{
@@ -39,7 +39,7 @@ window.init = function init(el, config) {
 	        	d.lane = +d.lane;
 	        	return d;
 	        }),
-	        record:records["women_freestyle_400"],
+	        record:records["women_freestyle_4x100"],
 	        length:400,
 	        team:true,
 	        multiplier: 0.5,
@@ -49,7 +49,8 @@ window.init = function init(el, config) {
 	            top:10,
 	            bottom:10
 	        }
-	    })	
+	    });
+
    	})
     
     return;

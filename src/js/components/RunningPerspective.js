@@ -871,7 +871,7 @@ export default function RunningLineChart(data,options) {
 						console.log("-------> DURATION",best_cumulative_times[s.distance].best_time*(delta/dimensions.length))
 						return best_cumulative_times[s.distance].best_time*(delta/dimensions.length)*multiplier
 					})*/
-					.duration(s=>{
+					.duration((s,i)=>{
 						if(s.distance===0) {
 							return best_cumulative_times[s.distance].best_time;
 						}

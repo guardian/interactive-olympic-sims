@@ -1038,7 +1038,7 @@ export default function RunningPerspectiveOval(data,options) {
 
 					})
 					.transition()
-					.duration(s=>{
+					.duration((s,i)=>{
 
 						if(s.distance===0) {
 							return best_cumulative_times[s.distance].best_time;
@@ -1047,7 +1047,7 @@ export default function RunningPerspectiveOval(data,options) {
 						
 						let delta2=(s.distance!==0 && s.distance!==dimensions.length)?delta*2:delta
 
-						let t=getTimeForDistance(best_cumulative_times[s.distance].cumulative_times[s.lane],dimensions.length,delta2)
+						let t=getTimeForDistance(best_cumulative_times[s.distance].cumulative_times[i],dimensions.length,delta2)
 
 						//console.log("DURATION",t)
 
@@ -1066,7 +1066,7 @@ export default function RunningPerspectiveOval(data,options) {
 						return interpolate(t);
 
 					})
-						.on("start",d=>{
+						.on("start",(d,i)=>{
 
 							ts.forEach(t=>{
 								clearTimeout(t);
@@ -1092,7 +1092,7 @@ export default function RunningPerspectiveOval(data,options) {
 								if(d.distance===0) {
 									duration=best_cumulative_times[d.distance].best_time;
 								}
-								duration=getTimeForDistance(best_cumulative_times[d.distance].cumulative_times[d.lane],dimensions.length,delta)
+								duration=getTimeForDistance(best_cumulative_times[d.distance].cumulative_times[i],dimensions.length,delta)
 
 								//console.log("DURATION",duration)
 

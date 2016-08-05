@@ -66,3 +66,27 @@ a {
 .fonts__text-egyptian { @include fs-bodyCopy(2); }
 .fonts__sans { @include f-headlineSans; }
 .fonts__text-sans { @include fs-textSans(4); }
+
+.notes {
+    font-size: 12px;
+    line-height: 16px;
+    font-family: 'Guardian Text Sans Web', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
+    color: #767676;
+
+    margin-left:10px;
+    
+    
+
+    @media (min-width: 61.25em) {
+        margin-left: 0rem;
+    }
+    @media (min-width: 71.25em) {
+        margin-left: 10rem;
+    }
+    @media (min-width: 81.25em) {
+        margin-left: 15rem;
+    }
+    @include mq(tablet) {
+        padding-left:20px;
+    }
+}

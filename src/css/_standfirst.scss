@@ -2,10 +2,10 @@
 	position:absolute;
 	z-index:9999;
 	top:0px;
-	left:0;
-	margin-left:0;
-	width:100%;
-	padding-left:0px;
+	//left:0;
+	margin-left:10px;
+	
+	
 
 	@media (min-width: 61.25em) {
 	    margin-left: 0rem;
@@ -18,8 +18,10 @@
 	}
 
 	@include mq(tablet) {
+		left:0;
 		width:40%;
 		padding-left:20px;
+		padding-right:0;
 	}
 	@include mq(desktop) {
 		width:40%;
@@ -46,7 +48,7 @@
 	p {
 		margin:0;
 		
-		@include fs-bodyCopy(2);
+		@include fs-bodyCopy(1);
 		color:#333;
 		@include mq(tablet) {
 			margin-top:20px;
@@ -55,12 +57,15 @@
 	}
 
 	button{
-		height: 42px;
+		height: 30px;
+		@include mq(tablet) {
+			height: 42px;
+		}
 	    border: none;
 	    padding: 0 15px 0 20px;
 	    border-radius: 42px;
 	    @include fs-textSans(4);
-	    
+	    margin-top:10px;
 	    @include mq(tablet) {
 	    	margin-top:20px;
 	    }
