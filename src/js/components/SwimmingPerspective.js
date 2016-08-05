@@ -114,7 +114,7 @@ export default function SwimmingLineChart(data,options) {
     				LEG_BREAKDOWN=i;
     			}
     		})
-    		console.log(REACTION_TIME,SPLITS,LEG_BREAKDOWN)
+    		//console.log(REACTION_TIME,SPLITS,LEG_BREAKDOWN)
     		let swimmer=options.team?entrant.country.identifier:entrant.participant.competitor.fullName;
 
     		let prev_cumulative_time=0;
@@ -205,8 +205,8 @@ export default function SwimmingLineChart(data,options) {
     		best_cumulative_times[distance].times=best_cumulative_times[distance].times.sort((a,b)=>(a-b));
     		best_cumulative_times[distance].times=best_cumulative_times[distance].cumulative_times.sort((a,b)=>(a-b));
     	}
-    	console.log(swimmers_data)
-		console.log(best_cumulative_times)
+    	//console.log(swimmers_data)
+		//console.log(best_cumulative_times)
 
 		swimmers_data.forEach(s => {
 
@@ -239,7 +239,7 @@ export default function SwimmingLineChart(data,options) {
 			
 		})
 
-		console.log(options.text)
+		//console.log(options.text)
 
 		buildVisual();
 
@@ -289,7 +289,7 @@ export default function SwimmingLineChart(data,options) {
 
 
 
-	    console.log(WIDTH,"x",HEIGHT)
+	    //console.log(WIDTH,"x",HEIGHT)
 
 	    
 
@@ -320,7 +320,7 @@ export default function SwimmingLineChart(data,options) {
 			w:xscale(dimensions.lane*(dimensions.lanes_n+1)),
 			h:yscale(0)
 		};
-		console.log("POOL",pool)		
+		//console.log("POOL",pool)		
 
 		swimming_pool=new SwimmingPool({
 									svg:svg,
@@ -482,13 +482,13 @@ export default function SwimmingLineChart(data,options) {
 
 	function buildTexts(state) {
 		
-		console.log("buildTexts",CURRENT_STEP)
+		//console.log("buildTexts",CURRENT_STEP)
 
 		
 
 		let texts=options.text.filter(d=>d.state===(state || "story"));
 
-		console.log("TEXTS",texts,texts[CURRENT_STEP])
+		//console.log("TEXTS",texts,texts[CURRENT_STEP])
 		
 		let standfirst=select(options.container)
 							.selectAll("div.stand-first")
@@ -514,7 +514,7 @@ export default function SwimmingLineChart(data,options) {
 	    	.append("button")
 		    	.on("click",()=>{
 					CURRENT_STEP=(CURRENT_STEP+1)%texts.length;
-					console.log(CURRENT_STEP,texts[CURRENT_STEP].mt)
+					//console.log(CURRENT_STEP,texts[CURRENT_STEP].mt)
 					//CURRENT_STEP=CURRENT_STEP===0?1:CURRENT_STEP;
 					buildTexts();
 					//deactivateButton();
@@ -556,13 +556,13 @@ export default function SwimmingLineChart(data,options) {
 	}
 	
 	function addAnnotation() {
-		console.log("addAnnotation",CURRENT_DISTANCE)
+		//console.log("addAnnotation",CURRENT_DISTANCE)
 
 		let annotations=options.text.filter(d=>(d.mt===CURRENT_DISTANCE && d.state==="annotation" && !d.time));
 
 		let annotation=annotations_layer.selectAll("div.annotation").data(annotations);
 
-		console.log("ANNOTATIONS",annotations)
+		//console.log("ANNOTATIONS",annotations)
 
 		let xy;
 		let offset=getOffset(annotations_layer.node());
@@ -584,12 +584,12 @@ export default function SwimmingLineChart(data,options) {
 					let overlayPersp=computePerspective(side);
 					d.coords=overlayPersp.transform(x,y)
 					xy=[x,y];
-					/*console.log("COORDS",d.coords)
+					/*//console.log("COORDS",d.coords)
 
 					
-					console.log("OFFSET",offset)
+					//console.log("OFFSET",offset)
 
-					console.log("LEFT",(d.coords[0]-offset.left))*/
+					//console.log("LEFT",(d.coords[0]-offset.left))*/
 
 					return (d.coords[0]-offset.left)+"px";
 				})
@@ -636,7 +636,7 @@ export default function SwimmingLineChart(data,options) {
 				})
 				.attr("stroke-width",Math.floor(xscale(dimensions.lane*0.5)))
 				.transition()
-				.duration(s.cumulative_time-best_time)
+				.duration((s.cumulative_time-best_time)*multiplier)
 				.ease(SwimmingLinear)
 						.attr("d",()=>{
 
@@ -736,7 +736,8 @@ export default function SwimmingLineChart(data,options) {
 			let transform=`rotateX(65deg) rotateY(0deg) rotateZ(10deg) translateX(-1%) translateY(${300}px) translateZ(150px)`;
 			if(WIDTH<400) {
 				//container.style("perspective","700px").style("perspective-origin","90% 20%")
-				transform="rotateX(75deg) rotateY(0deg) rotateZ(10deg) translateX(67px) translateY(365px) translateZ(45px) scale(0.8)";
+				//transform="rotateX(75deg) rotateY(0deg) rotateZ(10deg) translateX(67px) translateY(365px) translateZ(45px) scale(0.8)";
+				transform="rotateX(75deg) rotateY(0deg) rotateZ(10deg) translateX(67px) translateY(385px) translateZ(95px) scale(0.8)";
 			}
 			try {
 		    	svg
@@ -764,7 +765,8 @@ export default function SwimmingLineChart(data,options) {
 			  		    	
 			if(WIDTH<400) {
 				//container.style("perspective","700px").style("perspective-origin","90% 20%")
-				transform=`rotateX(70deg) rotateY(0deg) rotateZ(10deg) translateX(80px) translateY(50px) translateZ(30px) scale(0.8)`;
+				//transform=`rotateX(70deg) rotateY(0deg) rotateZ(10deg) translateX(80px) translateY(50px) translateZ(30px) scale(0.8)`;
+				transform= `rotateX(72deg) rotateY(0deg) rotateZ(9deg) translateX(72px) translateY(70px) translateZ(30px) scale(0.77)`;
 			}
 
 			try {
@@ -839,9 +841,9 @@ export default function SwimmingLineChart(data,options) {
 						//return getTimeForDistance(best_cumulative_times[s.distance].best_time,dimensions.length,delta)
 						let t=getTimeForDistance(best_cumulative_times[s.distance].cumulative_times[s.lane-1],s.distance,delta)
 
-						console.log(s.country_name,s.lane-1,s.distance,best_cumulative_times[s.distance].cumulative_times[s.lane-1],t)
+						//console.log(s.country_name,s.lane-1,s.distance,best_cumulative_times[s.distance].cumulative_times[s.lane-1],t)
 
-						return t;
+						return t*multiplier;
 						//return best_cumulative_times[s.distance].best_time*0.2*0.5
 					})
 					.delay(1000)
@@ -875,6 +877,8 @@ export default function SwimmingLineChart(data,options) {
 
 							if(d.lane===GOLD_LANE) {
 
+								stopWatch.showDistance(d.distance);
+
 								if(d.distance>0) {
 									let position=d.position-1,
 										record=options.record.split_times[position];
@@ -884,7 +888,7 @@ export default function SwimmingLineChart(data,options) {
 									stopWatch.hideRecord();
 								}
 
-								let duration=best_cumulative_times[d.distance].best_time*(delta/dimensions.length)*multiplier;
+								let duration=best_cumulative_times[d.distance].best_time*(delta/dimensions.length);
 								if(d.calculated) {
 									stopWatch.hide();
 								} else {
@@ -932,7 +936,7 @@ export default function SwimmingLineChart(data,options) {
 										gap=d.cumulative_time-best_cumulative_times[d.distance].best_cumulative;
 
 									addTime(d.distance,d.lane);
-								},delay)
+								},delay*multiplier)
 							);
 						})
 						.filter((d)=>(d.lane===GOLD_LANE))
@@ -960,7 +964,7 @@ export default function SwimmingLineChart(data,options) {
 		let x=xscale(lane*dimensions.lane + dimensions.lane/2),
 			y=(distance%(dimensions.length*2)>0)?yscale(dimensions.length):yscale(0);
 
-		console.log("POSITION",lane,distance,"->",x,y)
+		//console.log("POSITION",lane,distance,"->",x,y)
 
 		return [x,y];
 
@@ -1070,7 +1074,7 @@ function SwimmingPool(options) {
 				}
 				
 		];
-		console.log("LANES",lanes)
+		//console.log("LANES",lanes)
 		pool
 			.selectAll("path.lane-ropes")
 			.data(lanes)

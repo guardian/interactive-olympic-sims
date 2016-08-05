@@ -1,33 +1,54 @@
 .stopwatch {
 	
 	@include fs-data(3);
-	font-size:26px;
-	line-height:26px;
+	font-size:20px;
+	@include mq(tablet) {
+		font-size:26px;
+	}
 	font-weight:bold;
 	
 	position: absolute;
-	top:0;
-	right:0;
+
+	bottom:0;
+	left:0;
+	
+
+	@include mq(tablet) {
+		top:0;
+		right:0;
+		left:auto;
+		margin-right:20px;
+	}
+	
 	z-index:9999;
 
 	
 	width:150px;
 	height:80px;
 
-	margin-right:20px;
+	
 
 	g {
-		transform: translate(150px,40px);	
+		transform: translate(0px,40px);
+		@include mq(tablet) {
+			transform: translate(150px,40px);	
+		}
 		
 		text {
-			text-anchor:end;
+			text-anchor:start;
+			@include mq(tablet) {
+				text-anchor:end;
+			}
 			fill-opacity:0.6;
 
 			&.time {
 				fill:#333;
 			}
 			&.wr {
-				font-size:14px;
+				font-size:12px;
+				@include mq(tablet) {
+					font-size:14px;
+				}
 				font-weight: normal;
 				fill:#333;
 			}

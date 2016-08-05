@@ -21,6 +21,7 @@ export default function StopWatch(options) {
 	let timeDOM,
 		wrDOM,
 		gapDOM,
+		distDOM,
 		wr_visible=false;
 
 	let CURRENT_TIME;
@@ -41,7 +42,7 @@ export default function StopWatch(options) {
 
 	}
 	function buildWatch() {
-		console.log(options)
+		//console.log(options)
 		stopwatch=select(options.container)
 					.append("svg")
 					.attr("class","stopwatch")
@@ -51,6 +52,7 @@ export default function StopWatch(options) {
 		timeDOM=stopwatch_g.append("text").attr("class","time");
 		wrDOM=stopwatch_g.append("text").attr("class","wr").attr("transform","translate(0,20)");
 		gapDOM=stopwatch_g.append("text").attr("class","wr").attr("transform","translate(0,34)");
+		distDOM=stopwatch_g.append("text").attr("class","wr").attr("transform","translate(0,-22)");
 	}
 	buildWatch();
 
@@ -73,9 +75,10 @@ export default function StopWatch(options) {
 
 	function updateTime(raf=true) {
 		let current_time=new Date().getTime(),
-			diff=(current_time - start_time)+delta_time,
-			_t=Math.round(diff*multiplier/100)*100,
+			diff=(current_time - start_time)/multiplier+delta_time,
+			_t=Math.round(diff/100)*100,
 			t=msToTime(_t,1);
+
 		if(CURRENT_TIME!==_t) {
 			//console.log(_t,CURRENT_TIME)
 			timeDOM.text((t[1]?(t[1]+":"):"")+(t[1]&&t[2]<10?"0":"")+t[2]+"."+(t[3]));
@@ -129,6 +132,14 @@ export default function StopWatch(options) {
 		stopwatch
 			.classed("hidden",false)
 	}
+	
+	this.showDistance = (distance) => {
+		if(distance===0) {
+			distDOM.text("Reaction time");
+			return;
+		}
+		distDOM.text(distance+"m");
+	}
 
 	this.showRecord = (record,gap,split=false) => {
 
@@ -143,7 +154,7 @@ export default function StopWatch(options) {
 			return;	
 		}
 
-		console.log(gap)
+		//console.log(gap)
 
 		gapDOM.text(`${gap>0?"+":"-"}${formatSecondsMilliseconds(Math.abs(gap))}`);
 
@@ -161,7 +172,7 @@ export default function StopWatch(options) {
 	}
 
 	/*this.append = (entrant,time) => {
-		console.log(entrant);
+		//console.log(entrant);
 
 		list.push({
 			entrant:entrant.name,

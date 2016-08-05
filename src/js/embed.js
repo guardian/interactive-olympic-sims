@@ -29,19 +29,20 @@ window.init = function init(el, config) {
 
 
 
-   	console.log("SWIMMING SwimmingPerspective",el)
+   	//console.log("SWIMMING SwimmingPerspective",el)
 
    	d3_json("http://interactive.guim.co.uk/docsdata-test/1Qx2_oITx9455H4C_Kv8X4rPYtwnY_KwE-vxPe1cFx4M.json",(json)=>{
    		new SwimmingPerspective(swimming_data,{
 	        container:el,
 	        text:json.embed_sim.map(d=>{
 	        	d.mt = +d.mt;
+	        	d.lane = +d.lane;
 	        	return d;
 	        }),
 	        record:records["women_freestyle_400"],
 	        length:400,
 	        team:true,
-	        multiplier: 1,
+	        multiplier: 0.5,
 	        margins: {
 	            left:10,
 	            right:10,
