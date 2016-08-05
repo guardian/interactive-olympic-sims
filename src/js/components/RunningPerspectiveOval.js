@@ -72,6 +72,8 @@ export default function RunningPerspectiveOval(data,options) {
 
 	let margins=options.margins || {left:0,top:0,right:0,bottom:0};
 
+	let LANE_RATIOS=[];
+
 	let container,
 		overlay,
 		oval,
@@ -337,7 +339,9 @@ export default function RunningPerspectiveOval(data,options) {
 	    	oval.addRunner(d);
 	    })
 
-		
+	    LANE_RATIOS=oval.getRatios();
+
+
 	    
 		
 
@@ -428,32 +432,9 @@ export default function RunningPerspectiveOval(data,options) {
 				.attr("d",s=>{
 					return oval.getPath(s.lane,true);
 				})
-				//.attr("stroke-width",Math.floor(xscale(dimensions.lane*0.5)))
 				.attr("stroke-width",yscale(dimensions.lane-dimensions.line_width*2)*0.8)
-				/*.attr("d",s=>{
-
-					let x=xscale(s.lane*dimensions.lane + dimensions.lane/2),
-						start_y=yscale(0);
-
-					return line([
-						[x,start_y],
-						[x,start_y]
-					]);
-
-				})
-				*/
+	
 		
-		/*leg.filter(s=>(s.distance===0))
-				.append("path")
-				.attr("id",(s)=>("guide_"+s.lane+"_"+s.distance))
-				.attr("class","guide-text-path")
-				.attr("d", (s) => {
-					let x=xscale(s.lane*dimensions.lane + dimensions.lane/2),
-						y0=yscale(s.mt),
-						y1=yscale(50);
-					return `M${x},${y0}L${x},${y1}`;
-				});*/
-
 
 		leg.filter(s=>(s.distance===0))
 			.selectAll("text")
@@ -466,21 +447,28 @@ export default function RunningPerspectiveOval(data,options) {
 		leg.filter(s=>(s.distance===0))
 				//.selectAll("text:not(.stroke)")
 				.selectAll("text")
-					.attr("dx",0)
+					.attr("dx",15)
 				    .attr("dy","0.35em")
 					.append("textPath")
 				    	.attr("xlink:href", (s,i)=>{
 				    		return `#bg_o_${s.lane+1}`;
 				    	})
 				    	.attr("text-anchor","start")
-				    	.attr("startOffset",s=>{
+				    	.attr("startOffset",d=>{
+				    		if(d.distance===0) {
+				    			let v=(200-dimensions.lane_staggers[d.lane]*LANE_RATIOS[d.lane])/(dimensions.length*2);
+				    			return (v*100)+"%";
+				    		}
+				    		return "100%";
+				    	})
+				    	/*.attr("startOffset",s=>{
 				    		
 				    		let d=(dimensions.lane_staggers[s.lane]*0.88)/400;
 				    		
 				    		//console.log(s.lane,dimensions.lane_staggers,dimensions,(50 - d*100) + "%")
 				    		
 				    		return (0.5 - d)*100 + "%";
-				    	})
+				    	})*/
 				    	.text((s,i)=>{
 							let athlete=athletes_data.filter(d=>(d.lane===s.lane))[0];
 
@@ -501,11 +489,21 @@ export default function RunningPerspectiveOval(data,options) {
 				.attr("class","athlete-name")
 				.classed("stroke",(s,i)=>(i<1 && WIDTH>400))
 
+		leg.filter(s=>(s.distance%dimensions.length===0))
+			.selectAll("text.athlete-time")
+			.data(s=>(WIDTH<400?[s]:[s,s]))
+			.enter()
+			.append("text")
+				.attr("class","athlete-time")
+				.classed("stroke",(s,i)=>(i<1 && WIDTH>400))
+				.classed("hidden",true)
+
+		
+
 		leg.filter(s=>(s.distance>0))
-				.selectAll("text")
+				.selectAll("text.athlete-name")
 					.attr("dx",s=>{
 						return 10;
-				    	return (s.distance%100===0)?-5:-5
 				    })
 				    .attr("dy",s=>{
 				    	return (s.distance%100===0)?"0.35em":"0.35em"   //9:6
@@ -524,148 +522,46 @@ export default function RunningPerspectiveOval(data,options) {
 							}
 							return athlete.entrant.participant.competitor.lastName+" "+athlete.entrant.country.identifier
 						})
-
-
-		/*leg.filter(s=>(s.distance===0))
-				.append("path")
-				.attr("id",(s)=>("guide_"+s.lane+"_"+s.distance))
-				.attr("class","guide-text-path")
-				.attr("d", (s) => {
-					let x=xscale(s.lane*dimensions.lane + dimensions.lane/2),
-						y0=yscale(50),
-						y1=yscale(s.mt);
-					return `M${x},${y0}L${x},${y1}`;
-				});
-
-
-
-		leg.filter(s=>(s.distance===0))
-			.selectAll("text")
-			//.data(s=>([s,s,s,s]))
-			.data(s=>([s,s]))
-			.enter()
-			.append("text")
-				.attr("class","athlete-name")
-				.classed("stroke",(s,i)=>(i<1))
-
-		leg.filter(s=>(s.distance===0))
-				//.selectAll("text:not(.stroke)")
-				.selectAll("text")
-					.attr("dx",-5)
-				    .attr("dy","0.35em")
-					.append("textPath")
-				    	.attr("xlink:href", (s,i)=>{
-				    		return `#guide_${s.lane}_${s.distance}`
-				    	})
-				    	.attr("text-anchor","end")
-				    	.attr("startOffset","100%")
-				    	.text((s,i)=>{
-							let athlete=athletes_data.filter(d=>(d.lane===s.lane))[0]
-							//if(i%2) {
-								return athlete.entrant.participant.competitor.lastName;
-							//}
-							//return athlete.reaction_time.value;
-						})
-
-		leg.filter(s=>(s.distance>0))
-			.selectAll("text")
-			.data(s=>([s,s]))
-			.enter()
-			.append("text")
-				.attr("class","athlete-name")
-				.classed("stroke",(s,i)=>(i<1))
-
-		leg.filter(s=>(s.distance>0))
-				//.selectAll("text:not(.stroke)")
-				.selectAll("text")
+		
+		leg.filter(s=>(s.distance%dimensions.length===0))
+				.selectAll("text.athlete-time")
 					.attr("dx",s=>{
-				    	return (s.distance%100===0)?5:-5
+						
+				    	return (s.distance%100===0)?-5:-5
 				    })
-				    .attr("dy",s=>{
-				    	return (s.distance%100===0)?"0.35em":"0.35em"   //9:6
-				    })
+				    .attr("dy","0.35em")
 				  	.append("textPath")
-				    	.attr("xlink:href", s=>("#leg_"+s.lane+"_"+s.distance))
-				    	.attr("text-anchor",s=>(s.distance%100>0)?"end":"start")
-				    	.attr("startOffset",s=>(s.distance%100>0)?"50%":"50%")
+				    	//.attr("xlink:href", s=>("#leg_"+s.lane+"_"+s.distance))
+				    	 .attr("xlink:href", (s,i)=>{
+				    	 	if(s.distance===0) {
+				    	 		return `#bg_o_${s.lane+1}`;
+				    	 	}
+				    	 	return "#leg_"+s.lane+"_"+s.distance;
+				    	 })
+				    	.attr("text-anchor",s=>s.distance===0?"end":"end")
+				    	.attr("startOffset",d=>{
+				    		if(d.distance===0) {
+
+
+
+				    			//return (staggers_perc[d.lane]-(((d.mt*LANE_RATIOS[d.lane])/400)*100))+"%";
+				    			let v=(200-dimensions.lane_staggers[d.lane]*LANE_RATIOS[d.lane]-d.mt*LANE_RATIOS[d.lane])/(dimensions.length*2);
+				    			return (v*100)+"%";
+				    		}
+				    		return "100%";
+				    		return ((d.mt/dimensions.length)*100)+"%"
+				    	})
+				    	//.attr("startOffset",s=>(s.distance>0)?"100%":"0%")
 				    	.text(s=>{
 							let athlete=athletes_data.filter(d=>(d.lane===s.lane))[0]
-							return athlete.entrant.participant.competitor.lastName;
-						})*/
-		/*
-		leg.filter(s=>(s.distance===0))
-				.append("path")
-				.attr("id",(s)=>("guide_"+s.lane+"_"+s.distance))
-				.attr("class","guide-text-path")
-				.attr("d", (s) => {
-					let x=xscale(s.lane*dimensions.lane + dimensions.lane/2),
-						y0=yscale(50),
-						y1=yscale(s.mt);
-					return `M${x},${y0}L${x},${y1}`;
-				});
-		leg.filter(s=>(s.distance===0))
-				.append("path")
-				.attr("id",(s)=>("t_guide_"+s.lane+"_"+s.distance))
-				.attr("class","guide-text-path")
-				.attr("d", (s) => {
-					let x=xscale(s.lane*dimensions.lane + dimensions.lane/2),
-						y1=yscale(0),
-						y0=yscale(s.mt);
-					return `M${x},${y0}L${x},${y1}`;
-				});
 
-		leg.filter(s=>(s.distance===0))
-			.selectAll("text")
-			.data(s=>([s,s,s,s]))
-			.enter()
-			.append("text")
-				.attr("class","athlete-name")
-				.classed("stroke",(s,i)=>!(i%2))
-
-		leg.filter(s=>(s.distance===0))
-				//.selectAll("text:not(.stroke)")
-				.selectAll("text")
-					.attr("dx",(s,i)=>((i<2)?5:-5))
-				    .attr("dy","0.35em")
-				    .classed("time",(s,i)=>i<2)
-					.append("textPath")
-				    	.attr("xlink:href", (s,i)=>{
-				    		let t=(i<2)?"t_":""
-				    		return `#${t}guide_${s.lane}_${s.distance}`
-				    	})
-				    	.attr("text-anchor",(s,i)=>((i<2)?"start":"end"))
-				    	.attr("startOffset",(s,i)=>((i<2)?"0%":"100%"))
-				    	// .attr("text-anchor","end")
-				    	// .attr("startOffset","100%")
-				    	.text((s,i)=>{
-							let athlete=athletes_data.find(d=>(d.lane===s.lane))
-							if(i<2) {
-								return athlete.reaction_time.value;	
+							if(s.distance===0) {
+								return athlete.reaction_time.value;
 							}
-							return athlete.entrant.participant.competitor.lastName;
-						})
-		leg.filter(s=>(s.distance>0))
-			.selectAll("text")
-			.data(s=>([s,s]))
-			.enter()
-			.append("text")
-				.attr("class","athlete-name")
-				.classed("stroke",(s,i)=>(i<1))
 
-		leg.filter(s=>(s.distance>0))
-				//.selectAll("text:not(.stroke)")
-				.selectAll("text")
-					.attr("dx",5)
-				    .attr("dy","0.35em")
-				  	.append("textPath")
-				    	.attr("xlink:href", s=>("#leg_"+s.lane+"_"+s.distance))
-				    	.attr("text-anchor","start")
-				    	.attr("startOffset","50%")
-				    	.text(s=>{
-							let athlete=athletes_data.find(d=>(d.lane===s.lane))
-							return athlete.entrant.participant.competitor.lastName;
+							return athlete.value;
 						})
-		*/
+
 		goTo(options.text[0].mt,options.text[0].story==="intro")
 
 		
@@ -1069,7 +965,7 @@ export default function RunningPerspectiveOval(data,options) {
 		
 		transformTransition();
 
-		let delta=30;
+		let delta=20;
 
 		let selected_leg=leg
 			.classed("visible",false)
@@ -1084,7 +980,7 @@ export default function RunningPerspectiveOval(data,options) {
 
 		selected_leg
 				.filter(d=>(d.distance===distance && d.distance>0))
-				.selectAll("textPath")
+				.selectAll("textPath.athlete-name")
 				    	.attr("startOffset",s=>{
 
 				    		if(s.distance===0 || s.distance===dimensions.length) {
@@ -1123,7 +1019,10 @@ export default function RunningPerspectiveOval(data,options) {
 
 				    		return (s.distance>0)?"100%":"0%";
 				    	})*/
-
+		selected_leg
+			.selectAll("text.athlete-time")
+			.classed("hidden",true)
+			
 		selected_leg
 				.select("path")
 					.attr("stroke-dasharray", function(s){
@@ -1138,35 +1037,6 @@ export default function RunningPerspectiveOval(data,options) {
 						return interpolate(t);
 
 					})
-					/*
-					.attr("d",s=>{
-						//console.log(distance,s)
-						let x=xscale(s.lane*dimensions.lane + dimensions.lane/2),
-							start_y=(s.distance%(dimensions.length*2)>0)?yscale(0):yscale(dimensions.length),
-							dist=s.distance-s.mt,
-							y=(s.distance%(dimensions.length*2)>0)?yscale(dimensions.length-dist-delta):yscale(dist+delta);
-						//console.log("dist",dist)
-						//console.log("y",dimensions.length-dist-delta)
-
-						
-						if(options.text) {
-							start_y=yscale(0);
-							y=yscale(s.mt-delta);
-						}
-						if(s.distance===0) {
-							start_y=yscale(0);
-							y=start_y;
-						}
-
-						s.text_start_y=y;
-						return line([
-									[x,start_y],
-									[x,y],
-									[x,start_y]
-								]);
-
-					})
-					*/
 					.transition()
 					.duration(s=>{
 
@@ -1196,34 +1066,6 @@ export default function RunningPerspectiveOval(data,options) {
 						return interpolate(t);
 
 					})
-					/*
-						.attr("d",s=>{
-
-							let x=xscale(s.lane*dimensions.lane + dimensions.lane/2),
-								start_y=(s.distance%(dimensions.length*2)>0)?yscale(0):yscale(dimensions.length),
-								dist=s.distance-s.mt,
-								y=(s.distance%(dimensions.length*2)>0)?yscale(dimensions.length-dist-0):yscale(dist+0);
-
-
-							
-
-							if(options.text) {
-								start_y=yscale(0);
-								y=yscale(s.mt);
-							}
-
-							if(s.distance===0) {
-								start_y=yscale(0);
-								y=yscale(s.mt);
-							}
-
-							return line([
-										[x,start_y],
-										[x,y],
-										[x,start_y]
-									]);
-
-						})*/
 						.on("start",d=>{
 
 							ts.forEach(t=>{
@@ -1299,19 +1141,25 @@ export default function RunningPerspectiveOval(data,options) {
 							if(d.distance===dimensions.length) {
 								showGap(select(this.parentNode),d,best_cumulative_times[d.distance].best_cumulative);
 							}
+
 							
 							if(d.cumulative_time===best_cumulative_times[d.distance].best_cumulative) {
 								stopWatch.stop(d.cumulative_time);
 							}
-							return;
+							
 							if(d.distance%dimensions.length===0) {
 								let delay=d.cumulative_time-best_cumulative_times[d.distance].best_cumulative;
 								ts.push(
 									setTimeout(()=>{
-										let entrant=athletes_data.filter(a=>a.lane===d.lane)[0],
-											gap=d.cumulative_time-best_cumulative_times[d.distance].best_cumulative;
+										// let entrant=athletes_data.filter(a=>a.lane===d.lane)[0],
+										// 	gap=d.cumulative_time-best_cumulative_times[d.distance].best_cumulative;
 
-										addTime(d.distance,d.lane);
+										selected_leg
+											.filter(t=>t.lane===d.lane)
+												.selectAll("text.athlete-time")
+												.classed("hidden",false)
+
+										//addTime(d.distance,d.lane);
 
 									},delay)
 								);	

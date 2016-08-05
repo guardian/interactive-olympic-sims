@@ -219,7 +219,8 @@
 				path.gap {
 					stroke-opacity:0.5 !important;
 				}
-				.athlete-name {
+				.athlete-name,
+				.athlete-time {
 					@include f-textSans;
 					font-size:16px;
 					text-rendering: optimizeSpeed;// optimizeLegibility;
@@ -259,6 +260,10 @@
 
 							stroke:#000;
 						}
+					}
+
+					&.hidden {
+						display: none;
 					}
 					
 				}

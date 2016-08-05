@@ -624,7 +624,16 @@ export default function Oval(options) {
 		
 	}
 
+	this.getRatios = () => {
+		let lane_ratios=[],
+			inner_lane=background.select("#bg_1").node().getTotalLength();
 
+		for(let l=0;l<8;l++) {
+			let current_lane=background.select(`#bg_${l+1}`).node().getTotalLength();
+			lane_ratios[l]=inner_lane/current_lane;
+		}
+		return lane_ratios;
+	}
 
 	this.addRunner = (ath) => {
 		//console.log("-------------------------------->","adding runner at lane",lane)
@@ -640,6 +649,8 @@ export default function Oval(options) {
 					.attr("id","bg_o_"+lane)
 					//.style("stroke-width",hscale(dimensions.lane))
 					.style("stroke-width",hscale(dimensions.lane-dimensions.line_width*1)*1);
+
+
 
 		background
 				.append("g")

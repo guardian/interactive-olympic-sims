@@ -33,6 +33,7 @@
       "d3-collection": "npm:d3-collection@^1.0.0",
       "d3-format": "npm:d3-format@^1.0.0",
       "d3-interpolate": "npm:d3-interpolate@^1.1.0",
+      "d3-request": "npm:d3-request@^1.0.2",
       "d3-scale": "npm:d3-scale@^1.0.0",
       "d3-selection": "npm:d3-selection@^1.0.0",
       "d3-shape": "npm:d3-shape@^1.0.0",
