@@ -46,13 +46,15 @@ export default function StopWatch(options) {
 		stopwatch=select(options.container)
 					.append("svg")
 					.attr("class","stopwatch")
+					.attr("width",250)
+					.attr("height",80)
 
 		let stopwatch_g=stopwatch.append("g");
 
-		timeDOM=stopwatch_g.append("text").attr("class","time");
-		wrDOM=stopwatch_g.append("text").attr("class","wr").attr("transform","translate(0,20)");
-		gapDOM=stopwatch_g.append("text").attr("class","wr").attr("transform","translate(0,34)");
-		distDOM=stopwatch_g.append("text").attr("class","wr").attr("transform","translate(0,-22)");
+		timeDOM=stopwatch_g.append("text").attr("class","time").attr("x",125).attr("y",40);
+		wrDOM=stopwatch_g.append("text").attr("class","wr").attr("x",125).attr("y",56);
+		gapDOM=stopwatch_g.append("text").attr("class","wr").attr("x",125).attr("y",70);
+		distDOM=stopwatch_g.append("text").attr("class","wr").attr("x",125).attr("y",15);
 	}
 	buildWatch();
 

@@ -297,12 +297,6 @@ export default function SwimmingLineChart(data,options) {
 						.append("div")
 						.attr("class","rio-overlay");
 
-		
-		
-
-	    
-
-
 
 	    let box = container.node().getBoundingClientRect();
 	    WIDTH = box.width;
@@ -319,9 +313,7 @@ export default function SwimmingLineChart(data,options) {
 					});
 		    	})
 
-
-
-	    //console.log(WIDTH,"x",HEIGHT)
+		
 
 	    
 
@@ -347,6 +339,12 @@ export default function SwimmingLineChart(data,options) {
 	    let w=xscale.range()[1];
 					
 		buildTexts("intro");
+
+		//CATCHING IE9
+		if(typeof window.atob == "undefined") {
+			document.querySelector(".interactive-embed").className="interactive-embed js-interactive fallback";
+			return;
+		}
 
 		let pool={
 			w:xscale(dimensions.lane*(dimensions.lanes_n+1)),

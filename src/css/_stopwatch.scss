@@ -13,29 +13,32 @@
 	left:10px;
 
 	margin-bottom:40px;
-	
+	margin-left:-125px;
 
 	@include mq(tablet) {
 		top:0;
 		right:0;
+		bottom:auto;
 		left:auto;
 		margin-right:20px;
 		margin-bottom:0px;
+		margin-top:20px;
+		width:125px;
 	}
 	
 	z-index:9999;
 
 	
-	width:150px;
-	height:80px;
+	//width:150px;
+	//height:80px;
 
 	
 
 	g {
-		transform: translate(0px,40px);
+		/* transform: translate(0px,40px);
 		@include mq(tablet) {
 			transform: translate(150px,40px);	
-		}
+		} */
 		
 		text {
 			text-anchor:start;
