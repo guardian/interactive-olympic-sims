@@ -32,11 +32,18 @@
 	
 
 	transform-style: preserve-3d;
-  	transition: perspective 1s, perspective-origin 1s;
+  	
 	
 	perspective: 700px;
 	perspective-origin: 90% 20%;
 	
+	&.w_transition {
+		transition: perspective 1s, perspective-origin 1s;	
+		svg {
+			transition: transform 1s;
+		}
+	}
+
 	@include mq(mobile) {
 		perspective: 750px;
 		perspective-origin: 90% 0%;
@@ -73,7 +80,7 @@
 		}
 		
 		
-		transition: transform 1s;
+		
   		backface-visibility: hidden;	
 		
 		

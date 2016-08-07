@@ -285,7 +285,7 @@ export default function SwimmingLineChart(data,options) {
 	    select(options.container)
 	    		.append("div")
 	    		.attr("class","notes")
-	    		.html("The positions are based on the athletes' average speed. Source: Press Association")
+	    		.html("The positions are based on the athletes' average speed")
 
 	    annotations_layer=container
 								.append("div")
@@ -509,7 +509,7 @@ export default function SwimmingLineChart(data,options) {
 							return swimmer.entrant.participant.competitor.lastName+" "+swimmer.entrant.country.identifier
 						})
 
-		goTo(options.text[0].mt,options.text[0].story==="intro")
+		goTo(options.text[0].mt,options.text[0].story==="intro",true)
 
 		
 	}
@@ -645,7 +645,7 @@ export default function SwimmingLineChart(data,options) {
 		svg.selectAll("path").interrupt();
 		svg.selectAll("path.gap").remove();
 	}
-	function showGap(el,s,best_time) {
+	function showGap(el,s,best_time,first_run=false) {
 		//console.log("showGap",el,s);
 
 		//console.log("DURATION",s.cumulative_time-best_time)
@@ -670,7 +670,7 @@ export default function SwimmingLineChart(data,options) {
 				})
 				.attr("stroke-width",Math.floor(xscale(dimensions.lane*0.5)))
 				.transition()
-				.duration((s.cumulative_time-best_time)*multiplier)
+				.duration(first_run?0:(s.cumulative_time-best_time)*multiplier)
 				.ease(SwimmingLinear)
 						.attr("d",()=>{
 
@@ -701,6 +701,8 @@ export default function SwimmingLineChart(data,options) {
 		let xy;
 		let offset=getOffset(annotations_layer.node());
 
+		//console.log(offset)
+
 		annotations_layer
 			//.enter()
 			.append("div")
@@ -718,6 +720,7 @@ export default function SwimmingLineChart(data,options) {
 					let side=(d.mt%(dimensions.length*2)>0)?1:0;
 						
 					let overlayPersp=computePerspective(side);
+					//console.log(side,overlayPersp)
 					d.coords=overlayPersp.transform(x,y)
 					xy=[x,y];
 
@@ -750,7 +753,7 @@ export default function SwimmingLineChart(data,options) {
 		goTo(distance);
 	}
 	
-	function goTo(distance,text_update) {
+	function goTo(distance,text_update,first_run=false) {
 
 		ts.forEach(t=>{
 			clearTimeout(t);
@@ -884,6 +887,11 @@ export default function SwimmingLineChart(data,options) {
 					})
 					.transition()
 					.duration((s,i)=>{
+
+						if(first_run) {
+							return 0;
+						}
+
 						if(s.distance===0) {
 							return best_cumulative_times[s.distance].best_time;
 						}
@@ -895,7 +903,7 @@ export default function SwimmingLineChart(data,options) {
 						return t*multiplier;
 						//return best_cumulative_times[s.distance].best_time*0.2*0.5
 					})
-					.delay(1000)
+					.delay(first_run?0:1000)
 					.ease(SwimmingLinear)
 						.attr("d",s=>{
 
@@ -964,11 +972,13 @@ export default function SwimmingLineChart(data,options) {
 								} else {
 									stopWatch.hideRecord();
 								}
-								
+								if(first_run) {
+									container.classed("w_transition",true)
+								}
 							}
 
 							if(d.distance>0) {
-								showGap(select(this.parentNode),d,best_cumulative_times[d.distance].best_cumulative);
+								showGap(select(this.parentNode),d,best_cumulative_times[d.distance].best_cumulative,first_run);
 							}
 
 							if(d.cumulative_time===best_cumulative_times[d.distance].best_cumulative) {
@@ -985,7 +995,7 @@ export default function SwimmingLineChart(data,options) {
 										gap=d.cumulative_time-best_cumulative_times[d.distance].best_cumulative;
 
 									addTime(d.distance,d.lane);
-								},delay*multiplier)
+								},first_run?10:delay*multiplier)
 							);
 						})
 						.filter((d)=>(d.lane===GOLD_LANE))
@@ -1033,7 +1043,7 @@ export default function SwimmingLineChart(data,options) {
 			[xscale.range()[1],yscale.range()[1]],
 			[xscale.range()[0],yscale.range()[1]]
 		]
-
+		
 		let srcPts=[],
 			dstPts=[];
 
@@ -1057,7 +1067,7 @@ export default function SwimmingLineChart(data,options) {
 					dstPts.push(coords.top);
 				});
 
-		
+		//console.log(srcPts,dstPts)
 
 		perspectives[side] = PerspT(srcPts, dstPts);
 
