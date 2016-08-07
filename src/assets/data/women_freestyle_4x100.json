@@ -15,79 +15,117 @@
             },
             "result": {
                 "type": "Official",
-                "timestamp": "2013-11-13T12:15:01Z",
+                "timestamp": "2016-08-07T02:32:20Z",
                 "entrant": [{
                     "order": "4",
                     "type": "Team",
                     "code": "SWW411AUS01",
                     "rank": "1",
-                    "value": "3:33.15",
+                    "value": "3:30.65",
                     "property": [{
                         "type": "Medal Awarded",
                         "value": "Gold"
                     }, {
                         "type": "Record Set",
+                        "value": "WR"
+                    }, {
+                        "type": "Record Set",
                         "value": "OR"
+                    }, {
+                        "type": "Record Set",
+                        "value": "OC"
+                    }, {
+                        "type": "Diff",
+                        "value": "0.00"
                     }, {
                         "type": "Result Type",
                         "value": "Time"
                     }],
                     "resultExtension": [{
                         "type": "Reaction Time",
-                        "value": "0.70"
+                        "value": ["0.76", "0.21", "0.22", "0.34"]
+                    }, {
+                        "type": "Leg Breakdown",
+                        "extension": [{
+                            "position": "2",
+                            "value": "27.74"
+                        }, {
+                            "position": "3",
+                            "value": "25.59"
+                        }, {
+                            "position": "4",
+                            "value": "27.53"
+                        }, {
+                            "position": "5",
+                            "value": "24.47"
+                        }, {
+                            "position": "6",
+                            "value": "27.68"
+                        }, {
+                            "position": "7",
+                            "value": "24.15"
+                        }, {
+                            "position": "8",
+                            "value": "27.82"
+                        }]
                     }, {
                         "type": "Split Times",
                         "extension": [{
                             "position": "1",
-                            "value": "26.14"
+                            "value": "25.67",
+                            "property": {
+                                "type": "Diff",
+                                "value": "0.03"
+                            }
                         }, {
                             "position": "2",
-                            "value": "53.90"
+                            "value": "53.41",
+                            "property": {
+                                "type": "Diff",
+                                "value": "0.05"
+                            }
                         }, {
                             "position": "3",
-                            "value": "1:18.90"
+                            "value": "1:19.00",
+                            "property": {
+                                "type": "Diff",
+                                "value": "0.70"
+                            }
                         }, {
                             "position": "4",
-                            "value": "1:47.09"
+                            "value": "1:46.53",
+                            "property": {
+                                "type": "Diff",
+                                "value": "0.61"
+                            }
                         }, {
                             "position": "5",
-                            "value": "2:12.80"
+                            "value": "2:11.00",
+                            "property": {
+                                "type": "Diff",
+                                "value": "0.07"
+                            }
                         }, {
                             "position": "6",
-                            "value": "2:40.50"
+                            "value": "2:38.68",
+                            "property": {
+                                "type": "Diff",
+                                "value": "0.00"
+                            }
                         }, {
                             "position": "7",
-                            "value": "3:06.05"
+                            "value": "3:02.83",
+                            "property": {
+                                "type": "Diff",
+                                "value": "0.00"
+                            }
                         }, {
                             "position": "8",
-                            "value": "3:33.15"
-                        }]
-                    }, {
-                        "type": "Leg Breakdown",
-                        "extension": [{
-                            "position": "1",
-                            "value": "26.14"
-                        }, {
-                            "position": "2",
-                            "value": "53.90"
-                        }, {
-                            "position": "3",
-                            "value": "1:18.90"
-                        }, {
-                            "position": "4",
-                            "value": "1:47.09"
-                        }, {
-                            "position": "5",
-                            "value": "2:12.80"
-                        }, {
-                            "position": "6",
-                            "value": "2:40.50"
-                        }, {
-                            "position": "7",
-                            "value": "3:06.05"
-                        }, {
-                            "position": "8",
-                            "value": "3:33.15"
+                            "value": "3:30.65",
+                            "property": {
+                                "type": "Diff",
+                                "value": "0.00"
+                            }
                         }]
                     }],
                     "country": {
@@ -98,217 +136,140 @@
                     "participant": [{
                         "order": "1",
                         "competitor": {
-                            "identifier": "1116528",
-                            "firstName": "Alicia",
-                            "lastName": "Coutts",
-                            "fullName": "Alicia Coutts"
+                            "identifier": "1175755",
+                            "firstName": "Emma",
+                            "lastName": "McKeon",
+                            "fullName": "Emma McKeon"
                         }
                     }, {
                         "order": "2",
                         "competitor": {
-                            "identifier": "1116527",
-                            "firstName": "Cate",
-                            "lastName": "Campbell",
-                            "fullName": "Cate Campbell"
-                        }
-                    }, {
-                        "order": "3",
-                        "competitor": {
-                            "identifier": "1116530",
+                            "identifier": "1175728",
                             "firstName": "Brittany",
                             "lastName": "Elmslie",
                             "fullName": "Brittany Elmslie"
                         }
                     }, {
-                        "order": "4",
-                        "competitor": {
-                            "identifier": "1116550",
-                            "firstName": "Melanie",
-                            "lastName": "Schlanger",
-                            "fullName": "Melanie Schlanger"
-                        }
-                    }]
-                }, {
-                    "order": "3",
-                    "type": "Team",
-                    "code": "SWW411NED01",
-                    "rank": "2",
-                    "value": "3:33.79",
-                    "property": [{
-                        "type": "Medal Awarded",
-                        "value": "Silver"
-                    }, {
-                        "type": "Result Type",
-                        "value": "Time"
-                    }],
-                    "resultExtension": [{
-                        "type": "Reaction Time",
-                        "value": "0.72"
-                    }, {
-                        "type": "Split Times",
-                        "extension": [{
-                            "position": "1",
-                            "value": "25.86"
-                        }, {
-                            "position": "2",
-                            "value": "54.67"
-                        }, {
-                            "position": "3",
-                            "value": "1:19.96"
-                        }, {
-                            "position": "4",
-                            "value": "1:48.47"
-                        }, {
-                            "position": "5",
-                            "value": "2:13.93"
-                        }, {
-                            "position": "6",
-                            "value": "2:41.86"
-                        }, {
-                            "position": "7",
-                            "value": "3:06.57"
-                        }, {
-                            "position": "8",
-                            "value": "3:33.79"
-                        }]
-                    }, {
-                        "type": "Leg Breakdown",
-                        "extension": [{
-                            "position": "1",
-                            "value": "25.86"
-                        }, {
-                            "position": "2",
-                            "value": "54.67"
-                        }, {
-                            "position": "3",
-                            "value": "1:19.96"
-                        }, {
-                            "position": "4",
-                            "value": "1:48.47"
-                        }, {
-                            "position": "5",
-                            "value": "2:13.93"
-                        }, {
-                            "position": "6",
-                            "value": "2:41.86"
-                        }, {
-                            "position": "7",
-                            "value": "3:06.57"
-                        }, {
-                            "position": "8",
-                            "value": "3:33.79"
-                        }]
-                    }],
-                    "country": {
-                        "identifier": "NED",
-                        "name": "Netherlands",
-                        "longName": "Netherlands"
-                    },
-                    "participant": [{
-                        "order": "1",
-                        "competitor": {
-                            "identifier": "1119285",
-                            "firstName": "Inge",
-                            "lastName": "Dekker",
-                            "fullName": "Inge Dekker"
-                        }
-                    }, {
-                        "order": "2",
-                        "competitor": {
-                            "identifier": "1119341",
-                            "firstName": "Marleen",
-                            "lastName": "Veldhuis",
-                            "fullName": "Marleen Veldhuis"
-                        }
-                    }, {
                         "order": "3",
                         "competitor": {
-                            "identifier": "1119296",
-                            "firstName": "Femke",
-                            "lastName": "Heemskerk",
-                            "fullName": "Femke Heemskerk"
+                            "identifier": "1175719",
+                            "firstName": "Bronte",
+                            "lastName": "Campbell",
+                            "fullName": "Bronte Campbell"
                         }
                     }, {
                         "order": "4",
                         "competitor": {
-                            "identifier": "1119309",
-                            "firstName": "Ranomi",
-                            "lastName": "Kromowidjojo",
-                            "fullName": "Ranomi Kromowidjojo"
+                            "identifier": "1175720",
+                            "firstName": "Cate",
+                            "lastName": "Campbell",
+                            "fullName": "Cate Campbell"
                         }
                     }]
                 }, {
                     "order": "5",
                     "type": "Team",
                     "code": "SWW411USA01",
-                    "rank": "3",
-                    "value": "3:34.24",
+                    "rank": "2",
+                    "value": "3:31.89",
                     "property": [{
                         "type": "Medal Awarded",
-                        "value": "Bronze"
+                        "value": "Silver"
                     }, {
                         "type": "Record Set",
                         "value": "AM"
+                    }, {
+                        "type": "Diff",
+                        "value": "1.24"
                     }, {
                         "type": "Result Type",
                         "value": "Time"
                     }],
                     "resultExtension": [{
                         "type": "Reaction Time",
-                        "value": "0.78"
+                        "value": ["0.69", "0.21", "0.21", "0.18"]
+                    }, {
+                        "type": "Leg Breakdown",
+                        "extension": [{
+                            "position": "2",
+                            "value": "27.72"
+                        }, {
+                            "position": "3",
+                            "value": "24.94"
+                        }, {
+                            "position": "4",
+                            "value": "27.62"
+                        }, {
+                            "position": "5",
+                            "value": "25.01"
+                        }, {
+                            "position": "6",
+                            "value": "28.17"
+                        }, {
+                            "position": "7",
+                            "value": "25.39"
+                        }, {
+                            "position": "8",
+                            "value": "27.40"
+                        }]
                     }, {
                         "type": "Split Times",
                         "extension": [{
                             "position": "1",
-                            "value": "26.05"
+                            "value": "25.64",
+                            "property": {
+                                "type": "Diff",
+                                "value": "0.00"
+                            }
                         }, {
                             "position": "2",
-                            "value": "53.52"
+                            "value": "53.36",
+                            "property": {
+                                "type": "Diff",
+                                "value": "0.00"
+                            }
                         }, {
                             "position": "3",
-                            "value": "1:18.71"
+                            "value": "1:18.30",
+                            "property": {
+                                "type": "Diff",
+                                "value": "0.00"
+                            }
                         }, {
                             "position": "4",
-                            "value": "1:47.05"
+                            "value": "1:45.92",
+                            "property": {
+                                "type": "Diff",
+                                "value": "0.00"
+                            }
                         }, {
                             "position": "5",
-                            "value": "2:12.86"
+                            "value": "2:10.93",
+                            "property": {
+                                "type": "Diff",
+                                "value": "0.00"
+                            }
                         }, {
                             "position": "6",
-                            "value": "2:40.70"
+                            "value": "2:39.10",
+                            "property": {
+                                "type": "Diff",
+                                "value": "0.42"
+                            }
                         }, {
                             "position": "7",
-                            "value": "3:06.23"
+                            "value": "3:04.49",
+                            "property": {
+                                "type": "Diff",
+                                "value": "1.66"
+                            }
                         }, {
                             "position": "8",
-                            "value": "3:34.24"
-                        }]
-                    }, {
-                        "type": "Leg Breakdown",
-                        "extension": [{
-                            "position": "1",
-                            "value": "26.05"
-                        }, {
-                            "position": "2",
-                            "value": "53.52"
-                        }, {
-                            "position": "3",
-                            "value": "1:18.71"
-                        }, {
-                            "position": "4",
-                            "value": "1:47.05"
-                        }, {
-                            "position": "5",
-                            "value": "2:12.86"
-                        }, {
-                            "position": "6",
-                            "value": "2:40.70"
-                        }, {
-                            "position": "7",
-                            "value": "3:06.23"
-                        }, {
-                            "position": "8",
-                            "value": "3:34.24"
+                            "value": "3:31.89",
+                            "property": {
+                                "type": "Diff",
+                                "value": "1.24"
+                            }
                         }]
                     }],
                     "country": {
@@ -319,509 +280,413 @@
                     "participant": [{
                         "order": "1",
                         "competitor": {
-                            "identifier": "1132902",
-                            "firstName": "Missy",
-                            "lastName": "Franklin",
-                            "fullName": "Missy Franklin"
+                            "identifier": "1119892",
+                            "firstName": "Simone",
+                            "lastName": "Manuel",
+                            "fullName": "Simone Manuel"
                         }
                     }, {
                         "order": "2",
                         "competitor": {
-                            "identifier": "1134700",
-                            "firstName": "Jessica",
-                            "lastName": "Hardy",
-                            "fullName": "Jessica Hardy"
+                            "identifier": "1119938",
+                            "firstName": "Abbey",
+                            "lastName": "Weitzeil",
+                            "fullName": "Abbey Weitzeil"
                         }
                     }, {
                         "order": "3",
                         "competitor": {
-                            "identifier": "1133103",
-                            "firstName": "Lia",
-                            "lastName": "Neal",
-                            "fullName": "Lia Neal"
+                            "identifier": "1160666",
+                            "firstName": "Dana",
+                            "lastName": "Vollmer",
+                            "fullName": "Dana Vollmer"
                         }
                     }, {
                         "order": "4",
                         "competitor": {
-                            "identifier": "1133648",
-                            "firstName": "Allison",
-                            "lastName": "Schmitt",
-                            "fullName": "Allison Schmitt"
+                            "identifier": "1119883",
+                            "firstName": "Kathleen",
+                            "lastName": "Ledecky",
+                            "fullName": "Kathleen Ledecky"
                         }
                     }]
                 }, {
-                    "order": "6",
+                    "order": "3",
                     "type": "Team",
-                    "code": "SWW411CHN01",
-                    "rank": "4",
-                    "value": "3:36.75",
-                    "property": {
+                    "code": "SWW411CAN01",
+                    "rank": "3",
+                    "value": "3:32.89",
+                    "property": [{
+                        "type": "Medal Awarded",
+                        "value": "Bronze"
+                    }, {
+                        "type": "Diff",
+                        "value": "2.24"
+                    }, {
                         "type": "Result Type",
                         "value": "Time"
-                    },
+                    }],
                     "resultExtension": [{
                         "type": "Reaction Time",
-                        "value": "0.71"
+                        "value": ["0.64", "0.17", "0.20", "0.13"]
+                    }, {
+                        "type": "Leg Breakdown",
+                        "extension": [{
+                            "position": "2",
+                            "value": "28.01"
+                        }, {
+                            "position": "3",
+                            "value": "25.23"
+                        }, {
+                            "position": "4",
+                            "value": "27.89"
+                        }, {
+                            "position": "5",
+                            "value": "25.15"
+                        }, {
+                            "position": "6",
+                            "value": "28.04"
+                        }, {
+                            "position": "7",
+                            "value": "25.29"
+                        }, {
+                            "position": "8",
+                            "value": "27.43"
+                        }]
                     }, {
                         "type": "Split Times",
                         "extension": [{
                             "position": "1",
-                            "value": "25.99"
+                            "value": "25.85",
+                            "property": {
+                                "type": "Diff",
+                                "value": "0.21"
+                            }
                         }, {
                             "position": "2",
-                            "value": "53.58"
+                            "value": "53.86",
+                            "property": {
+                                "type": "Diff",
+                                "value": "0.50"
+                            }
                         }, {
                             "position": "3",
-                            "value": "1:19.46"
+                            "value": "1:19.09",
+                            "property": {
+                                "type": "Diff",
+                                "value": "0.79"
+                            }
                         }, {
                             "position": "4",
-                            "value": "1:48.07"
+                            "value": "1:46.98",
+                            "property": {
+                                "type": "Diff",
+                                "value": "1.06"
+                            }
                         }, {
                             "position": "5",
-                            "value": "2:14.05"
+                            "value": "2:12.13",
+                            "property": {
+                                "type": "Diff",
+                                "value": "1.20"
+                            }
                         }, {
                             "position": "6",
-                            "value": "2:42.10"
+                            "value": "2:40.17",
+                            "property": {
+                                "type": "Diff",
+                                "value": "1.49"
+                            }
                         }, {
                             "position": "7",
-                            "value": "3:08.36"
+                            "value": "3:05.46",
+                            "property": {
+                                "type": "Diff",
+                                "value": "2.63"
+                            }
                         }, {
                             "position": "8",
-                            "value": "3:36.75"
-                        }]
-                    }, {
-                        "type": "Leg Breakdown",
-                        "extension": [{
-                            "position": "1",
-                            "value": "25.99"
-                        }, {
-                            "position": "2",
-                            "value": "53.58"
-                        }, {
-                            "position": "3",
-                            "value": "1:19.46"
-                        }, {
-                            "position": "4",
-                            "value": "1:48.07"
-                        }, {
-                            "position": "5",
-                            "value": "2:14.05"
-                        }, {
-                            "position": "6",
-                            "value": "2:42.10"
-                        }, {
-                            "position": "7",
-                            "value": "3:08.36"
-                        }, {
-                            "position": "8",
-                            "value": "3:36.75"
+                            "value": "3:32.89",
+                            "property": {
+                                "type": "Diff",
+                                "value": "2.24"
+                            }
                         }]
                     }],
                     "country": {
-                        "identifier": "CHN",
-                        "name": "China",
-                        "longName": "People's Republic of China"
+                        "identifier": "CAN",
+                        "name": "Canada",
+                        "longName": "Canada"
                     },
                     "participant": [{
                         "order": "1",
                         "competitor": {
-                            "identifier": "1072491",
-                            "firstName": "Yi",
-                            "lastName": "Tang",
-                            "fullName": "Yi Tang"
+                            "identifier": "1230646",
+                            "firstName": "Sandrine",
+                            "lastName": "Mainville",
+                            "fullName": "Sandrine Mainville"
                         }
                     }, {
                         "order": "2",
                         "competitor": {
-                            "identifier": "1072455",
-                            "firstName": "Yuhan",
-                            "lastName": "Qiu",
-                            "fullName": "Yuhan Qiu"
+                            "identifier": "1230673",
+                            "firstName": "Chantal",
+                            "lastName": "Van Landeghem",
+                            "fullName": "Chantal Van Landeghem"
                         }
                     }, {
                         "order": "3",
                         "competitor": {
-                            "identifier": "1072492",
-                            "firstName": "Haibing",
-                            "lastName": "Wang",
-                            "fullName": "Haibing Wang"
+                            "identifier": "1230662",
+                            "firstName": "Taylor Madison",
+                            "lastName": "Ruck",
+                            "fullName": "Taylor Madison Ruck"
                         }
                     }, {
                         "order": "4",
                         "competitor": {
-                            "identifier": "1072484",
-                            "firstName": "Jiaying",
-                            "lastName": "Pang",
-                            "fullName": "Jiaying Pang"
-                        }
-                    }]
-                }, {
-                    "order": "8",
-                    "type": "Team",
-                    "code": "SWW411GBR01",
-                    "rank": "5",
-                    "value": "3:37.02",
-                    "property": {
-                        "type": "Result Type",
-                        "value": "Time"
-                    },
-                    "resultExtension": [{
-                        "type": "Reaction Time",
-                        "value": "0.68"
-                    }, {
-                        "type": "Split Times",
-                        "extension": [{
-                            "position": "1",
-                            "value": "26.13"
-                        }, {
-                            "position": "2",
-                            "value": "54.27"
-                        }, {
-                            "position": "3",
-                            "value": "1:19.51"
-                        }, {
-                            "position": "4",
-                            "value": "1:47.56"
-                        }, {
-                            "position": "5",
-                            "value": "2:13.47"
-                        }, {
-                            "position": "6",
-                            "value": "2:42.21"
-                        }, {
-                            "position": "7",
-                            "value": "3:08.04"
-                        }, {
-                            "position": "8",
-                            "value": "3:37.02"
-                        }]
-                    }, {
-                        "type": "Leg Breakdown",
-                        "extension": [{
-                            "position": "1",
-                            "value": "26.13"
-                        }, {
-                            "position": "2",
-                            "value": "54.27"
-                        }, {
-                            "position": "3",
-                            "value": "1:19.51"
-                        }, {
-                            "position": "4",
-                            "value": "1:47.56"
-                        }, {
-                            "position": "5",
-                            "value": "2:13.47"
-                        }, {
-                            "position": "6",
-                            "value": "2:42.21"
-                        }, {
-                            "position": "7",
-                            "value": "3:08.04"
-                        }, {
-                            "position": "8",
-                            "value": "3:37.02"
-                        }]
-                    }],
-                    "country": {
-                        "identifier": "GBR",
-                        "name": "Great Britain",
-                        "longName": "Great Britain"
-                    },
-                    "participant": [{
-                        "order": "1",
-                        "competitor": {
-                            "identifier": "1098567",
-                            "firstName": "Amy",
-                            "lastName": "Smith",
-                            "fullName": "Amy Smith"
-                        }
-                    }, {
-                        "order": "2",
-                        "competitor": {
-                            "identifier": "1098544",
-                            "firstName": "Francesca",
-                            "lastName": "Halsall",
-                            "fullName": "Francesca Halsall"
-                        }
-                    }, {
-                        "order": "3",
-                        "competitor": {
-                            "identifier": "1098550",
-                            "firstName": "Jess",
-                            "lastName": "Lloyd",
-                            "fullName": "Jess Lloyd"
-                        }
-                    }, {
-                        "order": "4",
-                        "competitor": {
-                            "identifier": "1098557",
-                            "firstName": "Caitlin",
-                            "lastName": "Mcclatchey",
-                            "fullName": "Caitlin Mcclatchey"
-                        }
-                    }]
-                }, {
-                    "order": "7",
-                    "type": "Team",
-                    "code": "SWW411DEN01",
-                    "rank": "6",
-                    "value": "3:37.45",
-                    "property": {
-                        "type": "Result Type",
-                        "value": "Time"
-                    },
-                    "resultExtension": [{
-                        "type": "Reaction Time",
-                        "value": "0.77"
-                    }, {
-                        "type": "Split Times",
-                        "extension": [{
-                            "position": "1",
-                            "value": "26.42"
-                        }, {
-                            "position": "2",
-                            "value": "54.52"
-                        }, {
-                            "position": "3",
-                            "value": "1:20.30"
-                        }, {
-                            "position": "4",
-                            "value": "1:48.56"
-                        }, {
-                            "position": "5",
-                            "value": "2:15.49"
-                        }, {
-                            "position": "6",
-                            "value": "2:44.21"
-                        }, {
-                            "position": "7",
-                            "value": "3:09.72"
-                        }, {
-                            "position": "8",
-                            "value": "3:37.45"
-                        }]
-                    }, {
-                        "type": "Leg Breakdown",
-                        "extension": [{
-                            "position": "1",
-                            "value": "26.42"
-                        }, {
-                            "position": "2",
-                            "value": "54.52"
-                        }, {
-                            "position": "3",
-                            "value": "1:20.30"
-                        }, {
-                            "position": "4",
-                            "value": "1:48.56"
-                        }, {
-                            "position": "5",
-                            "value": "2:15.49"
-                        }, {
-                            "position": "6",
-                            "value": "2:44.21"
-                        }, {
-                            "position": "7",
-                            "value": "3:09.72"
-                        }, {
-                            "position": "8",
-                            "value": "3:37.45"
-                        }]
-                    }],
-                    "country": {
-                        "identifier": "DEN",
-                        "name": "Denmark",
-                        "longName": "Denmark"
-                    },
-                    "participant": [{
-                        "order": "1",
-                        "competitor": {
-                            "identifier": "1081506",
-                            "firstName": "Pernille",
-                            "lastName": "Blume",
-                            "fullName": "Pernille Blume"
-                        }
-                    }, {
-                        "order": "2",
-                        "competitor": {
-                            "identifier": "1081831",
-                            "firstName": "Mie",
-                            "lastName": "Nielsen",
-                            "fullName": "Mie Nielsen"
-                        }
-                    }, {
-                        "order": "3",
-                        "competitor": {
-                            "identifier": "1068227",
-                            "firstName": "Lotte",
-                            "lastName": "Friis",
-                            "fullName": "Lotte Friis"
-                        }
-                    }, {
-                        "order": "4",
-                        "competitor": {
-                            "identifier": "1078310",
-                            "firstName": "Jeanette",
-                            "lastName": "Ottesen Gray",
-                            "fullName": "Jeanette Ottesen Gray"
+                            "identifier": "1230654",
+                            "firstName": "Penny",
+                            "lastName": "Oleksiak",
+                            "fullName": "Penny Oleksiak"
                         }
                     }]
                 }, {
                     "order": "2",
                     "type": "Team",
-                    "code": "SWW411JPN01",
-                    "rank": "7",
-                    "value": "3:37.96",
-                    "property": {
+                    "code": "SWW411NED01",
+                    "rank": "4",
+                    "value": "3:33.81",
+                    "property": [{
+                        "type": "Diff",
+                        "value": "3.16"
+                    }, {
                         "type": "Result Type",
                         "value": "Time"
-                    },
+                    }],
                     "resultExtension": [{
                         "type": "Reaction Time",
-                        "value": "0.74"
+                        "value": ["0.86", "0.16", "0.20", "0.25"]
+                    }, {
+                        "type": "Leg Breakdown",
+                        "extension": [{
+                            "position": "2",
+                            "value": "28.01"
+                        }, {
+                            "position": "3",
+                            "value": "25.06"
+                        }, {
+                            "position": "4",
+                            "value": "28.41"
+                        }, {
+                            "position": "5",
+                            "value": "25.38"
+                        }, {
+                            "position": "6",
+                            "value": "28.47"
+                        }, {
+                            "position": "7",
+                            "value": "24.73"
+                        }, {
+                            "position": "8",
+                            "value": "27.47"
+                        }]
                     }, {
                         "type": "Split Times",
                         "extension": [{
                             "position": "1",
-                            "value": "26.24"
+                            "value": "26.28",
+                            "property": {
+                                "type": "Diff",
+                                "value": "0.64"
+                            }
                         }, {
                             "position": "2",
-                            "value": "54.34"
+                            "value": "54.29",
+                            "property": {
+                                "type": "Diff",
+                                "value": "0.93"
+                            }
                         }, {
                             "position": "3",
-                            "value": "1:20.45"
+                            "value": "1:19.35",
+                            "property": {
+                                "type": "Diff",
+                                "value": "1.05"
+                            }
                         }, {
                             "position": "4",
-                            "value": "1:48.86"
+                            "value": "1:47.76",
+                            "property": {
+                                "type": "Diff",
+                                "value": "1.84"
+                            }
                         }, {
                             "position": "5",
-                            "value": "2:14.46"
+                            "value": "2:13.14",
+                            "property": {
+                                "type": "Diff",
+                                "value": "2.21"
+                            }
                         }, {
                             "position": "6",
-                            "value": "2:43.29"
+                            "value": "2:41.61",
+                            "property": {
+                                "type": "Diff",
+                                "value": "2.93"
+                            }
                         }, {
                             "position": "7",
-                            "value": "3:09.54"
+                            "value": "3:06.34",
+                            "property": {
+                                "type": "Diff",
+                                "value": "3.51"
+                            }
                         }, {
                             "position": "8",
-                            "value": "3:37.96"
-                        }]
-                    }, {
-                        "type": "Leg Breakdown",
-                        "extension": [{
-                            "position": "1",
-                            "value": "26.24"
-                        }, {
-                            "position": "2",
-                            "value": "54.34"
-                        }, {
-                            "position": "3",
-                            "value": "1:20.45"
-                        }, {
-                            "position": "4",
-                            "value": "1:48.86"
-                        }, {
-                            "position": "5",
-                            "value": "2:14.46"
-                        }, {
-                            "position": "6",
-                            "value": "2:43.29"
-                        }, {
-                            "position": "7",
-                            "value": "3:09.54"
-                        }, {
-                            "position": "8",
-                            "value": "3:37.96"
+                            "value": "3:33.81",
+                            "property": {
+                                "type": "Diff",
+                                "value": "3.16"
+                            }
                         }]
                     }],
                     "country": {
-                        "identifier": "JPN",
-                        "name": "Japan",
-                        "longName": "Japan"
+                        "identifier": "NED",
+                        "name": "Netherlands",
+                        "longName": "Netherlands"
                     },
                     "participant": [{
                         "order": "1",
                         "competitor": {
-                            "identifier": "1026948",
-                            "firstName": "Haruka",
-                            "lastName": "Ueda",
-                            "fullName": "Haruka Ueda"
+                            "identifier": "1219427",
+                            "firstName": "Marrit",
+                            "lastName": "Steenbergen",
+                            "fullName": "Marrit Steenbergen"
                         }
                     }, {
                         "order": "2",
                         "competitor": {
-                            "identifier": "1026946",
-                            "firstName": "Yayoi",
-                            "lastName": "Matsumoto",
-                            "fullName": "Yayoi Matsumoto"
+                            "identifier": "1219481",
+                            "firstName": "Femke",
+                            "lastName": "Heemskerk",
+                            "fullName": "Femke Heemskerk"
                         }
                     }, {
                         "order": "3",
                         "competitor": {
-                            "identifier": "1026962",
-                            "firstName": "Miki",
-                            "lastName": "Uchida",
-                            "fullName": "Miki Uchida"
+                            "identifier": "1214969",
+                            "firstName": "Inge",
+                            "lastName": "Dekker",
+                            "fullName": "Inge Dekker"
                         }
                     }, {
                         "order": "4",
                         "competitor": {
-                            "identifier": "1026950",
-                            "firstName": "Hanae",
-                            "lastName": "Ito",
-                            "fullName": "Hanae Ito"
+                            "identifier": "1219484",
+                            "firstName": "Ranomi",
+                            "lastName": "Kromowidjojo",
+                            "fullName": "Ranomi Kromowidjojo"
                         }
                     }]
                 }, {
-                    "order": "1",
+                    "order": "7",
                     "type": "Team",
                     "code": "SWW411SWE01",
-                    "property": {
-                        "type": "Invalid Result Mark",
-                        "value": "Disqualified"
-                    },
+                    "rank": "5",
+                    "value": "3:35.90",
+                    "property": [{
+                        "type": "Diff",
+                        "value": "5.25"
+                    }, {
+                        "type": "Result Type",
+                        "value": "Time"
+                    }],
                     "resultExtension": [{
-                        "type": "Split Times",
-                        "extension": [{
-                            "position": "1",
-                            "value": "26.31"
-                        }, {
-                            "position": "2",
-                            "value": "54.57"
-                        }, {
-                            "position": "3",
-                            "value": "1:20.45"
-                        }, {
-                            "position": "4",
-                            "value": "1:48.48"
-                        }, {
-                            "position": "5",
-                            "value": "2:14.71"
-                        }, {
-                            "position": "6",
-                            "value": "2:43.49"
-                        }]
+                        "type": "Reaction Time",
+                        "value": ["0.74", "0.19", "0.37", "0.22"]
                     }, {
                         "type": "Leg Breakdown",
                         "extension": [{
-                            "position": "1",
-                            "value": "26.31"
-                        }, {
                             "position": "2",
-                            "value": "54.57"
+                            "value": "27.86"
                         }, {
                             "position": "3",
-                            "value": "1:20.45"
+                            "value": "25.36"
                         }, {
                             "position": "4",
-                            "value": "1:48.48"
+                            "value": "27.11"
                         }, {
                             "position": "5",
-                            "value": "2:14.71"
+                            "value": "26.29"
                         }, {
                             "position": "6",
-                            "value": "2:43.49"
+                            "value": "28.41"
+                        }, {
+                            "position": "7",
+                            "value": "26.13"
+                        }, {
+                            "position": "8",
+                            "value": "28.41"
+                        }]
+                    }, {
+                        "type": "Split Times",
+                        "extension": [{
+                            "position": "1",
+                            "value": "26.33",
+                            "property": {
+                                "type": "Diff",
+                                "value": "0.69"
+                            }
+                        }, {
+                            "position": "2",
+                            "value": "54.19",
+                            "property": {
+                                "type": "Diff",
+                                "value": "0.83"
+                            }
+                        }, {
+                            "position": "3",
+                            "value": "1:19.55",
+                            "property": {
+                                "type": "Diff",
+                                "value": "1.25"
+                            }
+                        }, {
+                            "position": "4",
+                            "value": "1:46.66",
+                            "property": {
+                                "type": "Diff",
+                                "value": "0.74"
+                            }
+                        }, {
+                            "position": "5",
+                            "value": "2:12.95",
+                            "property": {
+                                "type": "Diff",
+                                "value": "2.02"
+                            }
+                        }, {
+                            "position": "6",
+                            "value": "2:41.36",
+                            "property": {
+                                "type": "Diff",
+                                "value": "2.68"
+                            }
+                        }, {
+                            "position": "7",
+                            "value": "3:07.49",
+                            "property": {
+                                "type": "Diff",
+                                "value": "4.66"
+                            }
+                        }, {
+                            "position": "8",
+                            "value": "3:35.90",
+                            "property": {
+                                "type": "Diff",
+                                "value": "5.25"
+                            }
                         }]
                     }],
                     "country": {
@@ -832,7 +697,7 @@
                     "participant": [{
                         "order": "1",
                         "competitor": {
-                            "identifier": "1036214",
+                            "identifier": "1207918",
                             "firstName": "Michelle",
                             "lastName": "Coleman",
                             "fullName": "Michelle Coleman"
@@ -840,7 +705,7 @@
                     }, {
                         "order": "2",
                         "competitor": {
-                            "identifier": "1036219",
+                            "identifier": "1207917",
                             "firstName": "Sarah",
                             "lastName": "Sjostrom",
                             "fullName": "Sarah Sjostrom"
@@ -848,7 +713,7 @@
                     }, {
                         "order": "3",
                         "competitor": {
-                            "identifier": "1058026",
+                            "identifier": "1207935",
                             "firstName": "Ida",
                             "lastName": "Marko-Varga",
                             "fullName": "Ida Marko-Varga"
@@ -856,12 +721,444 @@
                     }, {
                         "order": "4",
                         "competitor": {
-                            "identifier": "1036209",
-                            "firstName": "Gabriella",
-                            "lastName": "Fagundez",
-                            "fullName": "Gabriella Fagundez"
+                            "identifier": "1207914",
+                            "firstName": "Louise",
+                            "lastName": "Hansson",
+                            "fullName": "Louise Hansson"
                         }
                     }]
+                }, {
+                    "order": "6",
+                    "type": "Team",
+                    "code": "SWW411ITA01",
+                    "rank": "6",
+                    "value": "3:36.78",
+                    "property": [{
+                        "type": "Diff",
+                        "value": "6.13"
+                    }, {
+                        "type": "Result Type",
+                        "value": "Time"
+                    }],
+                    "resultExtension": [{
+                        "type": "Reaction Time",
+                        "value": ["0.72", "0.17", "0.10", "0.18"]
+                    }, {
+                        "type": "Leg Breakdown",
+                        "extension": [{
+                            "position": "2",
+                            "value": "29.04"
+                        }, {
+                            "position": "3",
+                            "value": "25.38"
+                        }, {
+                            "position": "4",
+                            "value": "28.31"
+                        }, {
+                            "position": "5",
+                            "value": "25.61"
+                        }, {
+                            "position": "6",
+                            "value": "28.38"
+                        }, {
+                            "position": "7",
+                            "value": "26.02"
+                        }, {
+                            "position": "8",
+                            "value": "27.87"
+                        }]
+                    }, {
+                        "type": "Split Times",
+                        "extension": [{
+                            "position": "1",
+                            "value": "26.17",
+                            "property": {
+                                "type": "Diff",
+                                "value": "0.53"
+                            }
+                        }, {
+                            "position": "2",
+                            "value": "55.21",
+                            "property": {
+                                "type": "Diff",
+                                "value": "1.85"
+                            }
+                        }, {
+                            "position": "3",
+                            "value": "1:20.59",
+                            "property": {
+                                "type": "Diff",
+                                "value": "2.29"
+                            }
+                        }, {
+                            "position": "4",
+                            "value": "1:48.90",
+                            "property": {
+                                "type": "Diff",
+                                "value": "2.98"
+                            }
+                        }, {
+                            "position": "5",
+                            "value": "2:14.51",
+                            "property": {
+                                "type": "Diff",
+                                "value": "3.58"
+                            }
+                        }, {
+                            "position": "6",
+                            "value": "2:42.89",
+                            "property": {
+                                "type": "Diff",
+                                "value": "4.21"
+                            }
+                        }, {
+                            "position": "7",
+                            "value": "3:08.91",
+                            "property": {
+                                "type": "Diff",
+                                "value": "6.08"
+                            }
+                        }, {
+                            "position": "8",
+                            "value": "3:36.78",
+                            "property": {
+                                "type": "Diff",
+                                "value": "6.13"
+                            }
+                        }]
+                    }],
+                    "country": {
+                        "identifier": "ITA",
+                        "name": "Italy",
+                        "longName": "Italy"
+                    },
+                    "participant": [{
+                        "order": "1",
+                        "competitor": {
+                            "identifier": "1071760",
+                            "firstName": "Erika",
+                            "lastName": "Ferraioli",
+                            "fullName": "Erika Ferraioli"
+                        }
+                    }, {
+                        "order": "2",
+                        "competitor": {
+                            "identifier": "1071763",
+                            "firstName": "Silvia",
+                            "lastName": "di Pietro",
+                            "fullName": "Silvia di Pietro"
+                        }
+                    }, {
+                        "order": "3",
+                        "competitor": {
+                            "identifier": "1099359",
+                            "firstName": "Aglaia",
+                            "lastName": "Pezzato",
+                            "fullName": "Aglaia Pezzato"
+                        }
+                    }, {
+                        "order": "4",
+                        "competitor": {
+                            "identifier": "1071761",
+                            "firstName": "Federica",
+                            "lastName": "Pellegrini",
+                            "fullName": "Federica Pellegrini"
+                        }
+                    }]
+                }, {
+                    "order": "8",
+                    "type": "Team",
+                    "code": "SWW411FRA01",
+                    "rank": "7",
+                    "value": "3:37.45",
+                    "property": [{
+                        "type": "Diff",
+                        "value": "6.80"
+                    }, {
+                        "type": "Result Type",
+                        "value": "Time"
+                    }],
+                    "resultExtension": [{
+                        "type": "Reaction Time",
+                        "value": ["0.68", "0.13", "0.14", "0.13"]
+                    }, {
+                        "type": "Leg Breakdown",
+                        "extension": [{
+                            "position": "2",
+                            "value": "28.25"
+                        }, {
+                            "position": "3",
+                            "value": "25.57"
+                        }, {
+                            "position": "4",
+                            "value": "27.60"
+                        }, {
+                            "position": "5",
+                            "value": "26.29"
+                        }, {
+                            "position": "6",
+                            "value": "28.63"
+                        }, {
+                            "position": "7",
+                            "value": "25.89"
+                        }, {
+                            "position": "8",
+                            "value": "28.64"
+                        }]
+                    }, {
+                        "type": "Split Times",
+                        "extension": [{
+                            "position": "1",
+                            "value": "26.58",
+                            "property": {
+                                "type": "Diff",
+                                "value": "0.94"
+                            }
+                        }, {
+                            "position": "2",
+                            "value": "54.83",
+                            "property": {
+                                "type": "Diff",
+                                "value": "1.47"
+                            }
+                        }, {
+                            "position": "3",
+                            "value": "1:20.40",
+                            "property": {
+                                "type": "Diff",
+                                "value": "2.10"
+                            }
+                        }, {
+                            "position": "4",
+                            "value": "1:48.00",
+                            "property": {
+                                "type": "Diff",
+                                "value": "2.08"
+                            }
+                        }, {
+                            "position": "5",
+                            "value": "2:14.29",
+                            "property": {
+                                "type": "Diff",
+                                "value": "3.36"
+                            }
+                        }, {
+                            "position": "6",
+                            "value": "2:42.92",
+                            "property": {
+                                "type": "Diff",
+                                "value": "4.24"
+                            }
+                        }, {
+                            "position": "7",
+                            "value": "3:08.81",
+                            "property": {
+                                "type": "Diff",
+                                "value": "5.98"
+                            }
+                        }, {
+                            "position": "8",
+                            "value": "3:37.45",
+                            "property": {
+                                "type": "Diff",
+                                "value": "6.80"
+                            }
+                        }]
+                    }],
+                    "country": {
+                        "identifier": "FRA",
+                        "name": "France",
+                        "longName": "France"
+                    },
+                    "participant": [{
+                        "order": "1",
+                        "competitor": {
+                            "identifier": "1130472",
+                            "firstName": "Beryl",
+                            "lastName": "Gastaldello",
+                            "fullName": "Beryl Gastaldello"
+                        }
+                    }, {
+                        "order": "2",
+                        "competitor": {
+                            "identifier": "1130463",
+                            "firstName": "Charlotte",
+                            "lastName": "Bonnet",
+                            "fullName": "Charlotte Bonnet"
+                        }
+                    }, {
+                        "order": "3",
+                        "competitor": {
+                            "identifier": "1130467",
+                            "firstName": "Mathilde",
+                            "lastName": "Cini",
+                            "fullName": "Mathilde Cini"
+                        }
+                    }, {
+                        "order": "4",
+                        "competitor": {
+                            "identifier": "1130487",
+                            "firstName": "Anna",
+                            "lastName": "Santamans",
+                            "fullName": "Anna Santamans"
+                        }
+                    }]
+                }, {
+                    "order": "1",
+                    "type": "Team",
+                    "code": "SWW411JPN01",
+                    "rank": "8",
+                    "value": "3:37.78",
+                    "property": [{
+                        "type": "Diff",
+                        "value": "7.13"
+                    }, {
+                        "type": "Result Type",
+                        "value": "Time"
+                    }],
+                    "resultExtension": [{
+                        "type": "Reaction Time",
+                        "value": ["0.70", "0.41", "0.23", "0.31"]
+                    }, {
+                        "type": "Leg Breakdown",
+                        "extension": [{
+                            "position": "2",
+                            "value": "27.93"
+                        }, {
+                            "position": "3",
+                            "value": "25.79"
+                        }, {
+                            "position": "4",
+                            "value": "28.19"
+                        }, {
+                            "position": "5",
+                            "value": "26.27"
+                        }, {
+                            "position": "6",
+                            "value": "28.84"
+                        }, {
+                            "position": "7",
+                            "value": "26.12"
+                        }, {
+                            "position": "8",
+                            "value": "28.34"
+                        }]
+                    }, {
+                        "type": "Split Times",
+                        "extension": [{
+                            "position": "1",
+                            "value": "26.30",
+                            "property": {
+                                "type": "Diff",
+                                "value": "0.66"
+                            }
+                        }, {
+                            "position": "2",
+                            "value": "54.23",
+                            "property": {
+                                "type": "Diff",
+                                "value": "0.87"
+                            }
+                        }, {
+                            "position": "3",
+                            "value": "1:20.02",
+                            "property": {
+                                "type": "Diff",
+                                "value": "1.72"
+                            }
+                        }, {
+                            "position": "4",
+                            "value": "1:48.21",
+                            "property": {
+                                "type": "Diff",
+                                "value": "2.29"
+                            }
+                        }, {
+                            "position": "5",
+                            "value": "2:14.48",
+                            "property": {
+                                "type": "Diff",
+                                "value": "3.55"
+                            }
+                        }, {
+                            "position": "6",
+                            "value": "2:43.32",
+                            "property": {
+                                "type": "Diff",
+                                "value": "4.64"
+                            }
+                        }, {
+                            "position": "7",
+                            "value": "3:09.44",
+                            "property": {
+                                "type": "Diff",
+                                "value": "6.61"
+                            }
+                        }, {
+                            "position": "8",
+                            "value": "3:37.78",
+                            "property": {
+                                "type": "Diff",
+                                "value": "7.13"
+                            }
+                        }]
+                    }],
+                    "country": {
+                        "identifier": "JPN",
+                        "name": "Japan",
+                        "longName": "Japan"
+                    },
+                    "participant": [{
+                        "order": "1",
+                        "competitor": {
+                            "identifier": "1140042",
+                            "firstName": "Miki",
+                            "lastName": "Uchida",
+                            "fullName": "Miki Uchida"
+                        }
+                    }, {
+                        "order": "2",
+                        "competitor": {
+                            "identifier": "1110001",
+                            "firstName": "Rikako",
+                            "lastName": "Ikee",
+                            "fullName": "Rikako Ikee"
+                        }
+                    }, {
+                        "order": "3",
+                        "competitor": {
+                            "identifier": "1110002",
+                            "firstName": "Misaki",
+                            "lastName": "Yamaguchi",
+                            "fullName": "Misaki Yamaguchi"
+                        }
+                    }, {
+                        "order": "4",
+                        "competitor": {
+                            "identifier": "1140043",
+                            "firstName": "Yayoi",
+                            "lastName": "Matsumoto",
+                            "fullName": "Yayoi Matsumoto"
+                        }
+                    }]
+                }, {
+                    "order": "9",
+                    "type": "Team",
+                    "code": "SWW411CHN01",
+                    "country": {
+                        "identifier": "CHN",
+                        "name": "China",
+                        "longName": "People's Republic of China"
+                    }
+                }, {
+                    "order": "10",
+                    "type": "Team",
+                    "code": "SWW411RUS01",
+                    "country": {
+                        "identifier": "RUS",
+                        "name": "Russian Federation",
+                        "longName": "Russian Federation"
+                    }
                 }]
             }
         }

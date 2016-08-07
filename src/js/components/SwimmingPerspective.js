@@ -95,14 +95,13 @@ export default function SwimmingLineChart(data,options) {
     function buildEvent() {
     	
     	
-
-    	//swimmers_data=data.olympics.eventUnit.result.entrant.sort((a,b)=>(+a.order - +b.order)).map(entrant => {
-    	swimmers_data=data.olympics.eventUnit.result.entrant.map(entrant => {
+    	swimmers_data=data.olympics.eventUnit.result.entrant.filter(d=>(+d.order<=8)).map(entrant => {
 
     		let REACTION_TIME,
 	    		SPLITS,
 	    		LEG_BREAKDOWN;
 
+	    	//console.log(entrant)
     		entrant.resultExtension.forEach((t,i)=>{
     			if(t.type==="Reaction Time") {
     				REACTION_TIME=i
@@ -127,8 +126,8 @@ export default function SwimmingLineChart(data,options) {
     			"swimmer":swimmer,
     			"lane":+entrant.order,
     			"reaction_time":{
-    				value: (typeof REACTION_TIME=='undefined') ? "DQF" : entrant.resultExtension[REACTION_TIME].value,
-    				time: (typeof REACTION_TIME=='undefined') ? "DQF" : +entrant.resultExtension[REACTION_TIME].value*1000
+    				value: (typeof REACTION_TIME=='undefined') ? "DQF" : entrant.resultExtension[REACTION_TIME].value[0],
+    				time: (typeof REACTION_TIME=='undefined') ? "DQF" : +entrant.resultExtension[REACTION_TIME].value[0]*1000
     			},
     			"splits":entrant.resultExtension[SPLITS].extension.map((d,i)=>{
     				let cumulative_time=convertTime(d.value),
@@ -442,6 +441,7 @@ export default function SwimmingLineChart(data,options) {
 				.attr("id",(s)=>("guide_"+s.lane+"_"+s.distance))
 				.attr("class","guide-text-path")
 				.attr("d", (s) => {
+					//console.log(s)
 					let x=xscale(s.lane*dimensions.lane + dimensions.lane/2),
 						y0=yscale(s.mt),
 						y1=yscale(50);
@@ -769,7 +769,7 @@ export default function SwimmingLineChart(data,options) {
 			//50m side
 
 
-			let transform=`rotateX(65deg) rotateY(0deg) rotateZ(10deg) translateX(-1%) translateY(${300}px) translateZ(150px)`;
+			let transform=`rotateX(65deg) rotateY(0deg) rotateZ(10deg) translateX(-1%) translateY(${50}px) translateZ(150px)`;
 			if(WIDTH<400) {
 				//container.style("perspective","700px").style("perspective-origin","90% 20%")
 				//transform="rotateX(75deg) rotateY(0deg) rotateZ(10deg) translateX(67px) translateY(365px) translateZ(45px) scale(0.8)";
