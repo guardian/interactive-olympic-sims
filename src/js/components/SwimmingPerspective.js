@@ -769,7 +769,7 @@ export default function SwimmingLineChart(data,options) {
 			//50m side
 
 
-			let transform=`rotateX(65deg) rotateY(0deg) rotateZ(10deg) translateX(-1%) translateY(${50}px) translateZ(150px)`;
+			let transform=`rotateX(65deg) rotateY(0deg) rotateZ(10deg) translateX(-1%) translateY(${95}px) translateZ(150px)`;
 			if(WIDTH<400) {
 				//container.style("perspective","700px").style("perspective-origin","90% 20%")
 				//transform="rotateX(75deg) rotateY(0deg) rotateZ(10deg) translateX(67px) translateY(365px) translateZ(45px) scale(0.8)";
