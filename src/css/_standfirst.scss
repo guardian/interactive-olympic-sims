@@ -49,6 +49,8 @@
 		margin:0;
 		
 		@include fs-bodyCopy(1);
+		font-size:16px;
+		line-height:24px;
 		color:#333;
 		@include mq(tablet) {
 			margin-top:20px;
@@ -65,7 +67,7 @@
 	    padding: 0 15px 0 20px;
 	    border-radius: 42px;
 	    @include fs-textSans(4);
-	    margin-top:10px;
+	    margin-top:5px;
 	    @include mq(tablet) {
 	    	margin-top:20px;
 	    }
@@ -83,8 +85,15 @@
 		    background-repeat:no-repeat;
 		    background-size:23px;
 		    background-position: center center;	
+		    background-size:16px;
 		    width:23px;
-		    height:23px;
+		    height:20px;
+		    @include mq(tablet) {
+		    	background-size:23px;
+		    	height:23px;
+		    }
+		    
+		    
 		    padding-left:15px;
 	    }
 	    &:hover{

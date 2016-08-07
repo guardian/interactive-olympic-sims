@@ -933,8 +933,9 @@ export default function SwimmingLineChart(data,options) {
 							});
 
 							if(d.lane===GOLD_LANE) {
-
-								stopWatch.showDistance(d.distance);
+								if(!first_run) {
+									stopWatch.showDistance(d.distance);	
+								}
 
 								if(d.distance>0) {
 									let position=d.position-1,
