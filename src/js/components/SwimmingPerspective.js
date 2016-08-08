@@ -33,7 +33,6 @@ import {
 	convertTimeHMS,
 	convertTime,
 	formatSecondsMilliseconds,
-	getDistance,
 	getTimeForDistance
 } from '../lib/time';
 
@@ -126,8 +125,8 @@ export default function SwimmingLineChart(data,options) {
     			"swimmer":swimmer,
     			"lane":+entrant.order,
     			"reaction_time":{
-    				value: (typeof REACTION_TIME=='undefined') ? "DQF" : entrant.resultExtension[REACTION_TIME].value[0],
-    				time: (typeof REACTION_TIME=='undefined') ? "DQF" : +entrant.resultExtension[REACTION_TIME].value[0]*1000
+    				value: (typeof REACTION_TIME=='undefined') ? "DQF" : entrant.resultExtension[REACTION_TIME].value,//[0],
+    				time: (typeof REACTION_TIME=='undefined') ? "DQF" : +entrant.resultExtension[REACTION_TIME].value*1000,//[0]*1000
     			},
     			"splits":entrant.resultExtension[SPLITS].extension.map((d,i)=>{
     				let cumulative_time=convertTime(d.value),

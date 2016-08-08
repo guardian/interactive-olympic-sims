@@ -1,0 +1,19 @@
+{
+	"women_freestyle_400":{
+		"athlete":"Kathleen Ledecky",
+		"country":"USA",
+		"time":"3:58.37",
+		"split_times":[
+				"27.85",
+				"57.87",
+				"1:27.91",
+				"1:58.30",
+				"2:28.37",
+				"2:58.74",
+				"3:29.07",
+				"3:58.37"
+			],
+		"date":"2014-08-23",
+		"where":"Gold Coas, AUS"
+	}
+}

@@ -1,0 +1,16 @@
+{
+	"men_freestyle_200":{
+		"athlete":"Paul Biedermann",
+		"country":"Germany",
+		"time":"1:42.00",
+		"reaction_time":0.66,
+		"split_times":[
+				"24.23",
+				"50.12",
+				"1:16.30",
+				"1:42.00"
+			],
+		"date":"2009-07-26",
+		"where":"Rome, ITA"
+	}
+}
