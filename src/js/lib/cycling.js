@@ -9,7 +9,7 @@ import {
 	getAngle
 } from './geometry';
 
-export const CyclingEasing=bezier(0.5,0.1,0.8,0.8); //using http://cubic-bezier.com/ to calculate parameters
+export const CyclingEasing=bezier(.52,.04,.8,.8); //using http://cubic-bezier.com/ to calculate parameters
 export const CyclingLinear=bezier(0.5,0.5,0.5,0.5);
 let bycicle_length=0.972+0.660;
 export const dimensions = {

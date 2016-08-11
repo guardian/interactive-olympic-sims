@@ -14,10 +14,12 @@ body {
 @import "general";
 @import "standfirst";
 @import "stopwatch";
-@import "swimming-perspective";
+//@import "swimming-perspective";
 //@import "running-perspective";
 //@import "running-perspective-oval";
 //@import "oval";
+
+@import "team_pursuit";
 
 .interactive-embed {
 	min-height:10px;

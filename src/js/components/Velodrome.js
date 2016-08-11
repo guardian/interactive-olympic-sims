@@ -91,6 +91,25 @@ export default function Velodrome(options) {
 					.attr("d",addGhostTrack(0))
 					.node()
 
+	let ghost_tracks=[
+						ghost
+							.append("path")
+							.attr("id","ghost_team0_0")
+							.attr("class","ghost-team")
+							.attr("d",addGhostTrack(0))
+							.attr("stroke-dasharray",function(d){
+								return "0 "+this.getTotalLength();
+							}),
+						ghost
+							.append("path")
+							.attr("id","ghost_team1")
+							.attr("class","ghost-team")
+							.attr("d",addGhostTrack(0))
+							.attr("stroke-dasharray",function(d){
+								return "0 "+this.getTotalLength();
+							})
+					];
+
 	let ghosts=[
 		ghost.append("g")
 				.attr("class","ghost"),
@@ -99,12 +118,12 @@ export default function Velodrome(options) {
 	];
 
 	ghosts[0].append("circle")
-				.attr("class","gold")
+				.attr("class","silver")
 				.attr("cx",0)
 				.attr("cy",0)
 				.attr("r",5/2)
 	ghosts[1].append("circle")
-				.attr("class","silver")
+				.attr("class","gold")
 				.attr("cx",0)
 				.attr("cy",0)
 				.attr("r",5/2)
@@ -163,14 +182,14 @@ export default function Velodrome(options) {
 			}()
 		]
 
-		if(team===0) {
-			for(let i=0;i<32/2;i++) {
+		if(team===1) {
+			for(let i=0;i<32/2;i++) { //32
 				hundreds.push(halves[1]);
 				hundreds.push(halves[0]);
 			}
 		}
-		if(team===1) {
-			for(let i=0;i<32/2;i++) {
+		if(team===0) {
+			for(let i=0;i<32/2;i++) { //32
 				hundreds.push(halves[0]);
 				hundreds.push(halves[1]);
 			}
@@ -265,25 +284,25 @@ export default function Velodrome(options) {
 						if(!Array.isArray(info.entrant.property)) {
 							return false;
 						}
-						return info.entrant.property.find(p=>{
+						return info.entrant.property.filter(p=>{
 							return p.type=="Medal Awarded" && p.value==="Gold"
-						})
+						})[0]
 					})
 					.classed("silver",d=>{
 						if(!Array.isArray(info.entrant.property)) {
 							return false;
 						}
-						return info.entrant.property.find(p=>{
+						return info.entrant.property.filter(p=>{
 							return p.type=="Medal Awarded" && p.value==="Silver"
-						})
+						})[0]
 					})
 					.classed("bronze",d=>{
 						if(!Array.isArray(info.entrant.property)) {
 							return false;
 						}
-						return info.entrant.property.find(p=>{
+						return info.entrant.property.filter(p=>{
 							return p.type=="Medal Awarded" && p.value==="Bronze"
-						})
+						})[0]
 					})
 		
 		team.selectAll("path")
@@ -306,18 +325,21 @@ export default function Velodrome(options) {
 
 
 	}
-
+	this.goTo = (split) => {
+		teamTransition(0,split)
+		teamTransition(1,split)
+	}
 	this.race = () => {
 
-		teamTransition(0,0)
-		teamTransition(1,0)
+		//teamTransition(0,0)
+		//teamTransition(1,0)
 
 	}
 	let CURRENT=[0,0],
 		PREV=[0,0];
 	function teamTransition(index,split) {
 
-		console.log(index,split,__TEAMS)
+		//console.log(index,split,__TEAMS)
 		let time=__TEAMS[index].splits[split].time;
 
 
@@ -325,7 +347,7 @@ export default function Velodrome(options) {
 		// 	time=convertTime(dimensions.race[options.race][lane][info.leg]+"");
 		// }
 
-		//console.log(lane,time)
+		console.log(time,__TEAMS)
 		let __TIME=(time?time:info.leg_time)/multiplier;
 	  	teams
 	  		.selectAll(".team")
@@ -356,30 +378,27 @@ export default function Velodrome(options) {
 							
 						});
 	}
+	console.log(teams.select("path"))
+	let totalLength,
+		snakeLength = TEAM_LENGTH,//l * 0.05,
+    	gap = totalLength - snakeLength;
+    let prev_path;
+	let ghost_path_length=ghost_tracks[0].node().getTotalLength();
 
 	function tweenDash(path,duration,index,split) {
 		return function(t) {
 
-			let totalLength=path.getTotalLength(),
-				snakeLength = TEAM_LENGTH,//l * 0.05,
-    			gap = totalLength - snakeLength,
-    			position=totalLength*t;
+			totalLength=totalLength || path.getTotalLength();
+    		let position=totalLength*t;
 
-			//let interpolate = interpolateString("0," + l, l + "," + l);
-			//if(index===1) {
-				let l2=ghost_path.getTotalLength();
-				//console.log(split,t * totalLength,(t*totalLength+l2/2)%l2,(l2/2*split%2),split%2)
-				
-				//let ghost_p = path.getPointAtLength(t * totalLength);
-				let ghost_p = ghost_path.getPointAtLength((t*totalLength+l2/2+(l2/2*(1-index))+(l2/2*(split%2)))%l2);
-
-				ghosts[index]
-            		.attr("transform", "translate(" + ghost_p.x + "," + ghost_p.y + ")")   
-			//}
 			
+			//let l2=ghost_path.getTotalLength();
+			
+			//let ghost_p = ghost_path.getPointAtLength((t*totalLength+l2/2+(l2/2*(1-(index===0?1:0)))+(l2/2*(split%2)))%l2);
 
-                  
-
+			//ghosts[index===0?1:0]
+        	//	.attr("transform", "translate(" + ghost_p.x + "," + ghost_p.y + ")");
+			
 			let dash="0,"+(position)+","+snakeLength+","+totalLength;
 
 			if(position<snakeLength) {
@@ -393,19 +412,62 @@ export default function Velodrome(options) {
 
 			if(PREV[index]) {
 				let prev_node=PREV[index];
-				
+				prev_path=select(PREV[index]);
 				if(position > snakeLength) {
-					select(PREV[index]).attr("stroke-dasharray", "0,"+(totalLength)+","+snakeLength+","+totalLength);
+					//select(PREV[index])
+					prev_path.attr("stroke-dasharray", "0,"+(totalLength)+","+snakeLength+","+totalLength);
 					PREV[index]=null;
 				} else {
 					//console.log("should modifiy prev:",(l*(1-t)),t,totalLength-(l*(1-t)),snakeLength-(totalLength-(l*(1-t))))
 					//console.log("0,"+(l*(1-t))+","+snakeLength+","+totalLength)
 					let dx=snakeLength-(totalLength-(totalLength*(1-t)))
 					//0,1061.9856567382812,55.89398193359375,1117.879638671875
-					select(PREV[index]).attr("stroke-dasharray", "0,"+(totalLength-dx)+","+snakeLength+","+totalLength);
+					//select(PREV[index])
+					prev_path.attr("stroke-dasharray", "0,"+(totalLength-dx)+","+snakeLength+","+totalLength);
 				}
+
+				
 			}
-			
+			/*
+			if(index===0) {
+				
+				let p=position+(split%2?0:ghost_path_length/2)-TEAM_LENGTH;
+				let ghost_dash="0,"+p+","+TEAM_LENGTH+","+ghost_path_length;
+				//console.log(split,split%2?ghost_path_length/2:0,ghost_dash)
+				//console.log(ghost_dash)
+				//let delta=(p+TEAM_LENGTH) - ghost_path_length/2;
+				//console.log(delta,"=",(p+TEAM_LENGTH)," - ",ghost_path_length/2)
+				//console.log(p,TEAM_LENGTH)
+				if(p<0) {
+
+					
+					ghost_dash=(TEAM_LENGTH+p)+","+(ghost_path_length-TEAM_LENGTH)+","+(Math.abs(position))
+					//console.log(ghost_dash)
+				}
+
+				ghost_tracks[0].attr("stroke-dasharray", ghost_dash);
+				
+			}
+			if(index===1) {
+				
+				let p=position+(split%2?ghost_path_length/2:0)-TEAM_LENGTH;//-TEAM_LENGTH;
+				let ghost_dash="0,"+p+","+TEAM_LENGTH+","+ghost_path_length;
+				//console.log(position)
+				//console.log(split,split%2?ghost_path_length/2:0,ghost_dash)
+				//console.log(ghost_dash)
+				//let delta=(p+TEAM_LENGTH) - ghost_path_length/2;
+				//console.log(delta,"=",(p+TEAM_LENGTH)," - ",ghost_path_length/2)
+				//console.log(p,TEAM_LENGTH)
+				if(p<0) {
+					//ghost_dash=(TEAM_LENGTH+p)+","+(ghost_path_length-TEAM_LENGTH)+","+(Math.abs(position))
+					ghost_dash=(TEAM_LENGTH+p)+","+(ghost_path_length-TEAM_LENGTH)+","+Math.abs(TEAM_LENGTH)
+					//console.log(ghost_dash)
+				}
+
+				ghost_tracks[1].attr("stroke-dasharray", ghost_dash);
+				
+			}
+			*/
 
 			
 			//console.log(t,"---->",dash)

@@ -1,22 +1,25 @@
 import iframeMessenger from 'guardian/iframe-messenger'
 import embedHTML from './text/embed.html!text'
 
-import swimming_data from '../assets/data/women_freestyle_400.json!json'
+//import swimming_data from '../assets/data/women_freestyle_400.json!json'
 //import swimming_text from '../assets/data/texts/women_freestyle_4x100.json!json'
 
 //import running_data200 from '../assets/data/men_running_200.json!json'
 //import running_text from '../assets/data/texts/men_running_200.json!json'
 
-import records from '../assets/data/records_w_fs_400.json!json'
+import records from '../assets/data/records_team_pursuit.json!json'
 
 
 //import RunningPerspectiveOval from './components/RunningPerspectiveOval';
 //import Running from './components/Running';
-import SwimmingPerspective from './components/SwimmingPerspective';
+//import SwimmingPerspective from './components/SwimmingPerspective';
 
 /*import {
 	dimensions200m        
 } from './lib/running';*/
+
+import men_team_pursuit from '../assets/data/men_cycling_track_team_pursuit.json!json'
+import TeamPursuit from './components/TeamPursuit';
 
 import {
 	json as d3_json
@@ -31,62 +34,25 @@ window.init = function init(el, config) {
 
    	//console.log("SWIMMING SwimmingPerspective",el)
 
-   	d3_json("https://interactive.guim.co.uk/docsdata-test/1POjTdD80wZg5cxaCrMsnIh2qoYGJdDqBpyL2-6EX7nA.json",(json)=>{
-   		new SwimmingPerspective(swimming_data,{
-	        container:el,
-	        text:json.embed_sim.map(d=>{
-	        	d.mt = +d.mt;
-	        	d.lane = +d.lane;
-	        	return d;
-	        }),
-	        record:records["women_freestyle_400"],
-	        length:400,
-	        team:false,
-	        multiplier: 0.5,
-	        margins: {
-	            left:10,
-	            right:10,
-	            top:10,
-	            bottom:10
-	        }
-	    });
+   	d3_json("https://interactive.guim.co.uk/docsdata-test/1rubYCASgNxcWrpWCrh1e4Y_kNfwF3jyt84L_iehxevI.json",(json)=>{
+   		
+        let team_pursuit=new TeamPursuit(men_team_pursuit,{
+            container:el,
+            record:records.men_team_pursuit,
+            text:json.embed_sim,
+            race:"team_pursuit",
+            title:"Team Pursuit, Men",
+            margins: {
+                left:40,
+                right:40,
+                top:40,
+                bottom:40
+            },
+            multiplier:1
+        })
 
    	})
     
-    return;
-
-    /*new RunningPerspectiveOval(running_data200,{
-        container:el,
-        text:running_text,
-        record:records["men_running_200"],
-        dimensions:dimensions200m,
-        team:false,
-        multiplier: 1,
-        race:"200m",
-        margins: {
-            left:0,
-            right:0,
-            top:0,
-            bottom:0
-        }
-    })
-
-    return;*/
-   /* console.log("RUNNING RunningPerspective",el)
-
-    new Running(running_data200,{
-        container:el,
-        dimensions:dimensions200m,
-        text:running_text,
-        record:records.men_running_200,
-        multiplier: 1,
-        race:"200m",
-        margins: {
-            left:0,
-            right:0,
-            top:0,
-            bottom:0
-        }
-    })*/
+    
 
 };
