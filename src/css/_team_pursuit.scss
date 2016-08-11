@@ -18,14 +18,15 @@
 		display: block;
 	
 		margin: 0 auto;
-
-		//transform:rotateX(20deg) rotateY(0deg) rotateZ(0deg) translateX(0px) translateY(0px) translateZ(0px) scale(1);
+		
 		transform-style: preserve-3d;
+		transform:rotateX(20deg) rotateY(0deg) rotateZ(0deg) translateX(0px) translateY(0px) translateZ(0px) scale(1);
+		
 
 		.scaffolding {
 			line {
 				stroke:#fff;
-				stroke-width:1;
+				stroke-width:2;
 				shape-rendering:crispEdges;
 			}	
 		}
@@ -95,7 +96,30 @@
 			}
 		}
 	}
-	.overlay {
+
+	@import "annotations";
+
+	.annotations {
+		.annotation {
+			position: relative;
+			h3 {
+				@include fs-header(2);
+				margin:0;
+				padding:0;
+			}
+
+			span {
+				@include fs-headline(2);
+			}
+			i {
+				@include fs-headline(2);
+				text-decoration: normal;
+				color:#bdbdbd;
+			}
+		}
+	}
+
+	/* .overlay {
 		top:0;
 		left:0;
 		width:100%;
@@ -126,5 +150,5 @@
 				border-color:#c0c0c0;
 			}
 		}
-	}
+	} */
 }

@@ -20,6 +20,11 @@ import {
 import {
 	line as d3_line
 } from 'd3-shape';
+import PerspT from 'perspective-transform';
+import {
+	getOffset,
+	getPerspective
+} from '../lib/dom';
 import Barchart from './Barchart';
 
 
@@ -40,6 +45,8 @@ import {
 
 import Velodrome from './Velodrome';
 
+import StopWatch from "./StopWatch";
+
 export default function TeamPursuit(data,options) {
 
 	console.log("TeamPursuit",data.olympics.eventUnit.result.entrant);
@@ -48,6 +55,18 @@ export default function TeamPursuit(data,options) {
 		teams_data=[];
 
 	let best_cumulative_times={};
+
+	let container,
+		annotations_layer,
+		overlay,
+		perspectives=[];
+
+	let hscale,
+		vscale;
+
+	let stopWatch;
+
+	let annotation_time;
 
 	let frameRequest = requestAnimFrame(function checkInnerHTML(time) {
         ////console.log(time)
@@ -73,21 +92,12 @@ export default function TeamPursuit(data,options) {
     					lap_time=cumulative_time-prev_cumulative_time;
     				prev_cumulative_time=cumulative_time;
 
-    				if(entrant.country.identifier==="GBR") {
-    					//console.log(d.value)
-    				}
-
     				return {
     					value:d.value,
     					time:lap_time,
     					cumulative_time:cumulative_time,
     					distance:+d.position*0.125
     				}
-    				// return {
-    				// 	value:d.value,
-    				// 	time:convertTimeHMS(d.value),
-    				// 	distance:+d.position*0.125
-    				// }
     			}),
     			"kms":entrant.resultExtension[0].extension.filter((d,i)=>(+d.position<=4 && i%2===0)).map((d,i)=>{
     				let cumulative_time=convertTimeHMS(d.value),
@@ -112,7 +122,16 @@ export default function TeamPursuit(data,options) {
 				}
 			}
 			
-    		team.splits.forEach(split=>{
+			team.splits=([{
+				value:"00:00",
+				time:0,
+				cumulative_time:0,
+				distance:0
+			}]).concat(team.splits)
+
+    		team.splits.forEach((split,i)=>{
+    			split.index=i;
+
     			if(!best_cumulative_times[split.distance]) {
     				best_cumulative_times[split.distance]={
     					cumulative_times:[],
@@ -142,7 +161,8 @@ export default function TeamPursuit(data,options) {
 
 			let prev={
 				mt:0,
-				dmt:0
+				dmt:0,
+				dt:0
 			}
 			s.splits.forEach(split => {
 
@@ -152,12 +172,14 @@ export default function TeamPursuit(data,options) {
 
 				let distance=split.distance;
 
-				split.mt=distance*best_cumulative_times[split.distance].best_cumulative/split.cumulative_time;
+				split.dt=split.time - best_cumulative_times[split.distance].best_time;
+				split.mt=split.cumulative_time?distance*best_cumulative_times[split.distance].best_cumulative/split.cumulative_time:split.cumulative_time;
 				split.dmt=distance-split.mt;
 
 				split.prev={
 					mt:prev.mt,
-					dmt:prev.dmt
+					dmt:prev.dmt,
+					dt:split.dt
 				};
 
 				prev.mt=split.mt;
@@ -194,6 +216,14 @@ export default function TeamPursuit(data,options) {
 	    					.append("div")
 	    					.attr("class","team-pursuit")
 
+	    annotations_layer=container
+								.append("div")
+								.attr("class","annotations");
+
+	    overlay=container
+						.append("div")
+						.attr("class","rio-overlay");
+
 	    let box = container.node().getBoundingClientRect();
 	    let ratio = (85.73+25.0*2)/50,
 	    	WIDTH = box.height*ratio,
@@ -208,13 +238,25 @@ export default function TeamPursuit(data,options) {
 	    			.append("svg")
 	    			.attr("width",WIDTH)
 	    			.attr("height",HEIGHT)
+	    			.each(function(){
+			    		stopWatch=new StopWatch({
+							container:options.container,
+							svg:this,
+							multiplier:options.multiplier
+						});
+			    	})
 
 	    
 	    
 
-	    let hscale=scaleLinear().domain([0,dimensions.radius*2+dimensions.field.width+dimensions.lane_width]).range([0,WIDTH-(margins.left+margins.right)]),
-    		vscale=scaleLinear().domain([0,dimensions.field.height+dimensions.lane_width]).range([0,HEIGHT-(margins.top+margins.bottom)]);
+	    hscale=scaleLinear().domain([0,dimensions.radius*2+dimensions.field.width+dimensions.lane_width]).range([0,WIDTH-(margins.left+margins.right)]);
+    	vscale=scaleLinear().domain([0,dimensions.field.height+dimensions.lane_width]).range([0,HEIGHT-(margins.top+margins.bottom)]);
 
+    	overlay
+			.style("top",0)//margins.left+"px")
+	    	.style("left",0)//margins.top+"px")
+	   		.style("width",WIDTH+"px")//hscale.range()[1]+"px")
+	    	.style("height",HEIGHT+"px")//vscale.range()[1]+"px")
 
 	    let velodrome=new Velodrome({
 	    	container:container,
@@ -227,6 +269,7 @@ export default function TeamPursuit(data,options) {
 	    	vscale:vscale,
 	    	splitCallback:((team,split)=>{
 	    		updateTeam(team,split)
+	    		addTime(team,split);
 	    	})
 	    })
 
@@ -251,15 +294,9 @@ export default function TeamPursuit(data,options) {
 	    		diff:s.cumulative_time - teams_data[1].splits[i].cumulative_time
 	    	}
 	    });
-	    let barchart=new Barchart(splits,{
+	    /*let barchart=new Barchart(splits,{
 	    	container:container
-	    })
-
-
-	    let overlay=container.append("div")
-	    				.attr("class","overlay")
-
-
+	    })*/
 
 	    let team=overlay.selectAll("div.team-info")
 	    			.data(teams_data)
@@ -293,39 +330,155 @@ export default function TeamPursuit(data,options) {
 	    let h3=team.append("h3");
 
 		h3.append("b").text(d=>d.team)
-	    let time=h3.append("span")
+	    annotation_time=h3.append("span")
 
 
 
 
 	    //velodrome.race();
-	    velodrome.goTo(20)
+	    velodrome.goFromTo(0,0.125)
+	    //velodrome.goFrom(3)
 
 	    
-	    function updateTeam(team,split) {
-
-	    	console.log("updateTeam",team,split)
-
-	    	let times=[
-	    			teams_data[0].splits[split],
-	    			teams_data[1].splits[split]
-	    		],
-	    		_time=teams_data[team].splits[split].value,
-	    		diff=times[team].cumulative_time-times[+!team].cumulative_time;
-
-
-	    	if(diff>0) {
-	    		_time="+"+formatSecondsMilliseconds(diff);
-	    	}
-
-
-	    	time.filter((d,i)=>(i===team)).html(_time+(" <i>"+((split+1)*125)+"m</i>"))
-
-
-
-	    }
+	    
 	}
 
-	
+	function updateTeam(team,split) {
+
+    	console.log("updateTeam",team,split)
+
+    	
+
+    	let times=[
+    			teams_data[0].splits[split],
+    			teams_data[1].splits[split]
+    		],
+    		_time=teams_data[team].splits[split].value,
+    		diff=times[team].cumulative_time-times[+!team].cumulative_time;
+
+
+    	if(diff>0) {
+    		_time="+"+formatSecondsMilliseconds(diff);
+    	}
+
+
+    	annotation_time.filter((d,i)=>(i===team)).html(_time+(" <i>"+((split)*125)+"m</i>"))
+
+
+
+    }
+
+    function addTime(team,split) {
+		//console.log("addTime",distance,lane)
+
+		
+		let times=[
+    			teams_data[0].splits[split],
+    			teams_data[1].splits[split]
+    		],
+    		_time=teams_data[team].splits[split].value,
+    		diff=times[team].cumulative_time-times[+!team].cumulative_time;
+
+
+    	if(diff>0) {
+    		_time="+"+formatSecondsMilliseconds(diff);
+    	}
+
+		
+
+		let xy;
+		let offset=getOffset(annotations_layer.node());
+
+		//console.log(offset)
+
+		annotations_layer
+			//.enter()
+			.append("div")
+				.datum({
+					distance:split*125,
+					time:_time,
+					diff:diff
+				})
+				.attr("class","annotation time")
+			//.merge(annotation)
+				.style("left",d=>{
+					
+					let x=hscale(dimensions.radius+dimensions.field.width/2),
+						y=vscale(team?dimensions.field.height:dimensions.lane_width)
+
+					let overlayPersp=computePerspective();
+					
+					d.coords=overlayPersp.transform(x,y)
+					xy=[x,y];
+
+					return (d.coords[0]-offset.left)+"px";
+				})
+				.style("top",d=>{
+					//let offset=getOffset(annotations_layer.node());
+					return (d.coords[1]-(offset.top))+"px";
+				})
+				.html(d=>{
+					return "<h3>"+teams_data[team].team+"</h3><span>"+d.time+("</span><i>"+(d.distance)+"m</i>")
+				})
+				
+
+
+	}
+
+	this.getPosition = (lane,distance) => {
+		return getPosition(lane,distance);
+	}
+
+	function getPosition(lane,distance) {
+
+		let x=xscale(lane*dimensions.lane + dimensions.lane/2),
+			y=(distance%(dimensions.length*2)>0)?yscale(dimensions.length):yscale(0);
+
+		//console.log("POSITION",lane,distance,"->",x,y)
+
+		return [x,y];
+
+	}
+
+	function computePerspective() {
+
+		
+
+		let coords=[
+			[hscale.range()[0],vscale.range()[0]],
+			[hscale.range()[1],vscale.range()[0]],
+			[hscale.range()[1],vscale.range()[1]],
+			[hscale.range()[0],vscale.range()[1]]
+		]
+		
+		let srcPts=[],
+			dstPts=[];
+
+		let point=overlay
+						.selectAll("div.overlay-point")
+						.data(coords);
+		point
+			.enter()
+				.append("div")
+				.attr("class","overlay-point")
+			.merge(point)
+				.style("left",d=>(d[0]+"px"))
+				.style("top",d=>(d[1]+"px"))
+				.each(function(d){
+					srcPts.push(d[0]);
+					srcPts.push(d[1]);
+
+					let coords=this.getBoundingClientRect();
+					//console.log("CSS3 coords",coords)
+					dstPts.push(coords.left);
+					dstPts.push(coords.top);
+				});
+
+		//console.log(srcPts,dstPts)
+
+		//perspectives[side] = PerspT(srcPts, dstPts);
+
+		return PerspT(srcPts, dstPts);
+	}
 
 }

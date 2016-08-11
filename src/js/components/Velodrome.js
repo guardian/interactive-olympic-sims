@@ -273,7 +273,36 @@ export default function Velodrome(options) {
 
 	}
 
+	function addTeamPath(index=0) {
+		let lane=0;
+		
 
+
+		let start={
+				x:hscale(dimensions.radius+dimensions.field.width/2),
+				y:vscale(-lane + dimensions.field.height*index)
+			},
+			end={
+				x:hscale(dimensions.radius+dimensions.field.width),
+				y:vscale(dimensions.field.height + lane -dimensions.field.height*index)	
+			},
+			arc1=describeArc(hscale(dimensions.radius),vscale(0)+vscale(dimensions.radius),vscale(dimensions.radius+lane+dimensions.field.height*index),0,180),
+			arc2=describeArc(hscale(dimensions.radius+dimensions.field.width),vscale(0)+vscale(dimensions.radius),vscale(dimensions.radius+lane+dimensions.field.height*index),180,0);
+
+		if(index) {
+			arc1=describeArc(hscale(dimensions.radius+dimensions.field.width),vscale(dimensions.radius),vscale(dimensions.radius+lane),180,0);
+			arc2=describeArc(hscale(dimensions.radius),vscale(0)+vscale(dimensions.radius),vscale(dimensions.radius+lane),0,180);
+		}
+		//console.log(arc1)
+
+		return `M${start.x},${start.y} L${arc1.start[0]},${arc1.start[1]} ${arc1.arc} L${arc2.start[0]},${arc2.start[1]} ${arc2.arc} L${start.x},${start.y}
+					L${arc1.start[0]},${arc1.start[1]} ${arc1.arc} L${arc2.start[0]},${arc2.start[1]} ${arc2.arc} L${start.x},${start.y}
+					L${arc1.start[0]},${arc1.start[1]} ${arc1.arc} L${arc2.start[0]},${arc2.start[1]} ${arc2.arc} L${start.x},${start.y}`;
+		/* ${arc1.arc} L${arc2.start[0]},${arc2.start[1]} ${arc2.arc} L${start.x},${start.y}
+				L${arc1.start[0]},${arc1.start[1]} ${arc1.arc} L${arc2.start[0]},${arc2.start[1]} ${arc2.arc} L${start.x},${start.y}
+				L${arc1.start[0]},${arc1.start[1]} ${arc1.arc} L${arc2.start[0]},${arc2.start[1]} ${arc2.arc} L${start.x},${start.y}
+				`;*/		
+	}
 
 	this.addTeam = (index,info) => {
 		console.log("-------------------------------->",index,info)
@@ -285,12 +314,36 @@ export default function Velodrome(options) {
 					.append("g")
 						.attr("class","team")
 						.attr("rel",info.team)
-
+		console.log("###############",addTeamPath(index))
 		team
-				.selectAll("path")
+			.append("path")
+				.attr("class","team-track")
+				.classed("gold",d=>{
+					if(!Array.isArray(info.entrant.property)) {
+						return false;
+					}
+					return info.entrant.property.filter(p=>{
+						return p.type=="Medal Awarded" && p.value==="Gold"
+					})[0]
+				})
+				.classed("silver",d=>{
+					if(!Array.isArray(info.entrant.property)) {
+						return false;
+					}
+					return info.entrant.property.filter(p=>{
+						return p.type=="Medal Awarded" && p.value==="Silver"
+					})[0]
+				})
+				.attr("d",addTeamPath(index))
+				.attr("stroke-dasharray",function(d){
+					return "0 "+this.getTotalLength();
+				})
+		/*team
+				.selectAll("path.split")
 				.data(addPath(index,info))
 				.enter()
 				.append("path")
+					.attr("class","split")
 					.attr("d",(d)=>{
 						return d.path;
 					})
@@ -320,10 +373,10 @@ export default function Velodrome(options) {
 						})[0]
 					})
 		
-		team.selectAll("path")
+		team.selectAll("path.split")
 			.attr("stroke-dasharray",function(d){
 				return "0 "+this.getTotalLength();
-			})
+			})*/
 		/*
 		//console.log(lane,"SPLITS",lane-1,splits[lane-1])
 		
@@ -340,9 +393,19 @@ export default function Velodrome(options) {
 
 
 	}
-	this.goTo = (split) => {
-		teamTransition(0,split)
-		teamTransition(1,split)
+	this.goTo = (distance) => {
+		teamTransition(0,distance)
+		teamTransition(1,distance)
+	}
+	this.goFromTo = (from,to=4) => {
+		let __to = from+(dimensions.length/1000/2);
+		teamTransition(0,from,__to,to);
+		teamTransition(1,from,__to,to)	
+	}
+	this.goFrom = (from) => {
+		let to = from+(dimensions.length/1000/2);
+		teamTransition(0,from,to);
+		teamTransition(1,from,to);
 	}
 	this.race = () => {
 
@@ -352,24 +415,133 @@ export default function Velodrome(options) {
 	}
 	let CURRENT=[0,0],
 		PREV=[0,0];
-	function teamTransition(index,split) {
+	let totalLength,
+		ovalLength,
+		snakeLength = TEAM_LENGTH,//l * 0.05,
+    	gap = totalLength - snakeLength,
+    	TRACK_LENGTH=dimensions.length/1000;
+    let prev_path;
+	let ghost_path_length=ghost_tracks[0].node().getTotalLength();
 
-		//console.log(index,split,__TEAMS)
+	function teamTransition(index,from,to,end_at=4,delay=100) {
 
-		let time=__TEAMS[index].splits[split].time;
+		console.log("teamTransition",index,from,to,__TEAMS[index])
+
+		let splitFrom=__TEAMS[index].splits.filter(d=>d.distance===from)[0],
+			splitTo=__TEAMS[index].splits.filter(d=>d.distance===to)[0];
+		
+
+
+		console.log("FROM",splitFrom);
+		console.log("TO",splitTo);
+
+		let __TIME=splitTo.time - splitTo.dt;
 
 
 		// if(dimensions.race[options.race]) {
 		// 	time=convertTime(dimensions.race[options.race][lane][info.leg]+"");
 		// }
 
-		console.log(time,__TEAMS)
-		let __TIME=(time?time:info.leg_time)/multiplier;
-	  	teams
-	  		.selectAll(".team")
-	  			.filter((d,i)=>(i===index))
-		  		.selectAll("path")
+		console.log(__TIME,__TEAMS)
+		
+		
+		let track_path=teams
+				  		.selectAll(".team")
+				  			.filter((d,i)=>(i===index))
+				  			.select("path.team-track");
+
+		track_path.style("transition",`none`);
+
+		
+
+	  	track_path
+	  			.style("stroke-dasharray", function(d){
+
+	  					let is2ndHalf=((splitTo.distance%1)/0.125)%2
+
+						//console.log("from",splitFrom,tweenTeamTrack(this,__TIME,index,splitFrom,is2ndHalf)(0))
+						//console.log("to",splitTo,tweenTeamTrack(this,__TIME,index,splitTo,is2ndHalf)(0))
+
+
+
+						return tweenTeamTrack(this,__TIME,index,splitFrom,is2ndHalf)(0)
+				})
+				.transition()
+				.duration(0)
+				.delay(delay)
+				.on("end",()=>{
+					track_path
+							.style("transition",`stroke-dasharray ${__TIME/options.multiplier}ms ${splitFrom.distance===0?"cubic-bezier(.52,.04,.8,.8)":"linear"}`)
+							.style("stroke-dasharray", function(d){
+									return tweenTeamTrack(this,__TIME,index,splitTo,true)(0)
+							})
+							.on("transitionend",()=>{
+								if(splitTo.distance<end_at) {
+									teamTransition(index,splitFrom.distance+TRACK_LENGTH/2,splitTo.distance+TRACK_LENGTH/2,end_at,0);
+								}
+								if(options.splitCallback) {
+									//console.log("SPLIT CALLBACK",index,CURRENT[index],split)
+									options.splitCallback(index,splitTo.index)
+								}
+							})
+				})
+				
+	  	
+
+		/*setTimeout(()=>{
+			track_path.style("transition",`stroke-dasharray ${__TIME/options.multiplier}ms ${splitFrom.distance===0?"cubic-bezier(.52,.04,.8,.8)":"linear"}`);
+
+			track_path
+					.style("stroke-dasharray", function(d){
+							return tweenTeamTrack(this,__TIME,index,splitTo,true)(0)
+					})
+					.on("transitionend",()=>{
+						if(splitTo.distance<end_at) {
+							teamTransition(index,splitFrom.distance+TRACK_LENGTH/2,splitTo.distance+TRACK_LENGTH/2,end_at,0);
+						}
+					})
+		},delay)*/
+		
+
+				/*
+				.transition()
+				.duration(__TIME/options.multiplier)
+				.ease(!splitFrom.time?CyclingEasing:CyclingLinear)
+				.attr("stroke-dasharray", function(d){
+						//console.log("T!O",__TIME,index,splitTo,tweenTeamTrack(this,__TIME,index,splitTo)(0))
+						return tweenTeamTrack(this,__TIME,index,splitTo,true)(0)
+				})
+				.on("end", function(d,i) {
+					//console.log("end",d,i)
+					
+					// if(CURRENT[index]===index) {
+					// 	CURRENT[index]++;
+					// 	PREV[index]=this;
+
+					// 	if(options.splitCallback) {
+					// 		//console.log("SPLIT CALLBACK",index,CURRENT[index],split)
+					// 		//options.splitCallback(index,split)
+					// 	}
+
+					// 	teamTransition(index,splitFrom.distance+TRACK_LENGTH/2+splitTo.distance+TRACK_LENGTH/2);
+					// }
+					if(splitTo.distance<end_at) {
+						teamTransition(index,splitFrom.distance+TRACK_LENGTH/2,splitTo.distance+TRACK_LENGTH/2,end_at);
+					}
+				});
+				*/
+				/*.attrTween("stroke-dasharray", function(d){
+						//console.log(d);
+						return tweenTeamTrack(this,__TIME,index,splitTo)
+				})*/
+		  		/*.selectAll("path")
 		  			.filter((d,i)=>(i===split))
+		  				.attr("stroke-dasharray", function(d){
+								console.log(d,__TIME,index);
+								console.log("!!!!!",tweenDash(this,__TIME,index,d)(0.01))
+								return tweenDash(this,__TIME,index,d)(0.01)
+						})*/
+		  				/*
 				  		.transition()
 						.duration(__TIME/options.multiplier)
 						.ease(!split?CyclingEasing:CyclingLinear)
@@ -393,13 +565,32 @@ export default function Velodrome(options) {
 							}
 							
 						});
+						*/
 	}
 	//console.log(teams.select("path"))
-	let totalLength,
-		snakeLength = TEAM_LENGTH,//l * 0.05,
-    	gap = totalLength - snakeLength;
-    let prev_path;
-	let ghost_path_length=ghost_tracks[0].node().getTotalLength();
+	
+
+	function tweenTeamTrack(path,duration,index,split,is2ndHalf) {
+		return function(t) {
+			totalLength=totalLength || path.getTotalLength();
+			ovalLength=totalLength/3;
+
+			let oval_part=split.distance%TRACK_LENGTH;
+			//console.log("OVAL PART",oval_part)
+			let startPoint=ovalLength + (oval_part>0?ovalLength/2:0)*(is2ndHalf?1:-1) ; //get the middle oval + part of the oval
+
+			let delta=split.dmt/TRACK_LENGTH;
+
+			console.log("ovalLength",ovalLength)
+			console.log("startPoint",startPoint)
+
+			let p=startPoint + (ovalLength)*t - ovalLength*delta;
+
+			let dash=`0,${p-TEAM_LENGTH},${TEAM_LENGTH},${totalLength}`;
+
+			return dash;
+		}
+	}
 
 	function tweenDash(path,duration,index,split) {
 		return function(t) {
