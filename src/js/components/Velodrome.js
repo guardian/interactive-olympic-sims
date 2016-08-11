@@ -143,7 +143,7 @@ export default function Velodrome(options) {
 	
 	
 
-	function addPath(team) {
+	function addPath(team,info) {
 
 		let hundreds=[];
 
@@ -183,15 +183,30 @@ export default function Velodrome(options) {
 		]
 
 		if(team===1) {
-			for(let i=0;i<32/2;i++) { //32
-				hundreds.push(halves[1]);
-				hundreds.push(halves[0]);
+			for(let i=0;i<info.splits.length/2;i++) { //32
+				hundreds.push({
+					path:halves[1],
+					split:info.splits[i]
+				});
+				hundreds.push({
+					path:halves[0],
+					split:info.splits[i]
+				});
+				//hundreds.push(halves[0]);
 			}
 		}
 		if(team===0) {
-			for(let i=0;i<32/2;i++) { //32
-				hundreds.push(halves[0]);
-				hundreds.push(halves[1]);
+			for(let i=0;i<info.splits.length/2;i++) { //32
+				hundreds.push({
+					path:halves[0],
+					split:info.splits[i]
+				});
+				hundreds.push({
+					path:halves[1],
+					split:info.splits[i]
+				});
+				//hundreds.push(halves[0]);
+				//hundreds.push(halves[1]);
 			}
 		}
 		
@@ -273,11 +288,11 @@ export default function Velodrome(options) {
 
 		team
 				.selectAll("path")
-				.data(addPath(index))
+				.data(addPath(index,info))
 				.enter()
 				.append("path")
 					.attr("d",(d)=>{
-						return d;
+						return d.path;
 					})
 					.attr("id",(d,i)=>("p"+index+"_"+i))
 					.classed("gold",d=>{
@@ -340,6 +355,7 @@ export default function Velodrome(options) {
 	function teamTransition(index,split) {
 
 		//console.log(index,split,__TEAMS)
+
 		let time=__TEAMS[index].splits[split].time;
 
 
@@ -357,10 +373,10 @@ export default function Velodrome(options) {
 				  		.transition()
 						.duration(__TIME/options.multiplier)
 						.ease(!split?CyclingEasing:CyclingLinear)
-						//.ease(Running400mEasing)
-						//.ease(RunningLinear)
-						//.ease(info.leg===0?Running200mEasing:RunningLinear)
-						.attrTween("stroke-dasharray", function(d){return tweenDash(this,__TIME,index,split)})
+						.attrTween("stroke-dasharray", function(d){
+								console.log(d);
+								return tweenDash(this,__TIME,index,d)
+						})
 						.on("end", function(d,i) {
 							//console.log("end",d,i)
 							
@@ -373,12 +389,12 @@ export default function Velodrome(options) {
 									options.splitCallback(index,split)
 								}
 
-								teamTransition(index,CURRENT[index]);
+								//teamTransition(index,CURRENT[index]);
 							}
 							
 						});
 	}
-	console.log(teams.select("path"))
+	//console.log(teams.select("path"))
 	let totalLength,
 		snakeLength = TEAM_LENGTH,//l * 0.05,
     	gap = totalLength - snakeLength;
@@ -391,6 +407,7 @@ export default function Velodrome(options) {
 			totalLength=totalLength || path.getTotalLength();
     		let position=totalLength*t;
 
+    		//console.log("tweenDash",split)
 			
 			//let l2=ghost_path.getTotalLength();
 			

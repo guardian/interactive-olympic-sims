@@ -140,7 +140,10 @@ export default function TeamPursuit(data,options) {
 
 			//s.splits=splits;
 
-
+			let prev={
+				mt:0,
+				dmt:0
+			}
 			s.splits.forEach(split => {
 
 				let gap=split.cumulative_time-best_cumulative_times[split.distance].best_cumulative,
@@ -151,6 +154,14 @@ export default function TeamPursuit(data,options) {
 
 				split.mt=distance*best_cumulative_times[split.distance].best_cumulative/split.cumulative_time;
 				split.dmt=distance-split.mt;
+
+				split.prev={
+					mt:prev.mt,
+					dmt:prev.dmt
+				};
+
+				prev.mt=split.mt;
+				prev.dmt=split.dmt;
 
 				options.text.push({
 					"state":"annotation",
@@ -170,7 +181,7 @@ export default function TeamPursuit(data,options) {
 
 
 
-		//buildVisual();
+		buildVisual();
 
 	}
 
