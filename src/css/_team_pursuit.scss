@@ -12,6 +12,11 @@
 	perspective: 400px;
 	perspective-origin: 50% 100%;
 	transform-style: preserve-3d;
+	
+	svg,.rio-overlay {
+		transform-style: preserve-3d;
+		//transform:rotateX(30deg) rotateY(0deg) rotateZ(20deg) translateX(90px) translateY(40px) translateZ(40px) scale(1);
+	}
 
 	svg {
 		
@@ -19,8 +24,7 @@
 	
 		margin: 0 auto;
 		
-		transform-style: preserve-3d;
-		transform:rotateX(20deg) rotateY(0deg) rotateZ(0deg) translateX(0px) translateY(0px) translateZ(0px) scale(1);
+
 		
 
 		.scaffolding {
@@ -101,14 +105,26 @@
 
 	.annotations {
 		.annotation {
-			position: relative;
+			width:auto;
 			h3 {
 				@include fs-header(2);
+				line-height: 14px;
 				margin:0;
 				padding:0;
+				margin-bottom:2px;
+				border-bottom:3px solid;
+				display: inline-block;
+			}
+			
+			&.gold h3 {
+				border-color:#ffd700;
+			}
+			&.silver h3 {
+				border-color:#c0c0c0;
 			}
 
 			span {
+				position:relative;
 				@include fs-headline(2);
 			}
 			i {

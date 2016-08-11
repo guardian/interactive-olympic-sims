@@ -61,6 +61,8 @@ export default function TeamPursuit(data,options) {
 		overlay,
 		perspectives=[];
 
+	let CURRENT_STEP=0;
+
 	let hscale,
 		vscale;
 
@@ -258,6 +260,8 @@ export default function TeamPursuit(data,options) {
 	   		.style("width",WIDTH+"px")//hscale.range()[1]+"px")
 	    	.style("height",HEIGHT+"px")//vscale.range()[1]+"px")
 
+	    buildTexts("intro");
+
 	    let velodrome=new Velodrome({
 	    	container:container,
 	    	svg:svg,
@@ -268,13 +272,13 @@ export default function TeamPursuit(data,options) {
 	    	hscale:hscale,
 	    	vscale:vscale,
 	    	splitCallback:((team,split)=>{
-	    		updateTeam(team,split)
 	    		addTime(team,split);
 	    	})
 	    })
 
 	    teams_data.forEach((team,i) => {
 	    	velodrome.addTeam(i,team);
+	    	addTime(i,0);
 	    })
 
 	    let splits=teams_data[0].splits.map((s,i)=>{
@@ -298,7 +302,7 @@ export default function TeamPursuit(data,options) {
 	    	container:container
 	    })*/
 
-	    let team=overlay.selectAll("div.team-info")
+	    /*let team=overlay.selectAll("div.team-info")
 	    			.data(teams_data)
 	    			.enter()
 	    			.append("div")
@@ -325,12 +329,12 @@ export default function TeamPursuit(data,options) {
 	    				})
 	    				.style("left",(d,i)=>{
 	    					return hscale(dimensions.radius+dimensions.field.width/2)+"px"
-	    				})
+	    				})*/
 	    
-	    let h3=team.append("h3");
+	    /*let h3=team.append("h3");
 
 		h3.append("b").text(d=>d.team)
-	    annotation_time=h3.append("span")
+	    annotation_time=h3.append("span")*/
 
 
 
@@ -343,7 +347,60 @@ export default function TeamPursuit(data,options) {
 	    
 	}
 
-	function updateTeam(team,split) {
+	function buildTexts(state) {
+		
+		//console.log("buildTexts",CURRENT_STEP)
+
+		
+
+		let texts=options.text.filter(d=>d.state===(state || "story"));
+
+		//console.log("TEXTS",texts,texts[CURRENT_STEP])
+		
+		let standfirst=select(options.container)
+							.selectAll("div.stand-first")
+								.data([texts[CURRENT_STEP]]);
+
+		standfirst=standfirst
+			.enter()
+		    .append("div")
+		    .attr("class","stand-first")
+			.merge(standfirst)
+    			.html(d=>{
+    				//console.log("!!!!",d)
+    				return "<p>"+d.description+"</p>";
+    			});
+
+		
+		let button=standfirst
+						.selectAll("button")
+		    				.data([texts[CURRENT_STEP].button]);
+
+	    button
+	    	.enter()
+	    	.append("button")
+		    	.on("click",()=>{
+					CURRENT_STEP=(CURRENT_STEP+1)%texts.length;
+					//console.log(CURRENT_STEP,texts[CURRENT_STEP].mt)
+					//CURRENT_STEP=CURRENT_STEP===0?1:CURRENT_STEP;
+					buildTexts();
+					//deactivateButton();
+					if(texts[CURRENT_STEP].state!=="intro") {
+						swimming_pool.setAxis(texts[CURRENT_STEP].mt)
+					} else {
+						swimming_pool.setAxis(0)
+					}
+					goTo(options.text.filter(d=>d.state==="story")[CURRENT_STEP].mt,(d)=>{
+						activateButton();
+					})
+				})
+			.merge(button)
+				.classed("replay",d=>(d.toLowerCase()==="replay"))
+				.text(d=>d)
+
+	}
+
+	/*function updateTeam(team,split) {
 
     	console.log("updateTeam",team,split)
 
@@ -366,10 +423,10 @@ export default function TeamPursuit(data,options) {
 
 
 
-    }
+    }*/
 
     function addTime(team,split) {
-		//console.log("addTime",distance,lane)
+		console.log("addTime",team,split)
 
 		
 		let times=[
@@ -392,15 +449,22 @@ export default function TeamPursuit(data,options) {
 		//console.log(offset)
 
 		annotations_layer
-			//.enter()
+			.selectAll("div.time")
+			.filter(d=>d.team===team)
+			.remove("div.time")
+
+		
+		annotations_layer
 			.append("div")
 				.datum({
 					distance:split*125,
 					time:_time,
-					diff:diff
+					diff:diff,
+					team:team
 				})
 				.attr("class","annotation time")
-			//.merge(annotation)
+				.classed("gold",(d)=>!d.team)
+				.classed("silver",(d)=>d.team)
 				.style("left",d=>{
 					
 					let x=hscale(dimensions.radius+dimensions.field.width/2),
@@ -411,11 +475,13 @@ export default function TeamPursuit(data,options) {
 					d.coords=overlayPersp.transform(x,y)
 					xy=[x,y];
 
+					console.log(xy)
+
 					return (d.coords[0]-offset.left)+"px";
 				})
 				.style("top",d=>{
 					//let offset=getOffset(annotations_layer.node());
-					return (d.coords[1]-(offset.top))+"px";
+					return (d.coords[1]-(offset.top)+(!d.team?16:-45))+"px";
 				})
 				.html(d=>{
 					return "<h3>"+teams_data[team].team+"</h3><span>"+d.time+("</span><i>"+(d.distance)+"m</i>")
