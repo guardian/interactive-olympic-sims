@@ -40,8 +40,27 @@
 				stroke:#f2ecde;
 				stroke-width:1;
 				fill:none;
+
 				&.inner {
 					stroke:#b7d9f4;
+				}
+
+				&.inner-line {
+					stroke-width:1;
+					stroke-opacity:0.25;
+					stroke:$inner_line;
+				}
+
+				&.middle-line {
+					stroke-width:1;
+					stroke-opacity:0.25;
+					stroke:$middle_line;
+				}
+
+				&.outer-line {
+					stroke-width:1;
+					stroke-opacity:0.25;
+					stroke:$outer_line;
 				}
 			}
 		}

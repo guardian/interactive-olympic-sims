@@ -71,9 +71,25 @@ export default function Velodrome(options) {
 				.style("stroke-width",vscale(lane_width))
 	background
 			.append("path")
-				.attr("d",addBackground(-lane_width/2-inner_width/2))
+				.attr("d",addBackground(-lane_width/2-inner_width/2+0.9))
 				.attr("class","inner")
 				.style("stroke-width",vscale(inner_width))
+
+	background
+			.append("path")
+				.attr("d",addBackground(-lane_width/4-0.6))
+				.attr("class","inner-line")
+
+	background
+			.append("path")
+				.attr("d",addBackground(-lane_width/4+1))
+				.attr("class","middle-line")
+	
+	background
+			.append("path")
+				.attr("d",addBackground(2))
+				.attr("class","outer-line")
+				
 
 
 	let teams=svg

@@ -70,6 +70,8 @@ export default function TeamPursuit(data,options) {
 
 	let annotation_time;
 
+	let velodrome;
+
 	let frameRequest = requestAnimFrame(function checkInnerHTML(time) {
         ////console.log(time)
         
@@ -262,7 +264,7 @@ export default function TeamPursuit(data,options) {
 
 	    buildTexts("intro");
 
-	    let velodrome=new Velodrome({
+	    velodrome=new Velodrome({
 	    	container:container,
 	    	svg:svg,
 	    	width:WIDTH,
@@ -340,11 +342,19 @@ export default function TeamPursuit(data,options) {
 
 
 	    //velodrome.race();
-	    velodrome.goFromTo(0,0.125)
+	    //console.log(options)
+
+	    //velodrome.goFromTo(+options.text[0].from,+options.text[0].to)
 	    //velodrome.goFrom(3)
 
+	    goFromTo(options.text[0]);
 	    
-	    
+	}
+
+	function goFromTo(info) {
+		addTime(0,teams_data[0].splits.filter(d=>d.distance == +info.from)[0].index);
+		addTime(1,teams_data[1].splits.filter(d=>d.distance == +info.from)[0].index);
+		velodrome.goFromTo(+info.from,+info.to)
 	}
 
 	function buildTexts(state) {
@@ -385,14 +395,13 @@ export default function TeamPursuit(data,options) {
 					//CURRENT_STEP=CURRENT_STEP===0?1:CURRENT_STEP;
 					buildTexts();
 					//deactivateButton();
-					if(texts[CURRENT_STEP].state!=="intro") {
-						swimming_pool.setAxis(texts[CURRENT_STEP].mt)
-					} else {
-						swimming_pool.setAxis(0)
-					}
-					goTo(options.text.filter(d=>d.state==="story")[CURRENT_STEP].mt,(d)=>{
+					
+					/*goTo(options.text.filter(d=>d.state==="story")[CURRENT_STEP].mt,(d)=>{
 						activateButton();
-					})
+					})*/
+					let story=options.text.filter(d=>d.state==="story")[CURRENT_STEP];
+
+					goFromTo(story);
 				})
 			.merge(button)
 				.classed("replay",d=>(d.toLowerCase()==="replay"))
