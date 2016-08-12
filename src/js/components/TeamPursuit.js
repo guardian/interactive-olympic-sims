@@ -223,6 +223,11 @@ export default function TeamPursuit(data,options) {
 	    					.append("div")
 	    					.attr("id","team-pursuit")
 
+	    select(options.container)
+	    		.append("div")
+	    		.attr("class","notes")
+	    		.html("The positions are based on the athletes' average speed. Race at 2x speed.")
+
 	    annotations_layer=container
 								.append("div")
 								.attr("class","annotations");
@@ -256,7 +261,7 @@ export default function TeamPursuit(data,options) {
 			    		stopWatch=new StopWatch({
 							container:options.container,
 							svg:this,
-							multiplier:options.multiplier
+							multiplier:1/options.multiplier
 						});
 			    	})
 
@@ -283,9 +288,21 @@ export default function TeamPursuit(data,options) {
 	    	multiplier:options.multiplier,
 	    	hscale:hscale,
 	    	vscale:vscale,
-	    	splitCallback:((team,split)=>{
+	    	splitCallback:((team,split,split_obj)=>{
 	    		addTime(team,split);
-	    	})
+	    		stopWatch.showDistance(split_obj.distance);
+
+	    		let record=options.record.split_times[split];
+				let trecord=convertTime(record),
+					gap=best_cumulative_times[split_obj.distance].best_cumulative-trecord;
+
+	    		stopWatch.showRecord(options.record.split_times[split],gap,split_obj.distance<4)
+	    	}),
+	    	stopWatch_callback:(split)=>{
+	    		if(split.cumulative_time===best_cumulative_times[split.distance].best_cumulative) {
+					stopWatch.stop(split.cumulative_time);
+				}
+	    	}
 	    })
 
 	    teams_data.forEach((team,i) => {
@@ -366,8 +383,27 @@ export default function TeamPursuit(data,options) {
 	}
 
 	function goFromTo(info) {
-		addTime(0,teams_data[0].splits.filter(d=>d.distance == +info.from)[0].index);
-		addTime(1,teams_data[1].splits.filter(d=>d.distance == +info.from)[0].index);
+
+		let split0=teams_data[0].splits.filter(d=>d.distance == +info.from)[0],
+			split1=teams_data[1].splits.filter(d=>d.distance == +info.from)[0];
+
+		//let duration=best_cumulative_times[info.from].best_time*(delta/dimensions.length);
+		stopWatch.start(best_cumulative_times[info.from].best_cumulative,true);	
+		stopWatch.showDistance(info.from);
+
+		let record=options.record.split_times[split0.index];
+		let trecord=convertTime(record),
+			gap=best_cumulative_times[split0.distance].best_cumulative-trecord;
+
+		if(split0.distance>0) {
+			stopWatch.showRecord(options.record.split_times[split0.index],gap,split0.distance<4)	
+		} else {
+			stopWatch.hideRecord();
+		}
+		
+
+		addTime(0,split0.index);
+		addTime(1,split1.index);
 		velodrome.goFromTo(+info.from,+info.to)
 	}
 
@@ -429,6 +465,7 @@ export default function TeamPursuit(data,options) {
 	function setPerspective(perspective="none",callback) {
 
 		velodrome.cancelTransitions();
+		stopWatch.hide();
 
 		if(perspective!=CURRENT_PERSPECTIVE) {
 			
@@ -497,6 +534,7 @@ export default function TeamPursuit(data,options) {
     		_time="+"+formatSecondsMilliseconds(diff);
     	}
 
+    	
 		
 
 		let xy;

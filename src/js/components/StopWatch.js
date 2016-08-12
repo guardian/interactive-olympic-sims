@@ -100,6 +100,8 @@ export default function StopWatch(options) {
 			cancelAnimFrame(frameRequest);	
 		}
 
+		console.log("START WATCH",time,raf)
+
 		delta_time=time;
 
 		start_time=new Date().getTime();
@@ -137,10 +139,10 @@ export default function StopWatch(options) {
 	
 	this.showDistance = (distance) => {
 		if(distance===0) {
-			distDOM.text("Reaction time");
+			distDOM.text("");
 			return;
 		}
-		distDOM.text(distance+"m");
+		distDOM.text((distance*1000)+"m");
 	}
 
 	this.showRecord = (record,gap,split=false) => {
@@ -151,14 +153,14 @@ export default function StopWatch(options) {
 		} else {
 			wrDOM.text(`WR ${record}`);
 		}
-		if(!gap) {
+		if(gap === false) {
 			gapDOM.text("")
 			return;	
 		}
 
 		//console.log(gap)
 
-		gapDOM.text(`${gap>0?"+":"-"}${formatSecondsMilliseconds(Math.abs(gap))}`);
+		gapDOM.text(`${gap>=0?"+":"-"}${formatSecondsMilliseconds(Math.abs(gap))}`);
 
 		wr_visible=true;
 	}

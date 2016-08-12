@@ -540,11 +540,14 @@ export default function Velodrome(options) {
 									if(splitTo.dmt>0) {
 										teamGapTransition(index,splitTo)	
 									}
+									if(options.stopWatch_callback) {
+										options.stopWatch_callback(splitTo)
+									}
 								}
 
 								if(options.splitCallback) {
 									ts[index]=setTimeout(()=>{
-												options.splitCallback(index,splitTo.index)	
+												options.splitCallback(index,splitTo.index,splitTo)	
 											},splitTo.dt_cumulative/multiplier)
 									
 								}
