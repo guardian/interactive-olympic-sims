@@ -1,4 +1,4 @@
-.team-pursuit {
+#team-pursuit {
 	$ratio:(85.73+25.0*2)/50;
 	$width:100%;
 	$height:500px;
@@ -9,22 +9,52 @@
 
 	position: relative;
 
+	overflow:hidden;
+	border-bottom:1px solid #333;
+
 	perspective: 400px;
 	perspective-origin: 50% 100%;
 	transform-style: preserve-3d;
 	
 	svg,.rio-overlay {
 		transform-style: preserve-3d;
-		//transform:rotateX(30deg) rotateY(0deg) rotateZ(20deg) translateX(90px) translateY(40px) translateZ(40px) scale(1);
+		transform:none;
+	}
+	
+	&.p_none {
+		svg,.rio-overlay {
+			transform:scale(0.51) translateX(-50%) translateY(-50%);	
+		}
 	}
 
+	&.p_center_bottom,
+	&.p_bottom_center {
+		svg,.rio-overlay {
+			transform:rotateX(25deg) rotateY(0deg) rotateZ(0deg) translateX(-23%) translateY(-30%) translateZ(-10px) scale(0.8);
+		}
+	}
+	&.p_right_bottom,
+	&.p_bottom_right {
+		svg,.rio-overlay {
+			//transform:rotateX(35deg) rotateY(0deg) rotateZ(45deg) translateX(-180px) translateY(120px) translateZ(100px) scale(1);
+			transform:rotateX(25deg) rotateY(0deg) rotateZ(25deg) translateX(-850px) translateY(40px) translateZ(110px) scale(0.7);
+		}
+	}
+	&.p_left_bottom,
+	&.p_bottom_left {
+		svg,.rio-overlay {
+			//transform:rotateX(35deg) rotateY(0deg) rotateZ(45deg) translateX(-180px) translateY(120px) translateZ(100px) scale(1);
+			transform:rotateX(25deg) rotateY(0deg) rotateZ(-25deg) translateX(-50px) translateY(-615px) translateZ(0px) scale(0.9);
+		}
+	}
+	
 	svg {
 		
 		display: block;
 	
 		margin: 0 auto;
 		
-
+		transition: transform 1s;
 		
 
 		.scaffolding {
@@ -37,12 +67,14 @@
 
 		.bg {
 			path {
-				stroke:#f2ecde;
+				stroke:$velodrome_lane;
+				stroke-opacity:0.8;
 				stroke-width:1;
 				fill:none;
 
 				&.inner {
 					stroke:#b7d9f4;
+					stroke-opacity:1;
 				}
 
 				&.inner-line {
@@ -84,13 +116,13 @@
 				circle {
 					fill:#000;
 					&.gold {
-						fill:#ffd700;
+						fill:$gold;
 					}
 					&.silver {
-						fill:#c0c0c0;
+						fill:$silver;
 					}
 					&.bronze {
-						fill:#cd7f32;
+						fill:$bronze;
 					}
 				}
 
@@ -101,19 +133,24 @@
 			.team {
 				path {
 					fill:none;
-					stroke-width:5;
+					stroke-width:8;
 					stroke:#333;
 
 					//transition: stroke-dasharray 1s;
 
 					&.gold {
-						stroke:#ffd700;
+						stroke:$gold;
 					}
 					&.silver {
-						stroke:#c0c0c0;
+						stroke:$silver;
 					}
 					&.bronze {
-						stroke:#cd7f32;
+						stroke:$bronze;
+					}
+
+					&.team-gap {
+						stroke-width:8;
+						stroke-opacity:0.25;
 					}
 				}
 			}
@@ -136,10 +173,10 @@
 			}
 			
 			&.gold h3 {
-				border-color:#ffd700;
+				border-color:$gold;
 			}
 			&.silver h3 {
-				border-color:#c0c0c0;
+				border-color:$silver;
 			}
 
 			span {

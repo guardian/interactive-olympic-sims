@@ -53,6 +53,8 @@ export default function Velodrome(options) {
 	let hscale=options.hscale,
 		vscale=options.vscale;    
 
+	let ts=[]; //timeouts
+
     
     let TEAM_LENGTH=hscale(dimensions.team_length);
 
@@ -113,7 +115,7 @@ export default function Velodrome(options) {
 							.attr("id","ghost_team0_0")
 							.attr("class","ghost-team")
 							.attr("d",addGhostTrack(0))
-							.attr("stroke-dasharray",function(d){
+							.style("stroke-dasharray",function(d){
 								return "0 "+this.getTotalLength();
 							}),
 						ghost
@@ -121,7 +123,7 @@ export default function Velodrome(options) {
 							.attr("id","ghost_team1")
 							.attr("class","ghost-team")
 							.attr("d",addGhostTrack(0))
-							.attr("stroke-dasharray",function(d){
+							.style("stroke-dasharray",function(d){
 								return "0 "+this.getTotalLength();
 							})
 					];
@@ -330,7 +332,7 @@ export default function Velodrome(options) {
 					.append("g")
 						.attr("class","team")
 						.attr("rel",info.team)
-		console.log("###############",addTeamPath(index))
+		//console.log("###############",addTeamPath(index))
 		team
 			.append("path")
 				.attr("class","team-track")
@@ -351,9 +353,34 @@ export default function Velodrome(options) {
 					})[0]
 				})
 				.attr("d",addTeamPath(index))
-				.attr("stroke-dasharray",function(d){
+				.style("stroke-dasharray",function(d){
 					return "0 "+this.getTotalLength();
 				})
+
+		team
+			.append("path")
+				.attr("class","team-gap")
+				.classed("gold",d=>{
+					if(!Array.isArray(info.entrant.property)) {
+						return false;
+					}
+					return info.entrant.property.filter(p=>{
+						return p.type=="Medal Awarded" && p.value==="Gold"
+					})[0]
+				})
+				.classed("silver",d=>{
+					if(!Array.isArray(info.entrant.property)) {
+						return false;
+					}
+					return info.entrant.property.filter(p=>{
+						return p.type=="Medal Awarded" && p.value==="Silver"
+					})[0]
+				})
+				.attr("d",addTeamPath(index))
+				.style("stroke-dasharray",function(d){
+					return "0 "+this.getTotalLength();
+				})
+
 		/*team
 				.selectAll("path.split")
 				.data(addPath(index,info))
@@ -414,7 +441,10 @@ export default function Velodrome(options) {
 		teamTransition(1,distance)
 	}
 	this.goFromTo = (from,to=4) => {
-		let __to = from+(dimensions.length/1000/2);
+		console.log("GO FROM TO",from,to)
+		ts.forEach(t=>(clearTimeout(t)));
+
+		let __to = +from+(dimensions.length/1000/2);
 		teamTransition(0,from,__to,to);
 		teamTransition(1,from,__to,to)	
 	}
@@ -423,12 +453,19 @@ export default function Velodrome(options) {
 		teamTransition(0,from,to);
 		teamTransition(1,from,to);
 	}
+	this.cancelTransitions = () =>{
+		console.log("cancel transitions")
+		ts.forEach(t=>(clearTimeout(t)));
+		teams.selectAll("path").style("transition","none")
+	}
 	this.race = () => {
 
 		//teamTransition(0,0)
 		//teamTransition(1,0)
 
 	}
+
+
 	let CURRENT=[0,0],
 		PREV=[0,0];
 	let totalLength,
@@ -468,7 +505,11 @@ export default function Velodrome(options) {
 
 		track_path.style("transition",`none`);
 
-		
+		teams.selectAll("path.team-gap")
+			.style("transition",`none`)
+			.style("stroke-dasharray",function(d){
+				return "0 "+this.getTotalLength();
+			})
 
 	  	track_path
 	  			.style("stroke-dasharray", function(d){
@@ -489,15 +530,23 @@ export default function Velodrome(options) {
 					track_path
 							.style("transition",`stroke-dasharray ${__TIME/options.multiplier}ms ${splitFrom.distance===0?"cubic-bezier(.52,.04,.8,.8)":"linear"}`)
 							.style("stroke-dasharray", function(d){
-									return tweenTeamTrack(this,__TIME,index,splitTo,true)(0)
+									splitTo.strokedasharray=tweenTeamTrack(this,__TIME,index,splitTo,true)(0);
+									return splitTo.strokedasharray;
 							})
 							.on("transitionend",()=>{
 								if(splitTo.distance<end_at) {
 									teamTransition(index,splitFrom.distance+TRACK_LENGTH/2,splitTo.distance+TRACK_LENGTH/2,end_at,0);
+								} else {
+									if(splitTo.dmt>0) {
+										teamGapTransition(index,splitTo)	
+									}
 								}
+
 								if(options.splitCallback) {
-									//console.log("SPLIT CALLBACK",index,CURRENT[index],split)
-									options.splitCallback(index,splitTo.index)
+									ts[index]=setTimeout(()=>{
+												options.splitCallback(index,splitTo.index)	
+											},splitTo.dt_cumulative/multiplier)
+									
 								}
 							})
 				})
@@ -584,7 +633,64 @@ export default function Velodrome(options) {
 						*/
 	}
 	//console.log(teams.select("path"))
-	
+	function teamGapTransition(index,split) {
+		console.log("teamGapTransition",index,split);
+
+		let gap_path=teams
+				  		.selectAll(".team")
+				  			.filter((d,i)=>(i===index))
+				  			.select("path.team-gap");
+
+		
+		let is2ndHalf=((split.distance%1)/0.125)%2
+
+
+		gap_path
+			.style("transition",`none`)
+
+		gap_path
+			.style("stroke-dasharray",()=>{
+				let dash=split.strokedasharray.split(",");
+				dash[1]= +dash[1] + (+dash[2]);
+				dash[2]=10;
+				split.strokedasharray=dash.join(",");
+				return dash.join(",");
+			})
+			.transition()
+			.duration(0)
+			.on("end",()=>{
+				gap_path
+						.style("transition",`stroke-dasharray ${split.dt_cumulative/options.multiplier}ms linear`)
+						.style("stroke-dasharray", function(d){
+								
+								let dash=split.strokedasharray.split(",");
+
+								let oval_part=split.distance%TRACK_LENGTH;
+			
+								let startPoint=ovalLength + (oval_part>0?ovalLength/2:0)*(is2ndHalf?1:-1) ; //get the middle oval + part of the oval
+
+								//console.log("GAP ovalLength",ovalLength)
+								//console.log("GAP startPoint",startPoint)
+
+								let p=startPoint + (ovalLength);
+
+								//let dash=`0,${p-TEAM_LENGTH},${TEAM_LENGTH},${totalLength}`;
+
+
+								dash[2]=(ovalLength+(is2ndHalf?ovalLength/2:0)) - (+dash[1]);
+
+								//console.log("GAP NEW DASH",dash)
+
+								return dash.join(",");
+
+						})
+						.on("transitionend",()=>{
+							console.log("GAP CLOSED")
+						})
+			})
+
+
+	}
 
 	function tweenTeamTrack(path,duration,index,split,is2ndHalf) {
 		return function(t) {
@@ -592,13 +698,13 @@ export default function Velodrome(options) {
 			ovalLength=totalLength/3;
 
 			let oval_part=split.distance%TRACK_LENGTH;
-			//console.log("OVAL PART",oval_part)
+			
 			let startPoint=ovalLength + (oval_part>0?ovalLength/2:0)*(is2ndHalf?1:-1) ; //get the middle oval + part of the oval
 
 			let delta=split.dmt/TRACK_LENGTH;
 
-			console.log("ovalLength",ovalLength)
-			console.log("startPoint",startPoint)
+			//console.log("ovalLength",ovalLength)
+			//console.log("startPoint",startPoint)
 
 			let p=startPoint + (ovalLength)*t - ovalLength*delta;
 
@@ -607,7 +713,25 @@ export default function Velodrome(options) {
 			return dash;
 		}
 	}
+	function tweenTeamGap(path,split) {
+		totalLength=totalLength || path.getTotalLength();
+		ovalLength=totalLength/3;
 
+		let oval_part=split.distance%TRACK_LENGTH;
+		//console.log("OVAL PART",oval_part)
+		let startPoint=ovalLength + (oval_part>0?ovalLength/2:0)*(is2ndHalf?1:-1) ; //get the middle oval + part of the oval
+
+		let delta=split.dmt/TRACK_LENGTH;
+
+		console.log("ovalLength",ovalLength)
+		console.log("startPoint",startPoint)
+
+		let p=startPoint + (ovalLength)*t - ovalLength*delta;
+
+		let dash=`0,${p-TEAM_LENGTH},${TEAM_LENGTH},${totalLength}`;
+
+		return dash;
+	}
 	function tweenDash(path,duration,index,split) {
 		return function(t) {
 
@@ -639,7 +763,7 @@ export default function Velodrome(options) {
 				prev_path=select(PREV[index]);
 				if(position > snakeLength) {
 					//select(PREV[index])
-					prev_path.attr("stroke-dasharray", "0,"+(totalLength)+","+snakeLength+","+totalLength);
+					prev_path.style("stroke-dasharray", "0,"+(totalLength)+","+snakeLength+","+totalLength);
 					PREV[index]=null;
 				} else {
 					//console.log("should modifiy prev:",(l*(1-t)),t,totalLength-(l*(1-t)),snakeLength-(totalLength-(l*(1-t))))
@@ -647,7 +771,7 @@ export default function Velodrome(options) {
 					let dx=snakeLength-(totalLength-(totalLength*(1-t)))
 					//0,1061.9856567382812,55.89398193359375,1117.879638671875
 					//select(PREV[index])
-					prev_path.attr("stroke-dasharray", "0,"+(totalLength-dx)+","+snakeLength+","+totalLength);
+					prev_path.style("stroke-dasharray", "0,"+(totalLength-dx)+","+snakeLength+","+totalLength);
 				}
 
 				

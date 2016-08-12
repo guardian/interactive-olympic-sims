@@ -63,6 +63,8 @@ export default function TeamPursuit(data,options) {
 
 	let CURRENT_STEP=0;
 
+	let CURRENT_PERSPECTIVE;
+
 	let hscale,
 		vscale;
 
@@ -177,6 +179,7 @@ export default function TeamPursuit(data,options) {
 				let distance=split.distance;
 
 				split.dt=split.time - best_cumulative_times[split.distance].best_time;
+				split.dt_cumulative=split.cumulative_time - best_cumulative_times[split.distance].best_cumulative;
 				split.mt=split.cumulative_time?distance*best_cumulative_times[split.distance].best_cumulative/split.cumulative_time:split.cumulative_time;
 				split.dmt=distance-split.mt;
 
@@ -216,9 +219,9 @@ export default function TeamPursuit(data,options) {
     	let margins=options.margins || {left:0,top:0,right:0,bottom:0};
 
     	
-	    let container=select(options.container)
+	    container=select(options.container)
 	    					.append("div")
-	    					.attr("class","team-pursuit")
+	    					.attr("id","team-pursuit")
 
 	    annotations_layer=container
 								.append("div")
@@ -237,6 +240,13 @@ export default function TeamPursuit(data,options) {
 	    	WIDTH=box.width;
 	    	HEIGHT=WIDTH/ratio;
 	    }
+	    WIDTH=WIDTH*2;
+	    HEIGHT=HEIGHT*2;
+
+	    margins.left*=2.5;
+	    margins.right*=2.5;
+	    margins.top*=2.5;
+	    margins.bottom*=2.5;
 
 	    let svg=container
 	    			.append("svg")
@@ -346,8 +356,12 @@ export default function TeamPursuit(data,options) {
 
 	    //velodrome.goFromTo(+options.text[0].from,+options.text[0].to)
 	    //velodrome.goFrom(3)
+		//options.text[0].perspective="bottom_left";
+	    setPerspective(options.text[0].perspective,()=>{
+			goFromTo(options.text[0])
+		})
 
-	    goFromTo(options.text[0]);
+	    //goFromTo(options.text[0]);
 	    
 	}
 
@@ -401,14 +415,47 @@ export default function TeamPursuit(data,options) {
 					})*/
 					let story=options.text.filter(d=>d.state==="story")[CURRENT_STEP];
 
-					goFromTo(story);
+					setPerspective(story.perspective,()=>{
+						goFromTo(story)
+					})
+
+					
 				})
 			.merge(button)
 				.classed("replay",d=>(d.toLowerCase()==="replay"))
 				.text(d=>d)
 
 	}
+	function setPerspective(perspective="none",callback) {
 
+		velodrome.cancelTransitions();
+
+		if(perspective!=CURRENT_PERSPECTIVE) {
+			
+			CURRENT_PERSPECTIVE=perspective;
+
+			container
+				.attr("class",`p_${perspective}`)
+				.transition()
+				.duration(0)
+				.delay(1000)
+					.on("end",()=>{
+						if(callback) {
+							console.log("CALLBACK!")
+							callback();
+						}
+					})		
+
+		} else {
+			CURRENT_PERSPECTIVE=perspective;
+			callback();	
+		}
+		
+		
+		
+		
+
+	}
 	/*function updateTeam(team,split) {
 
     	console.log("updateTeam",team,split)

@@ -34,7 +34,7 @@ window.init = function init(el, config) {
 
    	//console.log("SWIMMING SwimmingPerspective",el)
 
-   	d3_json("http://interactive.guim.co.uk/docsdata-test/1-kgMNS_5G8Xm9DKhxWVs3GeeYBzEB8FYQYBkOoReXJg.json",(json)=>{
+   	d3_json("https://interactive.guim.co.uk/docsdata-test/1-kgMNS_5G8Xm9DKhxWVs3GeeYBzEB8FYQYBkOoReXJg.json",(json)=>{
    		
         let team_pursuit=new TeamPursuit(men_team_pursuit,{
             container:el,
@@ -48,7 +48,7 @@ window.init = function init(el, config) {
                 top:40,
                 bottom:40
             },
-            multiplier:1
+            multiplier:2
         })
 
    	})
