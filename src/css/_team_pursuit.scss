@@ -4,12 +4,17 @@
 	$height:500px;
 	//max-width:1260px;
 
-	width:$width;
-	height:$height;
+	
 
 	position: relative;
+	
+	overflow:visible;
 
-	overflow:hidden;
+	@include mq(tablet) {
+		overflow:hidden;
+		width:$width;
+		height:$height;
+	}
 	//border-bottom:1px solid #333;
 
 	perspective: 400px;
@@ -78,19 +83,19 @@
 				}
 
 				&.inner-line {
-					stroke-width:1;
+					stroke-width:1.5;
 					stroke-opacity:0.25;
 					stroke:$inner_line;
 				}
 
 				&.middle-line {
-					stroke-width:1;
+					stroke-width:1.5;
 					stroke-opacity:0.25;
 					stroke:$middle_line;
 				}
 
 				&.outer-line {
-					stroke-width:1;
+					stroke-width:1.5;
 					stroke-opacity:0.25;
 					stroke:$outer_line;
 				}
@@ -133,7 +138,10 @@
 			.team {
 				path {
 					fill:none;
-					stroke-width:8;
+					stroke-width:4;
+					@include mq(tablet) {
+						stroke-width:8;
+					}
 					stroke:#333;
 
 					//transition: stroke-dasharray 1s;
@@ -149,8 +157,15 @@
 					}
 
 					&.team-gap {
-						stroke-width:8;
-						stroke-opacity:0.25;
+						stroke-width:4;
+						@include mq(tablet) {
+							stroke-width:8;
+						}
+						stroke-opacity:1;
+						stroke:#fff;
+						@include mq(tablet) {
+							stroke-opacity:1;
+						}
 					}
 				}
 			}
@@ -161,7 +176,7 @@
 
 	.annotations {
 		.annotation {
-			width:auto;
+			width:100px;
 			h3 {
 				@include fs-header(2);
 				line-height: 14px;
@@ -182,14 +197,33 @@
 			span {
 				position:relative;
 				@include fs-headline(2);
+
+				b {
+					display: inline-block;
+					margin-right:5px;
+					font-weight: normal;
+					color:#666;
+				}
 			}
 			i {
 				@include fs-headline(2);
-				text-decoration: normal;
+				font-style: normal;
 				color:#bdbdbd;
 			}
 		}
-	}
+		
+		&.p_bottom_center,
+		&.p_center_bottom {
+			.annotation.time.s0 {
+				margin-left:60px;
+			}
+			.annotation.time.s1 {
+				margin-top:15px;
+				text-align: right;
+				margin-left:-50px;
+			}
+		}
+ 	}
 
 	/* .overlay {
 		top:0;

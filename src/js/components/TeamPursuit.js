@@ -59,6 +59,7 @@ export default function TeamPursuit(data,options) {
 	let container,
 		annotations_layer,
 		overlay,
+		svg,
 		perspectives=[];
 
 	let CURRENT_STEP=0;
@@ -116,7 +117,16 @@ export default function TeamPursuit(data,options) {
     					distance:+d.position
     				}
     			}),
-    			"entrant":entrant
+    			"speed":entrant.resultExtension.filter(d=>d.type=="Average Speed")[0].value,
+    			"entrant":entrant,
+    			"records":(()=>{
+    				let records=[];
+    				if(typeof entrant.property.length !== 'undefined') {
+    					records = entrant.property.filter(r=>r.type==="Record Set").map(r=>r.value)	
+    				}
+    				return records.indexOf("WR")>-1?records.filter(r=>(r==="WR")):records.filter(r=>(r==="OR"))
+    				//return records.filter(r=>(r==="WR"));
+    			}())
     		}
     	});
 
@@ -245,15 +255,32 @@ export default function TeamPursuit(data,options) {
 	    	WIDTH=box.width;
 	    	HEIGHT=WIDTH/ratio;
 	    }
-	    WIDTH=WIDTH*2;
-	    HEIGHT=HEIGHT*2;
+	    
 
-	    margins.left*=2.5;
-	    margins.right*=2.5;
-	    margins.top*=2.5;
-	    margins.bottom*=2.5;
 
-	    let svg=container
+	    if(box.width<=480) {
+
+	    	WIDTH=window.innerHeight;
+	    	HEIGHT=WIDTH/ratio;
+
+	    	margins.left*=1.6;
+
+	    	container.style("height",WIDTH+"px")
+	    } else {
+	    	WIDTH=WIDTH*2;
+		    HEIGHT=HEIGHT*2;
+
+
+
+		    margins.left*=2.5;
+		    margins.right*=2.5;
+		    margins.top*=2.5;
+		    margins.bottom*=2.5;	
+	    }
+
+	    
+
+	    svg=container
 	    			.append("svg")
 	    			.attr("width",WIDTH)
 	    			.attr("height",HEIGHT)
@@ -305,7 +332,7 @@ export default function TeamPursuit(data,options) {
 	    	}
 	    })
 
-	    teams_data.forEach((team,i) => {
+	    teams_data.reverse().forEach((team,i) => {
 	    	velodrome.addTeam(i,team);
 	    	addTime(i,0);
 	    })
@@ -373,7 +400,7 @@ export default function TeamPursuit(data,options) {
 
 	    //velodrome.goFromTo(+options.text[0].from,+options.text[0].to)
 	    //velodrome.goFrom(3)
-		//options.text[0].perspective="bottom_left";
+		options.text[0].perspective="bottom_center";
 	    setPerspective(options.text[0].perspective,()=>{
 			goFromTo(options.text[0])
 		})
@@ -388,6 +415,7 @@ export default function TeamPursuit(data,options) {
 			split1=teams_data[1].splits.filter(d=>d.distance == +info.from)[0];
 
 		//let duration=best_cumulative_times[info.from].best_time*(delta/dimensions.length);
+		console.log(info)
 		stopWatch.start(best_cumulative_times[info.from].best_cumulative,true);	
 		stopWatch.showDistance(info.from);
 
@@ -471,8 +499,49 @@ export default function TeamPursuit(data,options) {
 			
 			CURRENT_PERSPECTIVE=perspective;
 
-			container
-				.attr("class",`p_${perspective}`)
+			let transform="scale(0.51) translateX(-50%) translateY(-50%)";
+
+			let box = container.node().getBoundingClientRect();
+
+			if(perspective==="bottom_left" || perspective==="left_bottom") {
+				let w=box.width;
+				//rotateX(25deg) rotateY(0deg) rotateZ(-25deg) translateX(-275px) translateY(-150px) translateZ(20px) scale(0.7)
+				//rotateX(25deg) rotateY(0deg) rotateZ(-25deg) translateX(-250px) translateY(-550px) translateZ(70px) scale(0.7)
+				let dxScale=scaleLinear().domain([800,1260]).range([-275,-250]),
+					dyScale=scaleLinear().domain([800,1260]).range([-155,-550]),
+					dzScale=scaleLinear().domain([800,1260]).range([20,70]);
+				transform=`rotateX(25deg) rotateY(0deg) rotateZ(-25deg) translateX(${dxScale(w)}px) translateY(${dyScale(w)}px) translateZ(${dzScale(w)}px) scale(0.7)`
+			}
+			if(perspective==="bottom_right" || perspective==="right_bottom") {
+
+				let w=box.width;
+
+				let dxScale=scaleLinear().domain([800,1260]).range([-420,-820]),
+					dyScale=scaleLinear().domain([800,1260]).range([170,40]),
+					dzScale=scaleLinear().domain([800,1260]).range([50,100]);
+				transform=`rotateX(25deg) rotateY(0deg) rotateZ(25deg) translateX(${dxScale(w)}px) translateY(${dyScale(w)}px) translateZ(${dzScale(w)}px) scale(0.7)`
+			}
+			if(perspective==="bottom_center" || perspective==="center_bottom") {
+				
+				let w=box.width;
+
+				let rxScale=scaleLinear().domain([620,1260]).range([0,25]);
+
+				transform=`rotateX(${rxScale(w)}deg) rotateY(0deg) rotateZ(0deg) translateX(-23%) translateY(-30%) translateZ(-10px) scale(0.75)`;
+			}
+
+			if(box.width<=480) {
+				//transform=`rotateX(0deg) rotateY(0deg) rotateZ(90deg) translateX(38%) translateY(60%) translateZ(0px) scale(1.1)`;	
+				transform=`rotateX(30deg) rotateY(0deg) rotateZ(90deg) translateX(53%) translateY(65%) translateZ(0px) scale(1.1)`;
+			}
+
+			annotations_layer.attr("class",`annotations p_${perspective}`)
+
+			svg
+				.style("-webkit-transform",transform)
+	    		.style("-moz-transform",transform)
+	    		.style("-ms-transform",transform)
+	    		.style("transform",transform)
 				.transition()
 				.duration(0)
 				.delay(1000)
@@ -481,7 +550,12 @@ export default function TeamPursuit(data,options) {
 							console.log("CALLBACK!")
 							callback();
 						}
-					})		
+					})
+			overlay
+		    		.style("-webkit-transform",transform)
+		    		.style("-moz-transform",transform)
+		    		.style("-ms-transform",transform)
+		    		.style("transform",transform);
 
 		} else {
 			CURRENT_PERSPECTIVE=perspective;
@@ -552,13 +626,14 @@ export default function TeamPursuit(data,options) {
 			.append("div")
 				.datum({
 					distance:split*125,
-					time:_time,
+					value:_time,
 					diff:diff,
-					team:team
+					team:team,
+					time:times[team].cumulative_time
 				})
-				.attr("class","annotation time")
-				.classed("gold",(d)=>!d.team)
-				.classed("silver",(d)=>d.team)
+				.attr("class","annotation time s"+team)
+				.classed("gold",(d)=>d.team)
+				.classed("silver",(d)=>!d.team)
 				.style("left",d=>{
 					
 					let x=hscale(dimensions.radius+dimensions.field.width/2),
@@ -578,7 +653,19 @@ export default function TeamPursuit(data,options) {
 					return (d.coords[1]-(offset.top)+(!d.team?16:-45))+"px";
 				})
 				.html(d=>{
-					return "<h3>"+teams_data[team].team+"</h3><span>"+d.time+("</span><i>"+(d.distance)+"m</i>")
+					let distance=d.distance+"m";
+					let wr="";
+					if(d.distance===0) {
+						return "<h3>"+teams_data[team].team+"</h3>";
+					}
+					if(d.distance===4000) {
+						distance=teams_data[team].speed+"km/h";
+						if(teams_data[team].records.indexOf("WR")>-1) {
+							wr="<b>WR</b>"
+						}
+					}
+					
+					return "<h3>"+teams_data[team].team+"</h3><span>"+wr+d.value+("</span><i>"+distance+"</i>")
 				})
 				
 

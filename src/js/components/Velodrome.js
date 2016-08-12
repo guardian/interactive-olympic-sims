@@ -99,7 +99,7 @@ export default function Velodrome(options) {
 				.attr("class","teams")
 				.attr("transform",`translate(${margins.left},${margins.top})`)
 
-	let ghost=svg
+	/*let ghost=svg
 				.append("g")
 				.attr("class","ghost-track")
 				.attr("transform",`translate(${margins.left},${margins.top})`)
@@ -126,9 +126,9 @@ export default function Velodrome(options) {
 							.style("stroke-dasharray",function(d){
 								return "0 "+this.getTotalLength();
 							})
-					];
+					];*/
 
-	let ghosts=[
+	/*let ghosts=[
 		ghost.append("g")
 				.attr("class","ghost"),
 		ghost.append("g")
@@ -144,7 +144,7 @@ export default function Velodrome(options) {
 				.attr("class","gold")
 				.attr("cx",0)
 				.attr("cy",0)
-				.attr("r",5/2)
+				.attr("r",5/2)*/
 	
 
 	let scaffolding=svg
@@ -271,7 +271,7 @@ export default function Velodrome(options) {
 		
 	}
 
-	function addGhostTrack(distance) {
+	/*function addGhostTrack(distance) {
 		let lane=0;
 		distance = distance || 0;
 
@@ -289,7 +289,7 @@ export default function Velodrome(options) {
 
 		return `M${start.x},${start.y} L${arc1.start[0]},${arc1.start[1]} ${arc1.arc} L${arc2.start[0]},${arc2.start[1]} ${arc2.arc} L${start.x},${start.y}`;
 
-	}
+	}*/
 
 	function addTeamPath(index=0) {
 		let lane=0;
@@ -474,7 +474,7 @@ export default function Velodrome(options) {
     	gap = totalLength - snakeLength,
     	TRACK_LENGTH=dimensions.length/1000;
     let prev_path;
-	let ghost_path_length=ghost_tracks[0].node().getTotalLength();
+	//let ghost_path_length=ghost_tracks[0].node().getTotalLength();
 
 	function teamTransition(index,from,to,end_at=4,delay=100) {
 
