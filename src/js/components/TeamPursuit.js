@@ -308,6 +308,12 @@ export default function TeamPursuit(data,options) {
 
 	    buildTexts("intro");
 
+	    //CATCHING IE9
+		if(typeof window.atob == "undefined") {
+			document.querySelector(".interactive-embed").className="interactive-embed js-interactive fallback";
+			return;
+		}
+
 	    velodrome=new Velodrome({
 	    	container:container,
 	    	svg:svg,

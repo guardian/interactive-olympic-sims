@@ -282,3 +282,23 @@
 		}
 	} */
 }
+
+.interactive-embed.fallback {
+	#team-pursuit {
+		background-image: url(./assets/imgs/team_pursuit.png);
+		background-size: 100% auto;
+		background-position: center top;
+		background-repeat: no-repeat;
+
+		svg,
+		.annotations {
+			display: none !important;
+		}
+	}
+	
+
+	.stand-first button,
+	.stopwatch {
+		display: none !important;
+	}
+}
