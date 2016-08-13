@@ -49,7 +49,7 @@ import StopWatch from "./StopWatch";
 
 export default function TeamPursuit(data,options) {
 
-	console.log("TeamPursuit",data.olympics.eventUnit.result.entrant);
+	//console.log("TeamPursuit",data.olympics.eventUnit.result.entrant);
 
 	let yscales={},
 		teams_data=[];
@@ -217,8 +217,8 @@ export default function TeamPursuit(data,options) {
 			
 		})
 
-    	console.log(teams_data)
-		console.log(best_cumulative_times)
+    	//console.log(teams_data)
+		//console.log(best_cumulative_times)
 
 
 
@@ -260,7 +260,7 @@ export default function TeamPursuit(data,options) {
 
 	    if(box.width<=480) {
 
-	    	WIDTH=window.innerHeight;
+	    	WIDTH=568;
 	    	HEIGHT=WIDTH/ratio;
 
 	    	//margins.left*=1.6;
@@ -417,7 +417,7 @@ export default function TeamPursuit(data,options) {
 			split1=teams_data[1].splits.filter(d=>d.distance == +info.from)[0];
 
 		//let duration=best_cumulative_times[info.from].best_time*(delta/dimensions.length);
-		console.log(info)
+		//console.log(info)
 		stopWatch.start(best_cumulative_times[(+info.from)+""].best_cumulative,true);	
 		stopWatch.showDistance((+info.from)+"");
 
@@ -514,10 +514,10 @@ export default function TeamPursuit(data,options) {
 				//transform=`rotateX(0deg) rotateY(0deg) rotateZ(90deg) translateX(38%) translateY(60%) translateZ(0px) scale(1.1)`;	
 				
 				
-				let drxScale=scaleLinear().domain([320,414]).range([30,25]),
-					dxScale=scaleLinear().domain([320,414]).range([53,50]),
-					dyScale=scaleLinear().domain([320,414]).range([65,65]),
-					dzScale=scaleLinear().domain([320,414]).range([0,0]),
+				let drxScale=scaleLinear().domain([320,414]).range([30,30]),
+					dxScale=scaleLinear().domain([320,414]).range([53,60]),
+					dyScale=scaleLinear().domain([320,414]).range([65,42]),
+					dzScale=scaleLinear().domain([320,414]).range([0,20]),
 					dsScale=scaleLinear().domain([320,414]).range([1.1,1]);
 
 				transform=`rotateX(${drxScale(box.width)}deg) rotateY(0deg) rotateZ(90deg) translateX(${dxScale(box.width)}%) translateY(${dyScale(box.width)}%) translateZ(${dzScale(box.width)}px) scale(${dsScale(box.width)})`;
@@ -575,7 +575,7 @@ export default function TeamPursuit(data,options) {
 				.delay(1000)
 					.on("end",()=>{
 						if(callback) {
-							console.log("CALLBACK!")
+							//console.log("CALLBACK!")
 							callback();
 						}
 					})
@@ -597,7 +597,7 @@ export default function TeamPursuit(data,options) {
 	}
 	/*function updateTeam(team,split) {
 
-    	console.log("updateTeam",team,split)
+    	//console.log("updateTeam",team,split)
 
     	
 
@@ -621,7 +621,7 @@ export default function TeamPursuit(data,options) {
     }*/
 
     function addTime(team,split) {
-		console.log("addTime",team,split)
+		//console.log("addTime",team,split)
 
 		
 		let times=[
@@ -672,7 +672,7 @@ export default function TeamPursuit(data,options) {
 					d.coords=overlayPersp.transform(x,y)
 					xy=[x,y];
 
-					console.log(xy)
+					//console.log(xy)
 
 					return (d.coords[0]-offset.left)+"px";
 				})

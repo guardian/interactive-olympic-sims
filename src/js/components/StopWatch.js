@@ -100,7 +100,7 @@ export default function StopWatch(options) {
 			cancelAnimFrame(frameRequest);	
 		}
 
-		console.log("START WATCH",time,raf)
+		//console.log("START WATCH",time,raf)
 
 		delta_time=time;
 
