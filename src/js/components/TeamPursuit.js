@@ -64,7 +64,9 @@ export default function TeamPursuit(data,options) {
 
 	let CURRENT_STEP=0;
 
-	let CURRENT_PERSPECTIVE;
+	let CURRENT_PERSPECTIVE,
+		WIDTH,
+		HEIGHT;
 
 	let hscale,
 		vscale;
@@ -238,18 +240,16 @@ export default function TeamPursuit(data,options) {
 	    		.attr("class","notes")
 	    		.html("The positions are based on the athletes' average speed. Race at 2x speed.")
 
-	    annotations_layer=container
-								.append("div")
-								.attr("class","annotations");
+	    
 
 	    overlay=container
 						.append("div")
 						.attr("class","rio-overlay");
 
 	    let box = container.node().getBoundingClientRect();
-	    let ratio = (85.73+25.0*2)/50,
-	    	WIDTH = box.height*ratio,
-	        HEIGHT = box.height;
+	    let ratio = (85.73+25.0*2)/50;
+	    WIDTH = box.height*ratio;
+	    HEIGHT = box.height;
 
 	    if(WIDTH>box.width) {
 	    	WIDTH=box.width;
@@ -263,7 +263,7 @@ export default function TeamPursuit(data,options) {
 	    	WIDTH=window.innerHeight;
 	    	HEIGHT=WIDTH/ratio;
 
-	    	margins.left*=1.6;
+	    	//margins.left*=1.6;
 
 	    	container.style("height",WIDTH+"px")
 	    } else {
@@ -292,7 +292,9 @@ export default function TeamPursuit(data,options) {
 						});
 			    	})
 
-	    
+	    annotations_layer=container
+								.append("div")
+								.attr("class","annotations");
 	    
 
 	    hscale=scaleLinear().domain([0,dimensions.radius*2+dimensions.field.width+dimensions.lane_width]).range([0,WIDTH-(margins.left+margins.right)]);
@@ -500,48 +502,68 @@ export default function TeamPursuit(data,options) {
 		stopWatch.hide();
 
 
-		if(perspective!=CURRENT_PERSPECTIVE) {
+		if(perspective!=CURRENT_PERSPECTIVE && CURRENT_PERSPECTIVE!="center_bottom_small") {
 			
-			CURRENT_PERSPECTIVE=perspective;
+			
 
 			let transform="scale(0.51) translateX(-50%) translateY(-50%)";
 
 			let box = container.node().getBoundingClientRect();
 
-			if(perspective==="bottom_left" || perspective==="left_bottom") {
-				let w=box.width;
-				//rotateX(25deg) rotateY(0deg) rotateZ(-25deg) translateX(-275px) translateY(-150px) translateZ(20px) scale(0.7)
-				//rotateX(25deg) rotateY(0deg) rotateZ(-25deg) translateX(-250px) translateY(-550px) translateZ(70px) scale(0.7)
-				let dxScale=scaleLinear().domain([800,1260]).range([-275,-250]),
-					dyScale=scaleLinear().domain([800,1260]).range([-155,-550]),
-					dzScale=scaleLinear().domain([800,1260]).range([20,70]);
-				transform=`rotateX(25deg) rotateY(0deg) rotateZ(-25deg) translateX(${dxScale(w)}px) translateY(${dyScale(w)}px) translateZ(${dzScale(w)}px) scale(0.7)`
-			}
-			if(perspective==="bottom_right" || perspective==="right_bottom") {
-
-				let w=box.width;
-
-				let dxScale=scaleLinear().domain([800,1260]).range([-420,-820]),
-					dyScale=scaleLinear().domain([800,1260]).range([170,40]),
-					dzScale=scaleLinear().domain([800,1260]).range([50,100]);
-				transform=`rotateX(25deg) rotateY(0deg) rotateZ(25deg) translateX(${dxScale(w)}px) translateY(${dyScale(w)}px) translateZ(${dzScale(w)}px) scale(0.7)`
-			}
-			if(perspective==="bottom_center" || perspective==="center_bottom") {
-				
-				let w=box.width;
-
-				let rxScale=scaleLinear().domain([620,1260]).range([0,25]);
-
-				transform=`rotateX(${rxScale(w)}deg) rotateY(0deg) rotateZ(0deg) translateX(-23%) translateY(-30%) translateZ(-10px) scale(0.75)`;
-				//transform =`rotateX(${rxScale(w)}deg) rotateY(0deg) rotateZ(0deg) translateX(-23%) translateY(-18%) translateZ(-40px) scale(0.75)`;
-			}
-
 			if(box.width<=480) {
 				//transform=`rotateX(0deg) rotateY(0deg) rotateZ(90deg) translateX(38%) translateY(60%) translateZ(0px) scale(1.1)`;	
-				transform=`rotateX(30deg) rotateY(0deg) rotateZ(90deg) translateX(53%) translateY(65%) translateZ(0px) scale(1.1)`;
+				
+				
+				let drxScale=scaleLinear().domain([320,414]).range([30,25]),
+					dxScale=scaleLinear().domain([320,414]).range([53,50]),
+					dyScale=scaleLinear().domain([320,414]).range([65,65]),
+					dzScale=scaleLinear().domain([320,414]).range([0,0]),
+					dsScale=scaleLinear().domain([320,414]).range([1.1,1]);
+
+				transform=`rotateX(${drxScale(box.width)}deg) rotateY(0deg) rotateZ(90deg) translateX(${dxScale(box.width)}%) translateY(${dyScale(box.width)}%) translateZ(${dzScale(box.width)}px) scale(${dsScale(box.width)})`;
+
+				CURRENT_PERSPECTIVE="center_bottom_small";
+
+			} else {
+				if(perspective==="bottom_left" || perspective==="left_bottom") {
+					let w=box.width;
+					//rotateX(25deg) rotateY(0deg) rotateZ(-25deg) translateX(-275px) translateY(-150px) translateZ(20px) scale(0.7)
+					//rotateX(25deg) rotateY(0deg) rotateZ(-25deg) translateX(-250px) translateY(-550px) translateZ(70px) scale(0.7)
+					let dxScale=scaleLinear().domain([800,1260]).range([-275,-250]),
+						dyScale=scaleLinear().domain([800,1260]).range([-155,-550]),
+						dzScale=scaleLinear().domain([800,1260]).range([20,70]);
+					transform=`rotateX(25deg) rotateY(0deg) rotateZ(-25deg) translateX(${dxScale(w)}px) translateY(${dyScale(w)}px) translateZ(${dzScale(w)}px) scale(0.7)`
+				}
+				if(perspective==="bottom_right" || perspective==="right_bottom") {
+
+					let w=box.width;
+
+					let dxScale=scaleLinear().domain([800,1260]).range([-420,-820]),
+						dyScale=scaleLinear().domain([800,1260]).range([170,40]),
+						dzScale=scaleLinear().domain([800,1260]).range([50,100]);
+					transform=`rotateX(25deg) rotateY(0deg) rotateZ(25deg) translateX(${dxScale(w)}px) translateY(${dyScale(w)}px) translateZ(${dzScale(w)}px) scale(0.7)`
+				}
+				if(perspective==="bottom_center" || perspective==="center_bottom") {
+					
+					let w=box.width;
+
+					let rxScale=scaleLinear().domain([620,1260]).range([0,25]);
+
+					transform=`rotateX(${rxScale(w)}deg) rotateY(0deg) rotateZ(0deg) translateX(-23%) translateY(-30%) translateZ(-10px) scale(0.75)`;
+					//transform =`rotateX(${rxScale(w)}deg) rotateY(0deg) rotateZ(0deg) translateX(-23%) translateY(-18%) translateZ(-40px) scale(0.75)`;
+				}
+
+				CURRENT_PERSPECTIVE=perspective;
 			}
 
-			annotations_layer.attr("class",`annotations p_${perspective}`)
+			annotations_layer.attr("class",`annotations p_${CURRENT_PERSPECTIVE}`)
+			
+
+			
+
+			
+
+			
 
 			svg
 				.style("-webkit-transform",transform)

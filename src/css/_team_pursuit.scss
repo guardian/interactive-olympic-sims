@@ -138,7 +138,7 @@
 			.team {
 				path {
 					fill:none;
-					stroke-width:4;
+					stroke-width:3;
 					@include mq(tablet) {
 						stroke-width:8;
 					}
@@ -157,7 +157,7 @@
 					}
 
 					&.team-gap {
-						stroke-width:4;
+						stroke-width:3;
 						@include mq(tablet) {
 							stroke-width:8;
 						}
@@ -178,7 +178,10 @@
 		.annotation {
 			width:100px;
 			h3 {
-				@include fs-header(2);
+				@include fs-header(1);
+				@include mq(tablet) {
+					@include fs-header(2);
+				}	
 				line-height: 14px;
 				margin:0;
 				padding:0;
@@ -196,7 +199,10 @@
 
 			span {
 				position:relative;
-				@include fs-headline(2);
+				@include fs-headline(1);
+				@include mq(tablet) {
+					@include fs-headline(2);
+				}
 
 				b {
 					display: inline-block;
@@ -206,7 +212,12 @@
 				}
 			}
 			i {
-				@include fs-headline(2);
+				@include fs-headline(1);
+				font-size:12px;
+				line-height: 14px;
+				@include mq(tablet) {
+					@include fs-headline(2);
+				}
 				font-style: normal;
 				color:#bdbdbd;
 			}
@@ -222,6 +233,19 @@
 				text-align: right;
 				margin-left:-50px;
 			}
+		}
+
+		&.p_center_bottom_small {
+			.annotation.time.s0 {
+				margin-left:-145px;
+				margin-top:9px;
+				text-align: right;
+			}
+			.annotation.time.s1 {
+				margin-top:70px;
+				text-align: left;
+				margin-left:-55px;
+			}	
 		}
  	}
 

@@ -155,9 +155,15 @@ export default function Velodrome(options) {
 	console.log(dimensions.radius,dimensions.field.width,hscale.domain(),hscale.range())
 	scaffolding.append("line")
 				.attr("x1",hscale(dimensions.radius+dimensions.field.width/2))
-				.attr("y1",-margins.top)
+				.attr("y1",-vscale(dimensions.lane))
 				.attr("x2",hscale(dimensions.radius+dimensions.field.width/2))
-				.attr("y2",options.height)
+				.attr("y2",vscale(1))
+
+	scaffolding.append("line")
+				.attr("x1",hscale(dimensions.radius+dimensions.field.width/2))
+				.attr("y1",vscale(dimensions.field.height-1))
+				.attr("x2",hscale(dimensions.radius+dimensions.field.width/2))
+				.attr("y2",vscale(dimensions.field.height)+vscale(dimensions.lane))
 	
 	
 
