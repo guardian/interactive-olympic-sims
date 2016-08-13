@@ -416,8 +416,8 @@ export default function TeamPursuit(data,options) {
 
 		//let duration=best_cumulative_times[info.from].best_time*(delta/dimensions.length);
 		console.log(info)
-		stopWatch.start(best_cumulative_times[info.from].best_cumulative,true);	
-		stopWatch.showDistance(info.from);
+		stopWatch.start(best_cumulative_times[(+info.from)+""].best_cumulative,true);	
+		stopWatch.showDistance((+info.from)+"");
 
 		let record=options.record.split_times[split0.index];
 		let trecord=convertTime(record),
@@ -490,10 +490,15 @@ export default function TeamPursuit(data,options) {
 				.text(d=>d)
 
 	}
+	function removeAnnotations() {
+		annotations_layer.selectAll("div.annotation").remove();
+	}
 	function setPerspective(perspective="none",callback) {
 
 		velodrome.cancelTransitions();
+		removeAnnotations();
 		stopWatch.hide();
+
 
 		if(perspective!=CURRENT_PERSPECTIVE) {
 			
@@ -528,6 +533,7 @@ export default function TeamPursuit(data,options) {
 				let rxScale=scaleLinear().domain([620,1260]).range([0,25]);
 
 				transform=`rotateX(${rxScale(w)}deg) rotateY(0deg) rotateZ(0deg) translateX(-23%) translateY(-30%) translateZ(-10px) scale(0.75)`;
+				//transform =`rotateX(${rxScale(w)}deg) rotateY(0deg) rotateZ(0deg) translateX(-23%) translateY(-18%) translateZ(-40px) scale(0.75)`;
 			}
 
 			if(box.width<=480) {
