@@ -31,7 +31,7 @@ window.init = function init(el, config) {
 
    	//console.log("SWIMMING SwimmingPerspective",el)
 
-   	d3_json("https://interactive.guim.co.uk/docsdata-test/1POjTdD80wZg5cxaCrMsnIh2qoYGJdDqBpyL2-6EX7nA.json",(json)=>{
+   	d3_json("https://interactive.guim.co.uk/docsdata-test/1DPNx1das2mGhvOveN-ACOgfDa4yKctkgkeZb9VVFZaI.json",(json)=>{
    		new SwimmingPerspective(swimming_data,{
 	        container:el,
 	        text:json.embed_sim.map(d=>{
