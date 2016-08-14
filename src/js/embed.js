@@ -1,18 +1,18 @@
 import iframeMessenger from 'guardian/iframe-messenger'
 import embedHTML from './text/embed.html!text'
 
-import swimming_data from '../assets/data/women_freestyle_400.json!json'
+//import swimming_data from '../assets/data/women_freestyle_400.json!json'
 //import swimming_text from '../assets/data/texts/women_freestyle_4x100.json!json'
 
-//import running_data200 from '../assets/data/men_running_200.json!json'
-//import running_text from '../assets/data/texts/men_running_200.json!json'
+import running_data from '../assets/data/men_running_100.json!json'
+import running_text from '../assets/data/texts/men_running_100.json!json'
 
-import records from '../assets/data/records_w_fs_400.json!json'
+import records from '../assets/data/records_m_100m.json!json'
 
 
 //import RunningPerspectiveOval from './components/RunningPerspectiveOval';
 //import Running from './components/Running';
-import SwimmingPerspective from './components/SwimmingPerspective';
+import RunningPerspective from './components/RunningPerspective';
 
 /*import {
 	dimensions200m        
@@ -32,17 +32,17 @@ window.init = function init(el, config) {
    	//console.log("SWIMMING SwimmingPerspective",el)
 
    	d3_json("https://interactive.guim.co.uk/docsdata-test/1DPNx1das2mGhvOveN-ACOgfDa4yKctkgkeZb9VVFZaI.json",(json)=>{
-   		new SwimmingPerspective(swimming_data,{
+   		new RunningPerspective(running_data,{
 	        container:el,
 	        text:json.embed_sim.map(d=>{
 	        	d.mt = +d.mt;
 	        	d.lane = +d.lane;
 	        	return d;
 	        }),
-	        record:records["women_freestyle_400"],
-	        length:400,
+	        record:records["men_running_100"],
+	        length:100,
 	        team:false,
-	        multiplier: 0.5,
+	        multiplier: 1,
 	        margins: {
 	            left:10,
 	            right:10,
