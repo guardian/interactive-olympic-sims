@@ -97,7 +97,10 @@ export default function RunningLineChart(data,options) {
     function buildEvent() {
     	
     	
-    	
+    	for(var k in options.dimensions) {
+    		//console.log("setting",k,dimensions[k],"to",options.dimensions[k])
+	    	dimensions[k]=options.dimensions[k];
+    	}
 
     	console.log(data.olympics.eventUnit.result)
     	//athletes_data=data.olympics.eventUnit.result.entrant.sort((a,b)=>(+a.order - +b.order)).map(entrant => {
@@ -157,8 +160,8 @@ export default function RunningLineChart(data,options) {
     				}
     				console.log("TEXT!!!",options.text)
     				let prev_time=0;
-    				//return options.text.filter(d=>(d.mt>0 && d.type==="story")).map(d=>{
-    				return options.text.filter(d=>(d.state==="story")).map(d=>{
+    				return options.text.filter(d=>(d.mt>0 && d.state==="story")).map(d=>{
+    				//return options.text.filter(d=>(d.state==="story")).map(d=>{
     					console.log("adding ",d.mt,"for",entrant.value)
     					let time=convertTime(entrant.value)*(d.mt / dimensions.length);
     					let leg={
@@ -888,6 +891,7 @@ export default function RunningLineChart(data,options) {
 			dz=dzScale(w),
 			dd=ddScale(distance);
 		let transform=`rotateX(45deg) rotateY(0deg) rotateZ(15deg) translateX(-${dx}%) translateY(${-dy+dd}px) translateZ(${dz}px)`;
+		transform=`rotateX(45deg) rotateY(0deg) rotateZ(0deg) translateX(0%) translateY(-3350px) translateZ(0px)`;
 		//dy=0;
 		//let transform=`rotateX(65deg) rotateY(0deg) rotateZ(10deg) translateX(-1%) translateY(${300}px) translateZ(150px)`;
 		if(WIDTH<400) {

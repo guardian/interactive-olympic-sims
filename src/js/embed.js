@@ -14,9 +14,9 @@ import records from '../assets/data/records_m_100m.json!json'
 //import Running from './components/Running';
 import RunningPerspective from './components/RunningPerspective';
 
-/*import {
-	dimensions200m        
-} from './lib/running';*/
+import {
+	dimensions100m        
+} from './lib/running';
 
 import {
 	json as d3_json
@@ -43,6 +43,7 @@ window.init = function init(el, config) {
 	        length:100,
 	        team:false,
 	        multiplier: 1,
+            dimensions:dimensions100m,
 	        margins: {
 	            left:10,
 	            right:10,
