@@ -117,6 +117,9 @@ export default function RunningLineChart(data,options) {
     		LEG_BREAKDOWN;
 
 	    	//console.log(entrant)
+	    	if(typeof entrant.resultExtension.length == 'undefined') {
+	    		entrant.resultExtension=[entrant.resultExtension];
+	    	}
 			entrant.resultExtension.forEach((t,i)=>{
 				if(t.type==="Reaction Time") {
 					REACTION_TIME=i
@@ -170,6 +173,9 @@ export default function RunningLineChart(data,options) {
     				//return options.text.filter(d=>(d.state==="story")).map(d=>{
     					//console.log("adding ",d.mt,"for",entrant.value)
     					let time=convertTime(entrant.value)*(d.mt / dimensions.length);
+    					if(dimensions.fixes[d.mt]) {
+    						time=convertTime(dimensions.fixes[d.mt][(+entrant.order-1)]);
+    					}
     					let leg={
 		    					value:entrant.value,
 			    				time:time-prev_time,
@@ -251,8 +257,8 @@ export default function RunningLineChart(data,options) {
     		best_cumulative_times[distance].times=best_cumulative_times[distance].times.sort((a,b)=>(a-b));
     		best_cumulative_times[distance].times=best_cumulative_times[distance].cumulative_times.sort((a,b)=>(a-b));
     	}
-    	//console.log(athletes_data)
-		//console.log(best_cumulative_times)
+    	console.log(athletes_data)
+		console.log(best_cumulative_times)
 
 		athletes_data.forEach(s => {
 
@@ -512,18 +518,22 @@ export default function RunningLineChart(data,options) {
 				//.selectAll("text:not(.stroke)")
 				.selectAll("text")
 					.attr("dx",s=>{
-				    	return (s.distance%100===0)?5:-5
+				    	return (s.distance%100===0)?5:5
 				    })
 				    .attr("dy",s=>{
 				    	return (s.distance%100===0)?"0.35em":"0.35em"   //9:6
 				    })
 				  	.append("textPath")
 				    	.attr("xlink:href", s=>("#leg_"+s.lane+"_"+s.distance))
-				    	.attr("text-anchor",s=>(s.distance%100>0)?"end":"start")
+				    	.attr("text-anchor",s=>(s.distance%100>0)?"start":"start")
 				    	.attr("startOffset",s=>(s.distance%100>0)?"50%":"50%")
 				    	.text(s=>{
+
 							let athlete=athletes_data.filter(d=>(d.lane===s.lane))[0]
-							return athlete.splits[0].name_country
+							if(s.distance%100===0) {
+								return athlete.splits[0].name_country	
+							}
+							
 							return athlete.entrant.participant.competitor.lastName;
 						})
 		
@@ -791,6 +801,8 @@ export default function RunningLineChart(data,options) {
 
 		container.classed("side0",(distance===0));
 		container.classed("side50",(distance===50));
+		container.classed("side60",(distance===60));
+		container.classed("side65",(distance===65));
 		container.classed("side100",(distance===100));
 
 		let box = container.node().getBoundingClientRect();
@@ -809,6 +821,14 @@ export default function RunningLineChart(data,options) {
 		let dy=0;
 		if(distance===0) {
 			dy=HEIGHT*0.90;
+			dzScale=scaleLinear().domain([620-hmargins,1260-hmargins]).range([570,1130]);			
+		}
+		if(distance===60) {
+			dy=HEIGHT*0.48;
+			dzScale=scaleLinear().domain([620-hmargins,1260-hmargins]).range([570,1130]);			
+		}
+		if(distance===65) {
+			dy=HEIGHT*0.48;
 			dzScale=scaleLinear().domain([620-hmargins,1260-hmargins]).range([570,1130]);			
 		}
 
@@ -862,7 +882,11 @@ export default function RunningLineChart(data,options) {
 
 		
 
-		let delta=20;
+		let delta=15;
+
+		if(distance<100) {
+			delta=25;
+		}
 
 		let selected_leg=leg
 			.classed("visible",false)
@@ -966,24 +990,24 @@ export default function RunningLineChart(data,options) {
 									]);
 
 						})
-						.on("start",d=>{
+						.on("start",(d,i)=>{
 
 							ts.forEach(t=>{
 								clearTimeout(t);
 								t=null;
 							});
 
-							if(d.lane===GOLD_LANE) {
+							if(d.lane===GOLD_LANE && d.distance%dimensions.length===0) {
 								if(!first_run) {
 									stopWatch.showDistance(d.distance);	
 								}
 
 								if(d.distance>0) {
-									let position=d.position-1,
+									let position=0,//d.position-1,
 										record=options.record.split_times[position];
 									let trecord=convertTime(record);
-									
-									stopWatch.showRecord(options.record.split_times[d.position-1],false,position<LEGS.length-2)	
+									console.log(position,record,options.record)
+									stopWatch.showRecord(options.record.split_times[0],false,false)//position<LEGS.length-2)	
 								} else {
 									stopWatch.hideRecord();
 								}
@@ -992,7 +1016,9 @@ export default function RunningLineChart(data,options) {
 								if(d.calculated) {
 									stopWatch.hide();
 								} else {
-									stopWatch.start(best_cumulative_times[d.distance].best_cumulative-duration,false);	
+									let t=getTimeForDistance(best_cumulative_times[d.distance].cumulative_times[i],d.distance,delta)
+									//console.log("START",best_cumulative_times[d.distance].best_cumulative,duration,t)
+									stopWatch.start(best_cumulative_times[d.distance].best_cumulative-t,false);	
 								}
 								
 							}
@@ -1003,24 +1029,30 @@ export default function RunningLineChart(data,options) {
 									buildTexts();
 									addAnnotation();
 								}
-								if(d.distance>0) {
-									//console.log("!!!!!!!",d)
-									let position=d.position-1,//LEGS.indexOf(+d.distance),
-										record=options.record.split_times[position];
-									//console.log(position,options.record.split_times)
-									let trecord=convertTime(record),
-										gap=best_cumulative_times[d.distance].best_cumulative-trecord;
-									//console.log("!!!!!!!!",record,trecord,gap,formatSecondsMilliseconds(gap))	
-									stopWatch.showRecord(options.record.split_times[d.position-1],gap,position<LEGS.length-2)	
-								} else {
-									stopWatch.hideRecord();
+								if(d.distance%dimensions.length>0) {
+									return;
 								}
-								if(first_run) {
-									container.classed("w_transition",true)
+								if(d.distance%dimensions.length===0) {
+									if(d.distance>0) {
+										//console.log("!!!!!!!",d)
+										let position=0,//d.position-1,//LEGS.indexOf(+d.distance),
+											record=options.record.split_times[position];
+										//console.log(position,options.record.split_times)
+										let trecord=convertTime(record),
+											gap=best_cumulative_times[d.distance].best_cumulative-trecord;
+										//console.log("!!!!!!!!",record,trecord,gap,formatSecondsMilliseconds(gap))	
+										stopWatch.showRecord(options.record.split_times[0],gap,0)	
+									} else {
+										stopWatch.hideRecord();
+									}
+									if(first_run) {
+										container.classed("w_transition",true)
+									}	
 								}
+								
 							}
 
-							if(d.distance>0) {
+							if(d.distance===dimensions.length) {
 								showGap(select(this.parentNode),d,best_cumulative_times[d.distance].best_cumulative,first_run);
 							}
 
