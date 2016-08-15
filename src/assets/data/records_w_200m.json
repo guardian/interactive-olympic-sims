@@ -1,0 +1,13 @@
+{
+	"women_running_200":{
+		"athlete":"Florence Griffith Joyner",
+		"country":"USA",
+		"time":"21.34",
+		"reaction_time":"0.66",
+		"split_times":[
+				"21.34"
+			],
+		"date":"1988-10-29",
+		"where":"Seoul, South Korea"
+	}
+}

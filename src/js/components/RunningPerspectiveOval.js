@@ -151,7 +151,7 @@ export default function RunningPerspectiveOval(data,options) {
     					]
     				}
     				let prev_time=0;
-    				return options.text.filter(d=>(d.mt>0 && d.type==="story")).map((d,i)=>{
+    				return options.text.filter(d=>(d.mt>0 && d.state==="story")).map((d,i)=>{
     					let time=convertTime(entrant.value)*(d.mt / dimensions.length);
     					//console.log("TIME TIME TIME",entrant.value,convertTime(entrant.value),d.mt,"/",dimensions.length,"=",d.mt / dimensions.length)
     					let leg={
@@ -188,7 +188,7 @@ export default function RunningPerspectiveOval(data,options) {
     	});
 
     	//LEGS=range(athletes_data[0].splits.length+1).map(d=>d*dimensions.length);
-    	LEGS=options.text.filter(d=>(d.type==="story")).map(d=>d.mt)
+    	LEGS=options.text.filter(d=>(d.state==="story")).map(d=>d.mt)
     	
 
     	athletes_data.forEach(athlete=>{
@@ -243,11 +243,11 @@ export default function RunningPerspectiveOval(data,options) {
 
 
 				options.text.push({
-					"type":"annotation",
+					"state":"annotation",
 					"time":true,
 					"mt":split.distance,//(LEGS.length-1)*dimensions.length,
 					"lane":s.lane,
-					"text":split.distance===0?split.value:text
+					"description":split.distance===0?split.value:text
 				})	
 
 			});
@@ -567,13 +567,13 @@ export default function RunningPerspectiveOval(data,options) {
 		
 	}
 
-	function buildTexts(type) {
+	function buildTexts(state) {
 		
 		//console.log("buildTexts",CURRENT_STEP)
 
 		
 
-		let texts=options.text.filter(d=>d.type===(type || "story"));
+		let texts=options.text.filter(d=>d.state===(state || "story"));
 
 		//console.log("TEXTS",texts,texts[CURRENT_STEP])
 		
@@ -588,7 +588,7 @@ export default function RunningPerspectiveOval(data,options) {
 			.merge(standfirst)
     			.html(d=>{
     				//console.log("!!!!",d)
-    				return "<p>"+d.text+"</p>";
+    				return "<p>"+d.description+"</p>";
     			});
 
 		
@@ -604,13 +604,13 @@ export default function RunningPerspectiveOval(data,options) {
 					//console.log(CURRENT_STEP,texts[CURRENT_STEP].mt)
 					//CURRENT_STEP=CURRENT_STEP===0?1:CURRENT_STEP;
 					buildTexts();
-					deactivateButton();
-					/*if(texts[CURRENT_STEP].type!=="intro") {
-						track.setAxis(texts[CURRENT_STEP].mt)
-					} else {
-						track.setAxis(0)
-					}*/
-					goTo(options.text.filter(d=>d.type==="story")[CURRENT_STEP].mt,(d)=>{
+					//deactivateButton();
+					// if(texts[CURRENT_STEP].state!=="intro") {
+					// 	swimming_pool.setAxis(texts[CURRENT_STEP].mt)
+					// } else {
+					// 	swimming_pool.setAxis(0)
+					// }
+					goTo(options.text.filter(d=>d.state==="story")[CURRENT_STEP].mt,(d)=>{
 						activateButton();
 					})
 				})
@@ -645,7 +645,7 @@ export default function RunningPerspectiveOval(data,options) {
 	function addAnnotation() {
 		//console.log("addAnnotation",CURRENT_DISTANCE)
 
-		let annotations=options.text.filter(d=>(d.mt===CURRENT_DISTANCE && d.type==="annotation" && !d.time));
+		let annotations=options.text.filter(d=>(d.mt===CURRENT_DISTANCE && d.state==="annotation" && !d.time));
 
 		let annotation=annotations_layer.selectAll("div.annotation").data(annotations);
 
@@ -756,7 +756,7 @@ export default function RunningPerspectiveOval(data,options) {
 	function addTime(distance,lane) {
 		//console.log("addTime",distance,lane)
 
-		let annotations=options.text.filter(d=>(d.mt===distance && d.lane===lane && d.type==="annotation" && d.time))[0];
+		let annotations=options.text.filter(d=>(d.mt===distance && d.lane===lane && d.state==="annotation" && d.time))[0];
 
 		let annotation=annotations_layer.selectAll("div.annotation");//.data(annotations,d=>("time_"+distance+"lane"));
 
