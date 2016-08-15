@@ -59,14 +59,17 @@ export default function StopWatch(options) {
 	buildWatch();
 
 	function setTime(time) {
-
+		//console.log("SETTING TIME",time)
 		if(CURRENT_TIME!==time) {
 
 			//console.log(CURRENT_TIME,"!==",time)
 
 			let t=msToTime(time);
-			timeDOM.text((t[1]?(t[1]+":"):"")+(t[1]&&t[2]<10?"0":"")+t[2]+"."+(t[3]));	
 
+			console.log(t)
+
+			timeDOM.text((t[1]?(t[1]+":"):"")+(t[1]&&t[2]<10?"0":"")+t[2]+"."+(t[3]));	
+			//alert((t[1]?(t[1]+":"):"")+(t[1]&&t[2]<10?"0":"")+t[2]+"."+(t[3]))
 			CURRENT_TIME=time;
 		}
 		
@@ -91,8 +94,11 @@ export default function StopWatch(options) {
 			frameRequest = requestAnimFrame(updateTime);	
 		}
 	}
-	this.update = () => {
-		updateTime(false);
+	this.update = (time) => {
+		if(CURRENT_TIME<time) {
+			updateTime(false);	
+		}
+		
 	}
 
 	this.start = (time=0,raf=true) => {

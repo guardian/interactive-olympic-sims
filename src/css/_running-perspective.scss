@@ -1,9 +1,9 @@
 .running-perspective {
 
 	overflow:hidden;
+
 	
-	border-top:1px solid #ddd;
-	border-bottom:1px solid #ddd;
+	
 
 	$ratio:1;
 	
@@ -15,13 +15,13 @@
 	
 	$li_padding_top:0;
 
-	$height:600px;
+	$height:500px;
 	
 	width:$width;
-	height:100vh;
+	height:568px;
 
 	@include mq(tablet) {
-		height: 600px;
+		height: 500px;
 	}
 
 	@include mq(desktop) {
@@ -35,7 +35,13 @@
 	position: relative;
 
 	transform-style: preserve-3d;
-  	transition: perspective 1s, perspective-origin 1s;
+  	
+  	&.w_transition {
+		transition: perspective 1s, perspective-origin 1s;	
+		svg {
+			transition: transform 1s;
+		}
+	}
 
 	//perspective: 530px;
 	//perspective-origin: 50% 0%;
@@ -57,10 +63,10 @@
 	perspective: 700px;
 	perspective-origin: 90% 20%;
 	
-	@include mq(mobile) {
-		perspective: 1000px;
+	@include mq(tablet) {
+		perspective: 700px;
 		//perspective-origin: 80% 50%;
-		perspective-origin: 50% 0%;
+		perspective-origin: 85% 80%;
 	}
 	
 
@@ -151,7 +157,7 @@
 		}
 		//height:$height;//$height;
 		
-		transition: transform 1s;
+		//transition: transform 1s;
 		
 
 		//transform:rotateX(50deg) rotateY(0deg) rotateZ(20deg) translateZ(0px) translateX(130px) translateY(-25px);
@@ -179,12 +185,20 @@
 					stop-color:#ffffff;
 				}
 			}
+			text.lane-number {
+				@include fs-textSans(1);
+				font-size: 25px;
+				letter-spacing: 0px;
+				fill:#fff;
+				font-weight: bold;
+				fill-opacity:0.2;
+			}
 			text.axis {
 				@include fs-textSans(1);
 				
 				font-size:12px;
 
-				@include mq(desktop) {
+				@include mq(tablet) {
 					font-size: 25px;
 					letter-spacing: 0px;
 				}
@@ -266,7 +280,7 @@
 					fill:none;
 					
 					stroke-opacity:0;
-					stroke:#1991C6;
+					stroke:#8EBE6F;
 					
 
 				}
@@ -389,14 +403,14 @@
 			&.side0 {
 				&.time {
 					span {
-						margin-top:-50px;
+						margin-top:-25px;
 					}
 				}
 			}
 			&.side1 {
 				&.time {
 					span {
-						margin-top:25px;
+						margin-top:-5px;
 					}
 				}
 			}
@@ -406,6 +420,10 @@
 .stopwatch {
 	position:absolute;
 	right:0;
+	top:145px;
+	@include mq(tablet) {
+		top:0px;
+	}
 	span.time {
 		text-align: right;
 	}

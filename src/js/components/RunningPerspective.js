@@ -94,9 +94,14 @@ export default function RunningLineChart(data,options) {
         frameRequest = requestAnimFrame(checkInnerHTML);
     });
 
+	function fixOrder(o) {
+		return 9-(+o);
+	}
+
     function buildEvent() {
     	
     	
+
     	for(var k in options.dimensions) {
     		//console.log("setting",k,dimensions[k],"to",options.dimensions[k])
 	    	dimensions[k]=options.dimensions[k];
@@ -105,6 +110,8 @@ export default function RunningLineChart(data,options) {
     	console.log(data.olympics.eventUnit.result)
     	//athletes_data=data.olympics.eventUnit.result.entrant.sort((a,b)=>(+a.order - +b.order)).map(entrant => {
     	athletes_data=data.olympics.eventUnit.result.entrant.map(entrant => {
+
+    		entrant.order=fixOrder(entrant.order);
 
     		let REACTION_TIME,
     		SPLITS,
@@ -160,7 +167,7 @@ export default function RunningLineChart(data,options) {
     				}
     				console.log("TEXT!!!",options.text)
     				let prev_time=0;
-    				return options.text.filter(d=>(d.mt>0 && d.state==="story")).map(d=>{
+    				return options.text.filter(d=>(d.mt>0 && d.state==="story")).map((d,i)=>{
     				//return options.text.filter(d=>(d.state==="story")).map(d=>{
     					console.log("adding ",d.mt,"for",entrant.value)
     					let time=convertTime(entrant.value)*(d.mt / dimensions.length);
@@ -170,7 +177,7 @@ export default function RunningLineChart(data,options) {
 			    				cumulative_time:time,
 			    				distance:d.mt,
 			    				calculated:(d.mt%dimensions.length)?true:false,
-			    				position:+d.position,
+			    				position:i+1,
 			    				country_name:(()=>{
 									//entrant.participant.competitor.lastName+" "+entrant.country.identifier
 									if(typeof entrant.participant.length != 'undefined') {
@@ -201,51 +208,16 @@ export default function RunningLineChart(data,options) {
     					
     				})
     			}()),
-    			/*"splits_swim":entrant.resultExtension[SPLITS].extension.map((d,i)=>{
-    				let cumulative_time=convertTime(d.value),
-    					lap_time=cumulative_time-prev_cumulative_time;
-    				prev_cumulative_time=cumulative_time;
-
-
-
-    				return {
-    					value:d.value,
-    					time:lap_time,
-    					cumulative_time:cumulative_time,
-    					distance:+d.position*dimensions.length,
-			    		calculated:(d.mt%dimensions.length)?true:false,
-			    		position:+d.position,
-			    		//name_country:entrant.participant.competitor.lastName+" "+entrant.country.identifier,
-						//country_name:entrant.country.identifier+" "+entrant.participant.competitor.lastName
-						country_name:(()=>{
-							//entrant.participant.competitor.lastName+" "+entrant.country.identifier
-							if(typeof entrant.participant.length != 'undefined') {
-								return entrant.participant.filter(e=>{
-									//console.log(+d.position,+d.position/2,+e.order)
-										return Math.ceil(+d.position/2) === +e.order;
-									}).map(e=>{
-										return entrant.country.identifier+" - "+e.competitor.lastName;
-									})[0]
-							}
-							return entrant.country.identifier+" - "+entrant.participant.competitor.lastName;
-						}()),
-						name_country:(()=>{
-							//entrant.participant.competitor.lastName+" "+entrant.country.identifier
-							if(typeof entrant.participant.length != 'undefined') {
-								return entrant.participant.filter(e=>{
-									//console.log(+d.position,+d.position/2,+e.order)
-										return Math.ceil(+d.position/2) === +e.order;
-									}).map(e=>{
-										return e.competitor.lastName+" - "+entrant.country.identifier;
-									})[0]
-							}
-							return entrant.participant.competitor.lastName+" - "+entrant.country.identifier;
-						}())
-						//country_name:entrant.country.identifier+" "+entrant.participant.competitor.lastName
-    				}
-    			}),*/
     			"entrant":entrant,
-    			"value":entrant.value
+    			"value":entrant.value,
+    			"records":(()=>{
+    				let records=[];
+    				if(typeof entrant.property.length !== 'undefined') {
+    					records = entrant.property.filter(r=>r.type==="Record Set").map(r=>r.value)	
+    				}
+    				return records.indexOf("WR")>-1?records.filter(r=>(r==="WR")):records.filter(r=>(r==="OR"))
+    				//return records.filter(r=>(r==="WR"));
+    			}())
     		}
     	});
 
@@ -289,7 +261,9 @@ export default function RunningLineChart(data,options) {
 				value:s.reaction_time.value,
 				time:s.reaction_time.time,
 				cumulative_time:s.reaction_time.time,
-				distance:0
+				distance:0,
+				name_country:s.splits[0].name_country,
+				country_name:s.splits[0].country_name
 			}]).concat(s.splits);
 
 
@@ -304,7 +278,7 @@ export default function RunningLineChart(data,options) {
 					"time":true,
 					"mt":split.distance,//(LEGS.length-1)*dimensions.length,
 					"lane":s.lane,
-					"text":split.distance===0?split.value:text,
+					"description":split.distance===0?split.value:text,
 					"records":split.distance===LEGS[LEGS.length-1]?s.records:[]
 				})	
 
@@ -331,6 +305,11 @@ export default function RunningLineChart(data,options) {
 	    					.append("div")
 	    					.attr("class","running-perspective");
 
+	    select(options.container)
+	    		.append("div")
+	    		.attr("class","notes")
+	    		.html("The positions are based on the athletes' average speed.")
+
 	    annotations_layer=container
 								.append("div")
 								.attr("class","annotations");
@@ -350,7 +329,7 @@ export default function RunningLineChart(data,options) {
 
 	    let box = container.node().getBoundingClientRect();
 	    WIDTH = box.width;
-		HEIGHT = box.width>414?box.width*3:box.height;
+		HEIGHT = box.width>480?box.width*4:box.height*2;
 
 	    svg
 	    	.attr("width",WIDTH)
@@ -511,6 +490,7 @@ export default function RunningLineChart(data,options) {
 				    	.attr("startOffset","100%")
 				    	.text((s,i)=>{
 							let athlete=athletes_data.filter(d=>(d.lane===s.lane))[0]
+							return athlete.splits[0].country_name
 							//if(i%2) {
 								return athlete.entrant.participant.competitor.lastName;
 							//}
@@ -540,83 +520,11 @@ export default function RunningLineChart(data,options) {
 				    	.attr("startOffset",s=>(s.distance%100>0)?"50%":"50%")
 				    	.text(s=>{
 							let athlete=athletes_data.filter(d=>(d.lane===s.lane))[0]
+							return athlete.splits[0].name_country
 							return athlete.entrant.participant.competitor.lastName;
 						})
-		/*
-		leg.filter(s=>(s.distance===0))
-				.append("path")
-				.attr("id",(s)=>("guide_"+s.lane+"_"+s.distance))
-				.attr("class","guide-text-path")
-				.attr("d", (s) => {
-					let x=xscale(s.lane*dimensions.lane + dimensions.lane/2),
-						y0=yscale(50),
-						y1=yscale(s.mt);
-					return `M${x},${y0}L${x},${y1}`;
-				});
-		leg.filter(s=>(s.distance===0))
-				.append("path")
-				.attr("id",(s)=>("t_guide_"+s.lane+"_"+s.distance))
-				.attr("class","guide-text-path")
-				.attr("d", (s) => {
-					let x=xscale(s.lane*dimensions.lane + dimensions.lane/2),
-						y1=yscale(0),
-						y0=yscale(s.mt);
-					return `M${x},${y0}L${x},${y1}`;
-				});
-
-		leg.filter(s=>(s.distance===0))
-			.selectAll("text")
-			.data(s=>([s,s,s,s]))
-			.enter()
-			.append("text")
-				.attr("class","athlete-name")
-				.classed("stroke",(s,i)=>!(i%2))
-
-		leg.filter(s=>(s.distance===0))
-				//.selectAll("text:not(.stroke)")
-				.selectAll("text")
-					.attr("dx",(s,i)=>((i<2)?5:-5))
-				    .attr("dy","0.35em")
-				    .classed("time",(s,i)=>i<2)
-					.append("textPath")
-				    	.attr("xlink:href", (s,i)=>{
-				    		let t=(i<2)?"t_":""
-				    		return `#${t}guide_${s.lane}_${s.distance}`
-				    	})
-				    	.attr("text-anchor",(s,i)=>((i<2)?"start":"end"))
-				    	.attr("startOffset",(s,i)=>((i<2)?"0%":"100%"))
-				    	// .attr("text-anchor","end")
-				    	// .attr("startOffset","100%")
-				    	.text((s,i)=>{
-							let athlete=athletes_data.find(d=>(d.lane===s.lane))
-							if(i<2) {
-								return athlete.reaction_time.value;	
-							}
-							return athlete.entrant.participant.competitor.lastName;
-						})
-		leg.filter(s=>(s.distance>0))
-			.selectAll("text")
-			.data(s=>([s,s]))
-			.enter()
-			.append("text")
-				.attr("class","athlete-name")
-				.classed("stroke",(s,i)=>(i<1))
-
-		leg.filter(s=>(s.distance>0))
-				//.selectAll("text:not(.stroke)")
-				.selectAll("text")
-					.attr("dx",5)
-				    .attr("dy","0.35em")
-				  	.append("textPath")
-				    	.attr("xlink:href", s=>("#leg_"+s.lane+"_"+s.distance))
-				    	.attr("text-anchor","start")
-				    	.attr("startOffset","50%")
-				    	.text(s=>{
-							let athlete=athletes_data.find(d=>(d.lane===s.lane))
-							return athlete.entrant.participant.competitor.lastName;
-						})
-		*/
-		goTo(options.text[0].mt,options.text[0].story==="intro")
+		
+		goTo(options.text[0].mt,options.text[0].story==="intro",true)
 
 		
 	}
@@ -743,7 +651,7 @@ export default function RunningLineChart(data,options) {
 		svg.selectAll("path").interrupt();
 		svg.selectAll("path.gap").remove();
 	}
-	function showGap(el,s,best_time) {
+	function showGap(el,s,best_time,first_run=false) {
 		console.log("showGap",el,s);
 
 		console.log("DURATION",s.cumulative_time-best_time)
@@ -768,7 +676,7 @@ export default function RunningLineChart(data,options) {
 				})
 				.attr("stroke-width",Math.floor(xscale(dimensions.lane*0.5)))
 				.transition()
-				.duration(s.cumulative_time-best_time)
+				.duration(first_run?0:(s.cumulative_time-best_time)*multiplier)
 				.ease(RunningLinear)
 						.attr("d",s=>{
 
@@ -796,8 +704,10 @@ export default function RunningLineChart(data,options) {
 
 		
 
-		let xy,
-			offset=getOffset(annotations_layer.node());
+		let xy;
+		let offset=getOffset(annotations_layer.node());
+
+		//console.log(offset)
 
 		annotations_layer
 			//.enter()
@@ -816,30 +726,33 @@ export default function RunningLineChart(data,options) {
 					let side=(d.mt%(dimensions.length*2)>0)?1:0;
 						
 					let overlayPersp=computePerspective(side);
+					//console.log(side,overlayPersp)
 					d.coords=overlayPersp.transform(x,y)
 					xy=[x,y];
-					//console.log("COORDS",d.coords)
 
 					
-					//console.log("OFFSET",offset)
-
-					//console.log("LEFT",(d.coords[0]-offset.left))
 
 					return (d.coords[0]-offset.left)+"px";
 				})
 				.style("top",d=>{
 					//let offset=getOffset(annotations_layer.node());
-					
-					let dy=(d.mt%(dimensions.length*2)>0)?-24:18;
-
-					return (d.coords[1]-(offset.top)+dy)+"px";
+					return (d.coords[1]-(offset.top))+"px";
 				})
-				.html(d=>"<span>"+d.text+"</span>")
+				.html(d=>{
+					let b="";
+					if(d.records.length) {
+						b=` ${d.records.join(",")}`;
+					}
+					//console.log(best_cumulative_times[distance].best_cumulative,convertTime(d.description))
+					return `<span ${best_cumulative_times[distance].best_cumulative===convertTime(d.description)?'class="leader"':''}>${d.description}${b}</span>`;
+				})
 				.select("span")
 					.style("margin-left",function(d){
 						let coords=this.getBoundingClientRect();
-						return (-coords.width/(d.mt===0?1.25:0.75))+"px";
+						//console.log(coords)
+						return (-coords.width/2)+"px";
 					})
+
 
 	}
 
@@ -860,7 +773,7 @@ export default function RunningLineChart(data,options) {
 		},1000)
 	}
 
-	function goTo(distance,text_update) {
+	function goTo(distance,text_update,first_run=false) {
 
 		ts.forEach(t=>{
 			clearTimeout(t);
@@ -873,30 +786,59 @@ export default function RunningLineChart(data,options) {
 
 		CURRENT_DISTANCE=distance;
 
+		container.classed("side0",(distance===0));
 		container.classed("side50",(distance===50));
 		container.classed("side100",(distance===100));
 
 		let box = container.node().getBoundingClientRect();
 			
 		let hmargins=margins.left+margins.right;
-		let dxScale=scaleLinear().domain([800-hmargins,1260-hmargins]).range([15,23]);
-		let dyScale=scaleLinear().domain([800-hmargins,1260-hmargins]).range([1660,2960]);
-		let dzScale=scaleLinear().domain([800-hmargins,1260-hmargins]).range([500,900]);
+		
+		let dxScale=scaleLinear().domain([620-hmargins,1260-hmargins]).range([-140,-620]);
+		let dyScale=scaleLinear().domain([620-hmargins,1260-hmargins]).range([-1880,-4160]);
+		let dzScale=scaleLinear().domain([620-hmargins,1260-hmargins]).range([570,1280]);
 
-		let ddScale=scaleLinear().domain([0,100]).range([0.93*yscale.range()[1],0]);
+		let drxScale=scaleLinear().domain([620-hmargins,800-hmargins,1260-hmargins]).range([40,50,40]).clamp(true);
+		let drzScale=scaleLinear().domain([620-hmargins,1260-hmargins]).range([15,20]);
 
-		let w=xscale.range()[1],
-			dx=dxScale(w),
-			dy=dyScale(w),
-			dz=dzScale(w),
-			dd=ddScale(distance);
-		let transform=`rotateX(45deg) rotateY(0deg) rotateZ(15deg) translateX(-${dx}%) translateY(${-dy+dd}px) translateZ(${dz}px)`;
-		transform=`rotateX(45deg) rotateY(0deg) rotateZ(0deg) translateX(0%) translateY(-3350px) translateZ(0px)`;
-		//dy=0;
-		//let transform=`rotateX(65deg) rotateY(0deg) rotateZ(10deg) translateX(-1%) translateY(${300}px) translateZ(150px)`;
-		if(WIDTH<400) {
-			//container.style("perspective","700px").style("perspective-origin","90% 20%")
-			transform="rotateX(75deg) rotateY(0deg) rotateZ(10deg) translateX(67px) translateY(365px) translateZ(45px) scale(0.8)";
+		let w=xscale.range()[1];
+			
+		let dy=0;
+		if(distance===0) {
+			dy=HEIGHT*0.90;
+			dzScale=scaleLinear().domain([620-hmargins,1260-hmargins]).range([570,1130]);			
+		}
+
+
+		//620 rotateX(40deg) rotateY(0deg) rotateZ(15deg) translateX(-140px) translateY(-1880px) translateZ(570px)
+		//800 rotateX(50deg) rotateY(0deg) rotateZ(20deg) translateX(-220px) translateY(-2370px) translateZ(900px)
+		//1260 rotateX(40deg) rotateY(0deg) rotateZ(20deg) translateX(-620px) translateY(-4160px) translateZ(1280px)
+		let transform=`rotateX(${drxScale(w)}deg) rotateY(0deg) rotateZ(${drzScale(w)}deg) translateX(${dxScale(w)}px) translateY(${dyScale(w)+dy}px) translateZ(${dzScale(w)}px)`;
+		
+		
+
+		if(box.width<=480) {
+
+			/*let drxScale=scaleLinear().domain([320,414]).range([30,30]),
+				dxScale=scaleLinear().domain([320,414]).range([53,60]),
+				dyScale=scaleLinear().domain([320,414]).range([65,42]),
+				dzScale=scaleLinear().domain([320,414]).range([0,20]),
+				dsScale=scaleLinear().domain([320,414]).range([1.1,1]);*/
+
+			let dxScale=scaleLinear().domain([320,414]).range([85,70]),
+				dyScale=scaleLinear().domain([320,414]).range([-450,-500]),
+				dzScale=scaleLinear().domain([320,414]).range([250,170]);
+
+			let drzScale=scaleLinear().domain([320,414]).range([14,10]);
+			
+			if(distance===0) {
+				dy=HEIGHT*0.9;
+				dxScale=scaleLinear().domain([320,414]).range([105,70]);
+				dzScale=scaleLinear().domain([320,414]).range([340,170]);
+			}
+			//rotateX(65deg) rotateY(0deg) rotateZ(10deg) translateX(80px) translateY(-380px) translateZ(220px) scale(1)
+			transform=`rotateX(70deg) rotateY(0deg) rotateZ(${drzScale(box.width)}deg) translateX(${dxScale(box.width)}px) translateY(${dyScale(box.width)+dy}px) translateZ(${dzScale(box.width)}px) scale(1)`;
+			//alert(box.width+" - "+transform)
 		}
 		//transform="translateY(-44%) scale(0.1)";
 		try {
@@ -921,8 +863,10 @@ export default function RunningLineChart(data,options) {
 
 		let selected_leg=leg
 			.classed("visible",false)
+			.interrupt()
 			.filter(d=>(d.distance===distance))
-				.classed("visible",true);
+				.classed("visible",true)
+
 		selected_leg
 				.select("path")
 					.attr("d",s=>{
@@ -965,14 +909,32 @@ export default function RunningLineChart(data,options) {
 						console.log("-------> DURATION",best_cumulative_times[s.distance].best_time*(delta/dimensions.length))
 						return best_cumulative_times[s.distance].best_time*(delta/dimensions.length)*multiplier
 					})*/
-					.duration((s,i)=>{
+					/*.duration((s,i)=>{
 						if(s.distance===0) {
 							return best_cumulative_times[s.distance].best_time;
 						}
 						return getTimeForDistance(best_cumulative_times[s.distance].best_time,dimensions.length,delta)
 						//return best_cumulative_times[s.distance].best_time*multiplier
+					})*/
+					/*.delay(1000)*/
+					.duration((s,i)=>{
+
+						if(first_run) {
+							return 0;
+						}
+
+						if(s.distance===0) {
+							return best_cumulative_times[s.distance].best_time;
+						}
+						//return getTimeForDistance(best_cumulative_times[s.distance].best_time,dimensions.length,delta)
+						let t=getTimeForDistance(best_cumulative_times[s.distance].cumulative_times[i],s.distance,delta)
+
+						//console.log(s.country_name,s.lane-1,s.distance,best_cumulative_times[s.distance].cumulative_times[i],t)
+						//console.log(s,t)
+						return t*multiplier;
+						//return best_cumulative_times[s.distance].best_time*0.2*0.5
 					})
-					.delay(1000)
+					.delay(first_run?0:1000)
 					.ease(RunningLinear)
 						.attr("d",s=>{
 
@@ -995,53 +957,12 @@ export default function RunningLineChart(data,options) {
 							}
 
 							return line([
-										/*[x-w/2,start_y],
-										[x+w/2,start_y],
-										[x+w/2,y],
-										[x-w/2,y],
-										[x-w/2,start_y]*/
 										[x,start_y],
 										[x,y],
 										[x,start_y]
 									]);
 
 						})
-						/*.on("start",d=>{
-							if(d.lane===1) {
-								let duration=best_cumulative_times[d.distance].best_time*(delta/dimensions.length)*multiplier;
-								if(d.calculated) {
-									stopWatch.hide();
-								} else {
-									stopWatch.start(best_cumulative_times[d.distance].best_cumulative-duration);	
-								}
-								
-							}
-						})*/
-						/*.on("__end",d=>{
-							if(d.lane===1) {
-								if(text_update){
-									buildTexts();
-									addAnnotation();
-								}
-								activateButton();
-							}
-							
-							if(d.cumulative_time===best_cumulative_times[d.distance].best_cumulative) {
-								//console.log(d.time,best_cumulative_times[d.distance].best_cumulative,best_cumulative_times[d.distance])
-								stopWatch.stop(d.cumulative_time);
-							}
-							let delay=d.cumulative_time-best_cumulative_times[d.distance].best_cumulative;
-							setTimeout(()=>{
-								let entrant=athletes_data.find(a=>a.lane===d.lane),
-									gap=d.cumulative_time-best_cumulative_times[d.distance].best_cumulative;
-
-								stopWatch.append({
-									name:entrant.entrant.participant.competitor.lastName,
-									time:(gap>0)?`+${formatSecondsMilliseconds(gap,2)}`:d.value
-								})
-							},delay)
-							
-						})*/
 						.on("start",d=>{
 
 							ts.forEach(t=>{
@@ -1049,51 +970,85 @@ export default function RunningLineChart(data,options) {
 								t=null;
 							});
 
-							if(d.lane===1) {
-								let duration=best_cumulative_times[d.distance].best_time*(delta/dimensions.length)*multiplier;
+							if(d.lane===GOLD_LANE) {
+								if(!first_run) {
+									stopWatch.showDistance(d.distance);	
+								}
+
+								if(d.distance>0) {
+									let position=d.position-1,
+										record=options.record.split_times[position];
+									let trecord=convertTime(record);
+									
+									stopWatch.showRecord(options.record.split_times[d.position-1],false,position<LEGS.length-2)	
+								} else {
+									stopWatch.hideRecord();
+								}
+
+								let duration=best_cumulative_times[d.distance].best_time*(delta/dimensions.length);
 								if(d.calculated) {
 									stopWatch.hide();
 								} else {
-									
-									
-
-									stopWatch.start(best_cumulative_times[d.distance].best_cumulative-duration);	
+									stopWatch.start(best_cumulative_times[d.distance].best_cumulative-duration,false);	
 								}
 								
 							}
 						})
 						.on("end",function(d){
-							if(d.lane===1) {
+							if(d.lane===GOLD_LANE) {
 								if(text_update){
 									buildTexts();
 									addAnnotation();
 								}
-								//activateButton();
+								if(d.distance>0) {
+									//console.log("!!!!!!!",d)
+									let position=d.position-1,//LEGS.indexOf(+d.distance),
+										record=options.record.split_times[position];
+									//console.log(position,options.record.split_times)
+									let trecord=convertTime(record),
+										gap=best_cumulative_times[d.distance].best_cumulative-trecord;
+									//console.log("!!!!!!!!",record,trecord,gap,formatSecondsMilliseconds(gap))	
+									stopWatch.showRecord(options.record.split_times[d.position-1],gap,position<LEGS.length-2)	
+								} else {
+									stopWatch.hideRecord();
+								}
+								if(first_run) {
+									container.classed("w_transition",true)
+								}
 							}
 
-							if(d.distance===dimensions.length) {
-								showGap(select(this.parentNode),d,best_cumulative_times[d.distance].best_cumulative);
+							if(d.distance>0) {
+								showGap(select(this.parentNode),d,best_cumulative_times[d.distance].best_cumulative,first_run);
 							}
 
+							console.log("SHOULD I STOP???",d.cumulative_time,"===",best_cumulative_times[d.distance].best_cumulative)
 							if(d.cumulative_time===best_cumulative_times[d.distance].best_cumulative) {
 								stopWatch.stop(d.cumulative_time);
 							}
 
-							if(d.distance%dimensions.length===0) {
-								let delay=d.cumulative_time-best_cumulative_times[d.distance].best_cumulative;
-								ts.push(
-									setTimeout(()=>{
-										let entrant=athletes_data.filter(a=>a.lane===d.lane)[0],
-											gap=d.cumulative_time-best_cumulative_times[d.distance].best_cumulative;
+							let delay=d.cumulative_time-best_cumulative_times[d.distance].best_cumulative;
 
-										addTime(d.distance,d.lane);
-
-									},delay)
-								);	
-							}
 
 							
+							ts.push(
+								setTimeout(()=>{
+									let entrant=athletes_data.filter(a=>a.lane===d.lane)[0],
+										gap=d.cumulative_time-best_cumulative_times[d.distance].best_cumulative;
+
+									addTime(d.distance,d.lane);
+								},first_run?10:delay*multiplier)
+								
+							);
 						})
+						.filter((d)=>(d.lane===GOLD_LANE && !first_run))
+							.attrTween("nothing",(d)=>{
+								return function(t) {
+									//console.log(Math.round(t*1000/10)*10)
+									stopWatch.update(best_cumulative_times[d.distance].best_cumulative);
+									//stopWatch.setTime(Math.round(t*1000/10)*10)
+									return "";
+								}
+							})
 
 		
 		
@@ -1201,7 +1156,7 @@ function Track(options) {
 
 		let lanes=[
 				{
-					lanes:range(dimensions.lanes_n).map(d=>{
+					lanes:range(dimensions.lanes_n+1).map(d=>{
 						return [[hscale(dimensions.lane*(d+1)),vscale(dimensions.length)],[hscale(dimensions.lane*(d+1)),vscale(0)]]
 					}),
 					colors:["g","b","b","y","y","y","b","b","g"]
@@ -1220,6 +1175,7 @@ function Track(options) {
 							return d.lanes.map((l,i)=>{
 								//console.log("L",l,i,d)
 								return	{
+											lane:i+1,
 											rope:l,
 											color:d.colors[i]	
 										}
@@ -1229,6 +1185,7 @@ function Track(options) {
 						.append("path")
 							//.attr("class",d=>("lane-line "+d.color))
 							.attr("class",d=>("lane-line"))
+							.attr("id",(d,i)=>("line_"+d.lane))
 							.style("fill","none")
 							.attr("d",d=>{
 								//console.log("rope",d.rope)
@@ -1237,6 +1194,24 @@ function Track(options) {
 								}))
 							})
 							//.style("stroke","url(#lineGradient)")
+		track
+			.select("g.lane-lines")
+				.selectAll("text.lane-number")
+				.data(range(lanes[0].lanes.length))
+				.enter()
+				.append("text")
+					.attr("class","lane-number")
+					.style("font-size",(hscale(dimensions.lane)*0.5)+"px")
+					.attr("dx",hscale(0.1)+"px")
+					.attr("dy",(-hscale(dimensions.lane)*0.3)+"px")
+					.append("textPath")
+				    	.attr("xlink:href", (s,i)=>{
+				    		return `#line_${s+1}`
+				    	})
+				    	.attr("text-anchor","start")
+				    	.attr("startOffset","0%")
+						.text(d=>(d+1))
+
 
 		let distances=[50,dimensions.length];
 		track.selectAll("text.axis")

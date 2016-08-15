@@ -46,7 +46,7 @@ window.init = function init(el, config) {
             dimensions:dimensions100m,
 	        margins: {
 	            left:10,
-	            right:10,
+	            right:100,
 	            top:10,
 	            bottom:10
 	        }

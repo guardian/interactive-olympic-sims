@@ -736,7 +736,8 @@ export default function SwimmingLineChart(data,options) {
 					if(d.records.length) {
 						b=` ${d.records.join(",")}`;
 					}
-					return `<span>${d.description}${b}</span>`;
+					//console.log(best_cumulative_times[distance].best_cumulative,convertTime(d.description))
+					return `<span ${best_cumulative_times[distance].best_cumulative===convertTime(d.description)?'class="leader"':''}>${d.description}${b}</span>`;
 				})
 				.select("span")
 					.style("margin-left",function(d){

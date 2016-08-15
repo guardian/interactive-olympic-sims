@@ -7,7 +7,9 @@ import {
 } from 'd3-format';
 
 export function convertTime(str_time) {
-
+	if(typeof str_time == 'undefined') {
+		return 0;
+	}
 	if(str_time.indexOf(".")<0) {
 		str_time+=".0";
 	}

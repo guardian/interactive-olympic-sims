@@ -44,6 +44,9 @@
 				position: absolute;
 				display: block;
 				width:150px;
+				&.leader {
+					font-weight: bold;
+				}
 			}
 			&.side0 {
 				span {
