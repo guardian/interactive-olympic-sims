@@ -39,7 +39,8 @@ import {
 
 import {
 	dimensions,
-	RunningLinear
+	RunningLinear,
+	fixOrder
 } from '../lib/running'
 
 import StopWatch from "./StopWatch";
@@ -94,9 +95,7 @@ export default function RunningLineChart(data,options) {
         frameRequest = requestAnimFrame(checkInnerHTML);
     });
 
-	function fixOrder(o) {
-		return 9-(+o);
-	}
+	
 
     function buildEvent() {
     	
@@ -107,7 +106,7 @@ export default function RunningLineChart(data,options) {
 	    	dimensions[k]=options.dimensions[k];
     	}
 
-    	console.log(data.olympics.eventUnit.result)
+    	//console.log(data.olympics.eventUnit.result)
     	//athletes_data=data.olympics.eventUnit.result.entrant.sort((a,b)=>(+a.order - +b.order)).map(entrant => {
     	athletes_data=data.olympics.eventUnit.result.entrant.map(entrant => {
 
@@ -165,11 +164,11 @@ export default function RunningLineChart(data,options) {
 			    			}
     					]
     				}
-    				console.log("TEXT!!!",options.text)
+    				//console.log("TEXT!!!",options.text)
     				let prev_time=0;
     				return options.text.filter(d=>(d.mt>0 && d.state==="story")).map((d,i)=>{
     				//return options.text.filter(d=>(d.state==="story")).map(d=>{
-    					console.log("adding ",d.mt,"for",entrant.value)
+    					//console.log("adding ",d.mt,"for",entrant.value)
     					let time=convertTime(entrant.value)*(d.mt / dimensions.length);
     					let leg={
 		    					value:entrant.value,
@@ -252,8 +251,8 @@ export default function RunningLineChart(data,options) {
     		best_cumulative_times[distance].times=best_cumulative_times[distance].times.sort((a,b)=>(a-b));
     		best_cumulative_times[distance].times=best_cumulative_times[distance].cumulative_times.sort((a,b)=>(a-b));
     	}
-    	console.log(athletes_data)
-		console.log(best_cumulative_times)
+    	//console.log(athletes_data)
+		//console.log(best_cumulative_times)
 
 		athletes_data.forEach(s => {
 
@@ -337,9 +336,9 @@ export default function RunningLineChart(data,options) {
 
 	   	
 	    
-	    console.log(WIDTH,"x",HEIGHT)
+	    //console.log(WIDTH,"x",HEIGHT)
 	    
-	    console.log(LEGS);
+	    //console.log(LEGS);
 	    let time_extent=extent(LEGS.map(l=>{
 	    	let leg_extent=extent(best_cumulative_times[l].cumulative_times);
 	    	return leg_extent[1]-leg_extent[0];
@@ -361,7 +360,11 @@ export default function RunningLineChart(data,options) {
 					
 		buildTexts("intro");
 		
-
+		//CATCHING IE9
+		if(typeof window.atob == "undefined") {
+			document.querySelector(".interactive-embed").className="interactive-embed js-interactive fallback";
+			return;
+		}
 		
 
 		let pool={
@@ -423,7 +426,7 @@ export default function RunningLineChart(data,options) {
 							d.dmt=distance-d.mt;
 							d.lane=ath.lane;
 							if(d.distance===0) {
-								console.log(d)
+								//console.log(d)
 							}
 							return d;
 						});
@@ -601,13 +604,13 @@ export default function RunningLineChart(data,options) {
 	}
 	
 	function addAnnotation() {
-		console.log("addAnnotation",CURRENT_DISTANCE)
+		//console.log("addAnnotation",CURRENT_DISTANCE)
 
 		let annotations=options.text.filter(d=>(d.mt===CURRENT_DISTANCE && d.state==="annotation" && !d.time));
 
 		let annotation=annotations_layer.selectAll("div.annotation").data(annotations);
 
-		console.log("ANNOTATIONS",annotations)
+		//console.log("ANNOTATIONS",annotations)
 
 		let xy;
 		let offset=getOffset(annotations_layer.node());
@@ -629,12 +632,12 @@ export default function RunningLineChart(data,options) {
 					let overlayPersp=computePerspective(side);
 					d.coords=overlayPersp.transform(x,y)
 					xy=[x,y];
-					/*console.log("COORDS",d.coords)
+					/*//console.log("COORDS",d.coords)
 
 					
-					console.log("OFFSET",offset)
+					//console.log("OFFSET",offset)
 
-					console.log("LEFT",(d.coords[0]-offset.left))*/
+					//console.log("LEFT",(d.coords[0]-offset.left))*/
 
 					return (d.coords[0]-offset.left)+"px";
 				})
@@ -652,9 +655,9 @@ export default function RunningLineChart(data,options) {
 		svg.selectAll("path.gap").remove();
 	}
 	function showGap(el,s,best_time,first_run=false) {
-		console.log("showGap",el,s);
+		//console.log("showGap",el,s);
 
-		console.log("DURATION",s.cumulative_time-best_time)
+		//console.log("DURATION",s.cumulative_time-best_time)
 
 		el
 			.append("path")
@@ -666,7 +669,7 @@ export default function RunningLineChart(data,options) {
 						start_y=(side>0)?yscale(side-s.dmt):yscale(s.dmt),
 						y=yscale(side);
 					
-					console.log("GAP PATH",s.lane,s.distance,s.mt,start_y,y)
+					//console.log("GAP PATH",s.lane,s.distance,s.mt,start_y,y)
 					
 					return line([
 								[x,start_y],
@@ -684,7 +687,7 @@ export default function RunningLineChart(data,options) {
 								side=s.distance%(dimensions.length*2),
 								start_y=(side>0)?yscale(side-s.dmt):yscale(s.dmt),
 								y=yscale(side);
-							console.log("GAP PATH",s.lane,s.distance,s.mt,start_y,y)
+							//console.log("GAP PATH",s.lane,s.distance,s.mt,start_y,y)
 							return line([
 										[x,start_y],
 										[x,y]
@@ -870,13 +873,13 @@ export default function RunningLineChart(data,options) {
 		selected_leg
 				.select("path")
 					.attr("d",s=>{
-						console.log(distance,s)
+						//console.log(distance,s)
 						let x=xscale(s.lane*dimensions.lane + dimensions.lane/2),
 							start_y=(s.distance%(dimensions.length*2)>0)?yscale(0):yscale(dimensions.length),
 							dist=s.distance-s.mt,
 							y=(s.distance%(dimensions.length*2)>0)?yscale(dimensions.length-dist-delta):yscale(dist+delta);
-						console.log("dist",dist)
-						console.log("y",dimensions.length-dist-delta)
+						//console.log("dist",dist)
+						//console.log("y",dimensions.length-dist-delta)
 
 						
 						if(options.text) {
@@ -906,7 +909,7 @@ export default function RunningLineChart(data,options) {
 						if(s.distance===0) {
 							return best_cumulative_times[s.distance].best_time;
 						}
-						console.log("-------> DURATION",best_cumulative_times[s.distance].best_time*(delta/dimensions.length))
+						//console.log("-------> DURATION",best_cumulative_times[s.distance].best_time*(delta/dimensions.length))
 						return best_cumulative_times[s.distance].best_time*(delta/dimensions.length)*multiplier
 					})*/
 					/*.duration((s,i)=>{
@@ -1021,7 +1024,7 @@ export default function RunningLineChart(data,options) {
 								showGap(select(this.parentNode),d,best_cumulative_times[d.distance].best_cumulative,first_run);
 							}
 
-							console.log("SHOULD I STOP???",d.cumulative_time,"===",best_cumulative_times[d.distance].best_cumulative)
+							//console.log("SHOULD I STOP???",d.cumulative_time,"===",best_cumulative_times[d.distance].best_cumulative)
 							if(d.cumulative_time===best_cumulative_times[d.distance].best_cumulative) {
 								stopWatch.stop(d.cumulative_time);
 							}
@@ -1064,7 +1067,7 @@ export default function RunningLineChart(data,options) {
 		let x=xscale(lane*dimensions.lane + dimensions.lane/2),
 			y=(distance%(dimensions.length*2)>0)?yscale(dimensions.length):yscale(0);
 
-		console.log("POSITION",lane,distance,"->",x,y)
+		//console.log("POSITION",lane,distance,"->",x,y)
 
 		return [x,y];
 
@@ -1163,7 +1166,7 @@ function Track(options) {
 				}
 				
 		];
-		console.log("LANES",lanes)
+		//console.log("LANES",lanes)
 		track
 			.selectAll("path.lane-lines")
 			.data(lanes)
@@ -1210,7 +1213,7 @@ function Track(options) {
 				    	})
 				    	.attr("text-anchor","start")
 				    	.attr("startOffset","0%")
-						.text(d=>(d+1))
+						.text(d=>(fixOrder(d+1)))
 
 
 		let distances=[50,dimensions.length];

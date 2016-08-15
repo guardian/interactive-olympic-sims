@@ -66,7 +66,7 @@ export default function StopWatch(options) {
 
 			let t=msToTime(time);
 
-			console.log(t)
+			//console.log(t)
 
 			timeDOM.text((t[1]?(t[1]+":"):"")+(t[1]&&t[2]<10?"0":"")+t[2]+"."+(t[3]));	
 			//alert((t[1]?(t[1]+":"):"")+(t[1]&&t[2]<10?"0":"")+t[2]+"."+(t[3]))

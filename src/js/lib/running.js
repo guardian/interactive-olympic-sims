@@ -80,3 +80,7 @@ export const dimensions100m = {
 	length:100,
 	lane_staggers:[0,3.519,7.352,11.185,15.017,18.850,22.683,26.516]
 }
+
+export function fixOrder(o) {
+	return 9-(+o);
+}
