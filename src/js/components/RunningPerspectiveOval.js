@@ -565,7 +565,7 @@ export default function RunningPerspectiveOval(data,options) {
 							return athlete.value;
 						})
 
-		goTo(options.text[0].mt,options.text[0].story==="intro")
+		goTo(options.text[0].mt,options.text[0].story==="intro",true)
 
 		
 	}
@@ -696,7 +696,7 @@ export default function RunningPerspectiveOval(data,options) {
 		svg.selectAll("path").interrupt();
 		svg.selectAll("path.gap").remove();
 	}
-	function showGap(el,s,best_time) {
+	function showGap(el,s,best_time,first_run=false) {
 		//console.log("showGap",el,s);
 
 		//console.log("DURATION",s.cumulative_time-best_time)
@@ -737,7 +737,8 @@ export default function RunningPerspectiveOval(data,options) {
 				//.attr("stroke-width",Math.floor(xscale(dimensions.lane*0.5)))
 				.attr("stroke-width",yscale(dimensions.lane-dimensions.line_width*2)*0.8)
 				.transition()
-				.duration(s.cumulative_time-best_time)
+				//.duration(s.cumulative_time-best_time)
+				.duration(first_run?0:(s.cumulative_time-best_time)*multiplier)
 				.ease(RunningLinear)
 				/*.ease(()=>{
 					if(s.distance===0) {
@@ -831,7 +832,7 @@ export default function RunningPerspectiveOval(data,options) {
 		},1000)
 	}
 
-	function goTo(distance,text_update) {
+	function goTo(distance,text_update,first_run=false) {
 
 		ts.forEach(t=>{
 			clearTimeout(t);
@@ -1044,6 +1045,10 @@ export default function RunningPerspectiveOval(data,options) {
 					.transition()
 					.duration((s,i)=>{
 
+						if(first_run) {
+							return 0;
+						}
+
 						if(s.distance===0) {
 							return best_cumulative_times[s.distance].best_time;
 						}
@@ -1055,9 +1060,10 @@ export default function RunningPerspectiveOval(data,options) {
 
 						//console.log("DURATION",t)
 
-						return t;
+						return t*multiplier;
 					})
-					.delay(2000)
+					//.delay(2000)
+					.delay(first_run?0:2000)
 					.ease(RunningLinear)
 					.attr("stroke-dasharray", function(s){
 
@@ -1080,6 +1086,10 @@ export default function RunningPerspectiveOval(data,options) {
 							
 
 							if(d.lane===GOLD_LANE) {
+
+								if(!first_run) {
+									stopWatch.showDistance(d.distance);	
+								}
 
 								if(d.distance===dimensions.length) {
 									let position=d.position,
@@ -1122,25 +1132,29 @@ export default function RunningPerspectiveOval(data,options) {
 									addAnnotation();
 								}
 								//activateButton();
-							}
+								if(d.distance>0) {
+									//console.log("!!!!!!!",d)
+									let position=d.position,//LEGS.indexOf(+d.distance),
+										record=options.record.split_times[position];
+									
+									if(!record && options.record.split_times.length===1) {
+										position=0;
+										record=options.record.split_times[position]
+									}
 
-							if(d.distance>0) {
-								//console.log("!!!!!!!",d)
-								let position=d.position,//LEGS.indexOf(+d.distance),
-									record=options.record.split_times[position];
-								
-								if(!record && options.record.split_times.length===1) {
-									position=0;
-									record=options.record.split_times[position]
+									let trecord=convertTime(record),
+										gap=best_cumulative_times[d.distance].best_cumulative-trecord;
+									//console.log("!!!!!!!!",record,trecord,gap,formatSecondsMilliseconds(gap))	
+									stopWatch.showRecord(options.record.split_times[position],gap,false)//position<LEGS.length-2)
+								} else {
+									stopWatch.hideRecord();
 								}
-
-								let trecord=convertTime(record),
-									gap=best_cumulative_times[d.distance].best_cumulative-trecord;
-								//console.log("!!!!!!!!",record,trecord,gap,formatSecondsMilliseconds(gap))	
-								stopWatch.showRecord(options.record.split_times[position],gap,false)//position<LEGS.length-2)
-							} else {
-								stopWatch.hideRecord();
+								if(first_run) {
+									container.classed("w_transition",true)
+								}
 							}
+
+							
 
 							/*select(this.parentNode)
 								.selectAll("textPath")
@@ -1152,7 +1166,7 @@ export default function RunningPerspectiveOval(data,options) {
 							    	})*/
 
 							if(d.distance===dimensions.length) {
-								showGap(select(this.parentNode),d,best_cumulative_times[d.distance].best_cumulative);
+								showGap(select(this.parentNode),d,best_cumulative_times[d.distance].best_cumulative,first_run);
 							}
 
 							
@@ -1174,7 +1188,7 @@ export default function RunningPerspectiveOval(data,options) {
 
 										//addTime(d.distance,d.lane);
 
-									},delay)
+									},first_run?10:delay*multiplier)
 								);	
 							}
 

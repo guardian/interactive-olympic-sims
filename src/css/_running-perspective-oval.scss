@@ -31,7 +31,14 @@
 	position: relative;
 
 	transform-style: preserve-3d;
-  	transition: perspective 1s, perspective-origin 1s;
+  	//transition: perspective 1s, perspective-origin 1s;
+
+  	&.w_transition {
+		transition: perspective 1s, perspective-origin 1s;	
+		svg {
+			transition: transform 2s;
+		}
+	}
 
 	//perspective: 530px;
 	//perspective-origin: 50% 0%;
@@ -147,7 +154,7 @@
 		}
 		//height:$height;//$height;
 		
-		transition: transform 2s ;
+		//transition: transform 2s ;
 		transition-timing-function: ease-in-out;
 
 		//transform:rotateX(40deg) rotateY(0deg) rotateZ(10deg) translateZ(470px) translateX(-120px) translateY(515px);
@@ -358,5 +365,25 @@
 		li {
 			text-align: right;
 		}
+	}
+}
+
+.interactive-embed.fallback {
+	.running-perspective-oval {
+		background-image: url(./assets/imgs/m_100m_final.png);
+		background-size: auto 100%;
+		background-position: right top;
+		background-repeat: no-repeat;
+
+		svg,
+		.annotations {
+			display: none !important;
+		}
+	}
+	
+
+	.stand-first button,
+	.stopwatch {
+		display: none !important;
 	}
 }
