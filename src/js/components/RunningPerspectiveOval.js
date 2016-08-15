@@ -154,6 +154,9 @@ export default function RunningPerspectiveOval(data,options) {
     				return options.text.filter(d=>(d.mt>0 && d.state==="story")).map((d,i)=>{
     					let time=convertTime(entrant.value)*(d.mt / dimensions.length);
     					//console.log("TIME TIME TIME",entrant.value,convertTime(entrant.value),d.mt,"/",dimensions.length,"=",d.mt / dimensions.length)
+    					if(dimensions.fixes[d.mt]) {
+    						time=convertTime(dimensions.fixes[d.mt][(+entrant.order-1)]);
+    					}
     					let leg={
 		    					value:entrant.value,
 			    				time:time-prev_time,
@@ -888,6 +891,7 @@ export default function RunningPerspectiveOval(data,options) {
 
 			dxScale=scaleLinear().domain([620,1260]).range([-1130,-2575]);
 			dyScale=scaleLinear().domain([620,1260]).range([-110,-1120]);
+			dzScale=scaleLinear().domain([620,1260]).range([330,330]);
 
 			transform = `rotateX(40deg) rotateY(10deg) rotateZ(17deg) translateZ(330px) translateX(${dxScale(w)}px) translateY(${dyScale(w)}px)`;
 
@@ -1080,10 +1084,14 @@ export default function RunningPerspectiveOval(data,options) {
 								if(d.distance===dimensions.length) {
 									let position=d.position,
 										record=options.record.split_times[position];
-									console.log(position,record)
+									if(!record && options.record.split_times.length===1) {
+										position=0;
+										record=options.record.split_times[position]
+									}
+									//console.log(position,record,options.record)
 									let trecord=convertTime(record);
-									console.log(position,record,trecord)
-									stopWatch.showRecord(options.record.split_times[d.position],false,false)	
+									//console.log(position,record,trecord)
+									stopWatch.showRecord(options.record.split_times[position],false,false)	
 								} else {
 									stopWatch.hideRecord();
 								}
@@ -1120,11 +1128,16 @@ export default function RunningPerspectiveOval(data,options) {
 								//console.log("!!!!!!!",d)
 								let position=d.position,//LEGS.indexOf(+d.distance),
 									record=options.record.split_times[position];
-								//console.log(position,options.record.split_times)
+								
+								if(!record && options.record.split_times.length===1) {
+									position=0;
+									record=options.record.split_times[position]
+								}
+
 								let trecord=convertTime(record),
 									gap=best_cumulative_times[d.distance].best_cumulative-trecord;
 								//console.log("!!!!!!!!",record,trecord,gap,formatSecondsMilliseconds(gap))	
-								stopWatch.showRecord(options.record.split_times[d.position],gap,position<LEGS.length-2)
+								stopWatch.showRecord(options.record.split_times[position],gap,false)//position<LEGS.length-2)
 							} else {
 								stopWatch.hideRecord();
 							}
