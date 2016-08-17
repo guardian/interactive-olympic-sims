@@ -311,9 +311,16 @@ export default function RunningPerspectiveOval(data,options) {
 		WIDTH = options.width || box.width*4,
         HEIGHT = options.height || box.height;
 
+        HEIGHT = box.width>480?box.height:box.height*2;
+
 	    let ratio=(84.39+36.5*2)/73.5;
 
 	    HEIGHT=WIDTH/ratio;
+
+	    // if(box.width<=480) {
+	    // 	HEIGHT=568;
+	    // 	WIDTH=HEIGHT*ratio;
+	    // }
 
 	    svg
 	    	.attr("width",WIDTH)
@@ -326,6 +333,10 @@ export default function RunningPerspectiveOval(data,options) {
 				});
 	    	})
 
+    	xscale=scaleLinear().domain([0,dimensions.radius*2+dimensions.field.width]).range([0,WIDTH-(margins.left+margins.left)]),
+		yscale=scaleLinear().domain([0,dimensions.lanes*2+dimensions.field.height]).range([0,HEIGHT-(margins.top+margins.bottom)]);
+
+		//xscale=yscale.copy();
 	    //console.log(WIDTH,"x",HEIGHT)
 	    
 	    oval=new Oval({
@@ -334,6 +345,10 @@ export default function RunningPerspectiveOval(data,options) {
 				svg:svg,
 				width:WIDTH,
 				height:HEIGHT,
+				scale:{
+					x:xscale,
+					y:yscale
+				},
 				margins:options.margins || {
 					top:0,
 					bottom:0,
@@ -369,8 +384,7 @@ export default function RunningPerspectiveOval(data,options) {
 		//xscale=scaleLinear().domain([0,(dimensions.lanes_n+1)*dimensions.lane]).range([0,WIDTH-(margins.left+margins.right)]);
 		//yscale=scaleLinear().domain([0,dimensions.length]).range([0,HEIGHT-(margins.top+margins.bottom)]);
 		
-		xscale=scaleLinear().domain([0,dimensions.radius*2+dimensions.field.width]).range([0,WIDTH]),
-		yscale=scaleLinear().domain([0,dimensions.lanes*2+dimensions.field.height]).range([0,HEIGHT]);
+		
 
 		overlay
 			.style("top",margins.left+"px")
@@ -643,7 +657,7 @@ export default function RunningPerspectiveOval(data,options) {
 		athlete_pf
 				.append("text")
 					.attr("x",0)
-					.attr("dx",-5)
+					.attr("dx",-1)
 					.attr("y",d=>{
 						return yscale(d.lane * dimensions.lane + dimensions.lane/2 - dimensions.lane*0.15)
 					})
@@ -927,7 +941,7 @@ export default function RunningPerspectiveOval(data,options) {
 			t=null;
 		});
 
-		photofinish.classed("visible",false)
+		container.classed("photo-finish",false);
 		removeAnnotations();
 		removeGaps();
 		stopWatch.hide();
@@ -940,63 +954,36 @@ export default function RunningPerspectiveOval(data,options) {
 		let box = container.node().getBoundingClientRect();
 			
 		let hmargins=margins.left+margins.right;
-		let dxScale=scaleLinear().domain([800-hmargins,1260-hmargins]).range([15,23]);
-		let dyScale=scaleLinear().domain([800-hmargins,1260-hmargins]).range([1660,2960]);
-		let dzScale=scaleLinear().domain([800-hmargins,1260-hmargins]).range([500,900]);
 
-		let ddScale=scaleLinear().domain([0,100]).range([0.93*yscale.range()[1],0]);
+		let ddScale;
 
 		let w=box.width,
-			dx=dxScale(w),
-			dy=dyScale(w),
-			dz=dzScale(w),
-			dd=ddScale(distance),
 			drxScale;
-		
-		//dy=0;
-		//let transform=`rotateX(65deg) rotateY(0deg) rotateZ(10deg) translateX(-1%) translateY(${300}px) translateZ(150px)`;
-		
-		
 		
 		function transformTransition(status=1) {
 
-			let transform = `rotateX(30deg) rotateY(0deg) rotateZ(70deg) translateZ(500px) translateX(-1780px) translateY(315px)`;
-			
-			transform = `rotateX(40deg) rotateY(0deg) rotateZ(70deg) translateZ(500px) translateX(-1700px) translateY(315px)`;
-			//from top
-			transform = `rotateX(0deg) rotateY(0deg) rotateZ(0deg) translateZ(60px) translateX(-2520px) translateY(-1890px)`;
+			let transform;
 
-			transform = `rotateX(20deg) rotateY(10deg) rotateZ(40deg) translateZ(60px) translateX(-2470px) translateY(-500px)`;
-
-			transform = `rotateX(50deg) rotateY(10deg) rotateZ(30deg) translateZ(400px) translateX(-3160px) translateY(-500px)`;
-
-			//1260
-			transform = `rotateX(40deg) rotateY(10deg) rotateZ(17deg) translateZ(330px) translateX(-2640px) translateY(-1040px)`;
-
-			//800
-			transform = `rotateX(40deg) rotateY(10deg) rotateZ(17deg) translateZ(330px) translateX(-1500px) translateY(-400px)`;
-
-			//620
-			transform = `rotateX(40deg) rotateY(10deg) rotateZ(17deg) translateZ(330px) translateX(-1130px) translateY(-110px)`;
-
-			dxScale=scaleLinear().domain([620,1260]).range([-1130,-2575]);
-			dyScale=scaleLinear().domain([620,1260]).range([-110,-1120]);
-			dzScale=scaleLinear().domain([620,1260]).range([330,330]);
+			let dxScale=scaleLinear().domain([620,1260]).range([-1130,-2575]),
+				dyScale=scaleLinear().domain([620,1260]).range([-110,-1120]),
+				dzScale=scaleLinear().domain([620,1260]).range([330,330]),
+				drxScale;
 
 			transform = `rotateX(40deg) rotateY(10deg) rotateZ(17deg) translateZ(330px) translateX(${dxScale(w)}px) translateY(${dyScale(w)}px)`;
 
-			if(distance===0) {
-				transform = `rotateX(31deg) rotateY(0deg) rotateZ(0deg) translateZ(500px) translateX(-280px) translateY(285px)`;
-				transform = `rotateX(0deg) rotateY(0deg) rotateZ(0deg) translateZ(0px) translateX(0px) translateY(0px)`;
-				transform = `rotateX(20deg) rotateY(0deg) rotateZ(-10deg) translateZ(160px) translateX(0px) translateY(-340px)`;
-				transform = `rotateX(30deg) rotateY(0deg) rotateZ(-30deg) translateZ(460px) translateX(400px) translateY(-790px)`;
-				transform = `rotateX(30deg) rotateY(0deg) rotateZ(0deg) translateZ(600px) translateX(-140px) translateY(230px)`;
+			if(w<480) {
+				//`rotateX(40deg) rotateY(10deg) rotateZ(50deg) translateZ(260px) translateX(-90px) translateY(430px)`
+				//`rotateX(40deg) rotateY(10deg) rotateZ(40deg) translateZ(250px) translateX(-395px) translateY(360px)`
 
-				//1260
-				transform = `rotateX(30deg) rotateY(0deg) rotateZ(-10deg) translateZ(500px) translateX(-50px) translateY(-100px)`;
-				//800
-				//620
-				transform = `rotateX(30deg) rotateY(0deg) rotateZ(-10deg) translateZ(300px) translateX(-50px) translateY(150px)`;
+				let dxScale=scaleLinear().domain([320,414]).range([-90,-395]),
+					dyScale=scaleLinear().domain([320,414]).range([430,360]),
+					dzScale=scaleLinear().domain([320,414]).range([260,250]),
+					drzScale=scaleLinear().domain([320,414]).range([50,40])
+
+				transform=`rotateX(40deg) rotateY(10deg) rotateZ(${drzScale(w)}deg) translateZ(${dzScale(w)}px) translateX(${dxScale(w)}px) translateY(${dyScale(w)}px)`;
+			}
+
+			if(distance===0) {
 
 				drxScale=scaleLinear().domain([620,1260]).range([30,20]);
 				dxScale=scaleLinear().domain([620,1260]).range([-50,-30]);
@@ -1004,38 +991,37 @@ export default function RunningPerspectiveOval(data,options) {
 
 				transform = `rotateX(${drxScale(w)}deg) rotateY(0deg) rotateZ(-10deg) translateZ(300px) translateX(${dxScale(w)}px) translateY(${dyScale(w)}px)`;
 
+				if(w<480) {
+					transform = `rotateX(25deg) rotateY(0deg) rotateZ(-35deg) translateZ(290px) translateX(20px) translateY(50px)`;
+				}
+
 			}
 			if(distance!==0 && distance !==dimensions.length) {
-				transform = `rotateX(50deg) rotateY(0deg) rotateZ(-30deg) translateZ(500px) translateX(810px) translateY(-1965px)`;
-				transform = `rotateX(43deg) rotateY(0deg) rotateZ(-10deg) translateZ(0px) translateX(520px) translateY(-2085px)`;
-				transform = `rotateX(40deg) rotateY(0deg) rotateZ(-15deg) translateZ(460px) translateX(400px) translateY(-2015px)`;
-				transform = `rotateX(40deg) rotateY(0deg) rotateZ(-15deg) translateZ(460px) translateX(400px) translateY(-2375px)`;
-
+				
 				drxScale=scaleLinear().domain([620,1260]).range([50,45]);
-				dxScale=scaleLinear().domain([620,1260]).range([-10,120]);
-				dyScale=scaleLinear().domain([620,1260]).range([-630,-2000]);
+				dxScale=scaleLinear().domain([620,1260]).range([40,120]);
+				dyScale=scaleLinear().domain([620,1260]).range([-630,-2050]);
 				dzScale=scaleLinear().domain([620,1260]).range([190,360]);
 
-				//620
-				transform = `rotateX(50deg) rotateY(0deg) rotateZ(-10deg) translateZ(190px) translateX(-10px) translateY(-630px)`
-
-				//1260
-				transform = `rotateX(40deg) rotateY(0deg) rotateZ(-10deg) translateZ(360px) translateX(50px) translateY(-2000px)`
-
 				transform = `rotateX(${drxScale(w)}deg) rotateY(0deg) rotateZ(-10deg) translateZ(${dzScale(w)}px) translateX(${dxScale(w)}px) translateY(${dyScale(w)}px)`;
+
+				if(w<480) {
+					transform = `rotateX(35deg) rotateY(0deg) rotateZ(10deg) translateZ(30px) translateX(-30px) translateY(-100px)`;
+				}
+				
 			}
 
 
 			if(__photofinish) {
-				//620
-				//rotateX(0deg) rotateY(0deg) rotateZ(0deg) translateZ(400px) translateX(-1200px) translateY(-680px)
-				//1260
-				//rotateX(0deg) rotateY(0deg) rotateZ(0deg) translateZ(100px) translateX(-2400px) translateY(-1800px) scale(1)
+				
 				dxScale=scaleLinear().domain([620,1260]).range([-1200,-2400]);
 				dyScale=scaleLinear().domain([620,1260]).range([-680,-1900]);
 				dzScale=scaleLinear().domain([620,1260]).range([400,100]);
 				transform = `rotateX(0deg) rotateY(0deg) rotateZ(0deg) translateZ(${dzScale(w)}px) translateX(${dxScale(w)}px) translateY(${dyScale(w)}px) scale(1)`;
-				//transform=`rotateX(0deg) rotateY(0deg) rotateZ(0deg) translateZ(0px) translateX(-18%) translateY(-50%) scale(0.3)`;
+				
+				if(w<480) {
+					transform = `rotateX(0deg) rotateY(0deg) rotateZ(0deg) translateZ(420px) translateX(-780px) translateY(-280px) scale(1)`;
+				}
 			}
 
 			/*if(WIDTH<400) {
@@ -1046,7 +1032,7 @@ export default function RunningPerspectiveOval(data,options) {
 			if(status===0) {
 				transform = `rotateX(60deg) rotateY(0deg) rotateZ(50deg) translateZ(500px) translateX(-640px) translateY(295px)`;
 			}*/
-
+			
 			try {
 		    	svg
 		    		.style("-webkit-transform",transform)
@@ -1085,8 +1071,11 @@ export default function RunningPerspectiveOval(data,options) {
 
 		let delta=20;
 
+		if(w<480) {
+			delta=15;
+		}
+
 		let selected_leg=leg
-			.classed("photo-finish",false)
 			.classed("visible",false)
 			.filter(d=>(d.distance===distance))
 				.classed("visible",true);
@@ -1317,11 +1306,10 @@ export default function RunningPerspectiveOval(data,options) {
 
 	function showPhotoFinish(distance) {
 
-		photofinish.classed("visible",true)
-
+		
+		container.classed("photo-finish",true);
 		leg
 			.filter(d=>(d.distance===distance))
-			.classed("photo-finish",true)
 				.select("path")
 					.attr("stroke-dasharray", function(s){
 

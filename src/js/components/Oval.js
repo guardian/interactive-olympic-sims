@@ -87,8 +87,8 @@ export default function Oval(options) {
 
     let internal_cuve_length=(dimensions.radius)*Math.PI*mult;
 
-    let hscale=scaleLinear().domain([0,dimensions.radius*2+dimensions.field.width]).range([0,WIDTH]),
-    	vscale=scaleLinear().domain([0,dimensions.lanes*2+dimensions.field.height]).range([0,HEIGHT]);
+    let hscale=options.scale.x || scaleLinear().domain([0,dimensions.radius*2+dimensions.field.width]).range([0,WIDTH]),
+    	vscale=options.scale.y || scaleLinear().domain([0,dimensions.lanes*2+dimensions.field.height]).range([0,HEIGHT]);
 
     hscale=vscale.copy();
 

@@ -21,12 +21,18 @@
 		.scaffolding {
 			line {
 				stroke:#fff;
-				stroke-width:4;
+				stroke-width:3;
+				@include mq(tablet) {
+					stroke-width:4;
+				}
 				stroke-linecap:butt;
 				//shape-rendering:crispEdges;
 
 				&.stagger {
-					stroke-width:8;
+					stroke-width:3;
+					@include mq(tablet) {
+						stroke-width:8;
+					}
 					stroke:#fff;
 				}
 			}	

@@ -14,7 +14,7 @@
 	$height:500px;
 	
 	width:$width;
-	height:500px;
+	height:568px;
 
 	@include mq(tablet) {
 		height: 500px;
@@ -205,18 +205,20 @@
 		}
 		g.photo-finish {
 			visibility: hidden;
-			&.visible {
-				visibility: visible;
-			}
+			
 			line {
 				stroke:#333;
 				stroke-width:1;
+				stroke-opacity:0.5;
 				shape-rendering:crispEdges;
 			}
 			g.athlete-pf {
 				text {
 					@include fs-textSans(1);
-					font-size:11px;
+					font-size:7px;
+					@include mq(tablet) {
+						font-size:11px;
+					}	
 					fill:#333;
 					text-anchor:end;
 				}
@@ -224,10 +226,14 @@
 			g.tick {
 				line {
 					stroke:#bdbdbd;
+					stroke-opacity:1;
 				}
 				text {
 					@include fs-textSans(1);
-					font-size:11px;
+					font-size:6px;
+					@include mq(tablet) {
+						font-size:11px;
+					}
 					fill:#bdbdbd;
 					text-anchor:middle;
 				}
@@ -258,7 +264,7 @@
 				.athlete-name,
 				.athlete-time {
 					@include f-textSans;
-					font-size:12px;
+					font-size:11px;
 					text-rendering: optimizeSpeed;// optimizeLegibility;
 					
 					@include mq(tablet) {
@@ -383,6 +389,27 @@
 						margin-top:25px;
 					}
 				}
+			}
+		}
+	}
+
+	&.photo-finish {
+		svg {
+			g.bg {
+				.background {
+					path {
+						stroke:#f4f4f4;
+					}
+				}
+			}
+			.athlete .leg .athlete-name {
+				fill:#333;
+				&.stroke {
+					visibility: hidden;
+				}
+			}
+			g.photo-finish {
+				visibility: visible;
 			}
 		}
 	}
