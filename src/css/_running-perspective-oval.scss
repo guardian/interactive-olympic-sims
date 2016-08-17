@@ -203,7 +203,36 @@
 			    text-anchor:start;
 			}
 		}
-
+		g.photo-finish {
+			visibility: hidden;
+			&.visible {
+				visibility: visible;
+			}
+			line {
+				stroke:#333;
+				stroke-width:1;
+				shape-rendering:crispEdges;
+			}
+			g.athlete-pf {
+				text {
+					@include fs-textSans(1);
+					font-size:11px;
+					fill:#333;
+					text-anchor:end;
+				}
+			}
+			g.tick {
+				line {
+					stroke:#bdbdbd;
+				}
+				text {
+					@include fs-textSans(1);
+					font-size:11px;
+					fill:#bdbdbd;
+					text-anchor:middle;
+				}
+			}
+		}
 		.athlete {
 			.leg {
 				path {
@@ -229,20 +258,20 @@
 				.athlete-name,
 				.athlete-time {
 					@include f-textSans;
-					font-size:16px;
+					font-size:12px;
 					text-rendering: optimizeSpeed;// optimizeLegibility;
 					
 					@include mq(tablet) {
-						font-size: 12px;
+						font-size: 14px;
 						&.time {
-							font-size:19px;
+							font-size:14px;
 						}
 					}
 					
-					@include mq(wide) {
-						font-size: 22px;
+					@include mq(desktop) {
+						font-size: 20px;
 						&.time {
-							font-size:22px;
+							font-size:20px;
 						}
 					}
 					fill:#222;
@@ -308,6 +337,9 @@
 						fill-opacity:1;
 					}
 				} */
+
+
+
 			}
 			&.gold {
 				.leg {

@@ -27,6 +27,7 @@ import {
 
 import Oval from './Oval';
 
+import {strokeShadow} from '../lib/CSSUtils';
 
 //import Barchart from './Barchart';
 import PerspT from 'perspective-transform';
@@ -84,6 +85,7 @@ export default function RunningPerspectiveOval(data,options) {
 		svg,
 		leg,
 		athlete,
+		photofinish,
 		marker,
 		xscale,
 		yscale,
@@ -151,7 +153,7 @@ export default function RunningPerspectiveOval(data,options) {
     					]
     				}
     				let prev_time=0;
-    				return options.text.filter(d=>(d.mt>0 && d.state==="story")).map((d,i)=>{
+    				return options.text.filter(d=>(d.mt>0 && d.state==="story" && !d.photofinish)).map((d,i)=>{
     					let time=convertTime(entrant.value)*(d.mt / dimensions.length);
     					//console.log("TIME TIME TIME",entrant.value,convertTime(entrant.value),d.mt,"/",dimensions.length,"=",d.mt / dimensions.length)
     					if(dimensions.fixes[d.mt]) {
@@ -191,7 +193,7 @@ export default function RunningPerspectiveOval(data,options) {
     	});
 
     	//LEGS=range(athletes_data[0].splits.length+1).map(d=>d*dimensions.length);
-    	LEGS=options.text.filter(d=>(d.state==="story")).map(d=>d.mt)
+    	LEGS=options.text.filter(d=>(d.state==="story" && !d.photofinish)).map(d=>d.mt)
     	
 
     	athletes_data.forEach(athlete=>{
@@ -226,8 +228,8 @@ export default function RunningPerspectiveOval(data,options) {
     		best_cumulative_times[distance].times=best_cumulative_times[distance].times.sort((a,b)=>(a-b));
     		best_cumulative_times[distance].times=best_cumulative_times[distance].cumulative_times.sort((a,b)=>(a-b));
     	}
-    	//console.log(athletes_data)
-		//console.log(best_cumulative_times)
+    	console.log(athletes_data)
+		console.log(best_cumulative_times)
 
 		athletes_data.forEach(s => {
 
@@ -278,6 +280,11 @@ export default function RunningPerspectiveOval(data,options) {
 	    container=select(options.container)
 	    					.append("div")
 	    					.attr("class","running-perspective-oval oval");
+
+	    select(options.container)
+	    		.append("div")
+	    		.attr("class","notes")
+	    		.html("The positions are based on the athletes' average speed.")
 
 	    annotations_layer=container
 								.append("div")
@@ -565,6 +572,83 @@ export default function RunningPerspectiveOval(data,options) {
 							return athlete.value;
 						})
 
+		photofinish=svg
+					.append("g")
+					.attr("class","photo-finish")
+					.attr("transform",`translate(${margins.left},${margins.top})`)
+
+		let l=best_cumulative_times[dimensions.length].cumulative_times.length,
+			best=best_cumulative_times[dimensions.length].cumulative_times[0],
+			worst=best_cumulative_times[dimensions.length].cumulative_times[l-1],
+			photofinish_axis=range(
+								Math.floor(best/100)*100-100,
+								Math.ceil(worst/100)*100+100,
+								100
+							),
+			photofinish_mt=photofinish_axis.map(d=>{
+				let x=dimensions.length*d/best;
+				return {
+					t:d,
+					dmt:x - dimensions.length
+				}
+			})
+
+		//console.log(l,photofinish_axis,photofinish_mt)
+
+		let tick=photofinish
+			.selectAll("g.tick")
+			.data(photofinish_mt)
+			.enter()
+			.append("g")
+				.attr("class","tick")
+				.attr("transform",(d)=>{
+					let x=yscale(dimensions.lanes+dimensions.radius+dimensions.field.width),
+						y=yscale(dimensions.lanes+dimensions.field.height-dimensions.lane*2/3);
+					x=x-yscale(d.dmt);
+					return `translate(${x},${y})`;
+				})
+		
+		tick
+			.append("line")
+				.attr("x1",0)
+				.attr("y1",0)
+				.attr("x2",0)
+				.attr("y2",yscale(dimensions.lane*0.2));
+		tick
+			.filter(d=>(d.t%200)>0)
+			.append("text")
+				.attr("x",0)
+				.attr("y",-3)
+				.text(d=>(formatSecondsMilliseconds(d.t,1)))
+
+		let athlete_pf=photofinish
+			.selectAll("g.athlete-pf")
+			.data(athletes_data)
+			.enter()
+			.append("g")
+				.attr("class","athlete-pf")
+				.attr("transform",(d)=>{
+					let split=d.splits[d.splits.length-1];
+					let x=yscale(dimensions.lanes+dimensions.radius+dimensions.field.width),
+						y=yscale(dimensions.lanes+dimensions.field.height);
+					x=x-yscale(split.dmt);
+					return `translate(${x},${y})`;
+				});
+		athlete_pf
+				.append("line")
+					.attr("x1",0)
+					.attr("y1",-yscale(dimensions.lane/2)+1)
+					.attr("x2",0)
+					.attr("y2",yscale(dimensions.lanes-dimensions.lane/2)-1)
+		athlete_pf
+				.append("text")
+					.attr("x",0)
+					.attr("dx",-5)
+					.attr("y",d=>{
+						return yscale(d.lane * dimensions.lane + dimensions.lane/2 - dimensions.lane*0.15)
+					})
+					.text(d=>d.value)
+
 		goTo(options.text[0].mt,options.text[0].story==="intro",true)
 
 		
@@ -592,7 +676,10 @@ export default function RunningPerspectiveOval(data,options) {
     			.html(d=>{
     				//console.log("!!!!",d)
     				return "<p>"+d.description+"</p>";
-    			});
+    			})
+    			.each(function(){
+    				strokeShadow(this,2);
+    			})
 
 		
 		let button=standfirst
@@ -613,9 +700,10 @@ export default function RunningPerspectiveOval(data,options) {
 					// } else {
 					// 	swimming_pool.setAxis(0)
 					// }
-					goTo(options.text.filter(d=>d.state==="story")[CURRENT_STEP].mt,(d)=>{
+					let story=options.text.filter(d=>(d.state==="story"))[CURRENT_STEP];
+					goTo(story.mt,(d)=>{
 						activateButton();
-					})
+					},false,story.photofinish)
 				})
 			.merge(button)
 				.classed("replay",d=>(d.toLowerCase()==="replay"))
@@ -832,13 +920,14 @@ export default function RunningPerspectiveOval(data,options) {
 		},1000)
 	}
 
-	function goTo(distance,text_update,first_run=false) {
+	function goTo(distance,text_update,first_run=false,__photofinish=false) {
 
 		ts.forEach(t=>{
 			clearTimeout(t);
 			t=null;
 		});
 
+		photofinish.classed("visible",false)
 		removeAnnotations();
 		removeGaps();
 		stopWatch.hide();
@@ -936,6 +1025,19 @@ export default function RunningPerspectiveOval(data,options) {
 				transform = `rotateX(${drxScale(w)}deg) rotateY(0deg) rotateZ(-10deg) translateZ(${dzScale(w)}px) translateX(${dxScale(w)}px) translateY(${dyScale(w)}px)`;
 			}
 
+
+			if(__photofinish) {
+				//620
+				//rotateX(0deg) rotateY(0deg) rotateZ(0deg) translateZ(400px) translateX(-1200px) translateY(-680px)
+				//1260
+				//rotateX(0deg) rotateY(0deg) rotateZ(0deg) translateZ(100px) translateX(-2400px) translateY(-1800px) scale(1)
+				dxScale=scaleLinear().domain([620,1260]).range([-1200,-2400]);
+				dyScale=scaleLinear().domain([620,1260]).range([-680,-1900]);
+				dzScale=scaleLinear().domain([620,1260]).range([400,100]);
+				transform = `rotateX(0deg) rotateY(0deg) rotateZ(0deg) translateZ(${dzScale(w)}px) translateX(${dxScale(w)}px) translateY(${dyScale(w)}px) scale(1)`;
+				//transform=`rotateX(0deg) rotateY(0deg) rotateZ(0deg) translateZ(0px) translateX(-18%) translateY(-50%) scale(0.3)`;
+			}
+
 			/*if(WIDTH<400) {
 				//container.style("perspective","700px").style("perspective-origin","90% 20%")
 				transform="rotateX(75deg) rotateY(0deg) rotateZ(10deg) translateX(67px) translateY(365px) translateZ(45px) scale(0.8)";
@@ -970,9 +1072,21 @@ export default function RunningPerspectiveOval(data,options) {
 		
 		transformTransition();
 
+		if(__photofinish) {
+			if(text_update){
+				buildTexts();
+				addAnnotation();
+			}
+			showPhotoFinish(distance);
+			return;
+		}
+
+		
+
 		let delta=20;
 
 		let selected_leg=leg
+			.classed("photo-finish",false)
 			.classed("visible",false)
 			.filter(d=>(d.distance===distance))
 				.classed("visible",true);
@@ -1198,6 +1312,31 @@ export default function RunningPerspectiveOval(data,options) {
 
 		
 		
+
+	}
+
+	function showPhotoFinish(distance) {
+
+		photofinish.classed("visible",true)
+
+		leg
+			.filter(d=>(d.distance===distance))
+			.classed("photo-finish",true)
+				.select("path")
+					.attr("stroke-dasharray", function(s){
+
+						let l=this.getTotalLength();
+						let interpolate = interpolateString("0," + l, l + "," + l);
+
+						let t = s.mt/dimensions.length;
+						//console.log("2-INTERPOLATE",t,interpolate(t))
+
+						return interpolate(t);
+
+					})
+		leg
+			.selectAll("text.athlete-time")
+			.classed("hidden",true)
 
 	}
 
