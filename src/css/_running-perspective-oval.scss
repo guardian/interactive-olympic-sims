@@ -264,7 +264,7 @@
 				.athlete-name,
 				.athlete-time {
 					@include f-textSans;
-					font-size:11px;
+					font-size:9px;
 					text-rendering: optimizeSpeed;// optimizeLegibility;
 					
 					@include mq(tablet) {

@@ -471,7 +471,7 @@ export default function RunningPerspectiveOval(data,options) {
 		leg.filter(s=>(s.distance===0))
 				//.selectAll("text:not(.stroke)")
 				.selectAll("text")
-					.attr("dx",15)
+					.attr("dx",5)
 				    .attr("dy","0.35em")
 					.append("textPath")
 				    	.attr("xlink:href", (s,i)=>{
@@ -975,11 +975,13 @@ export default function RunningPerspectiveOval(data,options) {
 				//`rotateX(40deg) rotateY(10deg) rotateZ(50deg) translateZ(260px) translateX(-90px) translateY(430px)`
 				//`rotateX(40deg) rotateY(10deg) rotateZ(40deg) translateZ(250px) translateX(-395px) translateY(360px)`
 
-				let dxScale=scaleLinear().domain([320,414]).range([-90,-395]),
-					dyScale=scaleLinear().domain([320,414]).range([430,360]),
+				let dxScale=scaleLinear().domain([320,414]).range([-35,-395]),
+					dyScale=scaleLinear().domain([320,414]).range([445,360]),
 					dzScale=scaleLinear().domain([320,414]).range([260,250]),
 					drzScale=scaleLinear().domain([320,414]).range([50,40])
 
+
+				//rotateX(40deg) rotateY(10deg) rotateZ(50deg) translateZ(260px) translateX(-35px) translateY(445px)
 				transform=`rotateX(40deg) rotateY(10deg) rotateZ(${drzScale(w)}deg) translateZ(${dzScale(w)}px) translateX(${dxScale(w)}px) translateY(${dyScale(w)}px)`;
 			}
 
@@ -992,7 +994,16 @@ export default function RunningPerspectiveOval(data,options) {
 				transform = `rotateX(${drxScale(w)}deg) rotateY(0deg) rotateZ(-10deg) translateZ(300px) translateX(${dxScale(w)}px) translateY(${dyScale(w)}px)`;
 
 				if(w<480) {
-					transform = `rotateX(25deg) rotateY(0deg) rotateZ(-35deg) translateZ(290px) translateX(20px) translateY(50px)`;
+					//320
+					//rotateX(25deg) rotateY(0deg) rotateZ(-35deg) translateZ(270px) translateX(-55px) translateY(140px)
+					//375
+					//rotateX(25deg) rotateY(0deg) rotateZ(-35deg) translateZ(270px) translateX(-15px) translateY(100px)
+
+					let dxScale=scaleLinear().domain([320,375]).range([-55,-15]),
+						dyScale=scaleLinear().domain([320,375]).range([140,100]),
+						dzScale=scaleLinear().domain([320,375]).range([270,270]);
+
+					transform = `rotateX(25deg) rotateY(0deg) rotateZ(-35deg) translateZ(${dzScale(w)}px) translateX(${dxScale(w)}px) translateY(${dyScale(w)}px)`;
 				}
 
 			}
@@ -1006,7 +1017,18 @@ export default function RunningPerspectiveOval(data,options) {
 				transform = `rotateX(${drxScale(w)}deg) rotateY(0deg) rotateZ(-10deg) translateZ(${dzScale(w)}px) translateX(${dxScale(w)}px) translateY(${dyScale(w)}px)`;
 
 				if(w<480) {
-					transform = `rotateX(35deg) rotateY(0deg) rotateZ(10deg) translateZ(30px) translateX(-30px) translateY(-100px)`;
+					//320
+					//rotateX(45deg) rotateY(0deg) rotateZ(40deg) translateZ(210px) translateX(400px) translateY(400px)
+					//375
+					//transform=`rotateX(45deg) rotateY(0deg) rotateZ(40deg) translateZ(260px) translateX(380px) translateY(370px)`
+
+					let dxScale=scaleLinear().domain([320,375]).range([390,380]),
+						dyScale=scaleLinear().domain([320,375]).range([390,370]),
+						dzScale=scaleLinear().domain([320,375]).range([200,260]);
+
+					transform = `rotateX(45deg) rotateY(0deg) rotateZ(40deg) translateZ(${dzScale(w)}px) translateX(${dxScale(w)}px) translateY(${dyScale(w)}px)`;
+
+					//transform = `rotateX(35deg) rotateY(0deg) rotateZ(10deg) translateZ(30px) translateX(-30px) translateY(-100px)`;
 				}
 				
 			}
@@ -1020,7 +1042,17 @@ export default function RunningPerspectiveOval(data,options) {
 				transform = `rotateX(0deg) rotateY(0deg) rotateZ(0deg) translateZ(${dzScale(w)}px) translateX(${dxScale(w)}px) translateY(${dyScale(w)}px) scale(1)`;
 				
 				if(w<480) {
+					//320
+					//rotateX(0deg) rotateY(0deg) rotateZ(0deg) translateZ(450px) translateX(-600px) translateY(-150px)
+					//375
+					//rotateX(0deg) rotateY(0deg) rotateZ(0deg) translateZ(481px) translateX(-700px) translateY(-180px) scale(1)
 					transform = `rotateX(0deg) rotateY(0deg) rotateZ(0deg) translateZ(420px) translateX(-780px) translateY(-280px) scale(1)`;
+
+					let dxScale=scaleLinear().domain([320,375]).range([-600,-700]),
+						dyScale=scaleLinear().domain([320,375]).range([-150,-180]),
+						dzScale=scaleLinear().domain([320,375]).range([450,481]);
+
+					transform = `rotateX(0deg) rotateY(0deg) rotateZ(0deg) translateZ(${dzScale(w)}px) translateX(${dxScale(w)}px) translateY(${dyScale(w)}px)`;
 				}
 			}
 
