@@ -46,7 +46,8 @@ import {
 import {
 	dimensions,
 	RunningLinear,
-	Running200mEasing
+	Running200mEasing,
+	fixOrder
 } from '../lib/running'
 
 import StopWatch from "./StopWatch";
@@ -107,25 +108,36 @@ export default function RunningPerspectiveOval(data,options) {
 
     function buildEvent() {
     	
-    	let REACTION_TIME=0,
-    		SPLITS=1;
-
     	for(var k in options.dimensions) {
     		//console.log("setting",k,dimensions[k],"to",options.dimensions[k])
 	    	dimensions[k]=options.dimensions[k];
     	}
 
-
-
-    	//console.log(data.olympics.eventUnit.result)
-
-
-		
-
-
     	athletes_data=data.olympics.eventUnit.result.entrant.map(entrant => {
  
-    		let athlete=options.team?entrant.country.identifier:entrant.participant.competitor.fullName;
+    		//entrant.order=fixOrder(entrant.order);
+
+    		let REACTION_TIME,
+    			SPLITS,
+    			LEG_BREAKDOWN;
+
+	    	//console.log(entrant)
+	    	if(typeof entrant.resultExtension.length == 'undefined') {
+	    		entrant.resultExtension=[entrant.resultExtension];
+	    	}
+			entrant.resultExtension.forEach((t,i)=>{
+				if(t.type==="Reaction Time") {
+					REACTION_TIME=i
+				}
+				if(t.type==="Split Times") {
+					SPLITS=i;
+				}
+				if(t.type==="Leg Breakdown") {
+					LEG_BREAKDOWN=i;
+				}
+			})
+			//console.log(REACTION_TIME,SPLITS,LEG_BREAKDOWN)
+			let athlete=options.team?entrant.country.identifier:entrant.participant.competitor.fullName;
 
 			let prev_cumulative_time=0;
 
@@ -157,7 +169,12 @@ export default function RunningPerspectiveOval(data,options) {
     					let time=convertTime(entrant.value)*(d.mt / dimensions.length);
     					//console.log("TIME TIME TIME",entrant.value,convertTime(entrant.value),d.mt,"/",dimensions.length,"=",d.mt / dimensions.length)
     					if(dimensions.fixes[d.mt]) {
-    						time=convertTime(dimensions.fixes[d.mt][(+entrant.order-1)]);
+    						let t=dimensions.fixes[d.mt][(+entrant.order-1)];
+    						console.log(entrant.order,time)
+    						if(t) {
+    							time=convertTime(t);
+    						}
+    						
     					}
     					let leg={
 		    					value:entrant.value,
@@ -228,8 +245,8 @@ export default function RunningPerspectiveOval(data,options) {
     		best_cumulative_times[distance].times=best_cumulative_times[distance].times.sort((a,b)=>(a-b));
     		best_cumulative_times[distance].times=best_cumulative_times[distance].cumulative_times.sort((a,b)=>(a-b));
     	}
-    	console.log(athletes_data)
-		console.log(best_cumulative_times)
+    	//console.log(athletes_data)
+		//console.log(best_cumulative_times)
 
 		athletes_data.forEach(s => {
 
@@ -437,7 +454,7 @@ export default function RunningPerspectiveOval(data,options) {
 
 						return ath.splits.map(d=>{
 
-							let distance=d.distance || 5;
+							let distance=d.distance || 2;
 							d.mt=distance*best_cumulative_times[d.distance].best_cumulative/d.cumulative_time;
 							d.dmt=distance-d.mt;
 							d.lane=ath.lane;
@@ -462,7 +479,7 @@ export default function RunningPerspectiveOval(data,options) {
 
 		leg.filter(s=>(s.distance===0))
 			.selectAll("text")
-			.data(s=>(WIDTH<400?[s]:[s,s]))
+			.data(s=>(WIDTH<480?[s]:[s,s]))
 			.enter()
 			.append("text")
 				.attr("class","athlete-name")
@@ -471,7 +488,7 @@ export default function RunningPerspectiveOval(data,options) {
 		leg.filter(s=>(s.distance===0))
 				//.selectAll("text:not(.stroke)")
 				.selectAll("text")
-					.attr("dx",5)
+					.attr("dx",WIDTH<480?5:15)
 				    .attr("dy","0.35em")
 					.append("textPath")
 				    	.attr("xlink:href", (s,i)=>{
@@ -1103,8 +1120,15 @@ export default function RunningPerspectiveOval(data,options) {
 
 		let delta=20;
 
+		if(distance!==0 && distance !==dimensions.length) {
+			delta=40;	
+		}
+
 		if(w<480) {
 			delta=15;
+			if(distance!==0 && distance !==dimensions.length) {
+				delta=30;
+			}
 		}
 
 		let selected_leg=leg
@@ -1126,8 +1150,8 @@ export default function RunningPerspectiveOval(data,options) {
 				    		if(s.distance===0 || s.distance===dimensions.length) {
 				    			return "0%"
 				    		}
-				    		console.log("TEXTPATH",200,s.distance,dimensions.lane_staggers[s.lane],200+dimensions.lane_staggers[s.lane]+100)
-				    		console.log(s)
+				    		//console.log("TEXTPATH",200,s.distance,dimensions.lane_staggers[s.lane],200+dimensions.lane_staggers[s.lane]+100)
+				    		//console.log(s)
 				    		let ratio=300/400;
 				    		return ((ratio + (dimensions.lane_staggers[s.lane]*ratio)/400)*100)+"%";
 				    		return ((0.5+(dimensions.lane_staggers[s.lane]/400))*100)+"%"
@@ -1139,26 +1163,7 @@ export default function RunningPerspectiveOval(data,options) {
 
 				    		return (s.distance>0)?"100%":"0%";
 				    	})
-				    	/*.transition()
-				    	.duration(s=>{
-
-							if(s.distance===0) {
-								return best_cumulative_times[s.distance].best_time;
-							}
-							//let t=getTimeForDistance(best_cumulative_times[s.distance].best_cumulative,dimensions.length,delta)
-							
-							let t=getTimeForDistance(best_cumulative_times[s.distance].cumulative_times[s.lane],dimensions.length,delta)
-
-							return t;
-						})
-						.delay(2000)
-						.ease(RunningLinear)
-				    	.attr("startOffset",s=>{
-
-				    		return (((s.mt) / dimensions.length)*100)+"%";
-
-				    		return (s.distance>0)?"100%":"0%";
-				    	})*/
+				    	
 		selected_leg
 			.selectAll("text.athlete-time")
 			.classed("hidden",true)
@@ -1169,10 +1174,19 @@ export default function RunningPerspectiveOval(data,options) {
 
 						let l=this.getTotalLength();
 						let interpolate = interpolateString("0," + l, l + "," + l);						
+						let delta_fix=0;
+
+						if(dimensions.delta_fixes[s.distance]) {
+							//console.log(s.distance,s.lane)
+    						delta_fix=dimensions.delta_fixes[s.distance][s.lane];
+    						
+    						
+    					}
 
 						let delta2=(s.distance!==0 && s.distance!==dimensions.length)?delta*2:delta
+						//console.log(s.lane,delta_fix,"=>",delta2+delta_fix)
 
-						let t = s.distance>0?((s.mt-delta2)/dimensions.length):0;
+						let t = s.distance>0?((s.mt-(delta2+delta_fix))/dimensions.length):0;
 						//console.log("1-INTERPOLATE",t,interpolate(t))
 						return interpolate(t);
 

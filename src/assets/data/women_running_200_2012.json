@@ -1,0 +1,291 @@
+{
+    "olympics": {
+        "eventUnit": {
+            "identifier": "ATW002101",
+            "description": "Women's 200m Final",
+            "unitType": "Individuals",
+            "medalEvent": "Yes",
+            "disciplineDescription": {
+                "identifier": "athletics",
+                "value": "Athletics"
+            },
+            "phaseDescription": {
+                "identifier": "ATW0021",
+                "value": "Final"
+            },
+            "result": {
+                "type": "Official",
+                "timestamp": "2013-11-13T12:14:32Z",
+                "entrant": [{
+                    "order": "6",
+                    "type": "Individual",
+                    "code": "1132858",
+                    "rank": "1",
+                    "value": "21.88",
+                    "property": [{
+                        "type": "Medal Awarded",
+                        "value": "Gold"
+                    }, {
+                        "type": "Result Type",
+                        "value": "Time"
+                    }],
+                    "resultExtension": [{
+                        "type": "Reaction Time",
+                        "value": "0.174"
+                    }, {
+                        "type": "Wind Speed",
+                        "value": "-0.2"
+                    }],
+                    "country": {
+                        "identifier": "USA",
+                        "name": "United States",
+                        "longName": "United States of America"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "bib": "3287",
+                        "competitor": {
+                            "identifier": "1132858",
+                            "firstName": "Allyson",
+                            "lastName": "Felix",
+                            "fullName": "Allyson Felix"
+                        }
+                    }
+                }, {
+                    "order": "3",
+                    "type": "Individual",
+                    "code": "1017430",
+                    "rank": "2",
+                    "value": "22.09",
+                    "property": [{
+                        "type": "Medal Awarded",
+                        "value": "Silver"
+                    }, {
+                        "type": "Record Set",
+                        "value": "PB"
+                    }, {
+                        "type": "Result Type",
+                        "value": "Time"
+                    }],
+                    "resultExtension": [{
+                        "type": "Reaction Time",
+                        "value": "0.169"
+                    }, {
+                        "type": "Wind Speed",
+                        "value": "-0.2"
+                    }],
+                    "country": {
+                        "identifier": "JAM",
+                        "name": "Jamaica",
+                        "longName": "Jamaica"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "bib": "2197",
+                        "competitor": {
+                            "identifier": "1017430",
+                            "firstName": "Shelly-Ann",
+                            "lastName": "Fraser-Pryce",
+                            "fullName": "Shelly-Ann Fraser-Pryce"
+                        }
+                    }
+                }, {
+                    "order": "8",
+                    "type": "Individual",
+                    "code": "1132223",
+                    "rank": "3",
+                    "value": "22.14",
+                    "property": [{
+                        "type": "Medal Awarded",
+                        "value": "Bronze"
+                    }, {
+                        "type": "Result Type",
+                        "value": "Time"
+                    }],
+                    "resultExtension": [{
+                        "type": "Reaction Time",
+                        "value": "0.167"
+                    }, {
+                        "type": "Wind Speed",
+                        "value": "-0.2"
+                    }],
+                    "country": {
+                        "identifier": "USA",
+                        "name": "United States",
+                        "longName": "United States of America"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "bib": "3299",
+                        "competitor": {
+                            "identifier": "1132223",
+                            "firstName": "Carmelita",
+                            "lastName": "Jeter",
+                            "fullName": "Carmelita Jeter"
+                        }
+                    }
+                }, {
+                    "order": "4",
+                    "type": "Individual",
+                    "code": "1020558",
+                    "rank": "4",
+                    "value": "22.38",
+                    "property": {
+                        "type": "Result Type",
+                        "value": "Time"
+                    },
+                    "resultExtension": [{
+                        "type": "Reaction Time",
+                        "value": "0.176"
+                    }, {
+                        "type": "Wind Speed",
+                        "value": "-0.2"
+                    }],
+                    "country": {
+                        "identifier": "JAM",
+                        "name": "Jamaica",
+                        "longName": "Jamaica"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "bib": "2194",
+                        "competitor": {
+                            "identifier": "1020558",
+                            "firstName": "Veronica",
+                            "lastName": "Campbell-Brown",
+                            "fullName": "Veronica Campbell-Brown"
+                        }
+                    }
+                }, {
+                    "order": "5",
+                    "type": "Individual",
+                    "code": "1130538",
+                    "rank": "5",
+                    "value": "22.39",
+                    "property": {
+                        "type": "Result Type",
+                        "value": "Time"
+                    },
+                    "resultExtension": [{
+                        "type": "Reaction Time",
+                        "value": "0.171"
+                    }, {
+                        "type": "Wind Speed",
+                        "value": "-0.2"
+                    }],
+                    "country": {
+                        "identifier": "USA",
+                        "name": "United States",
+                        "longName": "United States of America"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "bib": "3313",
+                        "competitor": {
+                            "identifier": "1130538",
+                            "firstName": "Sanya",
+                            "lastName": "Richards-Ross",
+                            "fullName": "Sanya Richards-Ross"
+                        }
+                    }
+                }, {
+                    "order": "7",
+                    "type": "Individual",
+                    "code": "1041268",
+                    "rank": "6",
+                    "value": "22.57",
+                    "property": {
+                        "type": "Result Type",
+                        "value": "Time"
+                    },
+                    "resultExtension": [{
+                        "type": "Reaction Time",
+                        "value": "0.161"
+                    }, {
+                        "type": "Wind Speed",
+                        "value": "-0.2"
+                    }],
+                    "country": {
+                        "identifier": "CIV",
+                        "name": "Cote d'Ivoire",
+                        "longName": "Côte d'Ivoire"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "bib": "1402",
+                        "competitor": {
+                            "identifier": "1041268",
+                            "firstName": "Murielle",
+                            "lastName": "Ahoure",
+                            "fullName": "Murielle Ahoure"
+                        }
+                    }
+                }, {
+                    "order": "1",
+                    "type": "Individual",
+                    "code": "1122581",
+                    "rank": "7",
+                    "value": "22.63",
+                    "property": {
+                        "type": "Result Type",
+                        "value": "Time"
+                    },
+                    "resultExtension": [{
+                        "type": "Reaction Time",
+                        "value": "0.157"
+                    }, {
+                        "type": "Wind Speed",
+                        "value": "-0.2"
+                    }],
+                    "country": {
+                        "identifier": "FRA",
+                        "name": "France",
+                        "longName": "France"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "bib": "1791",
+                        "competitor": {
+                            "identifier": "1122581",
+                            "firstName": "Myriam",
+                            "lastName": "Soumare",
+                            "fullName": "Myriam Soumare"
+                        }
+                    }
+                }, {
+                    "order": "2",
+                    "type": "Individual",
+                    "code": "1122851",
+                    "rank": "8",
+                    "value": "22.87",
+                    "property": {
+                        "type": "Result Type",
+                        "value": "Time"
+                    },
+                    "resultExtension": [{
+                        "type": "Reaction Time",
+                        "value": "0.150"
+                    }, {
+                        "type": "Wind Speed",
+                        "value": "-0.2"
+                    }],
+                    "country": {
+                        "identifier": "TTO",
+                        "name": "Trinidad & Tobago",
+                        "longName": "Trinidad and Tobago"
+                    },
+                    "participant": {
+                        "order": "1",
+                        "bib": "3058",
+                        "competitor": {
+                            "identifier": "1122851",
+                            "firstName": "Semoy",
+                            "lastName": "Hackett",
+                            "fullName": "Semoy Hackett"
+                        }
+                    }
+                }]
+            }
+        }
+    }
+}
