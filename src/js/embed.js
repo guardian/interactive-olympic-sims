@@ -4,7 +4,7 @@ import embedHTML from './text/embed.html!text'
 //import swimming_data from '../assets/data/women_freestyle_400.json!json'
 //import swimming_text from '../assets/data/texts/women_freestyle_4x100.json!json'
 
-import running_data200 from '../assets/data/women_running_200.json!json'
+import running_data200 from '../assets/data/men_running_200.json!json'
 //import running_text from '../assets/data/texts/men_running_200.json!json'
 
 import records from '../assets/data/records_w_200m.json!json'
@@ -31,7 +31,7 @@ window.init = function init(el, config) {
 
    	//console.log("SWIMMING SwimmingPerspective",el)
 
-   	d3_json("https://interactive.guim.co.uk/docsdata-test/1cwk7e6sC5Y1eiowZrOaYzLZb9-dAUhJq-01zlc8izp8.json",(json)=>{
+   	d3_json("https://interactive.guim.co.uk/docsdata-test/1BVv0OG0QZYAy42gnWcjPAFBFJZTkeWiFCEKDCb0-nZo.json",(json)=>{
    		new RunningPerspectiveOval(running_data200,{
 	        container:el,
 	        text:json.embed_sim.map(d=>{
