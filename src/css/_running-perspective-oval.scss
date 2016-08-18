@@ -230,7 +230,7 @@
 				}
 				text {
 					@include fs-textSans(1);
-					font-size:6px;
+					font-size:5px;
 					@include mq(tablet) {
 						font-size:11px;
 					}
@@ -264,7 +264,7 @@
 				.athlete-name,
 				.athlete-time {
 					@include f-textSans;
-					font-size:9px;
+					font-size:7px;
 					text-rendering: optimizeSpeed;// optimizeLegibility;
 					
 					@include mq(tablet) {
@@ -280,7 +280,7 @@
 							font-size:20px;
 						}
 					}
-					fill:#222;
+					fill:#fff;
 					@include mq(tablet) {
 						letter-spacing: 2px;
 						fill: #FFF;

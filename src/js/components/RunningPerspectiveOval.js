@@ -992,14 +992,16 @@ export default function RunningPerspectiveOval(data,options) {
 				//`rotateX(40deg) rotateY(10deg) rotateZ(50deg) translateZ(260px) translateX(-90px) translateY(430px)`
 				//`rotateX(40deg) rotateY(10deg) rotateZ(40deg) translateZ(250px) translateX(-395px) translateY(360px)`
 
-				let dxScale=scaleLinear().domain([320,414]).range([-35,-395]),
-					dyScale=scaleLinear().domain([320,414]).range([445,360]),
-					dzScale=scaleLinear().domain([320,414]).range([260,250]),
-					drzScale=scaleLinear().domain([320,414]).range([50,40])
+				let dxScale=scaleLinear().domain([320,414]).range([-680,-880]),
+					dyScale=scaleLinear().domain([320,414]).range([-100,-205]),
+					dzScale=scaleLinear().domain([320,414]).range([0,0]),
+					drzScale=scaleLinear().domain([320,414]).range([35,35]),
+					dsScale=scaleLinear().domain([320,414]).range([1.9,1.8]);
 
 
-				//rotateX(40deg) rotateY(10deg) rotateZ(50deg) translateZ(260px) translateX(-35px) translateY(445px)
-				transform=`rotateX(40deg) rotateY(10deg) rotateZ(${drzScale(w)}deg) translateZ(${dzScale(w)}px) translateX(${dxScale(w)}px) translateY(${dyScale(w)}px)`;
+				//rotateX(40deg) rotateY(0deg) rotateZ(35deg) translateZ(0px) translateX(-674.043px) translateY(-99.894px) scale(1.9)
+				//rotateX(40deg) rotateY(0deg) rotateZ(35deg) translateZ(0px) translateX(-880.106px) translateY(-202.66px) scale(1.8)
+				transform=`rotateX(40deg) rotateY(0deg) rotateZ(${drzScale(w)}deg) translateZ(${dzScale(w)}px) translateX(${dxScale(w)}px) translateY(${dyScale(w)}px) scale(${dsScale(w)})`;
 			}
 
 			if(distance===0) {
@@ -1016,11 +1018,12 @@ export default function RunningPerspectiveOval(data,options) {
 					//375
 					//rotateX(25deg) rotateY(0deg) rotateZ(-35deg) translateZ(270px) translateX(-15px) translateY(100px)
 
-					let dxScale=scaleLinear().domain([320,375]).range([-55,-15]),
-						dyScale=scaleLinear().domain([320,375]).range([140,100]),
-						dzScale=scaleLinear().domain([320,375]).range([270,270]);
-
-					transform = `rotateX(25deg) rotateY(0deg) rotateZ(-35deg) translateZ(${dzScale(w)}px) translateX(${dxScale(w)}px) translateY(${dyScale(w)}px)`;
+					let dxScale=scaleLinear().domain([320,375]).range([0,15]),
+						dyScale=scaleLinear().domain([320,375]).range([135,160]),
+						dzScale=scaleLinear().domain([320,375]).range([240,260]);
+					//rotateX(30deg) rotateY(0deg) rotateZ(-35deg) translateZ(240px) translateX(0px) translateY(135px) scale(1.1)
+					//rotateX(30deg) rotateY(0deg) rotateZ(-35deg) translateZ(260px) translateX(13.5455px) translateY(157.455px) scale(1.1)
+					transform = `rotateX(30deg) rotateY(0deg) rotateZ(-35deg) translateZ(${dzScale(w)}px) translateX(${dxScale(w)}px) translateY(${dyScale(w)}px) scale(1.1)`;
 				}
 
 			}
@@ -1039,7 +1042,7 @@ export default function RunningPerspectiveOval(data,options) {
 					//375
 					//transform=`rotateX(45deg) rotateY(0deg) rotateZ(40deg) translateZ(260px) translateX(380px) translateY(370px)`
 
-					let dxScale=scaleLinear().domain([320,375]).range([390,380]),
+					let dxScale=scaleLinear().domain([320,375]).range([420,410]),
 						dyScale=scaleLinear().domain([320,375]).range([390,370]),
 						dzScale=scaleLinear().domain([320,375]).range([200,260]);
 
@@ -1066,10 +1069,10 @@ export default function RunningPerspectiveOval(data,options) {
 					transform = `rotateX(0deg) rotateY(0deg) rotateZ(0deg) translateZ(420px) translateX(-780px) translateY(-280px) scale(1)`;
 
 					let dxScale=scaleLinear().domain([320,375]).range([-600,-700]),
-						dyScale=scaleLinear().domain([320,375]).range([-150,-180]),
+						dyScale=scaleLinear().domain([320,435]).range([-25,-40]),
 						dzScale=scaleLinear().domain([320,375]).range([450,481]);
 
-					transform = `rotateX(0deg) rotateY(0deg) rotateZ(0deg) translateZ(${dzScale(w)}px) translateX(${dxScale(w)}px) translateY(${dyScale(w)}px)`;
+					transform = `rotateX(0deg) rotateY(0deg) rotateZ(0deg) translateZ(${dzScale(w)}px) translateX(${dxScale(w)}px) translateY(${dyScale(w)}%)`;
 				}
 			}
 
@@ -1220,7 +1223,7 @@ export default function RunningPerspectiveOval(data,options) {
 						let interpolate = interpolateString("0," + l, l + "," + l);
 
 						let t = s.mt/dimensions.length;
-						//console.log("2-INTERPOLATE",t,interpolate(t))
+						console.log("2-INTERPOLATE",t,interpolate(t))
 
 						return interpolate(t);
 
