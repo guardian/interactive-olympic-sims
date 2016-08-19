@@ -1,0 +1,13 @@
+{
+	"men_running_4x100":{
+		"athlete":"Jamaica",
+		"country":"JAM",
+		"time":"36.84",
+		"reaction_time":"0.66",
+		"split_times":[
+				"36.84"
+			],
+		"date":"2012-08-11",
+		"where":"London, UK"
+	}
+}

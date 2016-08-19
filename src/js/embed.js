@@ -4,10 +4,10 @@ import embedHTML from './text/embed.html!text'
 //import swimming_data from '../assets/data/women_freestyle_400.json!json'
 //import swimming_text from '../assets/data/texts/women_freestyle_4x100.json!json'
 
-import running_data200 from '../assets/data/men_running_200.json!json'
+import running_data4x100 from '../assets/data/men_running_4x100.json!json'
 //import running_text from '../assets/data/texts/men_running_200.json!json'
 
-import records from '../assets/data/records_m_200m.json!json'
+import records from '../assets/data/records_m_4x100m.json!json'
 
 
 import RunningPerspectiveOval from './components/RunningPerspectiveOval';
@@ -15,7 +15,7 @@ import RunningPerspectiveOval from './components/RunningPerspectiveOval';
 //import SwimmingPerspective from './components/SwimmingPerspective';
 
 import {
-	dimensions200m        
+	dimensions400m        
 } from './lib/running';
 
 import {
@@ -31,19 +31,19 @@ window.init = function init(el, config) {
 
    	//console.log("SWIMMING SwimmingPerspective",el)
 
-   	d3_json("https://interactive.guim.co.uk/docsdata-test/1BVv0OG0QZYAy42gnWcjPAFBFJZTkeWiFCEKDCb0-nZo.json",(json)=>{
-   		new RunningPerspectiveOval(running_data200,{
+   	d3_json("https://interactive.guim.co.uk/docsdata-test/1GQP6IHVqzR-8MFYLUXjA9nZMlWw60eg0QEykowTVfPA.json",(json)=>{
+   		new RunningPerspectiveOval(running_data4x100,{
 	        container:el,
 	        text:json.embed_sim.map(d=>{
 	        	d.mt = +d.mt;
 	        	d.lane = +d.lane;
 	        	return d;
 	        }),
-	        record:records["men_running_200"],
-            dimensions:dimensions200m,
-	        length:200,
-            race:"200m",
-	        team:false,
+	        record:records["men_running_4x100"],
+            dimensions:dimensions400m,
+	        length:400,
+            race:"400m",
+	        team:true,
 	        multiplier: 1,
 	        margins: {
 	            left:10,

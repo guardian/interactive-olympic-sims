@@ -109,7 +109,7 @@ export default function RunningPerspectiveOval(data,options) {
     function buildEvent() {
     	
     	for(var k in options.dimensions) {
-    		//console.log("setting",k,dimensions[k],"to",options.dimensions[k])
+    		console.log("setting",k,dimensions[k],"to",options.dimensions[k])
 	    	dimensions[k]=options.dimensions[k];
     	}
 
@@ -145,7 +145,7 @@ export default function RunningPerspectiveOval(data,options) {
 				GOLD_LANE=+entrant.order;
 			}
 
-
+			//console.log(athlete,entrant)
     		return {
     			"athlete":athlete,
     			"lane":(+entrant.order-1),
@@ -153,6 +153,7 @@ export default function RunningPerspectiveOval(data,options) {
     				value: (typeof REACTION_TIME=='undefined') ? "DQF" : entrant.resultExtension[REACTION_TIME].value,
     				time: (typeof REACTION_TIME=='undefined') ? "DQF" : +entrant.resultExtension[REACTION_TIME].value*1000
     			},
+    			"disqualified": (entrant.property.value === "Disqualified"),
     			"splits":(function(){
     				if(!options.text) {
     					return [
@@ -167,7 +168,7 @@ export default function RunningPerspectiveOval(data,options) {
     				let prev_time=0;
     				return options.text.filter(d=>(d.mt>0 && d.state==="story" && !d.photofinish)).map((d,i)=>{
     					let time=convertTime(entrant.value)*(d.mt / dimensions.length);
-    					//console.log("TIME TIME TIME",entrant.value,convertTime(entrant.value),d.mt,"/",dimensions.length,"=",d.mt / dimensions.length)
+    					//console.log(d.mt,"TIME TIME TIME",entrant.value,convertTime(entrant.value),d.mt,"/",dimensions.length,"=",d.mt / dimensions.length,time,prev_time)
     					if(dimensions.fixes[d.mt]) {
     						let t=dimensions.fixes[d.mt][(+entrant.order-1)];
     						//console.log(entrant.order,time)
@@ -184,7 +185,8 @@ export default function RunningPerspectiveOval(data,options) {
 			    				position:i,
 			    				calculated:(d.mt%dimensions.length)?true:false
 			    			};
-			    		prev_time+=time;
+			    		prev_time+=leg.time;
+			    		//console.log("PREV_TIME DIVENTA",prev_time)
 			    		return leg;
     					
     				})
@@ -236,6 +238,7 @@ export default function RunningPerspectiveOval(data,options) {
     					times:[]
     				}
     			}
+    			//console.log(split.time,split)
     			best_cumulative_times[split.distance].times.push(split.time)
     			best_cumulative_times[split.distance].cumulative_times.push(split.cumulative_time)
     		})
@@ -245,9 +248,11 @@ export default function RunningPerspectiveOval(data,options) {
     		best_cumulative_times[distance].best_cumulative=d3_min(best_cumulative_times[distance].cumulative_times);
     		best_cumulative_times[distance].times=best_cumulative_times[distance].times.sort((a,b)=>(a-b));
     		best_cumulative_times[distance].times=best_cumulative_times[distance].cumulative_times.sort((a,b)=>(a-b));
+
+
     	}
-    	//console.log(athletes_data)
-		//console.log(best_cumulative_times)
+    	console.log(athletes_data)
+		console.log(best_cumulative_times)
 
 		athletes_data.forEach(s => {
 
@@ -373,6 +378,7 @@ export default function RunningPerspectiveOval(data,options) {
 					left:0,
 					right:0
 				},
+				dimensions:dimensions,
 				multiplier:multiplier,
 				hundred:100
 			})
@@ -386,23 +392,6 @@ export default function RunningPerspectiveOval(data,options) {
 
 
 	    
-		
-
-	    /*athletes_data.forEach(d=>{
-	    	let info={
-	    		leg_time:2000,
-	    		leg:0
-	    	};
-	    	oval.updateRunner(d,info);
-	    })*/
-	    
-	    //console.log(LEGS);
-	    
-
-		//xscale=scaleLinear().domain([0,(dimensions.lanes_n+1)*dimensions.lane]).range([0,WIDTH-(margins.left+margins.right)]);
-		//yscale=scaleLinear().domain([0,dimensions.length]).range([0,HEIGHT-(margins.top+margins.bottom)]);
-		
-		
 
 		overlay
 			.style("top",margins.left+"px")
@@ -475,7 +464,7 @@ export default function RunningPerspectiveOval(data,options) {
 		leg.append("path")
 				.attr("id",s=>"leg_"+s.lane+"_"+s.distance)
 				.attr("d",s=>{
-					return oval.getPath(s.lane,true);
+					return oval.getPath400(s.lane,true);
 				})
 				.attr("stroke-width",yscale(dimensions.lane-dimensions.line_width*2)*0.8)
 	
@@ -487,21 +476,25 @@ export default function RunningPerspectiveOval(data,options) {
 			.enter()
 			.append("text")
 				.attr("class","athlete-name")
-				.classed("stroke",(s,i)=>(i<1 && WIDTH>400))
+				.classed("stroke",(s,i)=>(i<1 && WIDTH>480))
 
 		leg.filter(s=>(s.distance===0))
 				//.selectAll("text:not(.stroke)")
 				.selectAll("text")
-					.attr("dx",WIDTH<480?5:15)
+					.attr("dx",WIDTH<480?-5:-15)
 				    .attr("dy","0.35em")
 					.append("textPath")
 				    	.attr("xlink:href", (s,i)=>{
-				    		return `#bg_o_${s.lane+1}`;
+				    		return `#bg_${s.lane+1}`;
 				    	})
-				    	.attr("text-anchor","start")
+				    	.attr("text-anchor","end")
 				    	.attr("startOffset",d=>{
 				    		if(d.distance===0) {
-				    			let v=(200-dimensions.lane_staggers[d.lane]*LANE_RATIOS[d.lane])/(dimensions.length*2);
+				    			if(d.lane===0) {
+				    				return "100%"
+				    			}
+				    			let v=(dimensions.length-dimensions.lane_staggers[d.lane]*LANE_RATIOS[d.lane])/(dimensions.length*2);
+				    			v=(dimensions.lane_staggers[d.lane]*LANE_RATIOS[d.lane])/dimensions.length;
 				    			return (v*100)+"%";
 				    		}
 				    		return "100%";
@@ -528,7 +521,7 @@ export default function RunningPerspectiveOval(data,options) {
 
 		leg.filter(s=>(s.distance>0))
 			.selectAll("text")
-			.data(s=>(WIDTH<400?[s]:[s,s]))
+			.data(s=>(WIDTH<480?[s]:[s,s]))
 			.enter()
 			.append("text")
 				.attr("class","athlete-name")
@@ -536,11 +529,11 @@ export default function RunningPerspectiveOval(data,options) {
 
 		leg.filter(s=>(s.distance%dimensions.length===0))
 			.selectAll("text.athlete-time")
-			.data(s=>(WIDTH<400?[s]:[s,s]))
+			.data(s=>(WIDTH<480?[s]:[s,s]))
 			.enter()
 			.append("text")
 				.attr("class","athlete-time")
-				.classed("stroke",(s,i)=>(i<1 && WIDTH>400))
+				.classed("stroke",(s,i)=>(i<1 && WIDTH>480))
 				.classed("hidden",true)
 
 		
@@ -589,8 +582,8 @@ export default function RunningPerspectiveOval(data,options) {
 
 
 
-				    			//return (staggers_perc[d.lane]-(((d.mt*LANE_RATIOS[d.lane])/400)*100))+"%";
-				    			let v=(200-dimensions.lane_staggers[d.lane]*LANE_RATIOS[d.lane]-d.mt*LANE_RATIOS[d.lane])/(dimensions.length*2);
+				    			
+				    			let v=(dimensions.length-dimensions.lane_staggers[d.lane]*LANE_RATIOS[d.lane]-d.mt*LANE_RATIOS[d.lane])/(dimensions.length*2);
 				    			return (v*100)+"%";
 				    		}
 				    		return "100%";
@@ -650,7 +643,7 @@ export default function RunningPerspectiveOval(data,options) {
 				.attr("x2",0)
 				.attr("y2",yscale(dimensions.lane*0.2));
 		tick
-			.filter(d=>(d.t%200)>0)
+			.filter(d=>(d.t%dimensions.length)>0)
 			.append("text")
 				.attr("x",0)
 				.attr("y",-3)
@@ -819,7 +812,7 @@ export default function RunningPerspectiveOval(data,options) {
 		svg.selectAll("path").interrupt();
 		svg.selectAll("path.gap").remove();
 	}
-	function showGap(el,s,best_time,first_run=false) {
+	function showGap(el,s,best_time,first_run=false,callback) {
 		//console.log("showGap",el,s);
 
 		//console.log("DURATION",s.cumulative_time-best_time)
@@ -828,7 +821,7 @@ export default function RunningPerspectiveOval(data,options) {
 			.insert("path","path")
 				.attr("class","gap")
 				.attr("d",()=>{
-					return oval.getPath(s.lane);
+					return oval.getPath400(s.lane);
 				})
 				/*.attr("d",()=>{
 
@@ -863,20 +856,19 @@ export default function RunningPerspectiveOval(data,options) {
 				//.duration(s.cumulative_time-best_time)
 				.duration(first_run?0:(s.cumulative_time-best_time)*multiplier)
 				.ease(RunningLinear)
-				/*.ease(()=>{
-					if(s.distance===0) {
-						//return Running200mEasing;
-					}
-					return RunningLinear;
-				})*/
-						.attr("stroke-dasharray", function(d){
+					.attr("stroke-dasharray", function(d){
 
-							let l=this.getTotalLength();
-							let interpolate = interpolateString("0," + l, l + "," + l);
-							
-							return interpolate(d.distance/dimensions.length);
+						let l=this.getTotalLength();
+						let interpolate = interpolateString("0," + l, l + "," + l);
+						
+						return interpolate(d.distance/dimensions.length);
 
-						})
+					})
+					.on("end",function(d){
+						if(callback) {
+							callback();
+						}
+					})
 						
 
 	}
@@ -955,22 +947,26 @@ export default function RunningPerspectiveOval(data,options) {
 		},1000)
 	}
 
-	function goTo(distance,text_update,first_run=false,__photofinish=false) {
+	function goTo(distance,text_update,first_run=false,__photofinish=false,cleanup=true,from_distance) {
 
 		ts.forEach(t=>{
 			clearTimeout(t);
 			t=null;
 		});
 
-		container.classed("photo-finish",false);
-		removeAnnotations();
-		removeGaps();
-		stopWatch.hide();
+		if(cleanup) {
+			container.classed("photo-finish",false);
+			removeAnnotations();
+			removeGaps();
+			stopWatch.hide();
 
-		CURRENT_DISTANCE=distance;
+			CURRENT_DISTANCE=distance;
+		}
 
-		container.classed("side50",(distance===50));
-		container.classed("side100",(distance===100));
+		
+
+		//container.classed("side50",(distance===50));
+		//container.classed("side100",(distance===100));
 
 		let box = container.node().getBoundingClientRect();
 			
@@ -1088,7 +1084,7 @@ export default function RunningPerspectiveOval(data,options) {
 			if(status===0) {
 				transform = `rotateX(60deg) rotateY(0deg) rotateZ(50deg) translateZ(500px) translateX(-640px) translateY(295px)`;
 			}*/
-			
+			transform=`translateX(-35%) translateY(-40%) scale(0.2)`;
 			try {
 		    	svg
 		    		.style("-webkit-transform",transform)
@@ -1159,10 +1155,10 @@ export default function RunningPerspectiveOval(data,options) {
 				    		}
 				    		//console.log("TEXTPATH",200,s.distance,dimensions.lane_staggers[s.lane],200+dimensions.lane_staggers[s.lane]+100)
 				    		//console.log(s)
-				    		let ratio=300/400;
-				    		return ((ratio + (dimensions.lane_staggers[s.lane]*ratio)/400)*100)+"%";
-				    		return ((0.5+(dimensions.lane_staggers[s.lane]/400))*100)+"%"
-				    		return (((200+dimensions.lane_staggers[s.lane]+100)/400)*100)+"%"
+				    		let ratio=300/dimensions.length;
+				    		return ((ratio + (dimensions.lane_staggers[s.lane]*ratio)/dimensions.length)*100)+"%";
+				    		//return ((0.5+(dimensions.lane_staggers[s.lane]/400))*100)+"%"
+				    		//return (((400+dimensions.lane_staggers[s.lane]+100)/400)*100)+"%"
 
 				    		//return ((((200+s.distance)-dimensions.lane_staggers[s.lane])/400)*100)+"%";
 
@@ -1181,20 +1177,30 @@ export default function RunningPerspectiveOval(data,options) {
 
 						let l=this.getTotalLength();
 						let interpolate = interpolateString("0," + l, l + "," + l);						
+
+						/*if(from_distance) {
+							let from_distance_ratio=from_distance/dimensions.length,
+								from_l=l*from_distance_ratio;
+							
+							console.log("FIRST FROM DISTANCE",("0,"+from_l+",1,"+l))
+							return "0,"+from_l+",1,"+l;
+						}*/
+
 						let delta_fix=0;
+
+
 
 						if(dimensions.delta_fixes[s.distance]) {
 							//console.log(s.distance,s.lane)
     						delta_fix=dimensions.delta_fixes[s.distance][s.lane];
-    						
-    						
     					}
 
 						let delta2=(s.distance!==0 && s.distance!==dimensions.length)?delta*2:delta
 						//console.log(s.lane,delta_fix,"=>",delta2+delta_fix)
 
 						let t = s.distance>0?((s.mt-(delta2+delta_fix))/dimensions.length):0;
-						//console.log("1-INTERPOLATE",t,interpolate(t))
+						//t=s.mt/dimensions.length;
+						console.log("1-INTERPOLATE",s.lane,t,interpolate(t),s,dimensions.length,dimensions.length*t)
 						return interpolate(t);
 
 					})
@@ -1208,10 +1214,7 @@ export default function RunningPerspectiveOval(data,options) {
 						if(s.distance===0) {
 							return best_cumulative_times[s.distance].best_time;
 						}
-						//let t=getTimeForDistance(best_cumulative_times[s.distance].best_cumulative,dimensions.length,delta)
-						
 						let delta2=(s.distance!==0 && s.distance!==dimensions.length)?delta*2:delta
-
 						let t=getTimeForDistance(best_cumulative_times[s.distance].cumulative_times[i],dimensions.length,delta2)
 
 						//console.log("DURATION",t)
@@ -1219,9 +1222,19 @@ export default function RunningPerspectiveOval(data,options) {
 						return t*multiplier;
 					})
 					//.delay(2000)
-					.delay(first_run?0:2000)
+					.delay((first_run || !cleanup)?0:2000)
 					.ease(RunningLinear)
 					.attr("stroke-dasharray", function(s){
+
+						/*if(from_distance) {
+							let from_distance_ratio=(from_distance)/dimensions.length,
+								from_l=l*from_distance_ratio,
+								run_l=l*(30/dimensions.length);
+							
+
+							console.log("SECOND FROM DISTANCE",("0,"+from_l+",50,"+l))
+							return ("0,"+from_l+",50,"+l);
+						}*/
 
 						let l=this.getTotalLength();
 						let interpolate = interpolateString("0," + l, l + "," + l);
@@ -1310,19 +1323,14 @@ export default function RunningPerspectiveOval(data,options) {
 								}
 							}
 
-							
 
-							/*select(this.parentNode)
-								.selectAll("textPath")
-							    	.attr("startOffset",s=>{
-
-							    		return (((s.mt) / dimensions.length)*100)+"%";
-
-							    		return (s.distance>0)?"99%":"0%";
-							    	})*/
-
-							if(d.distance===dimensions.length) {
-								showGap(select(this.parentNode),d,best_cumulative_times[d.distance].best_cumulative,first_run);
+							if(d.distance>0){ //===dimensions.length) {
+								showGap(select(this.parentNode),d,best_cumulative_times[d.distance].best_cumulative,first_run,()=>{
+									if(d.distance<dimensions.length && cleanup) {
+										console.log("NOW START THE NEXT 100m",d.distance+100)
+										//goTo(d.distance+100,function(){},false,false,false,d.distance)	
+									}
+								});
 							}
 
 							

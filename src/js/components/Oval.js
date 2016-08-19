@@ -39,8 +39,8 @@ export default function Oval(options) {
 
 	
 
-	dimensions.length=dimensions200m.length;
-	dimensions.staggers=dimensions200m.staggers;
+	dimensions.length=options.dimensions.length;
+	dimensions.staggers=options.dimensions.staggers;
 	
 
 	let addPathFunction={
@@ -131,7 +131,7 @@ export default function Oval(options) {
 
 	scaffolding.selectAll("line.stagger")
 			.data(dimensions.lane_staggers.map((d,lane)=>{
-				let x=dimensions.lanes+dimensions.radius,
+				let x=dimensions.lanes+dimensions.radius+dimensions.field.width,
 					l=lane*dimensions.lane,
 					y=dimensions.lanes+dimensions.field.height + l,
 					x1=hscale(x),
@@ -143,8 +143,8 @@ export default function Oval(options) {
 				let angle=getAngle(d-0.2,__RADIUS-dimensions.lane/2);
 
 				//console.log(d,__RADIUS,angle,toRad(angle))
-				let coords1=polarToCartesian(x1,y1,hscale(__RADIUS-dimensions.lane),-angle);
-				let coords2=polarToCartesian(x1,y1,hscale(__RADIUS),-angle);
+				let coords1=polarToCartesian(x1,y1,hscale(__RADIUS-dimensions.lane),180-angle);
+				let coords2=polarToCartesian(x1,y1,hscale(__RADIUS),180-angle);
 				//console.log("COORDS",coords)
 				return {
 					x1:coords1.x,
@@ -260,6 +260,13 @@ export default function Oval(options) {
  		];
 	}
 
+	this.getPath400 = (lane) => {
+		//lane = lane-1;
+
+		return addPath400(lane)
+
+	}
+
 	function addPath200(lane) {
 		lane = lane-1;
 
@@ -335,7 +342,7 @@ export default function Oval(options) {
 
 		let staggers=dimensions.lane_staggers.slice();
 
-		lane = lane-1;
+		//lane = lane-1;
 
 		if(!splits[lane]) {
 			splits[lane]=[];
@@ -415,7 +422,7 @@ export default function Oval(options) {
 		if(!last_coords.curve) { //THIS ARE LANES 6-7-8
 			
 
-			let start=`M${last_coords.coords[0]},${last_coords.coords[1]}`,
+			let start=`L${last_coords.coords[0]},${last_coords.coords[1]}`,
 				straight_part_after_curve_in_first_100=last_coords.last_straight,
 				straight_part=dimensions.field.width - straight_part_after_curve_in_first_100,
 				first_part_100=`L${hscale(x)},${last_coords.coords[1]}`;
@@ -486,7 +493,7 @@ export default function Oval(options) {
 				}
 			}
 			
-			hundreds.push(`${first_arc.path}${straight}${second_arc.arc}`);	
+			hundreds.push(`L${first_arc.start[0]},${first_arc.start[1]}${first_arc.arc}${straight}${second_arc.arc}`);	
 			splits[lane].push(last_coords.coords);
 		}
 
@@ -518,7 +525,7 @@ export default function Oval(options) {
 			if(last_coords.left2border) {
 				straight_part=`L${hscale(x)},${last_coords.coords[1]}`;
 			}
-			hundreds.push(`M${last_coords.coords[0]},${last_coords.coords[1]}${straight_part}${third_arc.arc}`)	
+			hundreds.push(`L${last_coords.coords[0]},${last_coords.coords[1]}${straight_part}${third_arc.arc}`)	
 			
 			splits[lane].push(third_arc.end);
 		//}
@@ -526,7 +533,7 @@ export default function Oval(options) {
 		//300-400m
 		
 			let fourth_arc=describeArc(hscale(x),vscale.range()[1]/2,hscale(__RADIUS),-180,-end_angle);
-			hundreds.push(`M${third_arc.end[0]},${third_arc.end[1]}${fourth_arc.arc}L${fourth_arc.end[0]+hscale(dimensions.field.width)},${fourth_arc.end[1]}`)
+			hundreds.push(`L${third_arc.end[0]},${third_arc.end[1]}${fourth_arc.arc}L${fourth_arc.end[0]+hscale(dimensions.field.width)},${fourth_arc.end[1]}`)
 		
 
 		

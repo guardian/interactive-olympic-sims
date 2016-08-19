@@ -17,7 +17,7 @@
                 "type": "Official",
                 "timestamp": "2013-11-13T12:14:31Z",
                 "entrant": [{
-                    "order": "1",
+                    "order": "5",
                     "type": "Team",
                     "code": "ATM401JAM01",
                     "rank": "1",
@@ -79,7 +79,7 @@
                         }
                     }]
                 }, {
-                    "order": "2",
+                    "order": "6",
                     "type": "Team",
                     "code": "ATM401USA01",
                     "rank": "2",
@@ -141,7 +141,7 @@
                         }
                     }]
                 }, {
-                    "order": "3",
+                    "order": "8",
                     "type": "Team",
                     "code": "ATM401TRI01",
                     "rank": "3",
@@ -200,7 +200,7 @@
                         }
                     }]
                 }, {
-                    "order": "4",
+                    "order": "2",
                     "type": "Team",
                     "code": "ATM401FRA01",
                     "rank": "4",
@@ -256,7 +256,7 @@
                         }
                     }]
                 }, {
-                    "order": "5",
+                    "order": "3",
                     "type": "Team",
                     "code": "ATM401JPN01",
                     "rank": "5",
@@ -312,7 +312,7 @@
                         }
                     }]
                 }, {
-                    "order": "6",
+                    "order": "7",
                     "type": "Team",
                     "code": "ATM401NED01",
                     "rank": "6",
@@ -368,7 +368,7 @@
                         }
                     }]
                 }, {
-                    "order": "7",
+                    "order": "1",
                     "type": "Team",
                     "code": "ATM401AUS01",
                     "rank": "7",
@@ -424,9 +424,11 @@
                         }
                     }]
                 }, {
-                    "order": "8",
+                    "order": "4",
                     "type": "Team",
                     "code": "ATM401CAN01",
+                    "rank": "8",
+                    "value": "38.05",
                     "property": {
                         "type": "Invalid Result Mark",
                         "value": "Disqualified"
