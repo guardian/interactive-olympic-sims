@@ -170,7 +170,7 @@ export default function RunningPerspectiveOval(data,options) {
     					//console.log("TIME TIME TIME",entrant.value,convertTime(entrant.value),d.mt,"/",dimensions.length,"=",d.mt / dimensions.length)
     					if(dimensions.fixes[d.mt]) {
     						let t=dimensions.fixes[d.mt][(+entrant.order-1)];
-    						console.log(entrant.order,time)
+    						//console.log(entrant.order,time)
     						if(t) {
     							time=convertTime(t);
     						}
@@ -190,6 +190,7 @@ export default function RunningPerspectiveOval(data,options) {
     				})
     			}()),
     			"entrant":entrant,
+    			"rank":+entrant.rank,
     			"value":(()=>{
     				if(typeof entrant.value != 'undefined') {
     					return entrant.value;
@@ -434,14 +435,17 @@ export default function RunningPerspectiveOval(data,options) {
 					.append("g")
 						.attr("class","athlete")
 						.classed("gold",d=>{
+							return d.rank===1;
 							let t=d.splits[d.splits.length-1];
 							return best_cumulative_times[t.distance].cumulative_times.indexOf(t.cumulative_time)===0;
 						})
 						.classed("silver",d=>{
+							return d.rank===2;
 							let t=d.splits[d.splits.length-1];
 							return best_cumulative_times[t.distance].cumulative_times.indexOf(t.cumulative_time)===1;
 						})
 						.classed("bronze",d=>{
+							return d.rank===3;
 							let t=d.splits[d.splits.length-1];
 							return best_cumulative_times[t.distance].cumulative_times.indexOf(t.cumulative_time)===2;
 						})
@@ -1223,7 +1227,7 @@ export default function RunningPerspectiveOval(data,options) {
 						let interpolate = interpolateString("0," + l, l + "," + l);
 
 						let t = s.mt/dimensions.length;
-						console.log("2-INTERPOLATE",t,interpolate(t))
+						//console.log("2-INTERPOLATE",t,interpolate(t))
 
 						return interpolate(t);
 

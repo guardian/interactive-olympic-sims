@@ -7,7 +7,7 @@ import embedHTML from './text/embed.html!text'
 import running_data200 from '../assets/data/men_running_200.json!json'
 //import running_text from '../assets/data/texts/men_running_200.json!json'
 
-import records from '../assets/data/records_w_200m.json!json'
+import records from '../assets/data/records_m_200m.json!json'
 
 
 import RunningPerspectiveOval from './components/RunningPerspectiveOval';
@@ -39,7 +39,7 @@ window.init = function init(el, config) {
 	        	d.lane = +d.lane;
 	        	return d;
 	        }),
-	        record:records["women_running_200"],
+	        record:records["men_running_200"],
             dimensions:dimensions200m,
 	        length:200,
             race:"200m",
