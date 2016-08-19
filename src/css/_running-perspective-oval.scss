@@ -260,6 +260,9 @@
 				}
 				path.gap {
 					stroke-opacity:0.5 !important;
+					&.next-runner {
+						stroke-opacity:1 !important;
+					}
 				}
 				.athlete-name,
 				.athlete-time {

@@ -15,6 +15,9 @@ export const Running400mEasing=bezier(0.05,0.1,0.07,0.07)
 
 export const Running200mEasing=bezier(0.32,0.05,0.23,0.23)
 
+export const Running4x100mChangeEasing=bezier(.24,.19,.38,.38)
+
+
 export const dimensions = {
 	field:{
 		width:84.39,

@@ -35,7 +35,7 @@ import {
 
 export default function Oval(options) {
 
-	//console.log("Oval",options)
+	////console.log("Oval",options)
 
 	
 
@@ -77,7 +77,7 @@ export default function Oval(options) {
 								.attr("width",WIDTH)
 								.attr("height",HEIGHT);
 
-    //console.log(WIDTH,HEIGHT,ratio,WIDTH/ratio);
+    ////console.log(WIDTH,HEIGHT,ratio,WIDTH/ratio);
 
     let splits=[];
 
@@ -142,10 +142,10 @@ export default function Oval(options) {
 				
 				let angle=getAngle(d-0.2,__RADIUS-dimensions.lane/2);
 
-				//console.log(d,__RADIUS,angle,toRad(angle))
+				////console.log(d,__RADIUS,angle,toRad(angle))
 				let coords1=polarToCartesian(x1,y1,hscale(__RADIUS-dimensions.lane),180-angle);
 				let coords2=polarToCartesian(x1,y1,hscale(__RADIUS),180-angle);
-				//console.log("COORDS",coords)
+				////console.log("COORDS",coords)
 				return {
 					x1:coords1.x,
 					y1:coords1.y,
@@ -220,7 +220,7 @@ export default function Oval(options) {
 		let curve_length=__RADIUS*Math.PI,
 			arc_length=curve_length-staggers[lane];
 
-		//console.log(lane,"CURVE_LENGTH",curve_length,"ARC_LENGTH:",arc_length,"distance to 100",arc_length-100)
+		////console.log(lane,"CURVE_LENGTH",curve_length,"ARC_LENGTH:",arc_length,"distance to 100",arc_length-100)
 		
 		let hundreds=[];
 		
@@ -285,7 +285,7 @@ export default function Oval(options) {
 		let curve_length=__RADIUS*Math.PI,
 			arc_length=curve_length-staggers[lane];
 
-		console.log(lane,"CURVE_LENGTH",curve_length,"ARC_LENGTH:",arc_length,"distance to 100",arc_length-100)
+		//console.log(lane,"CURVE_LENGTH",curve_length,"ARC_LENGTH:",arc_length,"distance to 100",arc_length-100)
 		
 		let hundreds=[];
 		
@@ -358,7 +358,7 @@ export default function Oval(options) {
 		let curve_length=__RADIUS*Math.PI,
 			arc_length=curve_length-staggers[lane];
 
-		console.log(lane,"CURVE_LENGTH",curve_length,"ARC_LENGTH:",arc_length,"distance to 100",arc_length-100)
+		//console.log(lane,"CURVE_LENGTH",curve_length,"ARC_LENGTH:",arc_length,"distance to 100",arc_length-100)
 		
 		
 		
@@ -372,7 +372,7 @@ export default function Oval(options) {
 			let start_angle=getAngle(staggers[lane],__RADIUS),
 				end_angle=180;//getAngle(hundred+dimensions.lane_staggers[lane],__RADIUS);
 			
-			console.log(lane,"lane","from",start_angle,"to",end_angle)
+			//console.log(lane,"lane","from",start_angle,"to",end_angle)
 			let starting_arc=describeArc(hscale(x+dimensions.field.width),vscale.range()[1]/2,hscale(__RADIUS),180-start_angle,180 - end_angle);
 			
 
@@ -397,7 +397,7 @@ export default function Oval(options) {
 			let start_angle=getAngle(staggers[lane],__RADIUS),
 				end_angle=getAngle(hundred+staggers[lane],__RADIUS);
 			
-			//console.log(lane,"lane","from",start_angle,"to",end_angle)
+			////console.log(lane,"lane","from",start_angle,"to",end_angle)
 			let starting_arc=describeArc(hscale(x+dimensions.field.width),vscale.range()[1]/2,hscale(__RADIUS),180-start_angle,180 - end_angle);
 			
 			//hundreds.push("")
@@ -432,8 +432,8 @@ export default function Oval(options) {
 			let end_angle=getAngle(second_arc_length,__RADIUS);///(dimensions.radius+dimensions.lane/2+dimensions.lane*lane)*(180/Math.PI);
 
 			//
-			//console.log(lane,"ANGLE2 IS",angle2)
-			//console.log("THE SECOND PART TO THE CURVE IS",l,"SO THE SECOND ARC IS",second_arc_length,"=>",angle2,"deg")
+			////console.log(lane,"ANGLE2 IS",angle2)
+			////console.log("THE SECOND PART TO THE CURVE IS",l,"SO THE SECOND ARC IS",second_arc_length,"=>",angle2,"deg")
 			let second_arc=describeArc(hscale(x),vscale.range()[1]/2,hscale(__RADIUS),-end_angle,0);
 			last_coords={
 				curve:1,
@@ -460,10 +460,10 @@ export default function Oval(options) {
 			let straight_part_after_curve_in_second_100=hundred-first_arc_length,
 				delta_straight_part=straight_part_after_curve_in_second_100-dimensions.field.width;
 			if(lane===0) {
-				console.log("-------------------------")
-				console.log(last_coords.remaining_curve)
-				console.log(straight_part_after_curve_in_second_100,dimensions.field.width)
-				console.log("-------------------------")
+				//console.log("-------------------------")
+				//console.log(last_coords.remaining_curve)
+				//console.log(straight_part_after_curve_in_second_100,dimensions.field.width)
+				//console.log("-------------------------")
 			}
 			let straight=`L${hscale(x - (delta_straight_part>0?0:delta_straight_part))},${first_arc.end[1]}`,
 				second_arc={arc:""}
@@ -477,7 +477,7 @@ export default function Oval(options) {
 					left2border:0//Math.abs(delta_straight_part)
 				}
 
-			console.log(lane,"--------------->",delta_straight_part)
+			//console.log(lane,"--------------->",delta_straight_part)
 			if(delta_straight_part>0) {
 				
 				let end_angle=delta_straight_part/(__RADIUS)*(180/Math.PI);
@@ -507,7 +507,7 @@ export default function Oval(options) {
 
 		
 		//200-300m
-		console.log("200-300m",lane,last_coords)
+		//console.log("200-300m",lane,last_coords)
 		
 		// let angle3=(running_curve)/(dimensions.radius+dimensions.lane/2+dimensions.lane*lane)*(180/Math.PI);
 		// angle3=angle3+last_coords.angle;
@@ -516,11 +516,11 @@ export default function Oval(options) {
 		let end_angle=getAngle(last_coords.curve_length+hundred,__RADIUS),
 			third_arc=describeArc(hscale(x),vscale.range()[1]/2,hscale(__RADIUS),-(end_angle),-last_coords.end_angle);
 		//if(lane===0) {
-			console.log(lane,"LAST COORDS",last_coords)
-			console.log("REMAINING CURVE",remaining_curve)
-			console.log("running_curve",running_curve,"--->",second_arc_length)
-			//console.log("WHOLE ARC",(hundred+remaining_curve+(last_coords.left2border||0)))
-			//console.log("ANGLE3",angle3)
+			//console.log(lane,"LAST COORDS",last_coords)
+			//console.log("REMAINING CURVE",remaining_curve)
+			//console.log("running_curve",running_curve,"--->",second_arc_length)
+			////console.log("WHOLE ARC",(hundred+remaining_curve+(last_coords.left2border||0)))
+			////console.log("ANGLE3",angle3)
 			let straight_part="";
 			if(last_coords.left2border) {
 				straight_part=`L${hscale(x)},${last_coords.coords[1]}`;
@@ -585,7 +585,7 @@ export default function Oval(options) {
 			staggers=dimensions200m.lane_staggers.slice();
 		}
 
-		//console.log("STAGGERS",options.race,staggers)
+		////console.log("STAGGERS",options.race,staggers)
 
 		let x=dimensions.lanes+dimensions.radius,
 			l=lane*dimensions.lane,
@@ -610,9 +610,9 @@ export default function Oval(options) {
 			
 			let starting_arc=describeArc(hscale(x+dimensions.field.width),vscale.range()[1]/2,hscale(__RADIUS),180,0),
 				ending_arc=describeArc(hscale(x),vscale.range()[1]/2,hscale(__RADIUS),0,180);
-			//console.log("BG BG BG BG",starting_arc)
+			////console.log("BG BG BG BG",starting_arc)
 
-			//console.log("RADIUS",lane,__RADIUS,hscale(__RADIUS),ending_arc.start[1])
+			////console.log("RADIUS",lane,__RADIUS,hscale(__RADIUS),ending_arc.start[1])
 
 			return `M${hscale(x+dimensions.field.width)},${starting_arc.start[1]}
 					${starting_arc.arc}
@@ -643,7 +643,7 @@ export default function Oval(options) {
 	}
 
 	this.addRunner = (ath) => {
-		//console.log("-------------------------------->","adding runner at lane",lane)
+		////console.log("-------------------------------->","adding runner at lane",lane)
 
 		let lane=ath.entrant.order,
 			runner=ath.entrant;
@@ -714,7 +714,7 @@ export default function Oval(options) {
 				return "0 "+this.getTotalLength();
 			})
 		
-		//console.log(lane,"SPLITS",lane-1,splits[lane-1])
+		////console.log(lane,"SPLITS",lane-1,splits[lane-1])
 		
 		let split=athlete.selectAll("g.split")
 					.data(splits[lane-1])
@@ -732,7 +732,7 @@ export default function Oval(options) {
 
 	this.updateRunner = (ath,info) => {
 		laneTransition(ath,info);
-		//console.log(lane,info)
+		////console.log(lane,info)
 	}
 
 	function laneTransition(ath,info) {
@@ -744,7 +744,7 @@ export default function Oval(options) {
 			time=convertTime(dimensions.race[options.race][lane][info.leg]+"");
 		}
 
-		//console.log(lane,time)
+		////console.log(lane,time)
 
 	  	runners
 	  		.selectAll(".runner")
