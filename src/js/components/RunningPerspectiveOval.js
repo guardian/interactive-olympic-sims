@@ -872,6 +872,56 @@ export default function RunningPerspectiveOval(data,options) {
 						
 
 	}
+	
+	function showNext(lane,distance) {
+		console.log("showNext",lane,distance);
+
+		let next_leg=leg
+			.filter(d=>(d.distance===distance && d.lane===lane))
+				
+
+		next_leg
+				.classed("visible",true)
+				.select("path")
+					.attr("stroke-dasharray", function(s){
+
+						let l=this.getTotalLength();
+						let interpolate = interpolateString("0," + l, l + "," + l);						
+
+						let t = (distance-100)/dimensions.length;
+						//t=s.mt/dimensions.length;
+						console.log("SHOW NEXT FROM",s.lane,t,interpolate(t),s,dimensions.length,dimensions.length*t)
+						//return interpolate(t);
+						return "0,"+(l*t)+","+(0)+","+l;
+
+					})
+					.transition()
+					.duration((s,i)=>{
+
+						let delta=100;
+						let t=getTimeForDistance(best_cumulative_times[s.distance].cumulative_times[i],dimensions.length,delta)
+
+						//console.log("DURATION",t)
+
+						return t*multiplier;
+					})
+					.ease(Running200mEasing)
+					.attr("stroke-dasharray", function(s){
+
+						let l=this.getTotalLength();
+						let interpolate = interpolateString("0," + l, l + "," + l);						
+
+						let t1 = (distance-100)/dimensions.length,
+							t2 = (distance-50)/dimensions.length;
+						//t=s.mt/dimensions.length;
+						//console.log("SHOW NEXT TO",s.lane,t1,interpolate(t),s,dimensions.length,dimensions.length*t)
+						//return interpolate(t);
+						return "0,"+(l*t1)+","+(l*t2)+","+l;
+
+					})
+
+	}
+
 	function addTime(distance,lane) {
 		//console.log("addTime",distance,lane)
 
@@ -1006,11 +1056,40 @@ export default function RunningPerspectiveOval(data,options) {
 
 			if(distance===0) {
 
+				dxScale=scaleLinear().domain([620,1260]).range([-1130,-2575]);
+				dyScale=scaleLinear().domain([620,1260]).range([-110,-1120]);
+				dzScale=scaleLinear().domain([620,1260]).range([330,330]);
+				drxScale;
+
+				transform = `rotateX(40deg) rotateY(5deg) rotateZ(-5deg) translateZ(260px) translateX(-3230px) translateY(-1810px)`;
+
+				if(w<480) {
+					//`rotateX(40deg) rotateY(10deg) rotateZ(50deg) translateZ(260px) translateX(-90px) translateY(430px)`
+					//`rotateX(40deg) rotateY(10deg) rotateZ(40deg) translateZ(250px) translateX(-395px) translateY(360px)`
+
+					let dxScale=scaleLinear().domain([320,414]).range([-680,-880]),
+						dyScale=scaleLinear().domain([320,414]).range([-100,-205]),
+						dzScale=scaleLinear().domain([320,414]).range([0,0]),
+						drzScale=scaleLinear().domain([320,414]).range([35,35]),
+						dsScale=scaleLinear().domain([320,414]).range([1.9,1.8]);
+
+
+					//rotateX(40deg) rotateY(0deg) rotateZ(35deg) translateZ(0px) translateX(-674.043px) translateY(-99.894px) scale(1.9)
+					//rotateX(40deg) rotateY(0deg) rotateZ(35deg) translateZ(0px) translateX(-880.106px) translateY(-202.66px) scale(1.8)
+					transform=`rotateX(40deg) rotateY(0deg) rotateZ(${drzScale(w)}deg) translateZ(${dzScale(w)}px) translateX(${dxScale(w)}px) translateY(${dyScale(w)}px) scale(${dsScale(w)})`;
+				}
+				
+
+			}
+			if(distance===100) {
+				transform=`rotateX(30deg) rotateY(0deg) rotateZ(10deg) translateZ(0px) translateX(-3200px) translateY(-130px)`;
+			}
+			if(distance===200) {
 				drxScale=scaleLinear().domain([620,1260]).range([30,20]);
 				dxScale=scaleLinear().domain([620,1260]).range([-50,-30]);
 				dyScale=scaleLinear().domain([620,1260]).range([150,-170]);
 
-				transform = `rotateX(${drxScale(w)}deg) rotateY(0deg) rotateZ(-10deg) translateZ(300px) translateX(${dxScale(w)}px) translateY(${dyScale(w)}px)`;
+				transform = `rotateX(40deg) rotateY(0deg) rotateZ(-30deg) translateZ(470px) translateX(350px) translateY(-850px)`;
 
 				if(w<480) {
 					//320
@@ -1025,10 +1104,8 @@ export default function RunningPerspectiveOval(data,options) {
 					//rotateX(30deg) rotateY(0deg) rotateZ(-35deg) translateZ(260px) translateX(13.5455px) translateY(157.455px) scale(1.1)
 					transform = `rotateX(30deg) rotateY(0deg) rotateZ(-35deg) translateZ(${dzScale(w)}px) translateX(${dxScale(w)}px) translateY(${dyScale(w)}px) scale(1.1)`;
 				}
-
 			}
-			if(distance!==0 && distance !==dimensions.length) {
-				
+			if(distance===300) {
 				drxScale=scaleLinear().domain([620,1260]).range([50,45]);
 				dxScale=scaleLinear().domain([620,1260]).range([40,120]);
 				dyScale=scaleLinear().domain([620,1260]).range([-630,-2050]);
@@ -1050,8 +1127,8 @@ export default function RunningPerspectiveOval(data,options) {
 
 					//transform = `rotateX(35deg) rotateY(0deg) rotateZ(10deg) translateZ(30px) translateX(-30px) translateY(-100px)`;
 				}
-				
 			}
+			
 
 
 			if(__photofinish) {
@@ -1084,7 +1161,7 @@ export default function RunningPerspectiveOval(data,options) {
 			if(status===0) {
 				transform = `rotateX(60deg) rotateY(0deg) rotateZ(50deg) translateZ(500px) translateX(-640px) translateY(295px)`;
 			}*/
-			transform=`translateX(-35%) translateY(-40%) scale(0.2)`;
+			//transform=`translateX(-40%) translateY(-30%) scale(0.4)`;
 			try {
 		    	svg
 		    		.style("-webkit-transform",transform)
@@ -1270,9 +1347,10 @@ export default function RunningPerspectiveOval(data,options) {
 									//console.log(position,record,options.record)
 									let trecord=convertTime(record);
 									//console.log(position,record,trecord)
-									stopWatch.showRecord(options.record.split_times[position],false,false)	
+									stopWatch.showRecord(options.record.split_times[0],false,false)
 								} else {
-									stopWatch.hideRecord();
+									stopWatch.showRecord(options.record.split_times[0],false,false)
+									//stopWatch.hideRecord();
 								}
 
 								let duration;
@@ -1328,6 +1406,7 @@ export default function RunningPerspectiveOval(data,options) {
 								showGap(select(this.parentNode),d,best_cumulative_times[d.distance].best_cumulative,first_run,()=>{
 									if(d.distance<dimensions.length && cleanup) {
 										console.log("NOW START THE NEXT 100m",d.distance+100)
+										showNext(d.lane,d.distance+100)
 										//goTo(d.distance+100,function(){},false,false,false,d.distance)	
 									}
 								});
