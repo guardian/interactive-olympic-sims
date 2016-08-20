@@ -617,7 +617,9 @@ export default function RunningPerspectiveOval(data,options) {
 							if(s.distance===0) {
 								return athlete.reaction_time.value;
 							}
-
+							if(athlete.disqualified) {
+								return "DQ";
+							}
 							return athlete.value;
 						})
 
@@ -872,16 +874,18 @@ export default function RunningPerspectiveOval(data,options) {
 					// 300=>0.75
 					// 400=>1
 					if(s.distance===dimensions.length) {
-						r=0.5;
+						r=1000;
 					}
-					let interpolate = interpolateString(
+					/*let interpolate = interpolateString(
 												("0,"+(r*l)+",")+"0," + l,
 												("0,"+(r*l)+",")+(l-r*l) + "," + l
-										);
+										);*/
 
 					//let t = s.mt/s.distance;
 					let t = s.distance>0?((s.mt)/dimensions.length):0;
 					//console.log("G-INTERPOLATE",t,interpolate(t))
+
+					return "0,"+r+","+(l*t-r)+","+l;
 
 					return interpolate(t);
 
@@ -890,7 +894,7 @@ export default function RunningPerspectiveOval(data,options) {
 				.attr("stroke-width",yscale(dimensions.lane-dimensions.line_width*2)*0.8)
 				.transition()
 				//.duration(s.cumulative_time-best_time)
-				.duration(first_run?0:(s.cumulative_time-best_time)*multiplier*((s.distance===dimensions.length)?0.5:1))
+				.duration(first_run?0:(s.cumulative_time-best_time)*multiplier*((s.distance===dimensions.length)?1:1))
 				.ease(RunningLinear)
 					.attr("stroke-dasharray", function(d){
 
@@ -904,13 +908,15 @@ export default function RunningPerspectiveOval(data,options) {
 						// 300=>0.75
 						// 400=>1
 						if(s.distance===dimensions.length) {
-							r=0.5;
+							r=1000;
 						}
-						let interpolate = interpolateString(
+						/*let interpolate = interpolateString(
 													("0,"+(r*l)+",")+"0," + l,
 													("0,"+(r*l)+",")+(l-r*l) + "," + l
-											);
-						
+											);*/
+						let t=d.distance/dimensions.length;
+						return "0,"+r+","+(l*t-r)+","+l;
+
 						return interpolate(d.distance/dimensions.length);
 
 					})
@@ -1096,7 +1102,7 @@ export default function RunningPerspectiveOval(data,options) {
 				//`rotateX(40deg) rotateY(10deg) rotateZ(50deg) translateZ(260px) translateX(-90px) translateY(430px)`
 				//`rotateX(40deg) rotateY(10deg) rotateZ(40deg) translateZ(250px) translateX(-395px) translateY(360px)`
 
-				let dxScale=scaleLinear().domain([320,414]).range([-680,-880]),
+				let dxScale=scaleLinear().domain([320,414]).range([-565,-880]),
 					dyScale=scaleLinear().domain([320,414]).range([-100,-205]),
 					dzScale=scaleLinear().domain([320,414]).range([0,0]),
 					drzScale=scaleLinear().domain([320,414]).range([35,35]),
@@ -1121,15 +1127,15 @@ export default function RunningPerspectiveOval(data,options) {
 					//`rotateX(40deg) rotateY(10deg) rotateZ(50deg) translateZ(260px) translateX(-90px) translateY(430px)`
 					//`rotateX(40deg) rotateY(10deg) rotateZ(40deg) translateZ(250px) translateX(-395px) translateY(360px)`
 
-					let dxScale=scaleLinear().domain([320,414]).range([-680,-880]),
-						dyScale=scaleLinear().domain([320,414]).range([-100,-205]),
+					let dxScale=scaleLinear().domain([320,414]).range([-840,-1040]),
+						dyScale=scaleLinear().domain([320,414]).range([-420,-650]),
 						dzScale=scaleLinear().domain([320,414]).range([0,0]),
-						drzScale=scaleLinear().domain([320,414]).range([35,35]),
-						dsScale=scaleLinear().domain([320,414]).range([1.9,1.8]);
+						drzScale=scaleLinear().domain([320,414]).range([-35,-35]),
+						dsScale=scaleLinear().domain([320,414]).range([1.4,1.4]);
 
 
-					//rotateX(40deg) rotateY(0deg) rotateZ(35deg) translateZ(0px) translateX(-674.043px) translateY(-99.894px) scale(1.9)
-					//rotateX(40deg) rotateY(0deg) rotateZ(35deg) translateZ(0px) translateX(-880.106px) translateY(-202.66px) scale(1.8)
+					//rotateX(40deg) rotateY(0deg) rotateZ(-35deg) translateZ(0px) translateX(-840px) translateY(-420px) scale(1.4)
+					//transform: rotateX(40deg) rotateY(0deg) rotateZ(-35deg) translateZ(0px) translateX(-1040px) translateY(-650px) scale(1.4);
 					transform=`rotateX(40deg) rotateY(0deg) rotateZ(${drzScale(w)}deg) translateZ(${dzScale(w)}px) translateX(${dxScale(w)}px) translateY(${dyScale(w)}px) scale(${dsScale(w)})`;
 				}
 				
@@ -1143,6 +1149,16 @@ export default function RunningPerspectiveOval(data,options) {
 					dyScale=scaleLinear().domain([620,1260]).range([330,10]),
 					dzScale=scaleLinear().domain([620,1260]).range([290,290]);
 				transform=`rotateX(40deg) rotateY(0deg) rotateZ(5deg) translateZ(${dzScale(w)}px) translateX(${dxScale(w)}px) translateY(${dyScale(w)}px) scale(1)`;
+				if(w<480) {
+					let dxScale=scaleLinear().domain([320,414]).range([-790,-1110]),
+						dyScale=scaleLinear().domain([320,414]).range([570,670]),
+						dzScale=scaleLinear().domain([320,414]).range([0,0]),
+						dsScale=scaleLinear().domain([320,414]).range([1.5,1.5]);
+					//transform: rotateX(40deg) rotateY(0deg) rotateZ(35deg) translateZ(0px) translateX(-790px) translateY(570px) scale(1.5);
+					//transform: rotateX(40deg) rotateY(0deg) rotateZ(35deg) translateZ(0px) translateX(-1110px) translateY(670px) scale(1.5);
+					transform=`rotateX(40deg) rotateY(0deg) rotateZ(35deg) translateZ(${dzScale(w)}px) translateX(${dxScale(w)}px) translateY(${dyScale(w)}px) scale(${dsScale(w)})`;
+					
+				}
 			}
 			if(distance===200) {
 				let drxScale=scaleLinear().domain([620,1260]).range([40,30]),
@@ -1155,17 +1171,16 @@ export default function RunningPerspectiveOval(data,options) {
 				transform = `rotateX(${drxScale(w)}deg) rotateY(0deg) rotateZ(-20deg) translateZ(300px) translateX(${dxScale(w)}px) translateY(${dyScale(w)}px)`;
 
 				if(w<480) {
-					//320
-					//rotateX(25deg) rotateY(0deg) rotateZ(-35deg) translateZ(270px) translateX(-55px) translateY(140px)
-					//375
-					//rotateX(25deg) rotateY(0deg) rotateZ(-35deg) translateZ(270px) translateX(-15px) translateY(100px)
+					
 
-					let dxScale=scaleLinear().domain([320,375]).range([0,15]),
-						dyScale=scaleLinear().domain([320,375]).range([135,160]),
-						dzScale=scaleLinear().domain([320,375]).range([240,260]);
-					//rotateX(30deg) rotateY(0deg) rotateZ(-35deg) translateZ(240px) translateX(0px) translateY(135px) scale(1.1)
-					//rotateX(30deg) rotateY(0deg) rotateZ(-35deg) translateZ(260px) translateX(13.5455px) translateY(157.455px) scale(1.1)
-					transform = `rotateX(30deg) rotateY(0deg) rotateZ(-35deg) translateZ(${dzScale(w)}px) translateX(${dxScale(w)}px) translateY(${dyScale(w)}px) scale(1.1)`;
+					let dxScale=scaleLinear().domain([320,414]).range([210,370]),
+						dyScale=scaleLinear().domain([320,414]).range([40,-20]),
+						dzScale=scaleLinear().domain([320,414]).range([0,0]),
+						dsScale=scaleLinear().domain([320,414]).range([1.5,1.5]);
+					
+					//transform: rotateX(30deg) rotateY(0deg) rotateZ(-45deg) translateZ(0px) translateX(210px) translateY(40px) scale(1.5);
+					//transform: rotateX(30deg) rotateY(0deg) rotateZ(-45deg) translateZ(0px) translateX(370px) translateY(-20px) scale(1.5);
+					transform = `rotateX(30deg) rotateY(0deg) rotateZ(-45deg) translateZ(${dzScale(w)}px) translateX(${dxScale(w)}px) translateY(${dyScale(w)}px) scale(${dsScale(w)})`;
 				}
 			}
 			if(distance===300) {
@@ -1208,9 +1223,9 @@ export default function RunningPerspectiveOval(data,options) {
 					//rotateX(0deg) rotateY(0deg) rotateZ(0deg) translateZ(481px) translateX(-700px) translateY(-180px) scale(1)
 					transform = `rotateX(0deg) rotateY(0deg) rotateZ(0deg) translateZ(420px) translateX(-780px) translateY(-280px) scale(1)`;
 
-					let dxScale=scaleLinear().domain([320,375]).range([-600,-700]),
-						dyScale=scaleLinear().domain([320,435]).range([-25,-40]),
-						dzScale=scaleLinear().domain([320,375]).range([450,481]);
+					let dxScale=scaleLinear().domain([320,414]).range([-545,-720]),
+						dyScale=scaleLinear().domain([320,414]).range([-25,-40]),
+						dzScale=scaleLinear().domain([320,414]).range([450,481]);
 
 					transform = `rotateX(0deg) rotateY(0deg) rotateZ(0deg) translateZ(${dzScale(w)}px) translateX(${dxScale(w)}px) translateY(${dyScale(w)}%)`;
 				}
@@ -1261,14 +1276,14 @@ export default function RunningPerspectiveOval(data,options) {
 
 		
 
-		let delta=25;
+		let delta=30;
 
 		if(distance!==0 && distance !==dimensions.length) {
 			delta=20;
 		}
 
 		if(w<480) {
-			delta=15;
+			delta=30;
 			if(distance!==0 && distance !==dimensions.length) {
 				delta=30;
 			}
@@ -1379,7 +1394,7 @@ export default function RunningPerspectiveOval(data,options) {
 						let delta2=(s.distance!==0 && s.distance!==dimensions.length)?delta:delta
 						let t=getTimeForDistance(best_cumulative_times[s.distance].cumulative_times[i],s.distance,delta2)
 
-						console.log("DURATION",t,delta2)
+						//console.log("DURATION",t,delta2)
 						if(s.distance===dimensions.length) {
 							t=t/2;
 						}
@@ -1399,18 +1414,18 @@ export default function RunningPerspectiveOval(data,options) {
 						// 300=>0.75
 						// 400=>1
 						if(s.distance===dimensions.length) {
-							r=0.5;
+							r=1000;
 						}
 						let interpolate = interpolateString(
-													("0,"+(r*l)+",")+"0," + l,
-													("0,"+(r*l)+",")+(l-r*l) + "," + l
+													("0,"+(1000*r)+",")+"0," + l,
+													("0,"+(1000*r)+",")+(l-1000*r) + "," + l
 											);
 
 						
 
 						let t = s.mt/dimensions.length;
 						//console.log("2-INTERPOLATE",t,interpolate(t))
-
+						return "0,"+r+","+(l*t-r)+","+l;
 						return interpolate(t);
 
 					})
@@ -1495,7 +1510,7 @@ export default function RunningPerspectiveOval(data,options) {
 
 
 							if(d.distance>0){ //===dimensions.length) {
-								console.log("!!!!",d,index)
+								//console.log("!!!!",d)
 								showGap(select(this.parentNode),d,best_cumulative_times[d.distance].best_cumulative,first_run,(d.distance<dimensions.length && cleanup)?function(s){showNext(s,d.lane,d.distance+100)}:false);
 							}
 
@@ -1518,7 +1533,7 @@ export default function RunningPerspectiveOval(data,options) {
 
 										//addTime(d.distance,d.lane);
 
-									},first_run?10:delay*multiplier*0.5)
+									},first_run?10:delay*multiplier*1)
 								);	
 							}
 
@@ -1553,16 +1568,16 @@ export default function RunningPerspectiveOval(data,options) {
 						// 300=>0.75
 						// 400=>1
 						if(distance===dimensions.length) {
-							r=0.5;
+							r=1000;
 						}
 						let interpolate = interpolateString(
-													("0,"+(r*l)+",")+"0," + l,
-													("0,"+(r*l)+",")+(l-r*l) + "," + l
+													("0,"+(1000*r)+",")+"0," + l,
+													("0,"+(1000*r)+",")+(l-1000*r) + "," + l
 											);
 
 						let t = s.mt/dimensions.length;
 						//console.log("2-INTERPOLATE",t,interpolate(t))
-
+						return "0,"+r+","+(l*t-r)+","+l;
 						return interpolate(t);
 
 					})

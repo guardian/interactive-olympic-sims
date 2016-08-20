@@ -135,7 +135,7 @@ export default function Oval(options) {
 				
 				let __RADIUS=dimensions.radius+dimensions.running_line[lane]+dimensions.lane*lane+dimensions.lane/2
 				
-				let angle=getAngle(d,__RADIUS-dimensions.lane/2);
+				let angle=getAngle(d+0.2,__RADIUS-dimensions.lane/2);
 
 				////console.log(d,__RADIUS,angle,toRad(angle))
 				let coords1=polarToCartesian(x1,y1,hscale(__RADIUS-dimensions.lane),180-angle);

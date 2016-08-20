@@ -14,27 +14,24 @@
                 "value": "Final"
             },
             "result": {
-                "type": "Official",
-                "timestamp": "2013-11-13T12:14:31Z",
+                "type": "Real-Time",
+                "timestamp": "2016-08-20T01:55:23Z",
                 "entrant": [{
-                    "order": "5",
+                    "order": "4",
                     "type": "Team",
                     "code": "ATM401JAM01",
                     "rank": "1",
-                    "value": "36.84",
+                    "value": "37.27",
                     "property": [{
-                        "type": "Medal Awarded",
-                        "value": "Gold"
-                    }, {
                         "type": "Record Set",
-                        "value": "WR"
+                        "value": "SB"
                     }, {
                         "type": "Result Type",
                         "value": "Time"
                     }],
                     "resultExtension": {
                         "type": "Reaction Time",
-                        "value": "0.162"
+                        "value": "0.150"
                     },
                     "country": {
                         "identifier": "JAM",
@@ -43,231 +40,57 @@
                     },
                     "participant": [{
                         "order": "1",
-                        "bib": "2171",
+                        "bib": "2626",
                         "competitor": {
-                            "identifier": "1020436",
-                            "firstName": "Nesta",
-                            "lastName": "Carter",
-                            "fullName": "Nesta Carter"
+                            "identifier": "1057256",
+                            "firstName": "Asafa",
+                            "lastName": "Powell",
+                            "fullName": "Asafa Powell"
                         }
                     }, {
                         "order": "2",
-                        "bib": "2174",
+                        "bib": "2611",
                         "competitor": {
-                            "identifier": "1020467",
-                            "firstName": "Michael",
-                            "lastName": "Frater",
-                            "fullName": "Michael Frater"
-                        }
-                    }, {
-                        "order": "3",
-                        "bib": "2169",
-                        "competitor": {
-                            "identifier": "1020433",
+                            "identifier": "1056795",
                             "firstName": "Yohan",
                             "lastName": "Blake",
                             "fullName": "Yohan Blake"
                         }
                     }, {
-                        "order": "4",
-                        "bib": "2170",
+                        "order": "3",
+                        "bib": "2608",
                         "competitor": {
-                            "identifier": "1020434",
+                            "identifier": "1056570",
+                            "firstName": "Nickel",
+                            "lastName": "Ashmeade",
+                            "fullName": "Nickel Ashmeade"
+                        }
+                    }, {
+                        "order": "4",
+                        "bib": "2612",
+                        "competitor": {
+                            "identifier": "1056797",
                             "firstName": "Usain",
                             "lastName": "Bolt",
                             "fullName": "Usain Bolt"
                         }
                     }]
                 }, {
-                    "order": "6",
-                    "type": "Team",
-                    "code": "ATM401USA01",
-                    "rank": "2",
-                    "value": "37.04",
-                    "property": [{
-                        "type": "Medal Awarded",
-                        "value": "Silver"
-                    }, {
-                        "type": "Record Set",
-                        "value": "NR"
-                    }, {
-                        "type": "Result Type",
-                        "value": "Time"
-                    }],
-                    "resultExtension": {
-                        "type": "Reaction Time",
-                        "value": "0.154"
-                    },
-                    "country": {
-                        "identifier": "USA",
-                        "name": "United States",
-                        "longName": "United States of America"
-                    },
-                    "participant": [{
-                        "order": "1",
-                        "bib": "3226",
-                        "competitor": {
-                            "identifier": "1289861",
-                            "firstName": "Trell",
-                            "lastName": "Kimmons",
-                            "fullName": "Trell Kimmons"
-                        }
-                    }, {
-                        "order": "2",
-                        "bib": "3216",
-                        "competitor": {
-                            "identifier": "1132934",
-                            "firstName": "Justin",
-                            "lastName": "Gatlin",
-                            "fullName": "Justin Gatlin"
-                        }
-                    }, {
-                        "order": "3",
-                        "bib": "3217",
-                        "competitor": {
-                            "identifier": "1284191",
-                            "firstName": "Tyson",
-                            "lastName": "Gay",
-                            "fullName": "Tyson Gay"
-                        }
-                    }, {
-                        "order": "4",
-                        "bib": "3205",
-                        "competitor": {
-                            "identifier": "1124747",
-                            "firstName": "Ryan",
-                            "lastName": "Bailey",
-                            "fullName": "Ryan Bailey"
-                        }
-                    }]
-                }, {
-                    "order": "8",
-                    "type": "Team",
-                    "code": "ATM401TRI01",
-                    "rank": "3",
-                    "value": "38.12",
-                    "property": [{
-                        "type": "Medal Awarded",
-                        "value": "Bronze"
-                    }, {
-                        "type": "Result Type",
-                        "value": "Time"
-                    }],
-                    "resultExtension": {
-                        "type": "Reaction Time",
-                        "value": "0.176"
-                    },
-                    "country": {
-                        "identifier": "TTO",
-                        "name": "Trinidad & Tobago",
-                        "longName": "Trinidad and Tobago"
-                    },
-                    "participant": [{
-                        "order": "1",
-                        "bib": "3038",
-                        "competitor": {
-                            "identifier": "1122841",
-                            "firstName": "Keston",
-                            "lastName": "Bledman",
-                            "fullName": "Keston Bledman"
-                        }
-                    }, {
-                        "order": "2",
-                        "bib": "3039",
-                        "competitor": {
-                            "identifier": "1122844",
-                            "firstName": "Marc",
-                            "lastName": "Burns",
-                            "fullName": "Marc Burns"
-                        }
-                    }, {
-                        "order": "3",
-                        "bib": "3040",
-                        "competitor": {
-                            "identifier": "1122845",
-                            "firstName": "Emmanuel",
-                            "lastName": "Callender",
-                            "fullName": "Emmanuel Callender"
-                        }
-                    }, {
-                        "order": "4",
-                        "bib": "3051",
-                        "competitor": {
-                            "identifier": "1122873",
-                            "firstName": "Richard",
-                            "lastName": "Thompson",
-                            "fullName": "Richard Thompson"
-                        }
-                    }]
-                }, {
-                    "order": "2",
-                    "type": "Team",
-                    "code": "ATM401FRA01",
-                    "rank": "4",
-                    "value": "38.16",
-                    "property": {
-                        "type": "Result Type",
-                        "value": "Time"
-                    },
-                    "resultExtension": {
-                        "type": "Reaction Time",
-                        "value": "0.181"
-                    },
-                    "country": {
-                        "identifier": "FRA",
-                        "name": "France",
-                        "longName": "France"
-                    },
-                    "participant": [{
-                        "order": "1",
-                        "bib": "1769",
-                        "competitor": {
-                            "identifier": "1122598",
-                            "firstName": "Jimmy",
-                            "lastName": "Vicaut",
-                            "fullName": "Jimmy Vicaut"
-                        }
-                    }, {
-                        "order": "2",
-                        "bib": "1759",
-                        "competitor": {
-                            "identifier": "1122497",
-                            "firstName": "Christophe",
-                            "lastName": "Lemaitre",
-                            "fullName": "Christophe Lemaitre"
-                        }
-                    }, {
-                        "order": "3",
-                        "bib": "1765",
-                        "competitor": {
-                            "identifier": "1122558",
-                            "firstName": "Pierre-Alexis",
-                            "lastName": "Pessonneaux",
-                            "fullName": "Pierre-Alexis Pessonneaux"
-                        }
-                    }, {
-                        "order": "4",
-                        "bib": "1766",
-                        "competitor": {
-                            "identifier": "1122559",
-                            "firstName": "Ronald",
-                            "lastName": "Pognon",
-                            "fullName": "Ronald Pognon"
-                        }
-                    }]
-                }, {
-                    "order": "3",
+                    "order": "5",
                     "type": "Team",
                     "code": "ATM401JPN01",
-                    "rank": "5",
-                    "value": "38.35",
-                    "property": {
+                    "rank": "2",
+                    "value": "37.60",
+                    "property": [{
+                        "type": "Record Set",
+                        "value": "AR"
+                    }, {
                         "type": "Result Type",
                         "value": "Time"
-                    },
+                    }],
                     "resultExtension": {
                         "type": "Reaction Time",
-                        "value": "0.162"
+                        "value": "0.144"
                     },
                     "country": {
                         "identifier": "JPN",
@@ -276,166 +99,57 @@
                     },
                     "participant": [{
                         "order": "1",
-                        "bib": "2241",
+                        "bib": "2664",
                         "competitor": {
-                            "identifier": "1021998",
+                            "identifier": "1142156",
                             "firstName": "Ryota",
                             "lastName": "Yamagata",
                             "fullName": "Ryota Yamagata"
                         }
                     }, {
                         "order": "2",
-                        "bib": "2220",
+                        "bib": "2640",
                         "competitor": {
-                            "identifier": "1021992",
-                            "firstName": "Masashi",
-                            "lastName": "Eriguchi",
-                            "fullName": "Masashi Eriguchi"
-                        }
-                    }, {
-                        "order": "3",
-                        "bib": "2236",
-                        "competitor": {
-                            "identifier": "1021990",
-                            "firstName": "Shinji",
-                            "lastName": "Takahira",
-                            "fullName": "Shinji Takahira"
-                        }
-                    }, {
-                        "order": "4",
-                        "bib": "2223",
-                        "competitor": {
-                            "identifier": "1022001",
+                            "identifier": "1100989",
                             "firstName": "Shota",
                             "lastName": "Iizuka",
                             "fullName": "Shota Iizuka"
+                        }
+                    }, {
+                        "order": "3",
+                        "bib": "2645",
+                        "competitor": {
+                            "identifier": "1101007",
+                            "firstName": "Yoshihide",
+                            "lastName": "Kiryu",
+                            "fullName": "Yoshihide Kiryu"
+                        }
+                    }, {
+                        "order": "4",
+                        "bib": "2636",
+                        "competitor": {
+                            "identifier": "1115398",
+                            "firstName": "Aska",
+                            "lastName": "Cambridge",
+                            "fullName": "Aska Cambridge"
                         }
                     }]
                 }, {
                     "order": "7",
                     "type": "Team",
-                    "code": "ATM401NED01",
-                    "rank": "6",
-                    "value": "38.39",
-                    "property": {
-                        "type": "Result Type",
-                        "value": "Time"
-                    },
-                    "resultExtension": {
-                        "type": "Reaction Time",
-                        "value": "0.171"
-                    },
-                    "country": {
-                        "identifier": "NED",
-                        "name": "Netherlands",
-                        "longName": "Netherlands"
-                    },
-                    "participant": [{
-                        "order": "1",
-                        "bib": "2546",
-                        "competitor": {
-                            "identifier": "1117646",
-                            "firstName": "Brian",
-                            "lastName": "Mariano",
-                            "fullName": "Brian Mariano"
-                        }
-                    }, {
-                        "order": "2",
-                        "bib": "2547",
-                        "competitor": {
-                            "identifier": "1117648",
-                            "firstName": "Churandy",
-                            "lastName": "Martina",
-                            "fullName": "Churandy Martina"
-                        }
-                    }, {
-                        "order": "3",
-                        "bib": "2543",
-                        "competitor": {
-                            "identifier": "1117566",
-                            "firstName": "Giovanni",
-                            "lastName": "Codrington",
-                            "fullName": "Giovanni Codrington"
-                        }
-                    }, {
-                        "order": "4",
-                        "bib": "2551",
-                        "competitor": {
-                            "identifier": "1117642",
-                            "firstName": "Patrick",
-                            "lastName": "van Luijk",
-                            "fullName": "Patrick van Luijk"
-                        }
-                    }]
-                }, {
-                    "order": "1",
-                    "type": "Team",
-                    "code": "ATM401AUS01",
-                    "rank": "7",
-                    "value": "38.43",
-                    "property": {
-                        "type": "Result Type",
-                        "value": "Time"
-                    },
-                    "resultExtension": {
-                        "type": "Reaction Time",
-                        "value": "0.127"
-                    },
-                    "country": {
-                        "identifier": "AUS",
-                        "name": "Australia",
-                        "longName": "Australia"
-                    },
-                    "participant": [{
-                        "order": "1",
-                        "bib": "1036",
-                        "competitor": {
-                            "identifier": "1090245",
-                            "firstName": "Anthony",
-                            "lastName": "Alozie",
-                            "fullName": "Anthony Alozie"
-                        }
-                    }, {
-                        "order": "2",
-                        "bib": "1054",
-                        "competitor": {
-                            "identifier": "1090284",
-                            "firstName": "Isaac",
-                            "lastName": "Ntiamoah",
-                            "fullName": "Isaac Ntiamoah"
-                        }
-                    }, {
-                        "order": "3",
-                        "bib": "1050",
-                        "competitor": {
-                            "identifier": "1125460",
-                            "firstName": "Andrew",
-                            "lastName": "McCabe",
-                            "fullName": "Andrew McCabe"
-                        }
-                    }, {
-                        "order": "4",
-                        "bib": "1057",
-                        "competitor": {
-                            "identifier": "1292422",
-                            "firstName": "Joshua",
-                            "lastName": "Ross",
-                            "fullName": "Joshua Ross"
-                        }
-                    }]
-                }, {
-                    "order": "4",
-                    "type": "Team",
                     "code": "ATM401CAN01",
-                    "rank": "8",
-                    "value": "38.05",
-                    "property": {
-                        "type": "Invalid Result Mark",
-                        "value": "Disqualified"
-                    },
+                    "rank": "3",
+                    "value": "37.64",
+                    "property": [{
+                        "type": "Record Set",
+                        "value": "NR"
+                    }, {
+                        "type": "Result Type",
+                        "value": "Time"
+                    }],
                     "resultExtension": {
                         "type": "Reaction Time",
-                        "value": "0.155"
+                        "value": "0.129"
                     },
                     "country": {
                         "identifier": "CAN",
@@ -444,39 +158,317 @@
                     },
                     "participant": [{
                         "order": "1",
-                        "bib": "1298",
+                        "bib": "2199",
                         "competitor": {
-                            "identifier": "1124368",
-                            "firstName": "Gavin",
-                            "lastName": "Smellie",
-                            "fullName": "Gavin Smellie"
+                            "identifier": "1109679",
+                            "firstName": "Akeem",
+                            "lastName": "Haynes",
+                            "fullName": "Akeem Haynes"
                         }
                     }, {
                         "order": "2",
-                        "bib": "1299",
+                        "bib": "2192",
                         "competitor": {
-                            "identifier": "1076230",
-                            "firstName": "Oluseyi",
-                            "lastName": "Smith",
-                            "fullName": "Oluseyi Smith"
+                            "identifier": "1109571",
+                            "firstName": "Aaron",
+                            "lastName": "Brown",
+                            "fullName": "Aaron Brown"
                         }
                     }, {
                         "order": "3",
-                        "bib": "1284",
+                        "bib": "2208",
                         "competitor": {
-                            "identifier": "1076187",
-                            "firstName": "Jared",
-                            "lastName": "Connaughton",
-                            "fullName": "Jared Connaughton"
+                            "identifier": "1109816",
+                            "firstName": "Brendon",
+                            "lastName": "Rodney",
+                            "fullName": "Brendon Rodney"
                         }
                     }, {
                         "order": "4",
-                        "bib": "1303",
+                        "bib": "2196",
                         "competitor": {
-                            "identifier": "1071626",
-                            "firstName": "Justyn",
-                            "lastName": "Warner",
-                            "fullName": "Justyn Warner"
+                            "identifier": "1109611",
+                            "firstName": "Andre",
+                            "lastName": "de Grasse",
+                            "fullName": "Andre de Grasse"
+                        }
+                    }]
+                }, {
+                    "order": "6",
+                    "type": "Team",
+                    "code": "ATM401CHN01",
+                    "rank": "4",
+                    "value": "37.90",
+                    "property": {
+                        "type": "Result Type",
+                        "value": "Time"
+                    },
+                    "resultExtension": {
+                        "type": "Reaction Time",
+                        "value": "0.230"
+                    },
+                    "country": {
+                        "identifier": "CHN",
+                        "name": "China",
+                        "longName": "People's Republic of China"
+                    },
+                    "participant": [{
+                        "order": "1",
+                        "bib": "2230",
+                        "competitor": {
+                            "identifier": "1225365",
+                            "firstName": "Xingqiang",
+                            "lastName": "Tang",
+                            "fullName": "Xingqiang Tang"
+                        }
+                    }, {
+                        "order": "2",
+                        "bib": "2234",
+                        "competitor": {
+                            "identifier": "1196266",
+                            "firstName": "Zhenye",
+                            "lastName": "Xie",
+                            "fullName": "Zhenye Xie"
+                        }
+                    }, {
+                        "order": "3",
+                        "bib": "2229",
+                        "competitor": {
+                            "identifier": "1196170",
+                            "firstName": "Bingtian",
+                            "lastName": "Su",
+                            "fullName": "Bingtian Su"
+                        }
+                    }, {
+                        "order": "4",
+                        "bib": "2240",
+                        "competitor": {
+                            "identifier": "1196261",
+                            "firstName": "Peimeng",
+                            "lastName": "Zhang",
+                            "fullName": "Peimeng Zhang"
+                        }
+                    }]
+                }, {
+                    "order": "1",
+                    "type": "Team",
+                    "code": "ATM401GBR01",
+                    "rank": "5",
+                    "value": "37.98",
+                    "property": {
+                        "type": "Result Type",
+                        "value": "Time"
+                    },
+                    "resultExtension": {
+                        "type": "Reaction Time",
+                        "value": "0.122"
+                    },
+                    "country": {
+                        "identifier": "GBR",
+                        "name": "Great Britain",
+                        "longName": "Great Britain"
+                    },
+                    "participant": [{
+                        "order": "1",
+                        "bib": "2462",
+                        "competitor": {
+                            "identifier": "1223912",
+                            "firstName": "Richard",
+                            "lastName": "Kilty",
+                            "fullName": "Richard Kilty"
+                        }
+                    }, {
+                        "order": "2",
+                        "bib": "2441",
+                        "competitor": {
+                            "identifier": "1217570",
+                            "firstName": "Harry",
+                            "lastName": "Aikines-Aryeetey",
+                            "fullName": "Harry Aikines-Aryeetey"
+                        }
+                    }, {
+                        "order": "3",
+                        "bib": "2451",
+                        "competitor": {
+                            "identifier": "1217634",
+                            "firstName": "James",
+                            "lastName": "Ellington",
+                            "fullName": "James Ellington"
+                        }
+                    }, {
+                        "order": "4",
+                        "bib": "2454",
+                        "competitor": {
+                            "identifier": "1217647",
+                            "firstName": "Adam",
+                            "lastName": "Gemili",
+                            "fullName": "Adam Gemili"
+                        }
+                    }]
+                }, {
+                    "order": "2",
+                    "type": "Team",
+                    "code": "ATM401BRA01",
+                    "rank": "6",
+                    "value": "38.41",
+                    "property": {
+                        "type": "Result Type",
+                        "value": "Time"
+                    },
+                    "resultExtension": {
+                        "type": "Reaction Time",
+                        "value": "0.184"
+                    },
+                    "country": {
+                        "identifier": "BRA",
+                        "name": "Brazil",
+                        "longName": "Brazil"
+                    },
+                    "participant": [{
+                        "order": "1",
+                        "bib": "2142",
+                        "competitor": {
+                            "identifier": "1217861",
+                            "firstName": "Ricardo",
+                            "lastName": "de Souza",
+                            "fullName": "Ricardo de Souza"
+                        }
+                    }, {
+                        "order": "2",
+                        "bib": "2146",
+                        "competitor": {
+                            "identifier": "1217908",
+                            "firstName": "Vitor Hugo",
+                            "lastName": "dos Santos",
+                            "fullName": "Vitor Hugo dos Santos"
+                        }
+                    }, {
+                        "order": "3",
+                        "bib": "2136",
+                        "competitor": {
+                            "identifier": "1217448",
+                            "firstName": "Bruno",
+                            "lastName": "de Barros",
+                            "fullName": "Bruno de Barros"
+                        }
+                    }, {
+                        "order": "4",
+                        "bib": "2157",
+                        "competitor": {
+                            "identifier": "1217750",
+                            "firstName": "Jorge",
+                            "lastName": "Vides",
+                            "fullName": "Jorge Vides"
+                        }
+                    }]
+                }, {
+                    "order": "8",
+                    "type": "Team",
+                    "code": "ATM401TTO01",
+                    "value": "38.00",
+                    "property": {
+                        "type": "Invalid Result Mark",
+                        "value": "Disqualified"
+                    },
+                    "resultExtension": {
+                        "type": "Reaction Time",
+                        "value": "0.148"
+                    },
+                    "country": {
+                        "identifier": "TTO",
+                        "name": "Trinidad and Tobago",
+                        "longName": "Trinidad and Tobago"
+                    },
+                    "participant": [{
+                        "order": "1",
+                        "bib": "2975",
+                        "competitor": {
+                            "identifier": "1149959",
+                            "firstName": "Keston",
+                            "lastName": "Bledman",
+                            "fullName": "Keston Bledman"
+                        }
+                    }, {
+                        "order": "2",
+                        "bib": "2986",
+                        "competitor": {
+                            "identifier": "1149983",
+                            "firstName": "Rondel",
+                            "lastName": "Sorrillo",
+                            "fullName": "Rondel Sorrillo"
+                        }
+                    }, {
+                        "order": "3",
+                        "bib": "2976",
+                        "competitor": {
+                            "identifier": "1149902",
+                            "firstName": "Emmanuel",
+                            "lastName": "Callender",
+                            "fullName": "Emmanuel Callender"
+                        }
+                    }, {
+                        "order": "4",
+                        "bib": "2988",
+                        "competitor": {
+                            "identifier": "1150035",
+                            "firstName": "Richard",
+                            "lastName": "Thompson",
+                            "fullName": "Richard Thompson"
+                        }
+                    }]
+                }, {
+                    "order": "3",
+                    "type": "Team",
+                    "code": "ATM401USA01",
+                    "value": "37.62",
+                    "property": {
+                        "type": "Invalid Result Mark",
+                        "value": "Disqualified"
+                    },
+                    "resultExtension": {
+                        "type": "Reaction Time",
+                        "value": "0.150"
+                    },
+                    "country": {
+                        "identifier": "USA",
+                        "name": "United States",
+                        "longName": "United States of America"
+                    },
+                    "participant": [{
+                        "order": "1",
+                        "bib": "3096",
+                        "competitor": {
+                            "identifier": "1211191",
+                            "firstName": "Mike",
+                            "lastName": "Rodgers",
+                            "fullName": "Mike Rodgers"
+                        }
+                    }, {
+                        "order": "2",
+                        "bib": "3069",
+                        "competitor": {
+                            "identifier": "1127210",
+                            "firstName": "Justin",
+                            "lastName": "Gatlin",
+                            "fullName": "Justin Gatlin"
+                        }
+                    }, {
+                        "order": "3",
+                        "bib": "3070",
+                        "competitor": {
+                            "identifier": "1160664",
+                            "firstName": "Tyson",
+                            "lastName": "Gay",
+                            "fullName": "Tyson Gay"
+                        }
+                    }, {
+                        "order": "4",
+                        "bib": "3054",
+                        "competitor": {
+                            "identifier": "1160645",
+                            "firstName": "Trayvon",
+                            "lastName": "Bromell",
+                            "fullName": "Trayvon Bromell"
                         }
                     }]
                 }]
