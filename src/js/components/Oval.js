@@ -108,24 +108,19 @@ export default function Oval(options) {
 					.attr("class","bg")
 					.attr("transform",`translate(${margins.left},${margins.top})`)
 
-	let runners=svg
-					.append("g")
-					.attr("class","runners")
-					.attr("transform",`translate(${margins.left},${margins.top})`)
+	// let runners=svg
+	// 				.append("g")
+	// 				.attr("class","runners")
+	// 				.attr("transform",`translate(${margins.left},${margins.top})`)
 
 	let scaffolding=svg
 					.append("g")
 					.attr("class","scaffolding")
 					.attr("transform",`translate(${margins.left},${margins.top})`)
 
-	/*scaffolding.append("line")
-				.attr("x1",hscale(dimensions.lanes+dimensions.radius)+2)
-				.attr("y1",0)
-				.attr("x2",hscale(dimensions.lanes+dimensions.radius)+2)
-				.attr("y2",HEIGHT)*/
 	scaffolding.append("line")
 				.attr("x1",hscale(dimensions.lanes+dimensions.radius+dimensions.field.width)+2)
-				.attr("y1",0)
+				.attr("y1",HEIGHT/2)
 				.attr("x2",hscale(dimensions.lanes+dimensions.radius+dimensions.field.width)+2)
 				.attr("y2",HEIGHT)
 
@@ -140,7 +135,7 @@ export default function Oval(options) {
 				
 				let __RADIUS=dimensions.radius+dimensions.running_line[lane]+dimensions.lane*lane+dimensions.lane/2
 				
-				let angle=getAngle(d-0.2,__RADIUS-dimensions.lane/2);
+				let angle=getAngle(d,__RADIUS-dimensions.lane/2);
 
 				////console.log(d,__RADIUS,angle,toRad(angle))
 				let coords1=polarToCartesian(x1,y1,hscale(__RADIUS-dimensions.lane),180-angle);

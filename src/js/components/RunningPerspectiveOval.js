@@ -541,6 +541,9 @@ export default function RunningPerspectiveOval(data,options) {
 		leg.filter(s=>(s.distance>0))
 				.selectAll("text.athlete-name")
 					.attr("dx",s=>{
+						if(s.distance===dimensions.length-100) {
+							return -10;
+						}
 						return 10;
 				    })
 				    .attr("dy",s=>{
@@ -549,10 +552,27 @@ export default function RunningPerspectiveOval(data,options) {
 				  	.append("textPath")
 				    	//.attr("xlink:href", s=>("#leg_"+s.lane+"_"+s.distance))
 				    	.attr("xlink:href", (s,i)=>{
-				    		return `#bg_${s.lane+1}`;
+				    		if(s.distance===dimensions.length || s.distance===dimensions.length-100) {
+				    			return `#bg_${s.lane+1}`;
+				    		} else {
+				    			return `#bg_o_${s.lane+1}`;
+				    		}
 				    	})
-				    	.attr("text-anchor","start")
-				    	//.attr("startOffset",s=>(s.distance>0)?"100%":"0%")
+				    	.attr("text-anchor",s=>{
+				    		if(s.distance===dimensions.length-100) {
+				    			return "end";
+				    		}
+				    		return "start";
+				    	})
+				    	.attr("startOffset",s=>{
+				    		if(s.distance===dimensions.length) {
+				    			return "0%";
+				    		}
+				    		if(s.distance===dimensions.length-100) {
+				    			return ((s.distance/dimensions.length*100)+"%")	
+				    		}
+				    		return (100-(s.distance/dimensions.length*100)+"%")
+				    	})
 				    	.text(s=>{
 							let athlete=athletes_data.filter(d=>(d.lane===s.lane))[0]
 							if(options.team) {
@@ -565,18 +585,18 @@ export default function RunningPerspectiveOval(data,options) {
 				.selectAll("text.athlete-time")
 					.attr("dx",s=>{
 						
-				    	return (s.distance%100===0)?-5:-5
+				    	return (s.distance===0)?5:-5
 				    })
 				    .attr("dy","0.35em")
 				  	.append("textPath")
 				    	//.attr("xlink:href", s=>("#leg_"+s.lane+"_"+s.distance))
 				    	 .attr("xlink:href", (s,i)=>{
 				    	 	if(s.distance===0) {
-				    	 		return `#bg_o_${s.lane+1}`;
+				    	 		return `#bg_${s.lane+1}`;
 				    	 	}
 				    	 	return "#leg_"+s.lane+"_"+s.distance;
 				    	 })
-				    	.attr("text-anchor",s=>s.distance===0?"end":"end")
+				    	.attr("text-anchor",s=>s.distance===0?"start":"end")
 				    	.attr("startOffset",d=>{
 				    		if(d.distance===0) {
 
@@ -584,6 +604,7 @@ export default function RunningPerspectiveOval(data,options) {
 
 				    			
 				    			let v=(dimensions.length-dimensions.lane_staggers[d.lane]*LANE_RATIOS[d.lane]-d.mt*LANE_RATIOS[d.lane])/(dimensions.length*2);
+				    			v=(dimensions.lane_staggers[d.lane]*LANE_RATIOS[d.lane]+d.mt)/dimensions.length;
 				    			return (v*100)+"%";
 				    		}
 				    		return "100%";
@@ -643,7 +664,7 @@ export default function RunningPerspectiveOval(data,options) {
 				.attr("x2",0)
 				.attr("y2",yscale(dimensions.lane*0.2));
 		tick
-			.filter(d=>(d.t%dimensions.length)>0)
+			.filter(d=>(d.t%200)>0)
 			.append("text")
 				.attr("x",0)
 				.attr("y",-3)
@@ -895,18 +916,21 @@ export default function RunningPerspectiveOval(data,options) {
 					})
 					.on("end",function(d){
 						if(callback) {
-							callback();
+							callback(s);
 						}
 					})
 						
 
 	}
 	
-	function showNext(lane,distance) {
-		//console.log("showNext",lane,distance);
+	function showNext(split,lane,distance) {
+		//console.log("showNext",split,lane,distance);
 
 		let next_leg=leg
 			.filter(d=>(d.distance===distance && d.lane===lane))
+			//.each((d,i)=>{
+				//console.log(i,d)
+			//})
 				
 
 		next_leg
@@ -915,7 +939,7 @@ export default function RunningPerspectiveOval(data,options) {
 					.attr("stroke-dasharray", function(s){
 
 						let l=this.getTotalLength();
-						let interpolate = interpolateString("0," + l, l + "," + l);						
+						//let interpolate = interpolateString("0," + l, l + "," + l);						
 
 						let t = (distance-100+0.25)/dimensions.length;
 						//t=s.mt/dimensions.length;
@@ -928,24 +952,25 @@ export default function RunningPerspectiveOval(data,options) {
 					.duration((s,i)=>{
 
 						let delta=49.75;
-						let t=getTimeForDistance(best_cumulative_times[distance].times[i],distance,delta)
+						let t=getTimeForDistance(split.cumulative_time,distance-100,delta)
 
-						//console.log("DURATION",t,best_cumulative_times[distance].times[i],distance,delta)
+						//console.log("DURATION NEXT",t,delta)
 
 						return t*multiplier;
 					})
 					.ease(Running4x100mChangeEasing)
+					//.ease(RunningLinear)
 					.attr("stroke-dasharray", function(s){
 
 						let l=this.getTotalLength();
-						let interpolate = interpolateString("0," + l, l + "," + l);						
+						//let interpolate = interpolateString("0," + l, l + "," + l);						
 
 						let t1 = (distance-100+0.25)/dimensions.length,
 							t2 = (distance-50)/dimensions.length;
 						//t=s.mt/dimensions.length;
 						//console.log("SHOW NEXT TO",s.lane,t1,interpolate(t),s,dimensions.length,dimensions.length*t)
 						//return interpolate(t);
-						return "0,"+(l*t1)+","+(l/8)+","+l;
+						return "0,"+(l*t1)+","+(l/8)+","+(l-l/8);
 
 					})
 
@@ -1085,12 +1110,12 @@ export default function RunningPerspectiveOval(data,options) {
 
 			if(distance===0) {
 
-				dxScale=scaleLinear().domain([620,1260]).range([-1130,-2575]);
-				dyScale=scaleLinear().domain([620,1260]).range([-110,-1120]);
-				dzScale=scaleLinear().domain([620,1260]).range([330,330]);
-				drxScale;
-
-				transform = `rotateX(40deg) rotateY(5deg) rotateZ(-5deg) translateZ(260px) translateX(-3230px) translateY(-1810px)`;
+				dxScale=scaleLinear().domain([620,1260]).range([-1495,-3230]);
+				dyScale=scaleLinear().domain([620,1260]).range([-600,-1810]);
+				dzScale=scaleLinear().domain([620,1260]).range([70,260]);
+				drxScale=scaleLinear().domain([620,1260]).range([20,40]);
+				//rotateX(20deg) rotateY(5deg) rotateZ(-5deg) translateZ(70px) translateX(-1495px) translateY(-600px)
+				transform = `rotateX(${drxScale(w)}deg) rotateY(5deg) rotateZ(-5deg) translateZ(${dzScale(w)}px) translateX(${dxScale(w)}px) translateY(${dyScale(w)}px)`;
 
 				if(w<480) {
 					//`rotateX(40deg) rotateY(10deg) rotateZ(50deg) translateZ(260px) translateX(-90px) translateY(430px)`
@@ -1111,14 +1136,23 @@ export default function RunningPerspectiveOval(data,options) {
 
 			}
 			if(distance===100) {
-				transform=`rotateX(30deg) rotateY(0deg) rotateZ(10deg) translateZ(0px) translateX(-3200px) translateY(-130px)`;
+				
+				//rotateX(40deg) rotateY(0deg) rotateZ(5deg) translateZ(290px) translateX(-1450px) translateY(330px)
+				//rotateX(40deg) rotateY(0deg) rotateZ(5deg) translateZ(290px) translateX(-3360px) translateY(10px)
+				let dxScale=scaleLinear().domain([620,1260]).range([-1450,-3360]),
+					dyScale=scaleLinear().domain([620,1260]).range([330,10]),
+					dzScale=scaleLinear().domain([620,1260]).range([290,290]);
+				transform=`rotateX(40deg) rotateY(0deg) rotateZ(5deg) translateZ(${dzScale(w)}px) translateX(${dxScale(w)}px) translateY(${dyScale(w)}px) scale(1)`;
 			}
 			if(distance===200) {
-				drxScale=scaleLinear().domain([620,1260]).range([30,20]);
-				dxScale=scaleLinear().domain([620,1260]).range([-50,-30]);
-				dyScale=scaleLinear().domain([620,1260]).range([150,-170]);
+				let drxScale=scaleLinear().domain([620,1260]).range([40,30]),
+					dxScale=scaleLinear().domain([620,1260]).range([50,100]),
+					dyScale=scaleLinear().domain([620,1260]).range([40,-540]),
+					dzScale=scaleLinear().domain([620,1260]).range([300,400])
 
-				transform = `rotateX(40deg) rotateY(0deg) rotateZ(-30deg) translateZ(470px) translateX(350px) translateY(-850px)`;
+				
+				//rotateX(30deg) rotateY(0deg) rotateZ(-20deg) translateZ(400px) translateX(99.281px) translateY(-537.219px)
+				transform = `rotateX(${drxScale(w)}deg) rotateY(0deg) rotateZ(-20deg) translateZ(300px) translateX(${dxScale(w)}px) translateY(${dyScale(w)}px)`;
 
 				if(w<480) {
 					//320
@@ -1190,7 +1224,7 @@ export default function RunningPerspectiveOval(data,options) {
 			if(status===0) {
 				transform = `rotateX(60deg) rotateY(0deg) rotateZ(50deg) translateZ(500px) translateX(-640px) translateY(295px)`;
 			}*/
-			transform=`rotateX(30deg) rotateZ(-10deg) translateX(-37%) translateY(-70%) scale(0.4)`;
+			//transform=`rotateX(30deg) rotateZ(-10deg) translateX(-37%) translateY(-70%) scale(0.4)`;
 			try {
 		    	svg
 		    		.style("-webkit-transform",transform)
@@ -1227,7 +1261,7 @@ export default function RunningPerspectiveOval(data,options) {
 
 		
 
-		let delta=20;
+		let delta=25;
 
 		if(distance!==0 && distance !==dimensions.length) {
 			delta=20;
@@ -1430,7 +1464,7 @@ export default function RunningPerspectiveOval(data,options) {
 								
 							}
 						})
-						.on("end",function(d){
+						.on("end",function(d,index){
 							if(d.lane===GOLD_LANE) {
 								if(text_update){
 									buildTexts();
@@ -1461,12 +1495,8 @@ export default function RunningPerspectiveOval(data,options) {
 
 
 							if(d.distance>0){ //===dimensions.length) {
-								let next = () =>{
-									//console.log("NOW START THE NEXT 100m",d.distance+100)
-									showNext(d.lane,d.distance+100)
-									//goTo(d.distance+100,function(){},false,false,false,d.distance)	
-								};
-								showGap(select(this.parentNode),d,best_cumulative_times[d.distance].best_cumulative,first_run,(d.distance<dimensions.length && cleanup)?next:false);
+								console.log("!!!!",d,index)
+								showGap(select(this.parentNode),d,best_cumulative_times[d.distance].best_cumulative,first_run,(d.distance<dimensions.length && cleanup)?function(s){showNext(s,d.lane,d.distance+100)}:false);
 							}
 
 							
@@ -1488,7 +1518,7 @@ export default function RunningPerspectiveOval(data,options) {
 
 										//addTime(d.distance,d.lane);
 
-									},first_run?10:delay*multiplier)
+									},first_run?10:delay*multiplier*0.5)
 								);	
 							}
 
@@ -1511,7 +1541,24 @@ export default function RunningPerspectiveOval(data,options) {
 					.attr("stroke-dasharray", function(s){
 
 						let l=this.getTotalLength();
-						let interpolate = interpolateString("0," + l, l + "," + l);
+						//let interpolate = interpolateString("0," + l, l + "," + l);
+
+						//let l=this.getTotalLength();
+						//let interpolate = interpolateString("0," + l, l + "," + l);
+
+						let r=0;
+						// 0=>0
+						// 100=>0.25
+						// 200=>0.5
+						// 300=>0.75
+						// 400=>1
+						if(distance===dimensions.length) {
+							r=0.5;
+						}
+						let interpolate = interpolateString(
+													("0,"+(r*l)+",")+"0," + l,
+													("0,"+(r*l)+",")+(l-r*l) + "," + l
+											);
 
 						let t = s.mt/dimensions.length;
 						//console.log("2-INTERPOLATE",t,interpolate(t))

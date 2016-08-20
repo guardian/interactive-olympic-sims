@@ -29,9 +29,9 @@
 				//shape-rendering:crispEdges;
 
 				&.stagger {
-					stroke-width:3;
+					stroke-width:2;
 					@include mq(tablet) {
-						stroke-width:8;
+						stroke-width:2;
 					}
 					stroke:#fff;
 				}

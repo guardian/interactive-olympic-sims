@@ -64,7 +64,7 @@
 			height: 42px;
 		}
 	    border: none;
-	    padding: 0 15px 0 20px;
+	    padding: 0 1px 0 15px;
 	    border-radius: 42px;
 	    @include fs-textSans(4);
 	    margin-top:5px;
@@ -88,13 +88,10 @@
 		    background-size:16px;
 		    width:23px;
 		    height:20px;
-		    @include mq(tablet) {
-		    	background-size:23px;
-		    	height:23px;
-		    }
+		   
 		    
 		    
-		    padding-left:15px;
+		    padding-left:13px;
 	    }
 	    &:hover{
 	    	background-color:#0082ba;
