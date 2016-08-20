@@ -307,7 +307,7 @@ export default function RunningPerspectiveOval(data,options) {
 	    select(options.container)
 	    		.append("div")
 	    		.attr("class","notes")
-	    		.html("The positions are based on the athletes' average speed.")
+	    		.html("The positions are based on the athletes' average speed. Race at 2x speed.")
 
 	    annotations_layer=container
 								.append("div")
@@ -1346,12 +1346,13 @@ export default function RunningPerspectiveOval(data,options) {
 						// 300=>0.75
 						// 400=>1
 						if(s.distance===dimensions.length) {
-							r=0.5;
+							r=1000;
 						}
-						let interpolate = interpolateString(
+						
+						/*let interpolate = interpolateString(
 													("0,"+(r*l)+",")+"0," + l,
 													("0,"+(r*l)+",")+(l-r*l) + "," + l
-											);
+											);*/
 
 
 						//interpolate = interpolateString(`0,$[leg*n],0,${l}`,`0,${leg*n},${l},${l}`)
@@ -1372,12 +1373,13 @@ export default function RunningPerspectiveOval(data,options) {
     						delta_fix=dimensions.delta_fixes[s.distance][s.lane];
     					}
 
-						let delta2=(s.distance!==0 && s.distance!==dimensions.length)?delta*2:delta
+						let delta2=(s.distance!==0 && s.distance!==dimensions.length)?delta:delta
 						//console.log(s.lane,delta_fix,"=>",delta2+delta_fix)
 
 						let t = s.distance>0?((s.mt-(delta2+delta_fix))/dimensions.length):0;
 						//t=s.mt/dimensions.length;
 						//console.log("1-INTERPOLATE",s.lane,t,interpolate(t),s,dimensions.length,dimensions.length*t)
+						return "0,"+r+","+(l*t-r)+","+l;
 						return interpolate(t);
 
 					})
@@ -1396,7 +1398,7 @@ export default function RunningPerspectiveOval(data,options) {
 
 						//console.log("DURATION",t,delta2)
 						if(s.distance===dimensions.length) {
-							t=t/2;
+							t=t;
 						}
 						return t*multiplier;
 					})
@@ -1416,10 +1418,13 @@ export default function RunningPerspectiveOval(data,options) {
 						if(s.distance===dimensions.length) {
 							r=1000;
 						}
-						let interpolate = interpolateString(
-													("0,"+(1000*r)+",")+"0," + l,
-													("0,"+(1000*r)+",")+(l-1000*r) + "," + l
-											);
+						if(s.distance===0) {
+							r=w<480?3:7;
+						}
+						// let interpolate = interpolateString(
+						// 							("0,"+(1000*r)+",")+"0," + l,
+						// 							("0,"+(1000*r)+",")+(l-1000*r) + "," + l
+						// 					);
 
 						
 

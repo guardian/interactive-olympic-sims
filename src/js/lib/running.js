@@ -15,7 +15,7 @@ export const Running400mEasing=bezier(0.05,0.1,0.07,0.07)
 
 export const Running200mEasing=bezier(0.32,0.05,0.23,0.23)
 
-export const Running4x100mChangeEasing=bezier(.23,.20,.38,.38)
+export const Running4x100mChangeEasing=bezier(.3,.15,.38,.38)
 
 
 export const dimensions = {

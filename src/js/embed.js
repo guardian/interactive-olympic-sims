@@ -44,7 +44,7 @@ window.init = function init(el, config) {
 	        length:400,
             race:"400m",
 	        team:true,
-	        multiplier: 1,
+	        multiplier: 0.5,
 	        margins: {
 	            left:10,
 	            right:10,
